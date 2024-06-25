@@ -1,0 +1,1062 @@
+
+<!-- Begin page -->
+<div id="layout-wrapper">
+      
+    <app-header></app-header>
+
+        <!-- ========== App Menu ========== -->
+        
+        <app-sidemenu></app-sidemenu>
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content" style="overflow-x: hidden;">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card mt-n4 mx-n4 mb-n5">
+                                <div class="bg-info-subtle">
+                                    <div class="card-body pb-4 mb-5">
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <div class="row align-items-center gy-2">
+                                                    <div class="col-sm">
+                                                    <div class="d-flex align-items-center ma-5">
+                                                        <div class="flex-shrink-0">
+                                                            <div class="avatar-sm">
+                                                                <span class="avatar-title bg-info-subtle">
+                                                                    <img src="assets\styles\img\icons8-plan-48.png" alt="" class="img-130">
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-2 ma-5">
+                                                            <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Training Plan</h2>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="col-sm-auto">
+                                                        <div class="flex-grow-1 ms-1 ">
+                                                            <div class="page-title-right padding-up-5">
+                                                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="personal"  name="user" [(ngModel)]="user" (change)="teamselection(user)">
+                                                                    <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio1">Proposed Plan</label>
+                                                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="team"  name="user" [(ngModel)]="user" (change)="teamselection(user)">
+                                                                    <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio2">Scheduled Plan</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                        </div>
+                                        <!--end row-->
+                                    </div><!-- end card body -->
+                            </div>
+                        </div><!-- end card -->
+                    </div>
+
+                    <div class="row topbar-up">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+
+                                        <!-- PROPOSED PLAN -->
+                                        <div id="divProposedPlan" *ngIf="user === 'personal'">
+                                            <div class="row topbar-up mb-2 bg-warning-subtle">
+                                                <div class="col-lg-12 bg-warning-subtle">
+                                                        <div class="pa-6-8 mb-3" style="margin-top: 50px!important;">
+                                                            <div class="row align-items-center gy-3">
+                                                                <div class="col-sm">
+                                                                    <div class="d-flex gap-1 flex-wrap">
+                                                                        <div class="search-box col-sm-4">
+                                                                            <input type="text" class="form-control searchInput" id="searchInput" [(ngModel)]="searchInput" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon" autocomplete='off'>
+                                                                            <i class="ri-search-line search-icon"></i>
+                                                                        </div>
+                                                                        <div class="col-sm-3">
+                                                                            <select class="form-select font-type fs-12 textbox-15 h-30" name="accesscompany" id="accesscompany" (change)="Listtrainingplansfilter()">
+                                                                                <option value ="-1">Company Name</option>
+                                                                                <option  *ngFor="let CompanyList of listaccesscompany" value="{{CompanyList.KEY_ID}}">
+                                                                                    {{CompanyList.DATA_VALUE}}
+                                                                                </option>
+                                                                            </select> 
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <select class="form-select h-30 font-type textbox-15" name="year" id="year" (change)="Listtrainingplansfilter()">
+                                                                                <option value ="-1">Select Year</option>
+                                                                                <option  *ngFor="let yrlist of yearlist" value="{{yrlist.DISPLAY_FIELD}}">
+                                                                                    {{yrlist.DISPLAY_FIELD}} 
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <select class="form-select font-type fs-12 textbox-15 h-30" name="trainingstatus" id="trainingstatus" (change)="Listtrainingplansfilter()">
+                                                                                <option value ="-1">Select Status</option>
+                                                                                <option  *ngFor="let trainingsts of liststatus" value="{{trainingsts.KEY_ID}}" [hidden]="trainingsts.KEY_ID==0 || trainingsts.KEY_ID==9 || trainingsts.KEY_ID==5 || trainingsts.KEY_ID==6">
+                                                                                    {{trainingsts.DATA_VALUE}}
+                                                                                </option>
+                                                                              </select>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-auto">
+                                                                    <a href="#"><button class="btn btn-orange btn-sm font-type fs-13 font-type text-white h-30" style="margin-right: 5px;" (click)="addnewrequest()" ><i class="ri-file-add-line align-bottom me-1"></i>New Request</button></a>
+                                                                    <!-- <a href="#"><button class="btn btn-success btn-sm font-type fs-13 font-type text-white h-30" id="Gen-btn" style="display:none" data-bs-toggle="modal" data-bs-target="#genModal"><i class="ri-ai-generate align-bottom me-1"></i>Generate Plan</button></a> -->
+                                                                    <a href="#"><button class="btn btn-blue btn-sm font-type fs-13 font-type text-white h-30" id="schedule-btn" data-bs-toggle="modal" data-bs-target="#VPMsgModal"><i class="ri-send-plane-fill align-bottom me-1"></i>Send to VP</button></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+
+                                                 <!--PROPOSED TABLE PLANNER-->
+                                                <div class="row margin-up-5">
+                                                    <div class="col-lg-12">
+                                                        <div class="table-responsive table-card mb-0">
+                                                                <table class="table table-nowrap align-middle table-bordered border-orange table-hover" id="table2">
+                                                                    <thead class="font-type table-light text-white">
+                                                                    <tr class="text-center">
+                                                                        <th>
+                                                                            <div class="form-check form-check-info">
+                                                                                <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
+                                                                            </div>
+                                                                        </th>
+                                                                        <td>ID</td>
+                                                                        <th>
+                                                                            <span>Areas</span> 
+                                                                            <!-- <input type="text" class="form-control searchInput" id="searchInput" [(ngModel)]="searchInput" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon"> -->
+                                                                            <!-- <input type="text" class="form-control searchInput h-30 font-type" id="searchInput" [(ngModel)]="searchInput" name="searchInput" placeholder="Filter" aria-label="search" aria-describedby="search_icon"> -->
+                                                                        </th>
+                                                                        <th>
+                                                                            <span>Training Name</span> 
+                                                                            <!-- <input type="text" class="form-control search h-30 font-type" placeholder="Filter..."> -->
+                                                                        </th>
+                                                                        <th scope="col" class="bg-blue fs-12 font-type">Employee</th>
+                                                                        <th>
+                                                                            <span>Provider</span>
+                                                                            <!-- <input type="text" class="form-control search h-30 font-type" placeholder="Filter..."> -->
+                                                                        </th>
+                                                                        <th>
+                                                                            <span>Convenient Schedule</span>
+                                                                            <!-- <input type="text" class="form-control search h-30 font-type" placeholder="Filter..."> -->
+                                                                        </th>
+                                                                        <th>Status</th>
+                                                                        <th>Action</th>
+                                                                    </tr>   
+                                                                </thead>
+                                                                <tbody class="list form-check-all font-type fs-11">
+                                                                    <ng-container *ngFor="let trPlans of listrainingplan | search : searchInput | pagination: currentPage: itemsPerPage; let i=index">
+                                                                
+                                                               
+                                                                <tr class="font-type" *ngFor="let employee of trPlans.Employees index as i; let isFirst = first  ">
+                                                                <ng-container *ngIf="isFirst">
+                                                                <td [attr.rowspan]="trPlans.Employees.length">
+                                                                        <div class="form-check form-check-info">
+                                                                            <input class="form-check-input" type="checkbox" name="chk_child" value="trPlans.TRAINING_ID" (click)="handleTrainingClick(trPlans.TRAINING_ID)">
+                                                                        </div>
+                                                                </td>
+                                                                <td [attr.rowspan]="trPlans.Employees.length">{{trPlans.TRAINING_ID}}</td>
+                                                                <td [attr.rowspan]="trPlans.Employees.length" style="white-space: pre-wrap;">{{trPlans.AREA_NAME}}</td>
+                                                                <td [attr.rowspan]="trPlans.Employees.length" style="white-space: pre-wrap;">{{trPlans.SUBJECT_NAME}}</td>
+                                                                <td class="p-1">{{employee.EMP_NAME}}</td>
+                                                                <td [attr.rowspan]="trPlans.Employees.length">{{trPlans.TRAINING_TYPE}}</td>
+                                                                <td [attr.rowspan]="trPlans.Employees.length">{{trPlans.PROPOSED_QUARTER}}</td>
+                                                                <td class="status" [attr.rowspan]="trPlans.Employees.length"> <span [ngStyle]="getStatusStyles(trPlans.PLAN_STATUS)" class="badge text-white width-budge fs-11 fw-medium">{{trPlans.PLAN_STATUS_VAL}}</span></td>
+                                                                <td [attr.rowspan]="trPlans.Employees.length">
+                                                                        <ul class="list-inline hstack gap-0 mb-0">
+                                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit Details">
+                                                                                <a href="#EditRequestModalTeam" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn" (click)="selectedforEdit(trPlans.TRAINING_ID,trPlans.PROPOSED_QUARTER_ID)">
+                                                                                    <i class="ri-edit-circle-fill fs-22 text-orange text-center"></i>
+                                                                                </a>
+                                                                             </li>
+
+                                                                             <ng-container [ngSwitch]="true">
+                                                                                <div *ngSwitchCase="trPlans.PLAN_STATUS != '4'">
+                                                                                    <li class="list-inline-item gap-0 mb-0" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Hold Training" (click)="holdproposedplan(trPlans.TRAINING_ID)">
+                                                                                        <a href="#" data-bs-toggle="modal" class="text-primary d-inline-block">
+                                                                                            <i class="ri-pause-circle-fill fs-24 text-warning text-center"></i>
+                                                                                        </a>
+                                                                                     </li>
+                                                                                </div>
+                                                                                <div *ngSwitchCase="trPlans.PLAN_STATUS == '4'">
+                                                                                    <li class="list-inline-item text-center" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Resume Training"  (click)="releaseplan(trPlans.TRAINING_ID)"  >
+                                                                                        <a href="#" data-bs-toggle="modal" class="text-primary d-inline-block">
+                                                                                            <i class="ri-restart-fill fs-22 text-success text-center"></i>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </div>
+                                                                            </ng-container>
+
+                                                                             
+
+
+                                                                             <li class="list-inline-item gap-0 mb-0" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel Training" (click)="rejectplan(trPlans.TRAINING_ID)" >
+                                                                                <a class="d-inline-block" data-bs-toggle="modal" href="#RejectModal">
+                                                                                  <i class="ri-close-circle-fill fs-24 text-dark text-center"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                            
+                                                                        </ul>
+                                                                </td>
+                                                               </ng-container>
+                                                                
+                                                               
+                                                               <ng-container *ngIf="!isFirst">
+                                                                <td class="p-1">{{employee.EMP_NAME}}</td>
+                                                                </ng-container>
+                                                                </tr>
+                                                               </ng-container>
+                                                                
+                                                            </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div *ngIf="listrainingplan">
+                                                            <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                                                <div class="col-sm">
+                                                                <div class="font-type fs-12 text-muted">
+                                                                    Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                                    - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                                    of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                                </div>
+                                                                </div>
+                                                                <div class="col-sm">
+                                                                    <div class="font-type fs-12 text-muted">
+                                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                                    <div class="d-flex gap-1 flex-wrap">
+                                                                        <div>
+                                                                            <div class="input-group">
+                                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                                    
+                                                                <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                                            </div>
+                                                            </div>
+                                                                
+                                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                                <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                                    <li class="page-item">
+                                                                    <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                                    </li>
+                                                                    <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                                    <li class="page-item">
+                                                                        <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                                    </li>
+                                                                    </ng-container>
+                                                                    <li class="page-item">
+                                                                    <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                                    </li>
+                                                                </ul>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <!--END PROPOSED TABLE PLANNER-->
+                                                </div><!--end col-->
+                                                </div>
+                                        </div>
+                                        <!-- END PROPOSED PLAN -->
+        
+                                        <!-- SCHEDULED PLAN -->
+                                        <div id="divScheduledPlan" *ngIf="user === 'team'" >
+                                            <div class="row margin-up-7">
+                                                <div class="col-lg-12">
+                                                    <div class="row topbar-up mb-2 bg-warning-subtle">
+                                                        <div class="col-lg-12 bg-warning-subtle">
+                                                                <div class="pa-6-8 mb-1" style="margin-top: 50px!important;">
+                                                                    <div class="row align-items-center gy-3">
+                                                                        <div class="col-sm">
+                                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                                <div class="search-box col-sm-3">
+                                                                                    <!-- <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."> -->
+                                                                                    <input type="text" class="form-control searchInput" id="searchInput" [(ngModel)]="searchInput" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                                                    <i class="ri-search-line search-icon"></i>
+                                                                                </div>
+                                                                                <div class="col-sm-2">
+                                                                                    <select class="form-select font-type fs-12 textbox-15 h-30" name="schecompany" id="schecompany"  (change)="ScheduledPlanList_Filter()" >
+                                                                                        <option value ="-1">Company Name</option>
+                                                                                        <option  *ngFor="let CompanyList of listaccesscompany" value="{{CompanyList.KEY_ID}}">
+                                                                                            {{CompanyList.DATA_VALUE}}
+                                                                                        </option>
+                                                                                      </select> 
+                                                                                </div>
+                                                                                <div class="col-sm-2">
+                                                                                    <select class="form-select h-30 font-type textbox-15" name="scheyear" id="scheyear" (change)="ScheduledPlanList_Filter()" >
+                                                                                        <option value ="-1">Select Year</option>
+                                                                                        <option  *ngFor="let yrlist of yearlist" value="{{yrlist.DISPLAY_FIELD}}">
+                                                                                            {{yrlist.DISPLAY_FIELD}} 
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-sm-2">
+                                                                                    <select class="form-select h-30 font-type textbox-15" name="schequarter" id="schequarter" (change)="ScheduledPlanList_Filter()" >
+                                                                                        <option value ="-1">Select Quarter</option>
+                                                                                        <option *ngFor="let qut of listQuarter" value="{{qut.KEY_ID}}" [selected]="qut.KEY_ID==this.proposedquarter"> {{qut.DATA_VALUE}}</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-sm-2">
+                                                                                    <select class="form-select font-type fs-12 textbox-15 h-30" name="schestatus" id="schestatus" (change)="ScheduledPlanList_Filter()" >
+                                                                                        <option value ="-1">Select Status</option>
+                                                                                        <option  *ngFor="let trainingsts of liststatus" value="{{trainingsts.KEY_ID}}" [hidden]="trainingsts.KEY_ID!=3 && trainingsts.KEY_ID!=9 && trainingsts.KEY_ID!=5 && trainingsts.KEY_ID!=8">
+                                                                                              
+                                                                                            {{trainingsts.DATA_VALUE}}
+                                                                                        </option>
+                                                                                    </select>  
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-auto">
+                                                                            <a href="online-training"><button class="btn btn-blue btn-sm font-type fs-13 font-type text-white h-30"><i class="ri-global-line fs-16 align-bottom me-1"></i>Online Trainings</button></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+
+                                                        <div class="mb-3"></div>
+
+                                                        <!--TABLE-->
+                                                        <div class="table-responsive table-card mb-0">
+                                                                <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                                                    <thead class="font-type table-light text-white">
+                                                                    <tr class="text-center">
+                                                                        <th>ID</th>
+                                                                        <th width="5%">Areas</th>
+                                                                        <th>Training Name</th>
+                                                                        <th class="bg-blue fs-12 font-type" width="15%">Employee</th>
+                                                                        <th>Location</th>
+                                                                        <th>Provider</th>
+                                                                        <th>Confirmed<br>Schedule</th>
+                                                                        <th>Actual<br>Training<br>Date</th>
+                                                                        <th>Status</th>
+                                                                        <th>Action</th>
+                                                                    </tr>   
+                                                                </thead>
+                                                                <tbody class="list form-check-all font-type fs-11">
+                                                                    <ng-container *ngFor="let schePlans of listschetrainingplan | search : searchInput | pagination: currentPage: itemsPerPage ; let i=index">
+                                                                        <tr class="font-type" *ngFor="let scheduledemp of schePlans.Employees ;index as i; let isFirst = first ">
+                                                                            <ng-container *ngIf="isFirst">
+                                                                                <td [attr.rowspan]="schePlans.Employees.length" class="fw-semibold">{{schePlans.TRAINING_ID}}</td>
+                                                                                <td [attr.rowspan]="schePlans.Employees.length" style="white-space: pre-wrap;">{{schePlans.AREA_NAME}}</td>
+                                                                                <td [attr.rowspan]="schePlans.Employees.length" style="white-space: pre-wrap;">{{schePlans.SUBJECT_NAME}}</td>
+                                                                                <td class="p-1">{{scheduledemp.EMP_NAME}}</td> 
+                                                                                <td style="white-space: pre-wrap;" [attr.rowspan]="schePlans.Employees.length">{{schePlans.LOCATION}}</td>
+                                                                                <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.TRAINING_TYPE}}</td>
+                                                                                <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.CONFIRMED_QUARTER}}</td>
+                                                                                <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.SCHEDULED_DATE | date: 'dd-MM-yyyy' }}</td>
+                                                                                <td class="status" [attr.rowspan]="schePlans.Employees.length"><span [ngStyle]="getStatusStyles(schePlans.PLAN_STATUS)" class="badge text-white width-budge fs-11 fw-medium">{{schePlans.PLAN_STATUS_VAL}}</span></td>
+                                                                                <td [attr.rowspan]="schePlans.Employees.length">
+                                                                                    <ng-container [ngSwitch]="true">
+                                                                                        <div *ngSwitchCase="schePlans.PLAN_STATUS != '9'">
+                                                                                            <ul class="list-inline hstack gap-1 mb-0">
+                                                                                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit Details">
+                                                                                                        <a href="#editScheduledModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn" (click)="editscheduledplan(schePlans.TRAINING_ID)">
+                                                                                                            <i class="ri-edit-circle-fill fs-22 text-orange text-center"></i>
+                                                                                                        </a>
+                                                                                                    </li> 
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                        <div *ngSwitchCase="schePlans.PLAN_STATUS == '9'">
+                                                                                            <ul class="list-inline hstack gap-2 mb-0">
+                                                                                                <li>
+                                                                                                        <div class="dropdown" style="overflow:visible;position: static;">
+                                                                                                        <a href="javascript:void(0);" class="btn btn-soft-info btn-sm " data-bs-toggle="dropdown" aria-expanded="true">
+                                                                                                            <i class="ri-more-fill"></i>
+                                                                                                        </a>
+                                                                                                        <ul class="dropdown-menu dropdown-menu-end text-blue" >
+                                                                                                            <li  ><a class="dropdown-item text-blue" (click)="navigateTo_attendancePage(schePlans.TRAINING_ID)"><i class="ri-booklet-fill  me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Attendance Register</span> </a></li>
+                                                                                                            <li *ngIf="schePlans.ATTENDANCE_FLAG==1"><a class="dropdown-item text-blue" (click)="navigateTo_feedbackPage(schePlans.TRAINING_ID)"><i class="ri-feedback-fill me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Course Feedback</span> </a></li>
+                                                                                                            <li *ngIf="schePlans.ASSESSMENT_FLAG==1 && schePlans.ATTENDANCE_FLAG==1"><a class="dropdown-item text-blue"  (click)="navigateTo_assessPage(schePlans.TRAINING_ID)" ><i class="ri-add-circle-fill me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Add Assessment</span><span class="text-muted ms-4 fs-12"></span></a></li>
+                                                                                                            <!-- <li><a class="dropdown-item text-blue" href="#"><i class="ri-file-edit-line me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Assessment Questionnaire</span></a></li> -->
+                                                                                                            <li *ngIf="schePlans.EFFECTIVE_STATUS==1 && schePlans.ATTENDANCE_FLAG==1"><a class="dropdown-item text-blue" (click)="navigateTo_effectivePage(schePlans.TRAINING_ID)"><i class="ri-book-open-line me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Course Effectiveness</span></a></li>
+                                                                                                            <li *ngIf="schePlans.CERTIFICATE_STATUS==1 && schePlans.ATTENDANCE_FLAG==1"><a class="dropdown-item text-blue"  (click)="navigateTo_certUploadPage(schePlans.TRAINING_ID)"><i class="ri-download-2-line me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Certificate Upload</span><span class="text-muted ms-4 fs-12"></span></a></li>
+
+                                                                                                            <!-- <li><a class="dropdown-item text-blue"  (click)="navigateTo_takeassessment(schePlans.TRAINING_ID)"><i class="ri-download-2-line me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Take Assessment</span><span class="text-muted ms-4 fs-12"></span></a></li> -->
+                                                                                                        </ul>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </ng-container>
+                                                                                </td>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="!isFirst">
+                                                                                <td class="p-1">{{scheduledemp.EMP_NAME}}</td>
+                                                                            </ng-container>
+                                                                        </tr>
+                                                                    </ng-container>
+                                                                    <!-- <tr class="font-type">
+                                                                        <td class="fw-semibold">#T00002</td>
+                                                                        <td style="white-space: pre-wrap;">QMS</td>
+                                                                        <td style="white-space: pre-wrap;">Basic Hydrogen Sulphide Training (H2S)</td>
+                                                                        <td class="p-1 redips-mark" >Alexis Clarke</td>
+                                                                        <td style="white-space: pre-wrap;" rowspan="3">Financial Center Road, Downtown Dubai</td>
+                                                                        <td>Internal</td>
+                                                                        <td>2nd Quarter</td>
+                                                                        <td>13-05-2024</td>
+                                                                        <td class="status"><span class="badge bg-primary text-white  width-budge fs-11 fw-medium">Completed</span></td>
+                                                                        <td>
+                                                                            <ul class="list-inline hstack gap-2 mb-0">
+                                                                            <li>
+                                                                                    <div class="dropdown" style="overflow:visible;position: static;">
+                                                                                    <a href="javascript:void(0);" class="btn btn-soft-info btn-sm " data-bs-toggle="dropdown" aria-expanded="true">
+                                                                                        <i class="ri-more-fill"></i>
+                                                                                    </a>
+                                                                                    <ul class="dropdown-menu dropdown-menu-end text-blue" >
+                                                                                        <li><a class="dropdown-item text-dark" href="attendanceRegister.html"><i class="ri-booklet-fill  me-2 align-bottom text-dark fs-16"></i><span class="text-dark">Attendance Register</span> </a></li>
+                                                                                        <li><a class="dropdown-item text-blue" href="#"><i class="ri-feedback-fill me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Course Feedback</span> </a></li>
+                                                                                        <li><a class="dropdown-item" href="#"><i class="ri-file-edit-line me-2 align-bottom text-success fs-16"></i><span class="text-success">Assessment Questionnaire</span></a></li>
+                                                                                        <li><a class="dropdown-item" href="#"><i class="ri-book-open-line me-2 align-bottom text-orange fs-16"></i><span class="text-orange">Course Effectiveness</span></a></li>
+                                                                                        <li><a class="dropdown-item" href="certificateUpload.html"><i class="ri-download-2-line me-2 align-bottom text-primary fs-16"></i><span class="text-primary">Certificate Upload</span><span class="text-muted ms-4 fs-12"></span></a></li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                    </tr>                                                                  -->
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                         <!--END TABLE-->
+
+                                                         <div *ngIf="listschetrainingplan">
+                                                            <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsPersonal>0">
+                                                                <div class="col-sm">
+                                                                  <div class="font-type fs-12 text-muted">
+                                                                    Showing <span class="fw-semibold">{{ getEntriesStartPersonal() }}</span>
+                                                                    - <span class="fw-semibold">{{ getEntriesEndPersonal() }}</span>
+                                                                    of <span class="fw-semibold">{{ totalSearchResultsPersonal }}</span> Results
+                                                                  </div>
+                                                                </div>
+                                                                <div class="col-sm">
+                                                                    <div class="font-type fs-12 text-muted">
+                                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPagesPersonal() }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                                    <div class="d-flex gap-1 flex-wrap">
+                                                                        <div>
+                                                                            <div class="input-group">
+                                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPagePersonal" tabindex="1">                                                                    
+                                                                    
+                                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPagePersonal()" tabindex="2">Go</button>
+                                                              </div>
+                                                            </div>
+                                                                 
+                                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                                    <li class="page-item">
+                                                                      <button class="page-link" (click)="changePagePersonal(currentPagePersonal - 1)" [class.disabled-button]="currentPagePersonal === 1">←</button>
+                                                                    </li>
+                                                                    <ng-container *ngFor="let pageNumberPersonal of getPageNumbersPersonal(currentPagePersonal)">
+                                                                      <li class="page-item">
+                                                                        <button class="page-link" (click)="changePagePersonal(pageNumberPersonal)" [class.active]="currentPagePersonal === pageNumberPersonal">{{ pageNumberPersonal }}</button>
+                                                                      </li>
+                                                                    </ng-container>
+                                                                    <li class="page-item">
+                                                                      <button class="page-link" (click)="changePagePersonal(currentPagePersonal + 1)" [class.disabled-button]="currentPagePersonal * itemsPerPage >= totalSearchResultsPersonal">→</button>
+                                                                    </li>
+                                                                  </ul>
+                                                                </div>
+                                                              </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                </div><!--end col-->
+                                             </div>
+                                        </div>
+                                        <!--END SCHEDULED PLAN -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- container-fluid -->   
+            </div>
+                <!-- End Page-content -->
+
+                <!-- MODEL BOXES-->
+                
+                     <!-- Status Modal-->
+                     <div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-bottom" style="float:right">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <div class="modal-body text-center ma-5">
+                                    <div class="mb-1">
+                                        <div class="table-responsive table-card">
+                                            <table class="table table-nowrap mb-0 table-bordered border-dark">
+                                                <thead class="font-type">
+                                                    <tr>
+                                                        <th scope="col">Levels</th>
+                                                        <th scope="col">Approver</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Remarks/Reason</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="fs-12 font-type">
+                                                        <td>L1</td>
+                                                        <td>HR</td>
+                                                        <td>07 Feb, 2024</td>
+                                                        <td><span class="badge bg-success width-budge fs-11 fw-medium">Approved</span></td>
+                                                        <td style="white-space: pre-wrap;">The performance review evaluates how well one learns new skills and information through training programs, and applies that new knowledge in the job.</td>
+                                                    </tr>
+                                                    <tr class="fs-12 font-type">
+                                                        <td>L2</td>
+                                                        <td>VP</td>
+                                                        <td>07 Feb, 2024</td>
+                                                        <td><span class="badge bg-warning width-budge fs-11 fw-medium">Hold</span></td>
+                                                        <td style="white-space: pre-wrap;">The performance review evaluates how well one learns new skills and information through training programs, and applies that new knowledge in the job.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                    <!-- End Status Modal-->
+
+                
+
+                 <!-- Plan Generation Modal-->
+                    <div class="modal fade zoomIn" id="genModal" tabindex="-1" aria-labelledby="genModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body text-center padding-down-5 mb-2">
+                                <div class="text-center">
+                                    <h6 class="bar-text font-type">Plan Generated Successfully!</h6>
+                                    <!--<h6 class="bar-text font-type">Plan Generation Failed!</h6>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   </div>
+                  <!-- End Plan Generation Modal-->     
+
+                  <!--Add Training Request Model Team-->
+
+                  <!-- <div class="modal fade zoomIn " id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    
+                                    <div class="row topbar-up mb-2">
+                                        <div class="col-lg-3 pt-2">
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Areas</span></h6>
+                                            <select class="form-select h-30 font-type textbox-15">
+                                                <option value="">Select</option>
+                                                <option>QMS</option>
+                                                <option>Safety</option>
+                                                <option>Product Specification /OJT</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3 pt-2">
+                                                    <h6 class="fs-12 font-type fw-semibold"><span>Training Name</span></h6>
+                                                        <select class="form-select font-type fs-12 textbox-15">
+                                                            <option value="">Select</option>
+                                                            <option >First Aid Training</option>
+                                                            <option >Fire Fighting Training</option>
+                                                            <option >EOT</option>
+                                                            <option >Basic Rigging & Slinging</option>
+                                                        </select>    
+                                        </div>
+                                        <div class="col-lg-6 pt-2">
+                                                    <h6 class="fs-12 font-type fw-semibold"><span>Employee</span></h6>
+                                                    <select class="form-select font-type fs-12 textbox-15 mb-1">
+                                                        <option value="">Select - Multi Select Dropdown</option>
+                                                        <option>Rajesh Kumar Sarder</option>
+                                                        <option>Subhana Nazir</option>
+                                                        <option>S. C. Meena</option>
+                                                        <option>RH Nichols</option>
+                                                        <option>Tonya Noble</option>
+                                                        <option>David Nichols</option>
+                                                        <option>Donald Palmer</option>  
+                                                        <option>Joseph Parker</option>  
+                                                        <option>Herbert Stokes</option>  
+                                                        <option>Alexis Clarke</option>  
+                                                        <option>Kevin Dawson</option>  
+                                                        <option>Tonya Noble</option>      
+                                                      </select>           
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-lg-3 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Provider</span></h6>
+                                            <select class="form-select font-type fs-12 textbox-15">
+                                                <option value="">Select</option>
+                                                <option >Internal</option>
+                                                <option >External</option>
+                                            </select>       
+                                    </div>
+                                    <div class="col-lg-3 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Convenient Schedule</span></h6>
+                                            <select class="form-select h-30 font-type textbox-15">
+                                                <option value="">Select</option>
+                                                <option >1st Quarter</option>
+                                                <option >2nd Quarter</option>
+                                                <option >3rd Quarter</option>
+                                                <option >4th Quarter</option>
+                                            </select>    
+                                    </div>
+                                    <div class="col-lg-6 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Remarks</span></h6>
+                                            <textarea class="form-control textbox-15" required></textarea>  
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 pt-2">
+                                            <div class="hstack gap-2 justify-content-end">
+                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type "><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                            </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                  </div>  -->
+
+                  <button id="addrequestbutton"  style="display: none;" data-bs-toggle="modal" data-bs-target="#AddRequestModal">Open Modal</button>
+                
+                  <div class="modal fade zoomIn " id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="HODrequestForm" (ngSubmit)="HODvalidateForm()">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="row topbar-up mb-2">
+                                        <div class="col-lg-3 pt-2">
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Areas</span></h6>
+                                            <select class="form-select h-30 font-type textbox-15" formControlName="harea">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let area of listarea" value="{{area.KEY_ID}}"> {{area.DATA_VALUE}}</option>
+                                            </select>
+                                            <div *ngIf="HODrequestForm.get('harea')!.hasError('required') && HODrequestForm.get('harea')!.touched" class="text-danger">Please select the area</div>
+                                        </div>
+                                        <div class="col-lg-3 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Training Name</span></h6>
+                                            <select class="form-select font-type fs-12 textbox-15" formControlName="htrainingname">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let training of listtraining" value="{{training.VALUE_FIELD}}">{{training.DISPLAY_FIELD}}</option>
+                                            </select> 
+                                            <div *ngIf="HODrequestForm.get('htrainingname')!.hasError('required') && HODrequestForm.get('htrainingname')!.touched" class="text-danger">Please select the training</div>   
+                                        </div>
+                                        <div class="col-lg-6 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Employee</span></h6>
+                                            <ng-multiselect-dropdown #dropdown
+                                                [settings]="dropdownSettings"
+                                                formControlName="hemployee"
+                                                [data]="listEmployee">     
+                                            </ng-multiselect-dropdown>    
+                                            <div *ngIf="HODrequestForm.get('hemployee')!.hasError('required') && HODrequestForm.get('hemployee')!.touched" class="text-danger">Please select employees</div>      
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-lg-3 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Provider</span></h6>
+                                            <select class="form-select font-type fs-12 textbox-15" formControlName="hprovider">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let provid of listprovider" value="{{provid.KEY_ID}}"> {{provid.DATA_VALUE}}</option>
+                                            </select>   
+                                            <div *ngIf="HODrequestForm.get('hprovider')!.hasError('required') && HODrequestForm.get('hprovider')!.touched" class="text-danger">Please select the provider</div>      
+                                    </div>
+                                    <div class="col-lg-3 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Convenient Schedule</span></h6>
+                                            <select class="form-select h-30 font-type textbox-15" formControlName="hschedule">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let qut of listQuarter" value="{{qut.KEY_ID}}"> {{qut.DATA_VALUE}}</option>
+                                            </select>    
+                                            <div *ngIf="HODrequestForm.get('hschedule')!.hasError('required') && HODrequestForm.get('hschedule')!.touched" class="text-danger">Please select the convenient schedule</div>  
+                                    </div>
+                                    <div class="col-lg-6 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Remarks</span></h6>
+                                            <textarea class="form-control textbox-15" required formControlName="remarks"></textarea> 
+                                            <div *ngIf="HODrequestForm.get('remarks')!.hasError('required') && HODrequestForm.get('remarks')!.touched" class="text-danger">Please fill remarks</div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 pt-2">
+                                            <div class="hstack gap-2 justify-content-end">
+                                                <div  *ngIf="!HODrequestForm.valid">
+                                                    <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" [disabled]="HODrequestForm.valid" id="validate-btn"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                </div>
+                                                <div *ngIf="HODrequestForm.valid">
+                                                    <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" id="add-btn" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="HODRequests()"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                </div>
+                                                <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " (click)="hClear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                            </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> 
+                
+                
+                  <!--End Training Request Modal Team-->
+
+
+                 <!-- Reject Modal-->
+                <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                        </div>
+                                        <form class="tablelist-form" autocomplete="off">
+                                            <div class="modal-body">
+                                                <input type="hidden" id="id-field" />
+                                                <div class="mb-3">
+                                                    <label class="form-label font-type">Reason</label>
+                                                    <textarea class="form-control" id="reason" name="reason" #reason></textarea>  
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer margin-up-15">
+                                                <div class="hstack gap-2">
+                                                    <button class="btn btn-orange" type="button" (click)="confirmrejectplan(this.trainingid,reason.value)" >Update</button>
+                                                    <button class="btn btn-danger font-type" id="delete-record">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                </div>                                          
+                <!-- End Reject Modal-->
+
+
+                             
+                <!--Send to VP Message-->
+                  <div class="modal fade zoomIn" id="VPMsgModal" tabindex="-1" aria-labelledby="VPMsgModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="text-center">
+                                    <h5 class="fs-13 font-type">You cannot undo this action ?</h5>
+                                    <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                                    <div class="hstack gap-2 justify-content-center remove">   
+                                        <button class="btn btn-success font-type" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close">No, Go back!</button>
+                                        <button class="btn btn-danger font-type" (click)="sendToVP()" >Yes, Continue</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                <!--End Send to VP Message-->
+
+
+<!--Edit Training Request Model Team-->
+<div class="modal fade zoomIn " id="EditRequestModalTeam" tabindex="-1" aria-labelledby="EditRequestModalTeam" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <form class="tablelist-form" autocomplete="off">
+                <div class="modal-body">
+                    <input type="hidden" id="id-field" />
+                    <div class="row mb-2">
+                       
+                    <div class="col-lg-6 pt-2">
+                            <h6 class="fs-12 font-type fw-semibold"><span>Convenient Schedule</span></h6>
+                            <select class="form-select h-30 font-type textbox-15" #convenientqtr id="convenientqtr" name="convenientqtr">
+                                <option value="">Select</option>
+                                <option *ngFor="let qut of listQuarter" value="{{qut.KEY_ID}}" [selected]="qut.KEY_ID==this.proposedquarter"> {{qut.DATA_VALUE}}</option>
+                            </select>    
+                    </div>
+                    <div class="col-lg-6 pt-2">
+                            <h6 class="fs-12 font-type fw-semibold"><span>Remarks</span></h6>
+                            <textarea class="form-control textbox-15" id="remarks" name="remarks" #remarks></textarea>  
+                        </div>
+                    </div>
+                    <div class="col-lg-12 pt-2">
+                            <div class="hstack gap-2 justify-content-end">
+                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type"  (click)="proposedEdit(trainingid,convenientqtr.value,remarks.value)" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Update</button>
+                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type "><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                            </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 
+ <!--End Edit Training Request Model Team-->
+
+ <!-- success model -->
+
+ <button id="openModalButtonForalertsuccess"  style="display: none;" data-bs-toggle="modal" data-bs-target="#SuRecordModals">Open Modal</button>
+  
+ <div class="modal fade zoomIn" id="SuRecordModals" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header bg-orange padding-up-5">
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModals==1">
+                 
+                 <div class="text-center">
+                     <h5 class="fs-13 font-type"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{successs}}</h5>
+                 </div>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModals==2">
+                 
+                <div class="text-center">
+                    <h5 class="fs-13 font-type"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{faileds}}</h5>
+                </div>
+            </div>
+         </div>
+     </div>
+ </div>
+
+
+
+
+
+                          <!--Edit Scheduled Modal-->
+                          <div class="modal fade zoomIn " id="editScheduledModal" tabindex="-1" aria-labelledby="editScheduledModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                    </div>
+                                    <form class="tablelist-form" autocomplete="off">
+                                        <div class="modal-body">
+                                            <div *ngFor="let fetcdtls of fetchScheduledDtls">
+                                                <div class="row mb-1">
+                                                    <div class="col-lg-2">
+                                                        <label for="nameInput" class="form-label font-type fw-semibold">Training Purpose</label>
+                                                    </div>
+                                                    <div class="col-lg-6 pt-2">
+                                                        <select class="form-select h-30 font-type textbox-15" name="selectedpurpose" [(ngModel)]="selectedpurpose">
+                                                            <!-- <option value="-1">Select</option> -->
+                                                            <option *ngFor="let purpose of trainingpurpose" value="{{purpose.KEY_ID}}"> {{purpose.DATA_VALUE}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-1" *ngIf="selectedpurpose == 2">
+                                                    <div class="col-lg-2">
+                                                        <label for="nameInput" class="form-label font-type fw-semibold">Skill Gap</label>
+                                                    </div>
+                                                    <div class="col-lg-6 pt-2">
+                                                        <select class="form-select h-30 font-type textbox-15" name="selectedskill" [(ngModel)]="selectedskill" (ngModelChange)="fetchskilledemployees()">
+                                                            <option value="-1">Select</option>
+                                                            <option *ngFor="let skill of Trainingskills" value="{{skill.KEY_ID}}"> {{skill.DATA_VALUE}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-1"  *ngIf="selectedpurpose == 1">
+                                                    <div class="col-lg-2">
+                                                        <label for="nameInput" class="form-label font-type fw-semibold">Employee </label>
+                                                    </div>
+                                                    <div class="col-lg-6 pt-2">
+                                                        <input type="hidden" id="trainingid" name="trainingid" value="{{fetcdtls.TRAINING_ID}}">
+                                                        <ng-multiselect-dropdown #dropdown
+                                                            [settings]="dropdownSettings"
+                                                            [(ngModel)]="selectedItems"
+                                                            [data]="listEmployeeforEdit" [ngModelOptions]="{standalone: true}">     
+                                                        </ng-multiselect-dropdown>    
+                                                        <!-- <div *ngIf="HODrequestForm.get('hemployee')!.hasError('required') && HODrequestForm.get('hemployee')!.touched" class="text-danger">Please select employees</div>       -->
+                                                    </div>
+
+                                                    <div class="col-lg-1">
+                                                        <a (click)="addEmployee(selectedItems,1)"><i class="ri-add-circle-line fs-24 text-success" title="Add Employee"></i></a>
+                                                    </div>
+                                                    <!-- <div class="col-lg-1">
+                                                        <a (click)="removeEmployee(selectedItems)"><i class="ri-indeterminate-circle-line fs-24 text-danger text-center" title="Remove Employee"></i></a>
+                                                    </div> -->
+                                                </div>
+                                                <div class="row mb-1"  *ngIf="selectedskill != -1 && selectedpurpose == 2">
+                                                    <div class="col-lg-2">
+                                                        <label for="nameInput" class="form-label font-type fw-semibold">Employee </label>
+                                                    </div>
+                                                    <div class="col-lg-6 pt-2">
+                                                        <input type="hidden" id="trainingid" name="trainingid" value="{{fetcdtls.TRAINING_ID}}">
+                                                        <ng-multiselect-dropdown #dropdown
+                                                            [settings]="dropdownSettings"
+                                                            [(ngModel)]="selectedItems"
+                                                            [data]="Trainingemployees" [ngModelOptions]="{standalone: true}">     
+                                                        </ng-multiselect-dropdown>    
+                                                    </div>
+
+                                                    <div class="col-lg-1">
+                                                        <a (click)="addEmployee(selectedItems,2)"><i class="ri-add-circle-line fs-24 text-success" title="Add Employee"></i></a>
+                                                    </div>
+                                                    <!-- <div class="col-lg-1">
+                                                        <a (click)="removeEmployee(selectedItems)"><i class="ri-indeterminate-circle-line fs-24 text-danger text-center" title="Remove Employee"></i></a>
+                                                    </div> -->
+                                                </div>
+                                                <div class="row mb-3">
+                                                        <div class="col-lg-2"></div>
+                                                        <div class="col-lg-10">
+                                                        <div class="table-responsive table-card mb-0" style="margin-left:2px;margin-top: 5px;width: auto" id="emp_Table">
+                                                            <!-- Tables Border Colors -->
+                                                                <table class="table table-bordered border-orange align-middle table-nowrap ma-20 table-hover">
+                                                                    <tbody  *ngFor="let fetchEmp of fechScheduledEmp">
+                                                                        <tr class="font-type">
+                                                                            <td>{{fetchEmp.EMP_CODE}} - {{fetchEmp.EMP_NAME}}</td>
+                                                                            <td>{{fetchEmp.PURPOSE_VAL}}</td>
+                                                                            <td class="text-center"> 
+                                                                                <i class="ri-close-circle-fill fs-14 text-danger text-center" title="Delete" (click)="removeEmployee(fetchEmp)"></i>
+                                                                            </td>
+                                                                        </tr>
+                                                                       
+                                                                        
+                                                                        
+                                                                    </tbody>
+                                                                </table>
+                                                        </div>
+                                                        </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-2">
+                                                        <label for="meassageInput" class="form-label font-type fw-semibold">Location</label>
+                                                    </div>
+                                                    <div class="col-lg-10">
+                                                        <textarea class="form-control font-type" id="location" name="location" rows="3" placeholder="Enter the Location">{{fetcdtls.LOCATION}}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-2">
+                                                        <label for="timeInput" class="form-label font-type fw-semibold">Provider Type</label>
+                                                    </div>
+                                                    <div class="col-lg-10">
+                                                        <select class="form-select font-type fs-12 textbox-15" id="providerty" name="providerty" #providerty (change)="selectprovider(providerty.value)">
+                                                            <option value="">Select</option>
+                                                            <option *ngFor="let provid of listprovider" value="{{provid.KEY_ID}}" [selected]="provid.KEY_ID==fetcdtls.TRAINING_TYPEID"> {{provid.DATA_VALUE}}</option>
+                                                        </select>  
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-2">
+                                                        <label for="timeInput" class="form-label font-type fw-semibold">Provider</label>
+                                                    </div>
+                                                    <div class="col-lg-10">
+                                                        <select class="form-select font-type fs-12 textbox-15" id="provider" name="provider">
+                                                            <option value="">Select</option>
+                                                            <option *ngFor="let providName of listProvideName" value="{{providName.KEY_ID}}" [selected]="providName.KEY_ID==fetcdtls.PROVIDER_ID"> {{providName.DATA_VALUE}} </option>
+                                                        </select>    
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-2">
+                                                        <label for="leaveemails" class="form-label font-type fw-semibold">Duration</label>
+                                                    </div>
+                                                    <div class="col-lg-10"> 
+                                                        <ngx-timepicker-field [format]="24"   class="editedIntime" id="duration" name="duration" ></ngx-timepicker-field>
+                                                        <!-- <input type="text" class="form-control font-type textbox-15" placeholder="Enter Duration" id="duration" name="duration" value="{{fetcdtls.CONFIRMED_QUARTER}}" > -->
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-4">
+                                                        <label for="contactNumber" class="form-label fw-semibold font-type">Actual Training Date</label>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <input type="date" class="form-control font-type fs-12 textbox-15 h-30" id="actual_train_dt" name="actual_train_dt" value="{{fetcdtls.SCHEDULED_DATE| date: 'yyyy-MM-dd' }}"> 
+                                                    </div>
+                                                </div>
+                                            
+                                            <div class="row row-cols-lg-auto g-3 align-items-center">
+                                                    <div class="col-lg-4 pt-3 margin-up-5">
+                                                        <h6 class="fs-12 font-type fw-semibold mb-2 text-blue"><span>Assessment/Questionnaire</span></h6>                                          
+                                                        <div class="input-group">
+                                                            <div class="form-check form-check-inline form-check-info">
+                                                                <input class="form-check-input" type="radio" name="assess" id="assessRadio1"  value="1"  [checked]="fetcdtls.FEEDBACK_STATUS === 1" >
+                                                                <label class="form-check-label font-type fs-12 fw-medium">Yes </label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline form-check-info">
+                                                                <input class="form-check-input" type="radio" name="assess" id="assessRadio2"  value="0"  [checked]="fetcdtls.FEEDBACK_STATUS !== 1" >
+                                                                <label class="form-check-label font-type fs-12 fw-medium">No </label>
+                                                            </div>
+                                                        </div>
+                                                    </div><!--end col-->
+                                                    <div class="col-lg-4 pt-3 margin-up-5">
+                                                        <h6 class="fs-12 font-type fw-semibold mb-2 text-blue"><span>Certificate</span></h6>                                          
+                                                    <div class="input-group">
+                                                        <div class="form-check form-check-inline form-check-info">
+                                                            <input class="form-check-input" type="radio" name="cert" id="certRadio2" value="1" [checked]="fetcdtls.ATTENDANCE_FLAG === 1" >
+                                                            <label class="form-check-label font-type fs-12 fw-semibold">Yes</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline form-check-info">
+                                                            <input class="form-check-input" type="radio" name="cert" id="certRadio2"  value="0" [checked]="fetcdtls.ATTENDANCE_FLAG !== 1" >
+                                                            <label class="form-check-label font-type fs-12 fw-semibold">No</label>
+                                                        </div>
+                                                    </div>
+                                                    </div><!--end col-->
+                                                    <div class="col-lg-4 pt-3 margin-up-5">
+                                                        <h6 class="fs-12 font-type fw-semibold mb-2 text-blue"><span>Course Effectiveness </span></h6>                                          
+                                                    <div class="input-group">
+                                                        <div class="form-check form-check-inline form-check-info">
+                                                            <input class="form-check-input" type="radio" name="effective" id="effectiveRadio2" value="1" [checked]="fetcdtls.EFFECTIVE_STATUS === 1" >
+                                                            <label class="form-check-label font-type fs-12 fw-semibold">Yes</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline form-check-info">
+                                                            <input class="form-check-input" type="radio" name="effective" id="effectiveRadio2"  value="0" [checked]="fetcdtls.EFFECTIVE_STATUS !== 1">
+                                                            <label class="form-check-label font-type fs-12 fw-semibold">No</label>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                            </div>
+                                            <div class="row row-cols-lg-auto g-2 align-items-center" style="margin-top: 10px;">
+                                                    <div class="col-12 pt-2 p-1">
+                                                        <div class="form-check form-check-info mb-3">
+                                                            <input class="form-check-input" type="checkbox" id="formCheck11" value="1" >
+                                                            <label class="form-check-label font-type fw-semibold" for="formCheck11" >
+                                                                Mark as training completed
+                                                            </label>
+                                                        </div>
+                                                    </div><!--end col-->    
+                                            </div>
+                                            </div>
+                                            <hr>
+                                            <div class="col-lg-6 pt-2 mb-2" style="float: inline-end;">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type "  (click)="UpdateScheduledData()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Update</button>
+                                                <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type "><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div><!--end row-->   
+                                    </form>
+                                </div>
+                            </div>
+                          </div> 
+                        <!--Add Training Request Model Team-->
+
+                        <app-footer></app-footer>
+
+
+        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->

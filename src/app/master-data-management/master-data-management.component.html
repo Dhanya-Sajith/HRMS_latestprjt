@@ -1,0 +1,610 @@
+                        
+  <!-- Begin page -->
+  <div id="layout-wrapper">
+
+    <app-header></app-header>
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>  
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Master Tables</h4></div>
+                    </div>
+                </div>
+            
+                <!--Input Control-->
+         
+                <div class="topbar-up row">
+                <div class="col-lg-12 col-md-12">
+                <div class="card">                  
+                <div class="card-body border border-top-0 border-end-0 border-start-0">
+                <div class="row" style="justify-content: center;">
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="col-md-5">
+                            <span class="font-type fs-13 fw-semibold">Master Table of : </span>
+                                </div>
+                                <select class="form-select font-type fs-12 textbox-15 mb-1" [(ngModel)]="typeid" (ngModelChange)="onMasterTypesSelected()">                                    
+                                    <option value="0" selected disabled>Select</option>
+                                    <option *ngFor="let combo of mastertypes" [ngValue]="combo">{{combo.DATA_VALUE}}</option>
+                                </select>    
+                        </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+
+                <!--EndInput Control-->
+
+
+                <div class="row" *ngIf="masterdata || masterdata2">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header border-0" style="padding:10px">
+                                <div class="row align-items-center gy-3">
+                                    <div class="col-sm">
+                                        <div class="align-items-center d-flex ">
+                                            <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">{{mastertype}} LIST</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-auto">
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            <div class="search-box">
+                                                <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..." [(ngModel)]="searchInput">
+                                                <i class="ri-search-line search-icon"></i>
+                                            </div>
+                                            <div *ngIf="!showdiv && mastertypeid!=7">
+                                                <a href="#AddDataModal" class="d-inline-block"  data-bs-toggle="modal" >
+                                                <button type="button" class="btn btn-orange w-100 h-30 text-white font-type"> <i class="ri-file-add-line me-2 align-bottom"></i>Add</button>
+                                                </a>
+                                            </div>
+                                            <div *ngIf="showdiv && mastertypeid!=12 && mastertypeid!=-5">
+                                                <a href="#AddDataModal2" class="d-inline-block"  data-bs-toggle="modal" >
+                                                <button type="button" class="btn btn-orange w-100 h-30 text-white font-type"> <i class="ri-file-add-line me-2 align-bottom"></i>Add</button>
+                                                </a>
+                                            </div>
+                                            <div *ngIf="mastertypeid==12">
+                                                <a href="#AddDataModalCompany" class="d-inline-block"  data-bs-toggle="modal" >
+                                                <button type="button" class="btn btn-orange w-100 h-30 text-white font-type"> <i class="ri-file-add-line me-2 align-bottom"></i>Add</button>
+                                                </a>
+                                            </div>
+                                            <div *ngIf="mastertypeid==-5">
+                                                <a href="#AddDataModalShift" class="d-inline-block"  data-bs-toggle="modal" >
+                                                <button type="button" class="btn btn-orange w-100 h-30 text-white font-type"> <i class="ri-file-add-line me-2 align-bottom"></i>Add</button>
+                                                </a>
+                                            </div>
+                                            <div *ngIf="mastertypeid==7">
+                                                <a href="#AddDataModalMedicalInsurance" class="d-inline-block"  data-bs-toggle="modal" >
+                                                <button type="button" class="btn btn-orange w-100 h-30 text-white font-type"> <i class="ri-file-add-line me-2 align-bottom"></i>Add</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body border border-dashed border-end-0 border-start-0">
+                            
+                            </div>
+                            <div class="card-body pt-0">
+                                <div>
+                           
+
+                                    <div class="table-responsive table-card mb-1 font-type">
+                                        <table class="table table-nowrap align-middle table-hover" id="orderTable">
+                                            <thead class="text-white table-light ">
+                                                <tr *ngIf="!showdiv">
+                                                    <th>{{mastertype}} ID</th>
+                                                    <th>{{mastertype}} NAME</th>
+                                                    <th *ngIf="mastertypeid==7">DOCUMENT</th>
+                                                </tr>
+                                                <tr *ngIf="showdiv"> 
+                                                    <th *ngFor="let column of masterdata2?.Columns">{{ column }}</th>
+                                                </tr>
+                                            </thead>
+                                            <!--Forms with typeid>0 -->
+                                            <tbody class="list form-check-all font-type"*ngIf="!showdiv && mastertypeid != 7 ">
+                                                <tr *ngFor="let item of masterdata | search : searchInput | pagination: currentPage: itemsPerPage ">
+                                                    <td>{{item.KEY_ID}}</td>
+                                                    <td class="customer_name">{{item.DATA_VALUE}}</td>
+                                                </tr>                                               
+                                            </tbody>
+                                            <!--Forms with typeid<0 -->
+                                            <tbody class="list form-check-all font-type" *ngIf="showdiv && mastertypeid != 12 ">
+                                                <tr *ngFor="let row of masterdata2?.Values | search : searchInput | pagination: currentPage2: itemsPerPage ">
+                                                  <td *ngFor="let column of masterdata2.Columns">{{ row[column] }}</td>
+                                                </tr>
+                                              </tbody>
+                                               <!--Company list-->
+                                              <tbody class="list form-check-all font-type" *ngIf="showdiv && mastertypeid == 12 ">
+                                                <tr *ngFor="let row of masterdata2?.Values | search : searchInput | pagination: currentPageCompany: itemsPerPage ">                                                    
+                                                    <td>{{ row['COMPANY CODE'] }}</td>                                                   
+                                                    <td>{{ row['COMPANY NAME'] }}</td>                                                    
+                                                    <td>{{ row['ADDRESS'] }}</td>                                                    
+                                                    <td>
+                                                        <img *ngIf="row['COMPANY CODE']" src="{{hostname}}/File/GetCompanyLogo/{{ row['COMPANY CODE'] }}/{{ row['LOGO'] }}"  width="100px" height="70px" alt="Company Logo">
+                                                    </td>                                                    
+                                                    <td>{{ row['PHONE NO'] }}</td>                                                    
+                                                    <td>{{ row['WEBSITE'] }}</td>                                                   
+                                                </tr>
+                                            </tbody>  
+                                             <!--Medical Insurance list-->
+                                             <tbody class="list form-check-all font-type" *ngIf="!showdiv && mastertypeid == 7 ">
+                                                <tr *ngFor="let row of masterdata | search : searchInput | pagination: currentPage: itemsPerPage ">                                                    
+                                                    <td>{{row.KEY_ID}}</td>
+                                                    <td class="customer_name">{{row.DATA_VALUE}}</td>                                                 
+                                                    <td >
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar-xs flex-shrink-0 ms-1"(click)="view_document(row,1)">
+                                                                <span class="avatar-title bg-info-subtle text-info rounded-circle fs-4">
+                                                                    <i class="fa fa-file-pdf-o" style="color: red;"></i>
+                                                                </span>
+                                                            </div>                                                            
+                                                        
+                                                            <div class="avatar-xs flex-shrink-0 ms-1" (click)="view_document(row,2)">
+                                                                <span class="avatar-title bg-info-subtle text-info rounded-circle fs-4">
+                                                                    <i class="fa fa-file-excel-o" style="color: green;"></i>
+                                                                </span>
+                                                            </div>                                                            
+                                                        </div>
+                                                    </td>                                                    
+                                                                                                      
+                                                </tr>
+                                            </tbody>                                        
+                                             
+                                        </table>
+                                       
+                                    </div>
+                                    <!--Pagination for Forms with typeid>0 -->
+                                    <div *ngIf="masterdata && !showdiv">
+                                        <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                            <div class="col-sm">
+                                              <div class="font-type fs-12 text-muted">
+                                                Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                              </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <div class="font-type fs-12 text-muted">
+                                                    Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-auto mt-4 mt-sm-0">
+                                                <div class="d-flex gap-1 flex-wrap">
+                                                    <div>
+                                                        <div class="input-group">
+                                                <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                
+                                               <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                          </div>
+                                        </div>
+                                             
+                                            <div class="col-sm-auto mt-3 mt-sm-0">
+                                              <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                <li class="page-item">
+                                                  <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                </li>
+                                                <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                  <li class="page-item">
+                                                    <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                  </li>
+                                                </ng-container>
+                                                <li class="page-item">
+                                                  <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>  
+                                <!--Pagination for Forms with typeid<0 -->  
+                                <div *ngIf="masterdata2 && showdiv && mastertypeid != 12 ">
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults2>0">
+                                        <div class="col-sm">
+                                          <div class="font-type fs-12 text-muted">
+                                            Showing <span class="fw-semibold">{{ getEntriesStart2() }}</span>
+                                            - <span class="fw-semibold">{{ getEntriesEnd2() }}</span>
+                                            of <span class="fw-semibold">{{ totalSearchResults2 }}</span> Results
+                                          </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="font-type fs-12 text-muted">
+                                                Total Pages : <span class="fw-semibold"> {{ getTotalPages2() }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div>
+                                                    <div class="input-group">
+                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage2" tabindex="1">                                                                    
+                                            
+                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage2()" tabindex="2">Go</button>
+                                      </div>
+                                    </div>
+                                         
+                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePage2(currentPage2 - 1)" [class.disabled-button]="currentPage2 === 1">←</button>
+                                            </li>
+                                            <ng-container *ngFor="let pageNumber2 of getPageNumbers2(currentPage2)">
+                                              <li class="page-item">
+                                                <button class="page-link" (click)="changePage2(pageNumber2)" [class.active]="currentPage2 === pageNumber2">{{ pageNumber2 }}</button>
+                                              </li>
+                                            </ng-container>
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePage2(currentPage2 + 1)" [class.disabled-button]="currentPage2 * itemsPerPage >= totalSearchResults2">→</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>    
+                            <!--Pagination for company list -->  
+                            <div *ngIf="masterdata2 && showdiv && mastertypeid == 12 ">
+                                <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsCompany>0">
+                                    <div class="col-sm">
+                                      <div class="font-type fs-12 text-muted">
+                                        Showing <span class="fw-semibold">{{ getEntriesStartCompany() }}</span>
+                                        - <span class="fw-semibold">{{ getEntriesEndCompany() }}</span>
+                                        of <span class="fw-semibold">{{ totalSearchResultsCompany }}</span> Results
+                                      </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="font-type fs-12 text-muted">
+                                            Total Pages : <span class="fw-semibold"> {{ getTotalPagesCompany() }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-auto mt-4 mt-sm-0">
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            <div>
+                                                <div class="input-group">
+                                        <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPageCompany" tabindex="1">                                                                    
+                                        
+                                       <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageCompany()" tabindex="2">Go</button>
+                                  </div>
+                                </div>
+                                     
+                                    <div class="col-sm-auto mt-3 mt-sm-0">
+                                      <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                        <li class="page-item">
+                                          <button class="page-link" (click)="changePageCompany(currentPageCompany - 1)" [class.disabled-button]="currentPageCompany === 1">←</button>
+                                        </li>
+                                        <ng-container *ngFor="let pageNumberCompany of getPageNumbersCompany(currentPageCompany)">
+                                          <li class="page-item">
+                                            <button class="page-link" (click)="changePageCompany(pageNumberCompany)" [class.active]="currentPageCompany === pageNumberCompany">{{ pageNumberCompany }}</button>
+                                          </li>
+                                        </ng-container>
+                                        <li class="page-item">
+                                          <button class="page-link" (click)="changePageCompany(currentPageCompany + 1)" [class.disabled-button]="currentPageCompany * itemsPerPage >= totalSearchResultsCompany">→</button>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>                     
+                                </div>                      
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--end col-->
+                </div>
+               <!--End Weekly OT List-->
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+        <app-footer></app-footer>
+                 <!-- Add Data Modal typeid>0-->
+                 <div class="modal fade zoomIn" id="AddDataModal" tabindex="-1" aria-labelledby="AddDataModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" (click)="cancel(form)"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off" #form="ngForm" (ngSubmit)="submitForm(form)">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="mb-3">
+                                        <label class="form-label font-type">{{mastertype}}</label>
+                                        <input type="text" class="form-control font-type textbox-15 mb-1" placeholder="ENTER THE {{mastertype}}"
+                                            name="mastertypeInput" ngModel required />
+                                       
+                                        <!-- Show error message if the input is touched or the form is submitted -->
+                                        <div *ngIf="(form.controls['mastertypeInput']?.invalid && (form.controls['mastertypeInput']?.touched || form.submitted))" class="text-danger">
+                                            <div *ngIf="form.controls['mastertypeInput']?.errors?.['required']">
+                                                *Required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer margin-up-15">
+                                    <div class="hstack gap-2">
+                                        <button type="submit" class="btn btn-orange font-type" id="delete-record" >Submit</button>
+                                        
+                                        <button type="button" class="btn btn-blue font-type" (click)="cancel(form)">Cancel</button> 
+                                    </div>
+                                </div>
+                            </form>                 
+                         
+                        </div>
+                    </div>
+                </div>                 
+            <!-- End Data Modal typeid>0-->
+<!-- Add Data Modal Other forms typeid<0-->
+<div class="modal fade zoomIn" id="AddDataModal2" tabindex="-1" aria-labelledby="AddDataModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" *ngIf="masterdata2">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" (click)="cancelOtherForm(form)"></button>
+            </div>
+            <form class="tablelist-form" autocomplete="off" #form="ngForm" (ngSubmit)="submitOtherForm(form)">
+                <div class="modal-body">
+                    <input type="hidden" id="id-field"/>
+                    <div class="mb-3" *ngFor="let columnName of masterdata2?.Columns">
+                        <label class="form-label font-type">{{ columnName }}</label>
+                        <input type="text" class="form-control font-type textbox-15 mb-1" placeholder="ENTER {{ columnName }}"
+                            name="{{ columnName }}" [(ngModel)]="formData[columnName]" #field="ngModel" required />
+                        <div *ngIf="field.invalid && (field.dirty || field.touched || form.submitted)" class="text-danger">
+                            <div *ngIf="field.errors?.['required']">*Required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer margin-up-15">
+                    <div class="hstack gap-2">
+                        <button type="submit" class="btn btn-orange font-type" id="delete-record" >Submit</button>
+                        <button type="button" class="btn btn-blue font-type" (click)="cancelOtherForm(form)">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- End Data Modal Other forms typeid<0 -->
+<!-- Add Data Modal Company-->
+<div class="modal fade zoomIn" id="AddDataModalCompany" tabindex="-1" aria-labelledby="AddDataModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" (click)="cancelCompanyform()"></button>
+            </div>
+            <form class="tablelist-form" autocomplete="off" [formGroup]="companyForm" (ngSubmit)="submitCompanyForm(companyForm)">
+                <div class="modal-body">
+                    <input type="hidden" id="id-field" />
+                    <div class="mb-3">
+                        <label class="form-label font-type">COMPANY CODE</label>
+                        <input type="text" class="form-control font-type textbox-15 mb-1" placeholder="Enter the company code"
+                            name="companyCode" formControlName="companyCode" required />                
+                            <div *ngIf="companyForm.get('companyCode')?.invalid && (companyForm.get('companyCode')?.dirty || companyForm.get('companyCode')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="companyForm.get('companyCode')?.errors?.['required']">*Required.</div>
+                            </div>                      
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-type">COMPANY NAME</label>
+                        <input type="text" class="form-control font-type textbox-15 mb-1" placeholder="Enter the company name"
+                            name="companyName" formControlName="companyName" required />                
+                            <div *ngIf="companyForm.get('companyName')?.invalid && (companyForm.get('companyName')?.dirty || companyForm.get('companyName')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="companyForm.get('companyName')?.errors?.['required']">*Required.</div>
+                            </div>                     
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-type">ADDRESS</label>
+                         <textarea class="form-control font-type textbox-15 mb-1" formControlName="address" name="address"  required > </textarea>               
+                         <div *ngIf="companyForm.get('address')?.invalid && (companyForm.get('address')?.dirty || companyForm.get('address')?.touched || submitted)" class="text-danger">
+                            <div *ngIf="companyForm.get('address')?.errors?.['required']">*Required.</div>
+                        </div>
+                     </div>
+                    <div class="mb-3">
+                        <label class="form-label font-type">LOGO</label>
+                        <input type="file" class="form-control font-type textbox-15 mb-1" id="logo"formControlName="logo" name="logo" accept="image/jpeg,image/png,image/jpg" required />
+                            <div *ngIf="companyForm.get('logo')?.invalid && (companyForm.get('logo')?.dirty || companyForm.get('logo')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="companyForm.get('logo')?.errors?.['required']">*Required.</div>
+                            </div>                     
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-type">PHONE NO</label>
+                        <input type="text" class="form-control font-type textbox-15 mb-1" placeholder="Enter the phone no"
+                            name="phoneNo" formControlName="phoneNo"  required />                
+                            <div *ngIf="companyForm.get('phoneNo')?.invalid && (companyForm.get('phoneNo')?.dirty || companyForm.get('phoneNo')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="companyForm.get('phoneNo')?.errors?.['required']">*Required.</div>
+                            </div>   
+                                               
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-type">WEBSITE</label>
+                        <input type="email" class="form-control font-type textbox-15 mb-1" formControlName="email" placeholder="Enter email" name="email" required />
+
+                        <div *ngIf="companyForm.get('email')?.invalid && (companyForm.get('email')?.dirty || companyForm.get('email')?.touched || submitted)" class="text-danger">
+                        <div *ngIf="companyForm.get('email')?.errors?.['required']">*Required.</div>
+                        
+                        </div>
+                     
+                    </div>
+                </div>
+                <div class="modal-footer margin-up-15">
+                    <div class="hstack gap-2">
+                        <button type="submit" class="btn btn-orange font-type" id="delete-record" >Submit</button>
+                        
+                        <button type="button" class="btn btn-blue font-type" (click)="cancelCompanyform()">Cancel</button> 
+                    </div>
+                </div>
+            </form>                 
+         
+        </div>
+    </div>
+</div>                 
+<!-- End Data Modal Company-->
+<!-- Add Data Modal Shift-->
+<div class="modal fade zoomIn" id="AddDataModalShift" tabindex="-1" aria-labelledby="AddDataModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" (click)="cancelShiftform()"></button>
+            </div>
+            <form class="tablelist-form" autocomplete="off" [formGroup]="shiftForm" (ngSubmit)="submitShiftForm(shiftForm)">
+                <div class="modal-body">
+                    <input type="hidden" id="id-field" />
+                    <div class="mb-3">
+                        <label class="form-label font-type">SHIFT NAME</label>
+                        <input type="text" class="form-control font-type textbox-15 mb-1" placeholder="Enter Shift Name"
+                            name="shiftname" formControlName="shiftname" required /> 
+                            <div *ngIf="shiftForm.get('shiftname')?.invalid && (shiftForm.get('shiftname')?.dirty || shiftForm.get('shiftname')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="shiftForm.get('shiftname')?.errors?.['required']">*Required.</div>
+                            </div>           
+                       
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-type">IN TIME</label>
+                        <ngx-timepicker-field [format]="24" formControlName="intime"class="form-control font-type textbox-15 mb-1"></ngx-timepicker-field>          
+                            <div *ngIf="shiftForm.get('intime')?.invalid && (shiftForm.get('intime')?.dirty || shiftForm.get('intime')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="shiftForm.get('intime')?.errors?.['required']">*Required.</div>
+                            </div> 
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-type">OUT TIME</label>
+                        <ngx-timepicker-field [format]="24" formControlName="outtime"class="form-control font-type textbox-15 mb-1"></ngx-timepicker-field>                
+                            <div *ngIf="shiftForm.get('outtime')?.invalid && (shiftForm.get('outtime')?.dirty || shiftForm.get('outtime')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="shiftForm.get('outtime')?.errors?.['required']">*Required.</div>
+                            </div> 
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-type">BREAK HOURS</label>
+                        <input type="number" class="form-control font-type textbox-15 mb-1" placeholder="Enter Shift Name"
+                            name="breakHours" formControlName="breakHours" required />                                       
+                            <div *ngIf="shiftForm.get('breakHours')?.invalid && (shiftForm.get('breakHours')?.dirty || shiftForm.get('breakHours')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="shiftForm.get('breakHours')?.errors?.['required']">*Required.</div>
+                             
+                            <div *ngIf="shiftForm.get('breakHours')?.errors?.['invalidNumberOrFloat']" class="text-danger">
+                                Invalid number or float value.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-type">SHIFT HOURS</label>
+                        <input type="number"  class="form-control font-type textbox-15 mb-1" placeholder="Enter Shift Name"
+                            name="shiftHours" formControlName="shiftHours" required />           
+                            <div *ngIf="shiftForm.get('shiftHours')?.invalid && (shiftForm.get('shiftHours')?.dirty || shiftForm.get('shiftHours')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="shiftForm.get('shiftHours')?.errors?.['required']">*Required.</div>
+                            
+                            <div *ngIf="shiftForm.get('shiftHours')?.errors && shiftForm.get('shiftHours')?.errors?.['invalidNumberOrFloat']" class="text-danger">
+                                Invalid number or float value.
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="modal-footer margin-up-15">
+                    <div class="hstack gap-2">
+                        <button type="submit" class="btn btn-orange font-type" id="delete-record">Submit</button>
+                        
+                        <button type="button" class="btn btn-blue font-type" (click)="cancelShiftform()">Cancel</button> 
+                    </div>
+                </div>
+            </form>                 
+         
+        </div>
+    </div>
+</div>                 
+<!-- End Data Modal Shift-->
+<!-- Add Data Modal Medical Insurance-->
+<div class="modal fade zoomIn" id="AddDataModalMedicalInsurance" tabindex="-1" aria-labelledby="AddDataModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" (click)="cancelInsuranceform()"></button>
+            </div>
+            <form class="tablelist-form" autocomplete="off" [formGroup]="InsuranceForm" (ngSubmit)="submitInsuranceForm(InsuranceForm)">
+                <div class="modal-body">
+                    <input type="hidden" id="id-field" />
+                    <div class="mb-3">
+                        <label class="form-label font-type">MEDICAL INSURANCE TYPE NAME</label>
+                        <input type="text" class="form-control font-type textbox-15 mb-1" placeholder="Enter Medical Insurance Name"
+                            name="Insurancename" formControlName="Insurancename" required /> 
+                            <div *ngIf="InsuranceForm.get('Insurancename')?.invalid && (InsuranceForm.get('Insurancename')?.dirty || InsuranceForm.get('Insurancename')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="InsuranceForm.get('Insurancename')?.errors?.['required']">*Required.</div>
+                            </div>           
+                       
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-type">MEDICAL INSURANCE DOCUMENT(pdf)</label>
+                        <input type="file" class="form-control font-type textbox-15 mb-1" id="insurancedoc"
+                            name="insurancedoc" formControlName="insurancedoc" accept=".pdf" required />           
+                            <div *ngIf="InsuranceForm.get('insurancedoc')?.invalid && (InsuranceForm.get('insurancedoc')?.dirty || InsuranceForm.get('insurancedoc')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="InsuranceForm.get('insurancedoc')?.errors?.['required']">*Required.</div>
+                            </div> 
+                    </div>   
+                    <div class="mb-3">
+                        <label class="form-label font-type">MEDICAL INSURANCE DOCUMENT(Excel)</label>
+                        <input type="file" class="form-control font-type textbox-15 mb-1" id="insurancedoc2"
+                            name="insurancedoc2" formControlName="insurancedoc2"  accept=".xls, .xlsx" required />           
+                            <div *ngIf="InsuranceForm.get('insurancedoc2')?.invalid && (InsuranceForm.get('insurancedoc2')?.dirty || InsuranceForm.get('insurancedoc2')?.touched || submitted)" class="text-danger">
+                                <div *ngIf="InsuranceForm.get('insurancedoc2')?.errors?.['required']">*Required.</div>
+                            </div> 
+                    </div>                   
+                </div>
+                <div class="modal-footer margin-up-15">
+                    <div class="hstack gap-2">
+                        <button type="submit" class="btn btn-orange font-type" id="delete-record">Submit</button>
+                        
+                        <button type="button" class="btn btn-blue font-type" (click)="cancelInsuranceform()">Cancel</button> 
+                    </div>
+                </div>
+            </form>                 
+         
+        </div>
+    </div>
+</div>                 
+<!-- End Data Modal Medical Insurance-->
+
+
+            <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+            <!--Modal For Success Message Start-->
+        <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                        </div>
+                        <div class="modal-body" *ngIf="showModal==1"> 
+                            <div class="container">
+                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                        
+                            </div>
+                        </div>
+                        <div class="modal-body" *ngIf="showModal==2">
+                        <div class="container">
+                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                            
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        <!--Modal For Success Message End-->
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

@@ -1,0 +1,432 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        
+        <div class="vertical-overlay"></div>
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+    
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase">ATTENDANCE DATA</h4>
+    
+                                <div class="page-title-right padding-up-5"  *ngIf="this.grpname.includes('HR') || this.grpname.includes('LM')">
+                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1"  value="team" name="user" [(ngModel)]="user" (change)="teamselection(user)" >
+                                        <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio1">Team</label>
+
+                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="personal" (change)="teamselection(user)" name="user" [(ngModel)]="user">
+                                        <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio2">Personal</label>
+
+                                    </div>
+                                </div>
+                                
+    
+                            </div>
+                        </div>
+                    </div>
+                
+    
+                    <div class="row topbar-up">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                                 
+                <!-- div team -->
+            <div *ngIf="user == 'team'">
+                <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5" id="teaminput" >
+                        <form>
+                            <div class="row ">
+                                <div class="col-lg-2 pt-2" [hidden]="this.grpname.includes('LM') && !this.grpname.includes('HR')">
+                                        <h6 class="fs-12 font-type"><span>Company</span></h6>
+                                        <select class="form-select font-type fs-11" #selectedCompany (change)="onCompanySelected(selectedCompany.value)" aria-label="Default select example" required>
+                                            <option value="0" selected disabled>Select</option>
+                                            <option value="-1" >All</option>
+                                            <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                        </select>     
+                                </div>
+                                <div class="col-lg-2 pt-2" [hidden]="this.grpname.includes('LM')  && !this.grpname.includes('HR')">
+                                        <h6 class="font-type fs-12"><span>Department </span></h6>
+                                        <select class="form-select font-type fs-11" #selectedDept (change)="onDeptSelected(selectedDept.value)" aria-label="Default select example" required>
+                                            <option value="0" selected disabled>Select</option>
+                                            <option value="-1" >All</option>
+                                            <option *ngFor="let combo of deptdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                        </select>  
+                                 
+                                </div>
+                                <div class="col-lg-2 pt-2">  
+                                        <h6 class="font-type fs-12"><span>Employee Name </span></h6>
+                                        <select class="form-select font-type fs-11" #selectedEmp (change)="onEmpSelected(selectedEmp.value)" aria-label="Default select example" required>
+                                            <option value="0" selected disabled>Select</option>
+                                            <option value="-1" >All</option>
+                                            <option *ngFor="let combo of empdata" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
+                                        </select>                      
+                                </div>
+                                <div class="col-lg-2 pt-2">  
+                                        <h6 class=" font-type fs-12"><span>Status </span></h6>
+                                        <select class="form-select font-type fs-11" #selectedstat (change)="onStatSelected(selectedstat.value)" aria-label="Default select example" required>
+                                            <option value="0" selected disabled>Select</option>
+                                            <option value="-1" >All</option>
+                                            <option *ngFor="let combo of statusdata"  [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                    </select>       
+                                </div>
+                                <div class="col-lg-2 pt-2">
+                                        <h6 class="font-type fs-12"><span>Start Date </span></h6>
+                                        <input type="date" class="form-control font-type fs-11 mb-0"  id="start-datepicker" name="fromdate" [(ngModel)]="fromdate" (ngModelChange)="filter()">      
+                                </div>
+                                <div class="col-lg-2 pt-2">
+                                        <h6 class="font-type fs-12"><span>End Date </span></h6>
+                                        <input type="date" class="form-control font-type fs-11 mb-0" format="dd-MM-yyyy" id="end-datepicker" name="todate" [(ngModel)]="todate" (ngModelChange)="filter()">
+                                  
+                                 </div>
+                                 <div class="col-lg-8 pt-2"></div>
+                                 <div class="col-lg-2 pt-2" *ngIf="this.grpname.includes('HR')" hidden>
+                                    <a href="ProccessedAttendance"><input type="button" class="btn btn-orange" value="Process"></a>
+                                 </div>
+                                <div class="col-lg-2 pt-2">
+                                    <div class="search-box" style="display: none;">
+                                        <input type="text" class="form-control searchInput" id="searchInput" [(ngModel)]="searchInput" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                        <i class="ri-search-line search-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                         </form>
+                    </div>
+                                
+                             <div class="card-body pt-3" >
+                                    <div>
+                                        <div class="table-responsive table-card mb-0">
+                                            <table class="table table-nowrap align-middle" id="orderTable">
+                                                <thead class="table-light text-white font-type">
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th hidden>EmpCode</th>
+                                                        <th  id="th-company">Co.</th>
+                                                        <th  id="th-dept">Department</th>
+                                                        <th  id="th-emp">Employee Name</th>
+                                                        <th>In Date</th>
+                                                        <th>Out Date</th>
+                                                        <th>Login Time</th>
+                                                        <th>Logout Time</th>
+                                                        <th>Working Hours</th>                                                        
+                                                        <th id="th-status" >Status</th>                                                       
+                                                        <th >Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all font-type fs-11">
+                                                    
+                                                    <tr class="trstyle fs-11" *ngFor="let item of AttendanceData | search : searchInput | pagination: currentPage: itemsPerPage ;index as i" >
+                                                            <td>{{i+1}}</td>
+                                                            <td hidden>{{item.EMP_CODE}}</td>
+                                                            <td>{{item.COMPANY_CODE}}</td>
+                                                            <td>{{item.DEPT}}</td>
+                                                            <td>{{item.EMP_NAME}}</td>
+                                                            <td>{{item.IN_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                            <td>{{item.OUT_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                            <td>
+                                                                
+                                                                    {{item.INTIME}}
+                                                                 
+                                                            </td>
+                                                            <td>
+                                                               
+                                                                    {{item.OUTTIME}}
+                                                                  
+                                                            </td>
+                                                            <!-- <td >{{item.WORKINGHRS}}</td> -->
+                                                            <td >{{item.WORKINGHRS}}</td> 
+                                                            
+                                                            
+                                                            
+                                                        <td id="td-status"> <span class="width-budge badge bg-success-subtle text-success p-2">{{item.STATUS}}</span></td>
+                                                        <td>
+                                                            <ul class="list-inline hstack gap-2 mb-0">
+                                                               
+                                                               <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit" *ngIf="this.grpname.includes('HR')">
+                                                                
+                                                                <button type="button" class="btn btn-outline-warning btn-sm br_radius mr-2" data-bs-toggle="modal" data-bs-target="#EditModal" id="buttonEdit" (click)="selecteditem(item)" ><i class="fa fa-pencil-square-o ic_color" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                
+                                                                </li>
+                                                                
+                                                                </ul>
+                                                               
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    
+                                                    
+                                                </tbody>
+                                            </table>
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                
+                            
+                               <div *ngIf="AttendanceData">
+                                <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                    <div class="col-sm">
+                                      <div class="font-type fs-12 text-muted">
+                                        Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                        - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                        of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                      </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="font-type fs-12 text-muted">
+                                            Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-auto mt-4 mt-sm-0">
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            <div>
+                                                <div class="input-group">
+                                        <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                        
+                                       <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                  </div>
+                                </div>
+                                     
+                                    <div class="col-sm-auto mt-3 mt-sm-0">
+                                      <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                        <li class="page-item">
+                                          <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                        </li>
+                                        <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                          <li class="page-item">
+                                            <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                          </li>
+                                        </ng-container>
+                                        <li class="page-item">
+                                          <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                        </div>
+                    </div>
+                            </div> 
+                        </div> 
+                   </div>
+                   <!-- div team end -->
+
+                    <!-- div personal -->
+
+                    <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5" id="teaminput" *ngIf="user == 'personal'">
+                        <form>
+                            <div class="row align-items-center">
+                                <div class="col-lg-3 pt-2"></div>
+                                <div class="col-lg-2 pt-2">
+                                    <div>
+                                        <h6 class="font-type fs-12"><span>Start Date </span></h6>
+                                        <input type="date" class="form-control  font-type fs-11" format="dd-MM-yyyy" id="start-datepicker" name="fromdate" [(ngModel)]="pfromdate" (ngModelChange)="filterPersonal()" > 
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 pt-2">
+                                    <div>
+                                        <h6 class="font-type fs-12"><span>End Date </span></h6>
+                                        <input type="date" class="form-control  font-type fs-11" id="end-datepicker" name="todate" [(ngModel)]="ptodate" (ngModelChange)="filterPersonal()">
+                                    </div>
+                                </div>
+                          
+                                <div class="col-lg-2 pt-2">
+                                    <div>
+                                        <h6 class="font-type fs-12"><span>Status </span></h6>
+                                        <select class="form-select font-type fs-11" #selectedstat (change)="onStatSelectedEmp(selectedstat.value)" aria-label="Default select example" required>
+                                            <option value="-1" selected>All</option>
+                                            <option *ngFor="let combo of statusdata" [value]="combo.KEY_ID" >{{ combo.DATA_VALUE }}</option>
+                                        </select>  
+                                    </div>
+                                </div>
+                                </div>
+                                
+                        </form>
+                    </div>
+
+                            <div *ngIf="user == 'personal'">
+                                
+                                <div class="card-body pt-3" >
+                                    <div>
+                                        <div class="table-responsive table-card mb-0">
+                                            <table class="table table-nowrap align-middle" id="orderTable">
+                                                <thead class="table-light text-white font-type">
+                                                    <tr>
+                                                        <th>No</th>                                                    
+                                                        <th>In Date</th>
+                                                        <th>Out Date</th>
+                                                        <th>Login Time</th>
+                                                        <th>Logout Time</th>
+                                                        <th>Working Hours</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all">
+                                                    <tr class="trstyle" *ngFor="let item of AttendanceDataPersonal | search : searchInput | pagination: currentPagePersonal: itemsPerPage ;index as i">
+                                                        <td>{{i+1}}</td>                                                            
+                                                    <td>{{item.IN_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                    <td>{{item.OUT_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                    <td>{{item.INTIME}}</td>
+                                                    <td >{{item.OUTTIME}}</td>
+                                                    <td >{{item.WORKINGHRS}}</td>
+                                                    
+                                                        <td id="td-status"> <span class="width-budge badge bg-success-subtle text-success p-2">{{item.STATUS}}</span></td>                                   
+                                                        
+                                                        
+                                                    </tr>
+                                                    
+                                                </tbody>
+                                            </table>
+                                            
+                                        </div>
+                                    </div>
+                            
+                               <div *ngIf="AttendanceDataPersonal">
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsPersonal>0">
+                                        <div class="col-sm">
+                                          <div class="font-type fs-12 text-muted">
+                                            Showing <span class="fw-semibold">{{ getEntriesStartPersonal() }}</span>
+                                            - <span class="fw-semibold">{{ getEntriesEndPersonal() }}</span>
+                                            of <span class="fw-semibold">{{ totalSearchResultsPersonal }}</span> Results
+                                          </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="font-type fs-12 text-muted">
+                                                Total Pages : <span class="fw-semibold"> {{ getTotalPagesPersonal() }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div>
+                                                    <div class="input-group">
+                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPagePersonal" tabindex="1">                                                                    
+                                            
+                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPagePersonal()" tabindex="2">Go</button>
+                                      </div>
+                                    </div>
+                                         
+                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePagePersonal(currentPagePersonal - 1)" [class.disabled-button]="currentPagePersonal === 1">←</button>
+                                            </li>
+                                            <ng-container *ngFor="let pageNumberPersonal of getPageNumbersPersonal(currentPagePersonal)">
+                                              <li class="page-item">
+                                                <button class="page-link" (click)="changePagePersonal(pageNumberPersonal)" [class.active]="currentPagePersonal === pageNumberPersonal">{{ pageNumberPersonal }}</button>
+                                              </li>
+                                            </ng-container>
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePagePersonal(currentPagePersonal + 1)" [class.disabled-button]="currentPagePersonal * itemsPerPage >= totalSearchResultsPersonal">→</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+                             </div> 
+                             </div>          
+                             <!-- End div personal -->
+                             <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button>
+                             <!--Modal For Success Message Start-->
+                             <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                 <div class="modal-dialog modal-dialog-centered">
+                                     <div class="modal-content">
+                                         <div class="modal-header bg-orange padding-up-5">
+                                             <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                         </div>
+                                         <div class="modal-body" *ngIf="showModal==1"> 
+                                             <div class="container">
+                                                 <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                         
+                                             </div>
+                                         </div>
+                                         <div class="modal-body" *ngIf="showModal==2">
+                                         <div class="container">
+                                             <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{Failed}}</h2>
+                                             
+                                         </div>
+                                     </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         <!--Modal For Success Message End-->
+                           <!--Edit Model-->
+
+                    <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="EditModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-info-subtle" style="background-color: #e9823d!important;">
+                                    <h5 class="modal-title">&nbsp;</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" style="margin-top:-30px;" (click)="clearEdit()"></button>
+                                </div>
+                                <!-- <form class="tablelist-form" autocomplete="off"> -->
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="mb-3">
+                                            <h3 class="fw-semibold"><span>Shift</span></h3>
+                                            <select class="form-select font-type fs-11" [(ngModel)]="selectedShift" (change)="onShiftSelected()" aria-label="Default select example" required>
+                                                <option value="-1" selected disabled>Select</option>
+                                                <option *ngFor="let combo of listshift" [value]="combo.VALUE_FIELD" >{{ combo.DISPLAY_FIELD }}</option>
+                                            </select>  
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-lg-6 mb-3">
+                                            <h3 class="fw-semibold"><span>Log In Date</span></h3>
+                                            <input type="text" id="LogdispInDate" name="LogdispInDate" class="form-control" [(ngModel)]="editedIndate" readonly  />
+                                        </div>
+                                        <div class="col-lg-6 mb-3">
+                                            <h3 class="fw-semibold"><span>Log Out Date</span></h3>
+                                            <input type="text" id="LogdispInDate" name="LogdispInDate" class="form-control" [(ngModel)]="editedOutdate" readonly  />
+                                        </div>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <h3 class="fw-semibold"><span>In Time</span></h3>                                                    
+                                                    <ngx-timepicker-field [format]="24" name="NewInTime" [(ngModel)]="editedIntime"></ngx-timepicker-field>   
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <h3 class="fw-semibold"><span>Out Time</span></h3>                                                    
+                                                    <ngx-timepicker-field [format]="24" name="NewOuTTime"  [(ngModel)]="editedOuttime"></ngx-timepicker-field>   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <div class="modal-footer">
+                                        <div class="hstack gap-2 justify-content-center">
+                                            <button type="submit" class="btn btn-orange" id="add-btn" (click)="saveChanges()">Update</button>
+                                        </div>
+                                    </div>
+                                <!-- </form> -->
+                            </div>
+                        </div>
+                    </div>
+                   <!--End Edit Model-->
+                    
+                </div>
+               
+                    
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+            <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+    
+

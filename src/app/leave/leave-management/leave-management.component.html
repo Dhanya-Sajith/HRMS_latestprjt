@@ -1,0 +1,1221 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+    <app-header></app-header>
+    <!-- ========== App Menu ========== -->
+    <!-- <app-sidemenu></app-sidemenu> -->
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Leave Management </h4>
+
+                            <div class="page-title-right padding-up-5" [hidden]="authorityflg == 0">
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"  value="team" name="user" [(ngModel)]="user" (change)="teamselection(user)">
+                                    <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio1">Team</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"  value="personal"  name="user" [(ngModel)]="user" (change)="teamselection(user)">
+                                    <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio2">Personal</label>
+
+                                </div>
+                            </div>
+                            
+           
+
+                        </div>
+                    </div>
+                </div>
+
+<!-- team -->
+
+                <div class="row"  *ngIf="user === 'team'" [hidden]="authorityflg == 0" >
+                    <div class="col-lg-12">
+                        <div class="card mt-n4 mx-n4">
+                            <div class="bg-warning-subtle">
+                                <div class="card-body pb-0 px-4 p-0">
+                                    <ul class="nav nav-tabs-custom border-bottom-0" role="tablist">
+                                        <li class="nav-item font-type">
+                                            <a class="nav-link active fw-semibold" data-bs-toggle="tab" routerLink="/Leave_Management" role="tab">
+                                                Leave
+                                            </a>
+                                        </li>
+                                        <li class="nav-item font-type">
+                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" routerLink="/compoff" role="tab" >
+                                                Comp OFF
+                                            </a>
+                                        </li>
+                                        <li class="nav-item font-type">
+                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" routerLink="/businesstrip" role="tab" >
+                                                Business Trip 
+                                            </a>
+                                        </li>
+                                        <li class="nav-item font-type">
+                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" routerLink="/permissions" role="tab">
+                                                Permissions
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                        </div>
+                        <!-- end card -->
+                    </div>
+                    <!-- end col -->
+                </div>
+
+
+<!-- team -->
+
+<!-- personal -->
+
+                <div class="row" *ngIf="user === 'personal'">
+                    <div class="col-lg-12">
+                        <div class="card mt-n4 mx-n4">
+                            <div class="bg-warning-subtle">
+                                <div class="card-body pb-0 px-4 p-0">
+                                    <ul class="nav nav-tabs-custom border-bottom-0" role="tablist">
+                                        <li class="nav-item font-type">
+                                            <a class="nav-link active fw-semibold" data-bs-toggle="tab" routerLink="/Leave_Management" role="tab">
+                                                Leave
+                                            </a>
+                                        </li>
+                                        <li class="nav-item font-type">
+                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" routerLink="/compoff" role="tab" >
+                                                Comp OFF
+                                            </a>
+                                        </li>
+                                        <li class="nav-item font-type">
+                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" routerLink="/businesstrip" role="tab" >
+                                                Business Trip 
+                                            </a>
+                                        </li>
+                                        <li class="nav-item font-type">
+                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" routerLink="/permissions" role="tab" >
+                                                Permissions
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                        </div>
+                        <!-- end card -->
+                    </div>
+                    <!-- end col -->
+                </div>
+
+
+<!-- personal -->
+            
+                <div class="tab-content text-muted">
+                <div class="tab-pane fade show active" id="leave" role="tabpanel">
+                <div class="topbar-up row">
+                <div class="col-lg-12">
+               <div class="card">                  
+                <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5" id="teaminput" *ngIf="user === 'team'" [hidden]="authorityflg == 0">
+                    <form>
+                        
+                        <div class="row mb-4">
+                                    <div class="col-lg-2 pt-2">
+                                            <h6 class="fs-12 font-type"><span>Company</span></h6>
+                                            <select class="form-select font-type fs-11"  aria-label="Default select example" #selectCompany name="comname" id="comname"  (change)="ListDepByComId();FetchLeaveReq_Filter();MatrixListFilter();FetchStatusCounts_LeaveFilter()">
+                                                <option  value ="-1"   >All</option> 
+                                                <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
+                                                    {{CompanyList.DATA_VALUE}}
+                                                </option>
+                                            </select> 
+                                  
+                                    </div>
+                                    <div class="col-lg-2 pt-2">
+                                            <h6 class="font-type fs-12"><span>Department </span></h6>
+                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="depname" id="depname"  (change)="ListEmpByComIdandDep();FetchLeaveReq_Filter();MatrixListFilter();FetchStatusCounts_LeaveFilter()">
+                                                <option [value]="-1" selected>All</option>
+                                                <option  *ngFor="let DepartmentList of listDepartment" value="{{DepartmentList.KEY_ID}}">
+                                                    {{DepartmentList.DATA_VALUE}}
+                                                </option>
+                                            </select>
+                          
+                                    </div>
+                                    <div class="col-lg-2 pt-2">  
+                                            <h6 class="font-type fs-12"><span>Employee Name </span></h6>
+                                            <select class="form-select font-type fs-11" aria-label="Default select example" name="empname" id="empname"  #empname (change)="FetchLeaveReq_Filter();MatrixListFilter();FetchStatusCounts_LeaveFilter()">
+                                                <option [value]="-1">All</option>
+                                                <option  *ngFor="let EmployeeList of listEmployee" value="{{EmployeeList.EMP_CODE}}">
+                                                    {{EmployeeList.EMP_NAME}}
+                                                </option>
+                                           
+                                          </select>                      
+  
+                                    </div>
+                                    <div class="col-lg-2 pt-2">  
+                                            <h6 class=" font-type fs-12"><span>Status </span></h6>
+                                            <select class="form-select font-type fs-11" aria-label="Default select example" name="fillstatus" id="fillstatus"  #fillstatus (change)="FetchLeaveReq_Filter()">
+                                                <option [value]="-1">All</option>
+                                                <option  *ngFor="let RegStatusList of listRegStatus" [hidden]="RegStatusList.DATA_VALUE == 'Cancelled'"value="{{RegStatusList.KEY_ID}}" [selected]="RegStatusList.DATA_VALUE == 'Pending for Approval'">
+                                                    {{RegStatusList.DATA_VALUE}}
+                                                </option>
+                                            
+                                          </select>       
+            
+                                    </div>
+                                    <div class="col-lg-2 pt-2">
+                                            <h6 class="font-type fs-12"><span>Start Date </span></h6>
+                                            <input type="date" class="form-control font-type fs-11 mb-0" id="tm_fromdate" name="tm_fromdate" [formControl]="tm_fromdate" (change)="FetchLeaveReq_Filter();MatrixListFilter();FetchStatusCounts_LeaveFilter()" >  
+                                    </div>
+                                    <div class="col-lg-2 pt-2">
+                                            <h6 class="font-type fs-12"><span>End Date </span></h6>
+                                            <input type="date" class="form-control font-type fs-11 mb-0" id="tm_todate" name="tm_todate" [formControl]="tm_todate" (change)="FetchLeaveReq_Filter();MatrixListFilter();FetchStatusCounts_LeaveFilter()">
+                                      
+                                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <!-- card -->
+                                <div class="card card-animate" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                    <div class="card-body p1-10">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">PENDING APPROVAL</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-end justify-content-between mt-2">
+                                            <div >
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4 font-type" >{{listLeavecounts[0].APPROVALPENDING}}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center margin-up-15">
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <p class="fw-medium text-truncate mb-0 font-type">Upcoming Days</p>
+                                            </div>
+                                            <div class="flex-shrink-0">
+                                                <h5 class="text-blue fs-14 mb-0 font-type">
+                                                    {{listLeavecounts[0].PENDING_UP}}	
+                                                </h5>
+                                            </div>
+                                        </div>                                            
+                                        
+                                    </div><!-- end card body -->
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+
+                            <div class="col-xl-3 col-md-6">
+                                <!-- card -->
+                                <div class="card card-animate" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                    <div class="card-body p1-10">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">APPROVED</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-end justify-content-between mt-2">
+                                            <div>
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4 font-type"> {{listLeavecounts[0].APPROVED}}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center margin-up-15">
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <p class="fw-medium text-truncate mb-0 font-type">Upcoming Days</p>
+                                            </div>
+                                            <div class="flex-shrink-0">
+                                                <h5 class="text-blue fs-14 mb-0 font-type">
+                                                    {{listLeavecounts[0].APPROVED_UP}}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        
+                                    </div><!-- end card body -->
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+
+                            <div class="col-xl-3 col-md-6">
+                                <!-- card -->
+                                <div class="card card-animate" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                    <div class="card-body p1-10">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">REJECTED</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-end justify-content-between mt-2">
+                                            <div>
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4 font-type"> {{listLeavecounts[0].REJECTED}}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center margin-up-15">
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <p class="fw-medium text-truncate mb-0 font-type">Upcoming Days</p>
+                                            </div>
+                                            <div class="flex-shrink-0">
+                                                <h5 class="text-blue fs-14 mb-0 font-type">
+                                                    {{listLeavecounts[0].REJECTED_UP}}	
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        
+                                    </div><!-- end card body -->
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+
+                            <div class="col-xl-3 col-md-12">
+                          
+                                <div class="card-body ">
+                                    <div class="live-preview">
+                                        <div class="d-flex align-items-center" >
+                                            <div class=" mb-4">
+                                            <button class="btn btn-blue font-type" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="width:200px" (click)="MatrixList()">Upcoming Absence Matrix</button>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center" >
+                                            <div class="mb-4">
+                                                <button class="btn btn-blue font-type" type="button" style="width:200px"   data-bs-toggle="offcanvas" data-bs-target="#offcanvasleave" aria-controls="offcanvasleave" (click)="fetchleavesummary()">Leave Details</button>
+                                            </div>
+                                        </div>
+                                       
+                                        <!-- Leave Details -->
+                                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasleave" aria-labelledby="offcanvasRightLabel" style="width: 550px;">
+                                            <div class="offcanvas-header border-bottom">
+                                                <h5 class="offcanvas-title font-type" id="offcanvasRightLabel">Leave Details </h5>
+                                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" ></button>
+                                            </div>
+                                            <div class="offcanvas-body p-0 overflow-hidden">
+                                                <div data-simplebar style="height: calc(100vh - 112px);">
+                                                    <div class="table-responsive">
+                                                      
+                                                        <div class="row col-md-12" style="margin-top: 10px;margin-left: 0px;">    
+                                                            <div class="col-md-4">
+                                                                <h6 class="font-type fs-12"><span>Leave From Date </span></h6>
+                                                                <input type="date" class="form-control font-type fs-11 mb-0" name="sdate" id="sdate" [formControl]="sdate" (change)="fetchleavesummary()">      
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <h6 class="font-type fs-12"><span>Leave To Date </span></h6>
+                                                                <input type="date" class="form-control font-type fs-11 mb-0" name="edate" id="edate" [formControl]="edate" (change)="fetchleavesummary()">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <h6 class="font-type fs-12"><span>Leave Type </span></h6>
+                                                                <select class="form-select  font-type fs-11" name="leavetype" id="leavetype" #leavetype (change)="leavesummarystatus(leavetype.value)">
+                                                                    <option value="-1">All</option>
+                                                                    <option value="L">Leave</option>
+                                                                    <option value="F">Compoff</option>
+                                                                    <option value="B">Business Trip</option>
+                                                                </select> 
+                                                            </div>
+                                                        </div> 
+                                                       
+
+                                                        <table class="table table-bordered table-nowrap align-middle mb-0" style="margin-top: 10px;">
+                                                            <thead>
+                                                                <tr class="font-type">
+                                                                    <th scope="col" style="width: 10%;">Emp Code</th>
+                                                                    <th scope="col" style="width: 20%;">Emp Name</th>
+                                                                    <th scope="col" style="width: 20%;">Leave Type</th>
+                                                                    <th scope="col" style="width: 20%;">Leave From Date</th>
+                                                                    <th scope="col" style="width: 20%;">Leave To Date</th>
+                                                                    <th scope="col" style="width: 10%;">Status</th>
+                                                                </tr>
+                                                            </thead>
+                
+                                                            <tbody class="font-type">
+                                                                <tr *ngFor="let leave of leavesummary;">
+                                                                    <td>{{leave.EMP_CODE}}</td>
+                                                                    <td>{{leave.EMP_NAME}}</td>
+                                                                    <td>{{leave.LEAVE_TYPE}}</td>
+                                                                    <td>{{leave.LEAVE_START_DATE}}</td>
+                                                                    <td>{{leave.LEAVE_END_DATE}}</td>
+                                                                    <td>{{leave.STATUS}}</td>
+                                                                </tr>
+                                                            </tbody><!-- end tbody -->
+                                                        </table><!-- end table -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                      
+
+                                        <!-- right offcanvas -->
+                                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                                            <div class="offcanvas-header border-bottom">
+                                                <h5 class="offcanvas-title font-type" id="offcanvasRightLabel">Upcoming Absence Matrix </h5>
+                                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                            </div>
+                                            <div class="offcanvas-body p-0 overflow-hidden">
+                                                <div data-simplebar style="height: calc(100vh - 112px);">
+                                                    <div class="table-responsive">
+
+                                                        <table class="table table-bordered table-nowrap align-middle mb-0">
+                                                            <thead>
+                                                                <tr class="font-type">
+                                                                    <th scope="col" style="width: 30%;">Date</th>
+                                                                    <th scope="col" style="width: 30%;">Approved (leave+compoff+BT)</th>
+                                                                    <th scope="col" style="width: 20%;">Requested (Leave)</th>
+                                                                </tr>
+                                                            </thead>
+                
+                                                            <tbody class="font-type">
+                                                                <tr *ngFor="let TeammatrixList of listmatrix">
+                                                                    <td>{{TeammatrixList.ABSENTDATE | date: 'dd-MM-yyyy'}}</td>
+                                                                    <td>{{TeammatrixList.APPROVED}}</td>
+                                                                    <td>{{TeammatrixList.PENDINGFORAPPROVE}}</td>
+                                                                </tr>
+                                                            </tbody><!-- end tbody -->
+                                                        </table><!-- end table -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>  
+                                                                          
+                                    </div>
+                           
+                                  
+                                </div>
+                            
+                                </div>
+                                <div class="col-lg-10 pt-2"></div>
+                                <div class="col-lg-2 pt-2">
+                                    <div class="search-box" style="display: none;">
+                                        <input type="text" class="form-control searchInput" id="searchInput" [(ngModel)]="searchInput" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                        <i class="ri-search-line search-icon"></i>
+                                    </div>
+                                </div>
+                        </div>
+                        
+                    </form>
+                </div>
+                            <!--Change 2-->
+                            <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5"  id="divPersonal"  *ngIf="user === 'personal'">
+                                <form>
+                                    <div class="row align-items-center mb-4">
+                                                <div class="col-lg-3 pt-2">
+                                                    <div>
+                                                        <h6 class="font-type fs-12"><span>Start Date </span></h6>
+                                                        <input type="date" class="form-control font-type fs-11 mb-0" id="pl_fromdate" name="pl_fromdate" [formControl]="pl_fromdate" (change)="ListLeaveRequests_Personal()" >  
+                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 pt-2">
+                                                    <div>
+                                                        <h6 class="font-type fs-12"><span>End Date </span></h6>
+                                                        <input type="date" class="form-control font-type fs-11 mb-0" id="pl_todate" name="pl_todate" [formControl]="pl_todate" (change)="ListLeaveRequests_Personal()">
+                                                    </div>
+                                                </div>
+                                          
+                                                <div class="col-lg-3 pt-2">
+                                                    <div>
+                                                        <h6 class="font-type fs-12"><span>Status </span></h6>
+                                                        <select class="form-select font-type fs-11" aria-label="Default select example" name="status_prsnl" id="status_prsnl"  #fillstatus (change)="ListLeaveRequests_Personal()">
+                                                            <option [value]="-1">All</option>
+                                                            <option  *ngFor="let RegStatusList of listRegStatus" value="{{RegStatusList.KEY_ID}}"[selected]="RegStatusList.DATA_VALUE == 'Pending for Approval'">
+                                                                {{RegStatusList.DATA_VALUE}}
+                                                            </option>
+                                                        
+                                                      </select>       
+    
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-lg-3">
+                                                    <div class="pt-4">    
+                                                        <button type="button" class="btn btn-orange font-type fs-12 add-button text-white" data-bs-toggle="modal" id="create-btn" data-bs-target="#AddRequestModal" (click)="clearaddreq()">Add Requests</button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xl-3 col-md-6">
+                                                        <!-- card -->
+                                                        <div class="card card-animate" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                            <div class="card-body p1-10">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="flex-grow-1 overflow-hidden">
+                                                                        <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">PENDING APPROVAL</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex align-items-end justify-content-between mt-2">
+                                                                    <div>
+                                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4 font-type">{{listLeavecounts[0].APPROVALPENDING}}</h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex align-items-center margin-up-15">
+                                                                    <div class="flex-grow-1 overflow-hidden">
+                                                                        <p class="fw-medium text-truncate mb-0 font-type">Upcoming Days</p>
+                                                                    </div>
+                                                                    <div class="flex-shrink-0">
+                                                                        <h5 class="text-blue fs-14 mb-0 font-type">
+                                                                            {{listLeavecounts[0].PENDING_UP}}
+                                                                        </h5>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div><!-- end card body -->
+                                                        </div><!-- end card -->
+                                                    </div><!-- end col -->
+                    
+                                                    <div class="col-xl-3 col-md-6">
+                                                        <!-- card -->
+                                                        <div class="card card-animate" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                            <div class="card-body p1-10">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="flex-grow-1 overflow-hidden">
+                                                                        <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">APPROVED</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex align-items-end justify-content-between mt-2">
+                                                                    <div>
+                                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4 font-type">{{listLeavecounts[0].APPROVED}}</h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex align-items-center margin-up-15">
+                                                                    <div class="flex-grow-1 overflow-hidden">
+                                                                        <p class="fw-medium text-truncate mb-0 font-type">Upcoming Days</p>
+                                                                    </div>
+                                                                    <div class="flex-shrink-0">
+                                                                        <h5 class="text-blue fs-14 mb-0 font-type">
+                                                                            {{listLeavecounts[0].APPROVED_UP}}
+                                                                        </h5>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div><!-- end card body -->
+                                                        </div><!-- end card -->
+                                                    </div><!-- end col -->
+                    
+                                                    <div class="col-xl-3 col-md-6">
+                                                        <!-- card -->
+                                                        <div class="card card-animate" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                            <div class="card-body p1-10">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="flex-grow-1 overflow-hidden">
+                                                                        <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">REJECTED</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex align-items-end justify-content-between mt-2">
+                                                                    <div>
+                                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4 font-type">{{listLeavecounts[0].REJECTED}}</h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex align-items-center margin-up-15">
+                                                                    <div class="flex-grow-1 overflow-hidden">
+                                                                        <p class="fw-medium text-truncate mb-0 font-type">Upcoming Days</p>
+                                                                    </div>
+                                                                    <div class="flex-shrink-0">
+                                                                        <h5 class="text-blue fs-14 mb-0 font-type">
+                                                                            {{listLeavecounts[0].REJECTED_UP}}
+                                                                        </h5>
+                                                                    </div>
+                                                                </div>
+                                                               
+                                                            </div><!-- end card body -->
+                                                        </div><!-- end card -->
+                                                    </div><!-- end col -->
+                    
+                                                    <div class="col-xl-3 col-md-12">
+                          
+                                                        <div class="card-body ">
+                                                            <div class="live-preview">
+                                                                <div class="d-flex align-items-center" >
+                                                                    <div class="button-center mb-4">
+                                                                    <button class="btn btn-blue font-type" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightsummary" aria-controls="offcanvasRightsummary" style="width:250px" (click)="leavebalancedtl()">Leave Summary</button>
+                                                                    </div>
+                                                                </div>
+                        
+                                                              
+                        
+                                                                <!-- right offcanvas -->
+                                                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightsummary" aria-labelledby="offcanvasRightLabel">
+                                                                    <div class="offcanvas-header border-bottom">
+                                                                        <h5 class="offcanvas-title font-type" id="offcanvasRightLabel">Leave Summary</h5>
+                                                                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="offcanvas-body p-0 overflow-hidden">
+                                                                        <div data-simplebar style="height: calc(100vh - 112px);">
+                                                                            <div class="table-responsive">
+                    
+                                                                                <table class="table table-bordered table-nowrap align-middle mb-0">
+                                                                                    <thead>
+                                                                                        <tr class="font-type">
+                                                                                            <th scope="col" style="width: 30%;">Leave Type</th>
+                                                                                            <th scope="col" style="width: 30%;">Total</th>
+                                                                                            <th scope="col" style="width: 20%;">Taken</th>
+                                                                                            <th scope="col" style="width: 20%;">Balance</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                        
+                                                                                    <tbody class="font-type">
+                                                                                        <tr *ngFor="let balance of leavebalance">
+                                                                                            <td>{{balance. LEAVE_TYPE_NAME}}</td>
+                                                                                            <td>{{balance. OPENING_BALANCE}}</td>
+                                                                                            <td>{{balance.LEAVE_TAKEN }}</td>
+                                                                                            <td>{{balance.CURRENT_BALANCE}}</td>
+                                                                                        </tr>
+                                                                                      
+                                                                                
+                                                                                    </tbody><!-- end tbody -->
+                                                                                </table><!-- end table -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                        
+                                                              
+                                                        
+                                                            </div>
+                                                          
+                                                        </div>
+                                                    
+                                                        </div>
+                                                </div>
+                                </form>
+                            </div>
+                             <!--Change2-->           
+                            <!--Changes 1-->
+                     
+                             <!--Changes 2-->
+
+<!-- team -->
+                            <div class="card-body pt-0" *ngIf="user === 'team'" [hidden]="authorityflg == 0">
+                                <div>
+                                    <div class="table-responsive table-card mb-0">
+                                        <table class="table table-nowrap align-middle" id="orderTable">
+                                            <thead class="table-light text-white font-type">
+                                                <tr>
+                                                    <th >Req ID</th>
+                                                    <th hidden>EMP CODE</th>
+                                                    <!-- <tr class="trstyle fs-11"  *ngFor="let LeaveuRequestList of listleaveRequest"> -->
+                                                    <th id="th-company">Co.</th>
+                                                    <th id="th-dept">Dept</th>
+                                                    <th id="th-emp">Employee</th>
+                                                    <th>Apply Date</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>No of Days</th>
+                                                    <th>Leave Type</th>
+                                                    <th>Reason</th>
+                                                    <th id="th-ViewDocModal">Document</th>
+                                                    <th id="th-status" >Status</th>  
+                                                    <th >Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="list form-check-all font-type fs-11">
+                                                <!-- <tr class="trstyle fs-11"> -->
+                                                    <tr class="trstyle fs-11"  *ngFor="let LeaveRequestList of PagedleaveRequest| search : searchInput;index as i" >
+                                                     <!-- <td>{{LeaveuRequestList.REQUEST_ID}}</td> -->
+                                                     <td >{{LeaveRequestList.REQ_ID}}</td>
+                                                     <td hidden>{{LeaveRequestList.EMP_CODE}}</td>
+                                                     <td id="td-company" >{{LeaveRequestList.COMPANY}}</td>
+                                                     <td id="td-dept" >{{LeaveRequestList.DEPT}}</td>
+                                                     <td id="td-emp" >{{LeaveRequestList.EMP_NAME}}</td>
+                                                     <td>{{LeaveRequestList.APPLICATION_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                     <td>{{LeaveRequestList.START_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                     <td>{{LeaveRequestList.END_DATE | date: 'dd-MM-yyyy'}} </td>
+                                                     <td>{{LeaveRequestList.NOOFLEAVES}}</td>
+                                                     <td>{{LeaveRequestList.TYPE}}</td>
+                                                    <!-- <td>{{LeaveRequestList.REASON}}</td> -->
+                                                    <td>
+                                                        <a data-target="#ReasonModal" data-bs-toggle="modal"
+                                                        href="#ReasonModal" class="textblack" (click)="selectreason(LeaveRequestList.REASON)">{{LeaveRequestList.REASON}}</a>
+                                                    </td>
+                                                  
+                                                    <td id="td-ViewDocModal">
+                                                        <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Document" [hidden]="LeaveRequestList.DOCUMENT ==''">
+                                                            <a href="#ViewDocModal" data-bs-toggle="modal" class="bar-text d-inline-block edit-item-btn" (click)="ActivereqID(LeaveRequestList.REQ_ID)">
+                                                            View <i class="ri-eye-line"></i>
+                                                            </a>
+                                                        </li>
+                                                    </td>
+                                                    <!-- <td id="td-status">  <span class="width-budge badge bg-info-subtle text-info p-2">Requested</span></td> -->
+                                                    <!--<span class="width-budge badge bg-success-subtle text-success p-2">Approved</span>-->
+                                                    <td id="td-status"> <span class="width-budge badge bg-success-subtle text-success p-2">{{LeaveRequestList.STATUS_VAL}}</span></td>
+                                                    <td>
+                                                        <ul class="list-inline hstack gap-2 mb-0">                                                               
+                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve">
+                                                                <!-- <a href="#ApproveRecordModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn"> -->
+                                                                <!-- <button type="button" class="btn btn-success btn-sm" id="buttonApprove"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button> -->
+                                                                <!-- </a> -->
+                                                                <!-- <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonApprove" data-bs-target="#ApproveRecordModal" (click)="approve(LeaveRequestList.REQ_ID,LeaveRequestList.EMP_CODE)"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button> -->
+                                                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonApprove" href="#ApproveRecordModal" [disabled]="LeaveRequestList.STATUS_VAL!='Pending for Approval'"  (click)="approve(LeaveRequestList.REQ_ID,LeaveRequestList.EMP_CODE)"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                            </li>
+                                                           
+                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reject">
+                                                                <!-- <a class="remove-item-btn" data-bs-toggle="modal" href="#RejectModal"> -->
+                                                                <!-- <button type="button" class="btn btn-danger btn-sm" id="buttonReject"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button> -->
+                                                                <!-- <button type="button" class="btn btn-danger btn-sm" id="buttonReject" (click)="setSelectedRequestID(LeaveRequestList.REQ_ID,LeaveRequestList.EMP_CODE)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button> -->
+                                                                <button type="button" class="btn btn-danger btn-sm" id="buttonReject" data-bs-toggle="modal" href="#RejectModal"  [disabled]="LeaveRequestList.STATUS_VAL!='Pending for Approval'" 
+                                                                (click)="setSelectedRequestID(LeaveRequestList.REQ_ID,LeaveRequestList.EMP_CODE)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                <!-- </a> -->
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>                                                    
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                      <div class="align-items-center justify-content-between row text-center text-sm-start">
+        <div class="col-sm">
+            <div class="text-muted" style="font-size:12px;">
+                Showing <span class="fw-semibold">{{ PagedleaveRequest.length }}</span> of <span class="fw-semibold">{{totalreq}}</span> Results
+            </div>
+        </div>
+        <div class="col-sm-auto  mt-3 mt-sm-0">
+            <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" (click)="previousPage()">←</a>
+                </li>
+
+               <li class="page-item" >
+                    <span class="page-link" [class.active]="currentPage">{{ currentPage }}</span>
+                    <!-- <span class="page-link" [class.active]="currentPage">{{ filteredCurrentPage }}</span>  -->
+                  </li>   
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" (click)="nextPage()">→</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+                                  
+                                </div>
+                            </div>
+
+
+<!-- team -->
+
+<!-- personal -->
+
+
+<div class="card-body pt-0" *ngIf="user === 'personal'|| this.viewflag==0">
+<div>
+    <div class="table-responsive table-card mb-0">
+        <table class="table table-nowrap align-middle" id="orderTable">
+            <thead class="table-light text-white font-type">
+                <tr> 
+                    <th >Req ID</th>                      
+                    <th>Apply Date</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>No of Days</th>
+                    <th>Leave Type</th>
+                    <th data-sort="reason">Reason</th>
+                    <th id="th-status">Status</th>
+                    <th >Action</th>
+                </tr>
+            </thead>
+            <tbody class="list form-check-all font-type fs-11">
+                <tr class="trstyle fs-11"  *ngFor="let LeaveReqListEmp of PagedleaveRequestPersonal"> 
+                    <td >{{LeaveReqListEmp.REQ_ID}}</td>
+                    <td>{{LeaveReqListEmp.APPLICATION_DATE | date: 'dd-MM-yyyy'}}</td>
+                    <td>{{LeaveReqListEmp.START_DATE | date: 'dd-MM-yyyy'}}</td>
+                    <td>{{LeaveReqListEmp.END_DATE | date: 'dd-MM-yyyy'}} </td>
+                    <td>{{LeaveReqListEmp.NOOFLEAVES}}</td>
+                    <td>{{LeaveReqListEmp.TYPE}}</td>
+                   <!-- <td>{{LeaveReqListEmp.REASON}}</td> -->
+                   <td class="reason">
+                    <a data-target="#ReasonModal" data-bs-toggle="modal" href="#ReasonModal" class="textblack" (click)="selectreason(LeaveReqListEmp.REASON)">{{LeaveReqListEmp.REASON}}</a>
+                </td>
+                  
+                    <!-- <td id="td-status"> <span class="width-budge badge bg-info-subtle text-info p-2">Requested</span></td> -->
+                    <!--<span class="width-budge badge bg-success-subtle text-success p-2">Approved</span>-->
+                    <!-- <td id="td-status"> <span class="width-budge badge bg-success-subtle text-success p-2">{{LeaveReqListEmp.STATUS_VAL}}</span></td> -->
+                    <td id="td-status"><a data-target="#statusModal" data-bs-toggle="modal" href="#statusModal" (click)="Approvelist(LeaveReqListEmp.REQ_ID)"> <span class="width-budge badge bg-success-subtle text-success p-2">{{LeaveReqListEmp.STATUS_VAL}}</span></a></td>
+                    <td>
+                        <ul class="list-inline hstack gap-2 mb-0">                                
+                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel" >
+                                <!-- <a class="remove-item-btn" data-bs-toggle="modal" href="#CancelModal"> -->
+                                <!-- <button type="button" class="btn btn-danger btn-sm " id="buttoncancel"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button> -->
+                                <button type="button" data-bs-toggle="modal" href="#CancelModal" class="btn btn-danger btn-sm" id="buttoncancel" [disabled]="LeaveReqListEmp.STATUS_VAL!='Pending for Approval'" (click)="setSelectedRequestID(LeaveReqListEmp.REQ_ID,LeaveReqListEmp.EMP_CODE)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                <!-- </a> -->
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                
+                
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="align-items-center justify-content-between row text-center text-sm-start">
+        <div class="col-sm">
+            <div class="text-muted" style="font-size:12px;">
+                Showing <span class="fw-semibold">{{ PagedleaveRequestPersonal.length }}</span> of <span class="fw-semibold">{{totalreq}}</span> Results
+            </div>
+        </div>
+        <div class="col-sm-auto  mt-3 mt-sm-0">
+            <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" (click)="previousPagePersonal()">←</a>
+                </li>
+
+               <li class="page-item" >
+                    <span class="page-link" [class.active]="currentPage">{{ currentPage }}</span>
+                    <!-- <span class="page-link" [class.active]="currentPage">{{ filteredCurrentPage }}</span>  -->
+                  </li>   
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" (click)="nextPagePersonal()">→</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+  
+</div>
+</div>
+
+<!-- personal -->
+
+
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+
+          <!--Edit Model-->
+          <div class="modal fade" id="ViewDocModal" tabindex="-1" aria-labelledby="ViewDocModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-orange padding-up-5">
+                        
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                    </div>
+                    <form class="tablelist-form" autocomplete="off">
+                        <div class="modal-body">
+                            <input type="hidden" id="id-field" />
+                                <h6 class="mb-3 fw-semibold text-uppercase font-type">Documents</h6>
+                                <div class="row g-3">
+                                    <div class="col-xxl-4 col-lg-12">
+                                        <div class="border rounded border-dashed p-2">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar-sm">
+                                                        <div class="avatar-title bg-light text-secondary rounded fs-24">
+                                                            <i class="ri-folder-zip-line"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-shrink-0 ms-2">
+                                                    <div class="d-flex gap-1">
+                                                        <a href="https://localhost:44381/api/File/GetLeavDocs/{{activereqid}}" download target="_blank"><button type="button" class="btn btn-icon text-muted btn-sm fs-18"><i class="ri-download-2-line"></i></button></a>
+                                                       
+                                                            <!-- <a href="#ViewDocModal">
+                                                            <button class="btn btn-icon text-muted btn-sm fs-18 dropdown" type="button" (click)="Viewdocs()" data-bs-toggle="modal" data-bs-target="#ViewDocModal">
+                                                                <i class="ri-eye-line"></i>
+                                                            </button>
+                                                        </a> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end row -->
+                        </div>  
+                    </form>
+                </div>
+            </div>
+        </div>
+       <!--End Edit Model-->
+
+
+
+                 <!-- Approve Model-->
+                 <div id="ApproveRecordModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ApproveRecordModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" style="margin-top:-30px;"></button>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==1"> 
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> Request Approved</h2>
+                               
+                                </div>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==2">
+                              <div class="container">
+                                  <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> Failed</h2>
+                                 
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  <!-- End Approve Model-->
+
+                 <!-- Reason Model-->
+
+                 <div class="modal fade zoomIn" id="ReasonModal" tabindex="-1" aria-labelledby="ReasonModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body text-centcter">
+                                <div>
+                                    <h6 class="fs-12 font-type" >{{Reason}}</h6>         
+                                </div>
+                            </div>
+                        </div>''
+                    </div>
+                </div>
+
+             <!-- End Reason Model-->
+
+            <!-- Reject Model-->
+            <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                            <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" style="margin-top:-30px;"></button>
+                        </div>
+                        <form class="tablelist-form" autocomplete="off">
+                            <div class="modal-body">
+                                <input type="hidden" id="id-field" />
+                                <div class="mb-3">
+                                    <label class="form-label">Reason</label>
+                                    <textarea class="form-control" required #reason [formControl]="reasonControl"></textarea>  
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="hstack gap-2">
+                
+                                    <button class="btn btn-danger" id="delete-record" data-bs-toggle="modal" data-bs-target="#RejectedModal" data-bs-dismiss="modal" (click)="reject(selectedRequestID,selectedEmpCode,reason.value)">Reject</button>
+                                    <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                <!-- End Reject Model-->
+                <!-- Rejected  Model-->
+                <div id="RejectedModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="RejectedModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" style="margin-top:-30px;"></button>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==1"> 
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> Request Rejected!</h2>
+                               
+                                </div>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==2">
+                              <div class="container">
+                                  <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> Rejection Failed</h2>
+                                 
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  <!-- End Rejected Modal-->
+
+                <!--Cancel Request Model-->
+                <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="text-center">
+                                    <h5 class="fs-13 font-type">You are about to cancel your request ?</h5>
+                                    <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                                    <div class="hstack gap-2 justify-content-center remove">   
+                                        <!-- <button class="btn btn-danger font-type" id="delete-record">Cancel</button> -->
+                                        <button class="btn btn-danger btn-sm" id="delete-record" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#CancelledModal" (click)="cancelLeaveReq(selectedRequestID)">Yes</button>
+                                        <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!--End cancel Request Model-->
+
+<!-- Cancelled  Model-->
+<div id="CancelledModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="CancelledModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header bg-orange padding-up-5">
+            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" style="margin-top:-30px;"></button>
+        </div>
+        <div class="modal-body" *ngIf="showModal==1"> 
+            <div class="container">
+                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> Request Cancelled!</h2>
+           
+            </div>
+        </div>
+        <div class="modal-body" *ngIf="showModal==2">
+          <div class="container">
+              <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> Failed</h2>
+             
+          </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- End Cancelled Modal-->
+<button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SaveModal">Open Modal</button>
+<!-- SUBMIT MODEL -->
+                <div class="modal fade zoomIn" id="SaveModal" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body text-center padding-down-5" *ngIf="showModal==1">
+                                
+                                <div class="text-center">
+                                    <h5 class="bar-text fs-12 font-type">{{success}}</h5>
+                                     
+                                </div>
+                            </div>
+                            <div class="modal-body text-center padding-down-5" *ngIf="showModal==2">
+                                
+                                <div class="text-center">
+                                    <h5 class="bar-text fs-12 font-type">{{failed}}</h5>
+                                     
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 
+            <!-- END SUBMIT MODEL -->
+            <!-- Status Model-->
+            <div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true" style="float: right;">
+                <div class="modal-dialog modal-dialog-centered" style="float: right;">
+                    <div class="modal-content" style="float: right;">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                        </div>
+                        <div class="table-responsive">
+                
+                            <table class="table table-bordered table-nowrap align-middle mb-0">
+                                <thead>
+                                    <tr class="font-type">
+                                        <th scope="col" style="width: 30%;">LEVEL_ID</th>
+                                        <th scope="col" style="width: 30%;">APPROVER </th>
+                                        <th scope="col" style="width: 20%;">STATUS </th>
+                                        <th scope="col" style="width: 20%;">DATE</th>
+                                        <th scope="col" style="width: 20%;">REMARKS</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="font-type">
+                                    <tr  *ngFor="let approvedtl of approvelist">
+                                        <td>{{approvedtl.LEVEL_ID}}</td>
+                                        <td>{{approvedtl.APPROVER}}</td>
+                                        <td>{{approvedtl.STATUS}}</td>
+                                        <td>{{approvedtl.VERIFIED_DATE}}</td>
+                                        <td>{{approvedtl.VERIFIED_REMARKS}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Status Model-->
+
+
+
+
+
+            <!--Add Request Model-->
+                <div class="modal fade" id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="clearaddreq()"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="requestForm" (ngSubmit)="validateForm()">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="row">
+                                        <div *ngIf="validdates" class="text-danger">{{validdates}}</div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-2">
+                                                <h3 class="fw-semibold fs-13 font-type"><span>Leave Type</span></h3>
+                                                <select class="form-select fs-12 font-type height-check" aria-label="Default select example" #selectLeave name="reqleavetype" id="reqleavetype"  formControlName="reqleavetype" (change)="FetchAvailableLeaves()" required>
+                                                    <option value="0">Select</option>
+                                                    <option  *ngFor="let listleavedata of listleavetype" [hidden]="listleavedata.LEAVE_TYPE == 'Business Trip'" value="{{listleavedata.LEAVE_TYPE_ID}}">
+                                                        {{listleavedata.LEAVE_TYPE}}
+                                                      </option>                                                      
+                                                  </select>
+                                                  <div *ngIf="requestForm.get('reqleavetype')!.hasError('required') && requestForm.get('reqleavetype')!.touched" class="text-danger">Required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-2">
+                                                <h3 class="fw-semibold fs-13 font-type"><span>Available Leaves</span></h3>
+                                                <!-- <input type="text" class="form-control fs-12 font-type height-check" readonly name="noofleaves" id="noofleaves"  [(ngModel)]="noofleaves"  > -->
+                                                <!-- <input type="text" class="form-control fs-12 font-type height-check" readonly name="noofleaves" id="noofleaves"  [(ngModel)]="noofleaves"  > -->
+                                                <input type="text" class="form-control fs-12 font-type height-check" [formControl]="noofleaves" readonly value="{{noofleaves}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="mb-2">
+                                                <h3 class="fw-semibold fs-13 font-type"><span>Start Date</span></h3>
+                                                <input type="date"  class="form-control fs-12 font-type height-check"  id="startdate" name="startdate" formControlName="startdate" (change)="getDiffDays()" required />
+                                                <div *ngIf="requestForm.get('startdate')!.hasError('required') && requestForm.get('startdate')!.touched" class="text-danger">Required</div>
+                                                <div *ngIf="validdate" class="text-danger">{{validdate}}</div>
+                                            </div>  
+
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="mb-2">
+                                                <h3 class="fw-semibold fs-13 font-type"><span>End Date</span></h3>
+                                                <input type="date" id="NewInTime" class="form-control fs-12 font-type height-check"   id="enddate" name="enddate" formControlName="enddate" (change)="getDiffDays()" />
+                                                <div *ngIf="requestForm.get('enddate')!.hasError('required') && requestForm.get('enddate')!.touched" class="text-danger">Required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="mb-2">
+                                                <h3 class="fw-semibold fs-13 font-type"><span>No of Leave Days</span></h3>
+                                                <!-- <input type="text" class="form-control fs-12 font-type height-check" id="NoofDaysControl" name="NoofDaysControl" formControlName="NoofDaysControl" readonly value="{{dateDiff}}">
+                                                <div *ngIf="validdates" class="text-danger">{{validdates}}</div> -->
+                                                <input type="text" class="form-control fs-12 font-type height-check" name="NoofDaysControl" id="NoofDaysControl" formControlName="NoofDaysControl"  readonly>
+                                                <div *ngIf="requestForm.get('NoofDaysControl')!.hasError('required') && requestForm.get('enddate')!.touched" class="text-danger">Required</div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div >
+                                        <div class="row" [hidden]="hidedur_div=='0'">
+                                        <div class="col-lg-6">
+                                            <div class="mb-2" [hidden]="hidedur_div=='0'">
+                                                <h3 class="fw-semibold fs-13 font-type"><span>Leave Duration</span></h3>
+                                                <select class="form-select fs-12 font-type height-check" aria-label="Default select example" #selectduration name="duration" id="duration" [formControl]="lvduration" [hidden]="hidedur_div=='0'" (change)="sessionaction()" required>
+                                                    <option value="0">Select</option>
+                                                    <option  *ngFor="let durationData of listduration" value="{{durationData.KEY_ID}}">
+                                                        {{durationData.DATA_VALUE}}
+                                                    </option>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-2" [hidden]="sessaction=='1'">
+                                                <h3 class="fw-semibold fs-13 font-type"><span>Leave Session</span></h3>
+                                                <select class="form-select fs-12 font-type height-check" aria-label="Default select example" #selectsession name="session" id="session" [formControl]="lvsession"  [hidden]="hidedur_div=='0'" required>
+                                                    <option value="0">Select</option>
+                                                    <option  *ngFor="let LvSessionData of listsession" value="{{LvSessionData.KEY_ID}}">
+                                                        {{LvSessionData.DATA_VALUE}}
+                                                    </option>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                        <div class="mb-3">
+                                        <h3 class="fw-semibold fs-13 font-type"><span>Reason</span></h3>
+                                        <textarea class="form-control" required #reqreason id="reqreason" name="reqreason" formControlName="reqreasonControl"></textarea> 
+                                        <div *ngIf="requestForm.get('reqreasonControl')!.hasError('required') && requestForm.get('reqreasonControl')!.touched" class="text-danger">Required</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h3 class="fw-semibold fs-13 font-type"><span>Document Upload</span></h3>
+                                        <input class="form-control font-type fs-12" type="file" id="formFile" name="formFile" [formControl]="DocFileControl" (change)="Checksize($event.target)" >
+                                        <!-- <input type="file"  formControlName="source" name="source" (change)="Checksize($event.target)" > -->
+                                    </div>
+                                    <div  [hidden]="anual == '0'">
+                                    <div class="form-check form-check-info mb-2">
+                                        <input class="form-check-input" type="checkbox" id="formCheck11" [formControl]="airticket"  (click)="enable()" >
+                                        <label class="form-check-label font-type" for="formCheck11">
+                                            Air Ticket
+                                             <!-- [formControl]="singlechk" [(ngModel)]="Reqdata.isChecked"  -->
+                                        </label>
+                                    </div>
+                                 
+                                    <div class="row"  [hidden]="airticketstatus == '1'">                                            
+                                        <div class="col-lg-6">
+                                            <div class="mb-2">
+                                                <h3 class="fw-semibold fs-13 font-type"><span>Departure</span></h3>
+                                                <select class="form-select fs-12 font-type height-check" aria-label="Default select example" #selectdeparture name="departure" formControlName="departure" id="departure" Required>
+                                                   <option value="0">Select</option>
+                                                    <option  *ngFor="let CountryData of listcountry" value="{{CountryData.VALUE_FIELD}}">
+                                                        {{CountryData.DISPLAY_FIELD}}
+                                                    </option>
+                                                  </select> 
+                                                  <!-- <div *ngIf="requestForm.get('departure')!.hasError('required') && requestForm.get('departure')!.touched" class="text-danger">Required</div>                                                      -->
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <h3 class="fw-semibold fs-13 font-type"><span>Arrival</span></h3>
+                                                <select class="form-select fs-12 font-type height-check" aria-label="Default select example" #selectarrival name="arrival" formControlName="arrival" id="arrival"required>
+                                                    <option value="0">Select</option>
+                                                    <option  *ngFor="let CountryData of listcountry" value="{{CountryData.VALUE_FIELD}}">
+                                                        {{CountryData.DISPLAY_FIELD}}
+                                                    </option>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                     
+                                    </div>
+                                    <div class="row" [hidden]="costdoc == '0'" >                                            
+                                        <div class="col-lg-6 m-0" >
+                                            <div class="mb-2">
+                                                <h3 class="fw-semibold fs-13 font-type"><span>Cost</span></h3>
+                                                <input type="text" class="form-control fs-12 font-type height-check" [formControl]="costcontrol" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <h3 class="fw-semibold fs-13 font-type"><span>Document Upload</span></h3>
+                                                <input class="form-control font-type fs-12" type="file" id="airformFile" [formControl]="AirticketDocControl" >
+                                                  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                 
+                                </div>
+                                <div class="modal-footer" style="padding-bottom: 0px;">
+                                    <div class="hstack gap-2" *ngIf="!requestForm.valid">
+                                        <button type="submit" class="btn btn-orange font-type text-white" [disabled]="requestForm.valid" id="validate-btn" (click)="validateForm()">Submit</button>
+                                    </div>
+                                    <div class="hstack gap-2" *ngIf="requestForm.valid">
+                                        <button type="button" class="btn btn-orange font-type text-white" id="add-btn" (click)="addLeaveRequest();"  data-bs-target="#SaveModal" data-bs-toggle="modal">Submit</button>
+                                        <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
+                                    </div>
+                                </div>
+                            </form>
+                    </div>
+                </div>                
+                 <!--End Add Request Model-->
+
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

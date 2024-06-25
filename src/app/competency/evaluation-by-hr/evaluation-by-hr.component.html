@@ -1,0 +1,394 @@
+
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+
+        <!-- ========== App Menu ========== -->
+       
+        <app-sidemenu></app-sidemenu>
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content" style="overflow-x: hidden;">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card mt-n4 mx-n4 mb-n5">
+                                            <div class="bg-info-subtle">
+                                                <div class="card-body pb-4 mb-5">
+                                                    <div class="row">
+                                                        <div class="col-md">
+                                                            <div class="row align-items-center gy-2">
+                                                                <div class="col-sm">
+                                                                <div class="d-flex align-items-center ma-5">
+                                                                    <div class="flex-shrink-0">
+                                                                        <div class="avatar-sm">
+                                                                            <span class="avatar-title bg-info-subtle">
+                                                                                <img src="assets\styles\img\icons8-evaluation-64.png" alt="" width="100%">
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="flex-grow-1 ms-2 ma-5">
+                                                                        <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Competency Request</h2>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                                <div class="col-sm-auto">
+                                                                    <div class="flex-grow-1 ms-1 ">
+                                                                        <div class="page-title-right padding-up-5">
+                                                                            <a href="#">
+                                                                            <button type="button" class="btn btn-orange btn-sm font-type fs-13 h-30 font-type text-white" data-bs-toggle="modal"  data-bs-target="#AddRequestModal"><i class="ri-file-add-line align-middle me-1 fs-14"></i>New Evaluation Request</button>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <!--end row-->
+                                                        </div>
+                                                    </div>
+                                                    <!--end row-->
+                                                </div><!-- end card body -->
+                                        </div>
+                                    </div><!-- end card -->
+                                </div>
+                    <!-- end start page title -->
+
+                                <!-- LIST -->
+                               <div class="row topbar-up">
+                                <div class="col-lg-12">
+                                    <div class="card shadow-lg">
+                                        <div class="bg-light-subtle border border-start-0 border-end-0 py-2 px-3">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <div class="align-items-center d-flex ">
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Request Summary</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div class="search-box col-sm-3">
+                                                            <input type="text" class="form-control searchInput" id="searchInput" [(ngModel)]="searchInput" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                        <div class="">
+                                                            <select class="form-select font-type fs-12 textbox-15 h-30" name="accesscompany" id="accesscompany" (change)="fetchevaluationdatafilter()" >
+                                                                <option value ="-1">Company Name</option>
+                                                                <option  *ngFor="let CompanyList of listaccesscompany" value="{{CompanyList.KEY_ID}}">
+                                                                    {{CompanyList.DATA_VALUE}}
+                                                                </option>
+                                                            </select>  
+                                                        </div>
+                                                        <div>
+                                                            <select class="form-select h-30 font-type textbox-15" name="year" id="year"   (change)="fetchevaluationdatafilter()">
+                                                                <option value ="-1">Select Year</option>
+                                                                <option  *ngFor="let yrlist of yearlist" value="{{yrlist.DISPLAY_FIELD}}">
+                                                                    {{yrlist.DISPLAY_FIELD}} 
+                                                                </option>
+                                                            </select> 
+                                                        </div>
+                                                        <div>
+                                                            <select class="form-select font-type fs-12 textbox-15 h-30" name="trainingstatus" id="trainingstatus"  (change)="fetchevaluationdatafilter()">
+                                                                <option value ="-1">Select Status</option>
+                                                                <option  *ngFor="let trainingsts of liststatus" value="{{trainingsts.KEY_ID}}" [hidden]="trainingsts.KEY_ID==2">
+                                                                    {{trainingsts.DATA_VALUE}}
+                                                                </option>
+                                                            </select>   
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive table-card mb-0">
+                                                <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                                    <thead class="table-light text-white font-type">
+                                                    <tr class="border-orange">
+                                                        <th>SL No</th>
+                                                        <th>Company Name</th>
+                                                        <th>Department</th>
+                                                        <th>Employee</th>
+                                                        <th>Purpose</th>
+                                                        <th>Target Date</th>
+                                                        <th>Status</th>
+                                                        <th width="5%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all font-type fs-11" *ngFor="let listeve of listevaluationreq| search : searchInput| pagination: currentPage: itemsPerPage ; let i=index" >
+                                                <tr class="font-type">
+                                                    <td class="fw-semibold">{{i+1}}</td>
+                                                    <td>{{listeve.COMPANY_CODE}}</td>
+                                                    <td>{{listeve.DEPARTMENT}}</td>
+                                                    <td>{{listeve.EMP_NAME}}</td>
+                                                    <td style="white-space: pre-wrap;">{{listeve.PURPOSE}}</td>
+                                                    <td>{{listeve.TARGET_DATE|date:'dd-MM-yyyy'}}</td>
+                                                    <td class="status"><span *ngIf="listeve.REQ_STATUS==3" class="badge bg-danger text-white width-budge fs-11">Overdue</span>
+                                                        <span *ngIf="listeve.REQ_STATUS==1" class="badge bg-success text-white width-budge fs-11 fw-medium">Submitted</span>
+                                                        <span *ngIf="listeve.REQ_STATUS==0" class="badge bg-blue text-white width-budge fs-11 fw-medium">Pending</span>
+                                                        <span *ngIf="listeve.REQ_STATUS==4" class="badge bg-danger text-white width-budge fs-11">Cancelled</span>
+                                                    </td>
+                                                    <td>
+                                                            <ul class="list-inline hstack gap-2 mb-0">
+                                                                <li class="list-inline-item" *ngIf="listeve.REQ_STATUS!=1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Delete">
+                                                                    <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#CancelModal" (click)="editData(listeve.EMP_CODE,listeve.REQUEST_ID)">
+                                                                        <i class="ri-delete-bin-5-fill fs-18"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="list-inline-item expandChildTable" *ngIf="listeve.REQ_STATUS==1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Result">
+                                                                    <a  class="text-success d-inline-block"  (click)="fetchfromlocalstorage(listeve.EMP_NAME,listeve.PURPOSE,listeve.DESIGNATION,listeve.COMPANY_CODE,listeve.DEPID,listeve.EMP_CODE,listeve.REQUEST_ID,listeve.DESIGID)" >
+                                                                        <i class="ri-eye-fill fs-16"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                    </td>
+                                                    </tr>
+                                                <!-- <tr class="font-type">
+                                                    <td class="fw-semibold">02</td>
+                                                    <td>FZE - HFZA - MH</td>
+                                                    <td>Research and Development</td>
+                                                    <td>James Bangs</td>
+                                                    <td style="white-space: pre-wrap;">Transfer in Company</td>
+                                                    <td>29-04-2024</td>
+                                                    <td class="status"><span class="badge bg-success text-white width-budge fs-11 fw-medium">Submitted</span>
+                                                        <td>
+                                                            <ul class="list-inline hstack gap-2 mb-0">
+                                                                <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Result">
+                                                                    <a href="competencyAssessmentHR.html" class="text-success d-inline-block">
+                                                                        <i class="ri-eye-fill fs-16"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                </tr> -->
+                                                <!-- <tr class="font-type">
+                                                    <td class="fw-semibold">03</td>
+                                                    <td>FZE - WV</td>
+                                                    <td>HSE & Facility</td>
+                                                    <td>Boonie Hoynas Victor Parker James</td>
+                                                    <td style="white-space: pre-wrap;">Upon Receiving Certification or Training </td>
+                                                    <td>14-04-2024</td>
+                                                    <td class="status"><span class="badge bg-blue text-white width-budge fs-11 fw-medium">Pending</span>
+                                                      
+                                                        <td>
+                                                            <ul class="list-inline hstack gap-1 mb-0">
+                                                                <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Delete">
+                                                                    <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#CancelModal">
+                                                                        <i class="ri-delete-bin-5-fill fs-18"></i>
+                                                                    </a>
+                                                                </li>
+                                                             </ul>
+                                                        </td>
+                                                </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div *ngIf="listevaluationreq">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                                <div class="col-sm">
+                                                <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                    
+                                                <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                            </div>
+                                            </div>
+                                                
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                    <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                    <li class="page-item">
+                                                        <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                    </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                    <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                    </li>
+                                                </ul>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                               </div>
+                                <!-- LIST -->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+                <!-- End Page-content -->
+
+                 <!--Add Request Model-->
+                 <div class="modal fade zoomIn " id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="HRrequestForm" (ngSubmit)="HRvalidateForm()">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="row mb-3">
+                                            <div class="col-lg-2">
+                                                <h6 class="fs-12 font-type fw-semibold">Company</h6>
+                                            </div>
+                                            <div class="col-lg-10">
+                                                <div class="div-space">
+                                                    <select class="form-select h-30 font-type textbox-15 fs-12" #comcompany formControlName="comcompany" (change)="DepartmentList(comcompany.value)">
+                                                        <option value ="">Select Company Name</option>
+                                                        <option  *ngFor="let CompanyList of listaccesscompany" value="{{CompanyList.KEY_ID}}">
+                                                                {{CompanyList.DATA_VALUE}}
+                                                        </option>
+                                                      </select>
+                                                      <div *ngIf="HRrequestForm.get('comcompany')!.hasError('required') && HRrequestForm.get('comcompany')!.touched" class="text-danger">Please select company</div>
+                                                  </div>
+                                            </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-2">
+                                            <h6 class="fs-12 font-type fw-semibold">Department</h6>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <div class="div-space">
+                                                <select class="form-select font-type h-30 textbox-15 fs-12" #depart formControlName="comdepartment" (change)=EmployeeList(comcompany.value,depart.value)>
+                                                    <option value ="">Select Department Name</option>
+                                                    <option  *ngFor="let DepartmentList of department" value="{{DepartmentList.KEY_ID}}">
+                                                        {{DepartmentList.DATA_VALUE}}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="HRrequestForm.get('comdepartment')!.hasError('required') && HRrequestForm.get('comdepartment')!.touched" class="text-danger">Please select department</div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Employee</span></h6>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <ng-multiselect-dropdown #dropdown
+                                            [settings]="dropdownSettings"
+                                            formControlName="hemployee"
+                                            [data]="listEmployee">     
+                                            </ng-multiselect-dropdown> 
+                                            <div *ngIf="HRrequestForm.get('hemployee')!.hasError('required') && HRrequestForm.get('hemployee')!.touched" class="text-danger">Please select employee</div>          
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-2">
+                                            <h6 class="fs-12 font-type fw-semibold">Purpose</h6>
+                                        </div>
+                                        <div class="col-lg-10">
+                                                <textarea class="form-control font-type textbox-15 fs-12" placeholder="Enter the purpose" formControlName="compurpose"> </textarea>
+                                                <div *ngIf="HRrequestForm.get('compurpose')!.hasError('required') && HRrequestForm.get('compurpose')!.touched" class="text-danger">Please enter purpose</div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Target Date</span></h6>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <input type="date" class="form-control font-type fs-12 mb-0 textbox-15" value="2023-11" formControlName="comtargetdate">  
+                                            <div *ngIf="HRrequestForm.get('comtargetdate')!.hasError('required') && HRrequestForm.get('comtargetdate')!.touched" class="text-danger">Please enter target date</div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 pt-2">
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <div  *ngIf="!HRrequestForm.valid">
+                                                <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" [disabled]="HRrequestForm.valid" id="validate-btn"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                            </div>
+                                            <div *ngIf="HRrequestForm.valid">
+                                                <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" id="add-btn" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="HRRequests()"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                            </div>
+                                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " ><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> 
+                 <!--End Request Model-->
+
+
+                 <!--Cancel Request Model-->
+                 <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="text-center">
+                                    <h5 class="fs-13 font-type">You are about to delete an entry ?</h5>
+                                    <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                                    <div class="hstack gap-2 justify-content-center remove">   
+                                        <button class="btn btn-success font-type" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close">No, Go back!</button>
+                                        <button class="btn btn-danger font-type" (click)="cofirmEdit(this.emplcode,this.reqID)">Yes, Continue</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Cancel Request Model-->
+
+
+                 <!-- success model -->
+
+                <button id="openModalButtonForalertsuccess"  style="display: none;" data-bs-toggle="modal" data-bs-target="#SuRecordModals">Open Modal</button>
+                
+                <div class="modal fade zoomIn" id="SuRecordModals" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body text-center padding-down-5"  *ngIf="showModals==1">
+                                
+                                <div class="text-center">
+                                    <h5 class="fs-13 font-type"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{successs}}</h5>
+                                </div>
+                            </div>
+                            <div class="modal-body text-center padding-down-5"  *ngIf="showModals==2">
+                                
+                                <div class="text-center">
+                                    <h5 class="fs-13 font-type"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{faileds}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <app-footer></app-footer>
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->

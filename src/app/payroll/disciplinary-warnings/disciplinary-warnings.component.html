@@ -1,0 +1,329 @@
+  <!-- Begin page -->
+  <div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+   
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Disciplinary Actions</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Individual -->
+
+
+                <div class="card topbar-up">
+                    <div class="card-body">
+                        <form  [formGroup]="SaveForm" (ngSubmit)="validateSaveForm()">
+                        <div class="border border-dashed rounded p-3 pa-0 mb-2">
+                            <div class="row mb-1 margin-up-10">
+                                <div class="col-lg-4 pt-2">
+                                    <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
+                                    <select class="form-select font-type fs-11" aria-label="Default select example" id="company" name="company"  formControlName="company" #company (change)="DepartmentListFn(company.value)">
+                                        <option value="" selected disabled>Select</option>
+                                        <option *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">{{CompanyList.DATA_VALUE}}</option>
+                                    </select>   
+                                </div>
+                                <div class="col-lg-4 pt-2">
+                                    <h6 class="font-type fs-12 fw-semibold"><span>Department </span></h6>
+                                    <select class="form-select font-type fs-11" aria-label="Default select example" id="department" name="department"  formControlName="department" #department required (change)="EmployeeListFn(department.value,company.value)">
+                                        <option value="" selected disabled>Select</option>
+                                        <option  *ngFor="let DepartmentList of listDepartment" value="{{DepartmentList.KEY_ID}}">{{DepartmentList.DATA_VALUE}}</option>
+                                    </select>
+                                 
+                                </div>
+                                <div class="col-lg-4 pt-2">  
+                                    <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
+                                    <select class="form-select font-type fs-11" aria-label="Default select example" id="emp_code" name="emp_code" #emp_code required  formControlName="emp_code">
+                                        <option value="" selected disabled>Select</option>
+                                        <option  *ngFor="let EmployeeList of listEmployee" value="{{EmployeeList.EMP_CODE}}">{{EmployeeList.EMP_NAME}}</option>
+                                    </select>   
+                                    <div *ngIf="SaveForm.get('emp_code')!.hasError('required') && SaveForm.get('emp_code')!.touched" class="text-danger">
+                                        Please, select the employee.
+                                    </div>                   
+                                </div>   
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-lg-2 pt-2">
+                                    <h6 class="font-type fs-12 fw-semibold"><span>Issued Date </span></h6>
+                                    <input type="date" class="form-control font-type fs-11 mb-0 textbox-15" name="fromdt" formControlName="fromdt" min="{{mindate}}" (change)="datevalidation()">
+                                    <div *ngIf="SaveForm.get('fromdt')!.hasError('required') && SaveForm.get('fromdt')!.touched" class="text-danger">
+                                        Please, Select the start date.
+                                    </div>
+                                    <div *ngIf="validdate" class="text-danger">{{validdate}}</div>
+                                </div>
+                                <div class="col-lg-2 pt-2">  
+                                    <h6 class="font-type fs-12 fw-semibold"><span>Reversal Date </span></h6>
+                                    <input type="date" class="form-control font-type fs-11 mb-0 textbox-15" name="todt" formControlName="todt" min="{{mindate}}" (change)="datevalidation()">          
+                                    <div *ngIf="SaveForm.get('todt')!.hasError('required') && SaveForm.get('todt')!.touched" class="text-danger">
+                                        Please, Select the end date.
+                                    </div>              
+                                </div>
+                                <div class="col-lg-8 pt-2">  
+                                        <h6 class="font-type fs-12 fw-semibold"><span>Remarks</span></h6>
+                                        <textarea class="form-control font-type textbox-15 fs-11" placeholder="Enter remarks" rows="2" name="reason" formControlName="reason"></textarea>                     
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <div class="hstack gap-2" *ngIf="!SaveForm.valid">
+                                        <button type="submit" class="btn btn-orange font-type text-white" [disabled]="SaveForm.valid" id="validate-btn" (click)="validateSaveForm()">Submit</button>
+                                    </div>
+                                
+                                    <div class="hstack gap-2" *ngIf="SaveForm.valid">
+                                        <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="SaveDisciplinary()">Submit</button>
+                                    </div>
+                                    <button type="button" class="btn btn-blue font-type" (click)="clear()">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!--TABLE LIST-->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header" style="padding:10px">
+                                <div class="row align-items-center gy-3">
+                                    <div class="col-sm">
+                                        <div class="align-items-center d-flex ">
+                                            <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Disciplinary Actions Summary</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-auto">
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            <div class="search-box">
+                                                <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..." id="searchInput" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                <i class="ri-search-line search-icon"></i>
+                                            </div>
+                                            <div class="">
+                                                <select class="form-select font-type fs-11" aria-label="Default select example" id="companycd" name="companycd" #companycd (change)="FetchDisciplinaryWarnings(companycd.value)">
+                                                    <option value="-1">All Company</option>
+                                                    <option *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">{{CompanyList.DATA_VALUE}}</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <select class="form-select font-type fs-11 textbox-15" id="activestatus" name="activestatus" #activestatus  (change)="Activewarnings(activestatus.value)">
+                                                    <option value="-1">All</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="0">Closed</option>
+                                                </select>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive table-card mb-0">
+                                    <table class="table table-nowrap align-middle table-bordered border-orange">
+                                        <thead class="table-light text-white font-type">
+                                        <tr class="border-orange">
+                                            <th>Emp Code</th>
+                                            <th>Name</th>
+                                            <th>Company</th>
+                                            <th>Department</th>
+                                            <th>Issued Date</th>
+                                            <th>Reversal Date</th>
+                                            <th>Remarks</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list form-check-all font-type fs-11">
+                                    <tr class="font-type" *ngFor="let data of listdata  | search : searchInput | pagination: currentPage: itemsPerPage;index as i">
+                                        <th>{{data.EMP_CODE}}</th>
+                                        <td>{{data.EMP_NAME}}</td>
+                                        <td>{{data.COMPANY}}</td>
+                                        <td>{{data.DEPARTMENT}}</td>
+                                        <td>{{data.ISSUED_DATE | date:"dd-MM-yyyy"}}</td>
+                                        <td>{{data.REVERSAL_DATE | date:"dd-MM-yyyy"}}</td>
+                                        <td>{{data.REMARKS}}<a href="#RemarksModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-11" style="text-decoration: underline;" (click)="selectreason(data.REMARKS)">View More</a></td>
+                                        <td class="status">
+                                            <ng-container *ngIf="data.REVERSAL_DATE < mindate">
+                                                <span class="badge bg-danger text-white  width-budge fs-11 fw-medium">Closed</span>
+                                            </ng-container>
+                                            <ng-container *ngIf="data.REVERSAL_DATE > mindate">
+                                                <span class="badge bg-success text-white  width-budge fs-11 fw-medium">Active</span>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ul class="list-inline hstack gap-2 mb-0">
+                                                <li class="list-inline-item edit text-blue d-inline-block edit-item-btn" data-bs-trigger="hover" data-bs-placement="top" title="Edit" data-bs-toggle="modal" data-bs-target="#EditModal" (click)="Editempcode(data.EMP_CODE,data.WARNING_ID,data.REVERSAL_DATE,data.REMARKS,data.ISSUED_DATE)">
+                                                    <i class="ri-pencil-fill fs-16"></i>
+                                                </li>
+                                                <li class="list-inline-item text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" data-bs-trigger="hover" data-bs-placement="top" title="Remove" data-bs-target="#SuccessRecordModal" (click)="Deletewarnings(data.WARNING_ID,data.EMP_CODE)">
+                                                    <i class="ri-delete-bin-5-fill fs-16"></i>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div *ngIf="listdata">
+                                <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                    <div class="col-sm">
+                                      <div class="font-type fs-12 text-muted">
+                                        Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                        - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                        of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                      </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="font-type fs-12 text-muted">
+                                            Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-auto mt-4 mt-sm-0">
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            <div>
+                                                <div class="input-group">
+                                        <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                        
+                                       <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                  </div>
+                                </div>
+                                     
+                                    <div class="col-sm-auto mt-3 mt-sm-0">
+                                      <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                        <li class="page-item">
+                                          <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                        </li>
+                                        <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                          <li class="page-item">
+                                            <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                          </li>
+                                        </ng-container>
+                                        <li class="page-item">
+                                          <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                        </div>
+                    </div>
+                            </div> 
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                   </div>
+                    <!--Remarks Model-->
+                    <div class="modal fade zoomIn" id="RemarksModal" tabindex="-1" aria-labelledby="RemarksModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off">
+                                    <div class="modal-body ">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="mb-1">
+                                            <label class="form-label font-type">{{REMARKS}}</label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                     <!--Edit Model-->
+                     <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="EditModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="clearEdit()"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off" [formGroup]="EditForm" (ngSubmit)="validateEditForm()" >
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                        
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-2">
+                                                  <h3 class="font-type fs-12 fw-semibold"><span>Reversal Date </span></h3>
+                                                  <input type="date" class="form-control font-type fs-11 mb-0 textbox-15" name="reversaldt" formControlName="reversaldt" min="{{mindate}}" (change)="Editdatevalidation()">          
+                                                  <div *ngIf="EditForm.get('reversaldt')!.hasError('required') && EditForm.get('reversaldt')!.touched" class="text-danger">
+                                                      Please, Select the end date.
+                                                  </div>  
+                                                  <div *ngIf="validdates" class="text-danger">{{validdates}}</div> 
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-2">
+                                                    <h3 class="fw-semibold fs-13 font-type"><span>Remarks</span></h3>
+                                                    <textarea class="form-control font-type textbox-15 fs-11" placeholder="Enter remarks" rows="2" name="remarks" formControlName="remarks"></textarea>                                                                      
+                                                </div>
+                                            </div>
+                                        </div>                                       
+                                           
+                                    <div class="modal-footer" style="padding-bottom: 0px;">
+                                        <div class="hstack gap-2" *ngIf="!EditForm.valid">
+                                            <button type="submit" class="btn btn-orange font-type text-white" [disabled]="EditForm.valid" id="validate-btn" (click)="validateEditForm()">Submit</button>
+                                        </div>
+                                    
+                                        <div class="hstack gap-2" *ngIf="EditForm.valid">
+                                            <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Edit()">Submit</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </form>
+                        </div>
+                    </div> 
+                    </div>               
+                     <!--End Edit Model--> 
+                     <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                    <!--Modal For Success Message Start-->
+                    <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==1"> 
+                                    <div class="container">
+                                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                
+                                    </div>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==2">
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                    
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Modal For Success Message End-->
+                </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+ 
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

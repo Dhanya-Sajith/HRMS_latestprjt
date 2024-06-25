@@ -1,0 +1,202 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+   
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Medical Insurance</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row topbar-up">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card">
+                            <div class="card-header border-bottom-dashed align-items-center bg-light-blue">
+                                <div class="d-flex align-items-center flex-wrap gap-2">
+                                    <div class="flex-grow-1">
+                                        <div class="form-check form-check-info">
+                                            <h4 class="card-title"><b>Insurance Type : {{documentname}}</b></h4>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div class="hstack text-nowrap gap-2">
+                                            <a href="DashboardEmp" class="btn btn-danger"><i class="fa fa-angle-double-left"></i> Exit </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ma-10"  style="justify-content: center;" [hidden]="documentid == 8">
+                            <div class="col-md-8 col-md-8">
+                            <div class="card-body p-0 topbar-up">
+                                <div class="p-3">
+                                    <div class="acitivity-timeline acitivity-main">
+                                        <div class="acitivity-item d-flex py-1">
+                                            <div class="flex-grow-1 ms-3 ">
+                                                <div class="col-lg-10 col-md-10">
+                                                    <div class="card-body border border-dashed pa-6-5" (click)="view_document(documentid,1)">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar-xs flex-shrink-0 ms-1">
+                                                                <span class="avatar-title bg-info-subtle text-info rounded-circle fs-4">
+                                                                    <i class="fa fa-file-pdf-o" style="color: red;"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <p class="fw-semibold mb-0 font-type">Table of Benefits</p>
+                                                            </div>
+                                                        </div>
+                                                    </div><br>
+                                                    <div class="card-body border border-dashed pa-6-5" (click)="view_document(documentid,2)">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar-xs flex-shrink-0 ms-1">
+                                                                <span class="avatar-title bg-info-subtle text-info rounded-circle fs-4">
+                                                                    <i class="fa fa-file-excel-o" style="color: green;"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <p class="fw-semibold mb-0 font-type">Network List</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- end card body -->
+                            
+                        </div><!-- end card -->
+                    </div>
+                </div><!-- end row -->
+
+            <!--start Upload Model-->     
+            <!-- <div class="modal fade" id="UploadModal" tabindex="-1" aria-labelledby="UploadModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="clearEdit()"></button>
+                        </div>
+                        <form class="tablelist-form" autocomplete="off" [formGroup]="EditForm" (ngSubmit)="validateEditForm()" >
+                            <div class="modal-body">
+                                <input type="hidden" id="id-field" />
+                                
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mb-2">
+                                        <h3 class="font-type fs-12 fw-semibold"><span>Upload Ticket</span></h3>
+                                        <input class="form-control font-type fs-12" type="file" id="AirticketDocControl" formControlName="AirticketDocControl">          
+                                        <div *ngIf="EditForm.get('AirticketDocControl')!.hasError('required') && EditForm.get('AirticketDocControl')!.touched" class="text-danger">
+                                            Please, upload the airticket..
+                                        </div>  
+                                        </div>
+                                    </div>
+                                </div>                                       
+                                
+                            <div class="modal-footer" style="padding-bottom: 0px;">
+                                <div class="hstack gap-2" *ngIf="!EditForm.valid">
+                                    <button type="submit" class="btn btn-soft-success" [disabled]="EditForm.valid" id="validate-btn" (click)="validateEditForm()">Upload</button>
+                                </div>
+                            
+                                <div class="hstack gap-2" *ngIf="EditForm.valid">
+                                    <button type="button" class="btn btn-soft-success" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="uploaddocument()">Upload</button>
+                                </div>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div> 
+            </div>    -->
+            <!--End Upload Model--> 
+
+             <!--Edit Model-->
+             <div class="modal fade" id="ViewDocModal" tabindex="-1" aria-labelledby="ViewDocModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                        </div>
+                        <form class="tablelist-form" autocomplete="off">
+                            <div class="modal-body">
+                                <input type="hidden" id="id-field" />
+                                    <h6 class="mb-3 fw-semibold text-uppercase font-type">Ticket</h6>
+                                    <div class="row g-3">
+                                        <div class="col-xxl-4 col-lg-12">
+                                            <div class="border rounded border-dashed p-2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <div class="avatar-sm">
+                                                            <div class="avatar-title bg-light text-secondary rounded fs-24">
+                                                                <i class="fa fa-ticket"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-shrink-0 ms-2">
+                                                        <div class="d-flex gap-1">
+                                                            <!-- <button type="button" class="btn btn-icon text-muted btn-sm fs-18" (click)="download_documents()"><i class="ri-download-2-line"></i></button> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- end row -->
+                            </div>  
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--End Edit Model-->
+
+            <!--Modal For Success Message Start-->
+            <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                        </div>
+                        <!-- <div class="modal-body" *ngIf="showModal==1"> 
+                            <div class="container">
+                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                        
+                            </div>
+                        </div>
+                        <div class="modal-body" *ngIf="showModal==2">
+                        <div class="container">
+                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                            
+                        </div> -->
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!--Modal For Success Message End-->
+        </div>
+       <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

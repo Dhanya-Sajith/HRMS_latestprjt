@@ -1,0 +1,659 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper"> 
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+   
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+
+<div class="main-content" >
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">My Payroll</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row topbar-up">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                    <div class="card-body pb-0 px-4">
+                                        <ul class="nav nav-tabs-custom border-bottom-0 font-type" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active fw-semibold fs-13" data-bs-toggle="tab" href="#Salary-Structure" role="tab">
+                                                    Salary Structure
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link fw-semibold fs-13" data-bs-toggle="tab" href="#payslips" role="tab">
+                                                   Payslips
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link fw-semibold fs-13" data-bs-toggle="tab" href="#Annual-Earnings" role="tab">
+                                                   Annual Earnings
+                                                </a>
+                                            </li>
+                                            <!-- <li class="nav-item">
+                                                <a class="nav-link fw-semibold fs-13"  href="Generate_Payslip" >
+                                                   Payslips Generate
+                                                </a>
+                                            </li> -->
+                                        </ul>
+                                    </div>
+                                    <!-- end card body -->
+                            </div>
+                            <!-- end card -->
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!--TAB 1-->
+                    <div class="row margin-up-5">
+                        <div class="col-lg-12">
+                            <div class="tab-content text-muted">
+                                <div class="tab-pane fade show active" id="Salary-Structure" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-8">
+                                            <!-- <div class="card">
+                                                <div class="card-body">
+                                                    <div class="text-muted">
+                                                        <div class="pt-3 border-top border-top-dashed mt-1 border-bottom border-bottom-dashed margin-up-5">
+                                                            <div class="row gy-3">
+                                                                <div class="col-lg-4 col-md-4">
+                                                                    <div>
+                                                                        <p class="mb-2 text-uppercase fw-medium font-type text-blue fw-semibold">Monthly CTC : </p>
+                                                                        <h5 class="fs-15 mb-3 font-type fw-semibold">7000 AED</h5>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4">
+                                                                    <div>
+                                                                        <p class="mb-2 text-uppercase fw-medium font-type text-blue fw-semibold">Yearly CTC :</p>
+                                                                        <h5 class="fs-15 mb-3 font-type fw-semibold">84,000 AED</h5>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4">
+                                                                    <div>
+                                                                        <p class="mb-2 text-uppercase fw-medium font-type text-blue fw-semibold">Earnings :</p>
+                                                                        <h5 class="fs-15 mb-3 font-type fw-semibold">5000 AED</h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <!-- end card -->
+
+                                            <div class="card margin-up-5" >
+                                                <div class="card-header align-items-center d-flex h-30">
+                                                    <h4 class="card-title mb-0 flex-grow-1 font-type fw-semibold">From {{this.maxdate}} </h4>
+                                                </div><!-- end card header -->
+                                                <ul class="list-group list-group-flush ma-10">
+
+                                                    <!-- <li class="list-group-item list-group-item-action border-bottom-0"> -->
+                                                        <!-- <div class="d-flex align-items-center">
+                                                            <div class="ms-2 flex-grow-1">
+                                                                    <h6 class="fs-13 mb-1 font-type">{{salarydet.ALLOWANCE_NAME}}</h6>
+                                                            </div>
+                                                            <div class="ms-1">
+                                                                <h6 class="font-type fw-semibold fs-15">{{salarydet.AMOUNT}}</h6>
+                                                            </div>
+                                                        </div> -->
+
+                                                        <table class="table align-middle table-nowrap table-hover font-type">
+                                                            <thead class="table-light text-white">
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th  class="linehtsty">Component</th>
+                                                                    <th  class="linehtsty" style="text-align: right;">Amount (AED)</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody style="background-color: #fffbfb;">
+                                                                <tr class="font-type" *ngFor="let salarydet of salarydetails">
+                                                                    <td></td>
+                                                                    <td  class="linehtsty">{{salarydet.ALLOWANCE_NAME}}</td>
+                                                                    <td  class="linehtsty" style="text-align: right;">{{salarydet.AMOUNT}}</td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    <!-- </li> -->
+                                                    
+                                                </ul>
+                                                <!-- end card body -->
+                                            </div>
+                                            <!-- end card -->
+                                        </div>
+                                        <!-- ene col -->
+                                        <div class="col-md-4 col-lg-4">
+                                            <div class="card ma-10">
+                                                <div class="card-header align-items-center d-flex border-bottom-dashed h-30">
+                                                    <h4 class="card-title mb-0 flex-grow-1 font-type fw-semibold">Salary Revision History</h4>
+                                                </div>
+                                                <div data-simplebar data-simplebar-auto-hide="true" data-simplebar-track="white" style="max-height: 230px;min-height:auto">
+                                                <div class="card-body">
+                                                    <div class="accordion" id="default-accordion-example" *ngFor="let salaryhis of salaryhistory" >
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header" id="headingOne">
+                                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + salaryhis.ID" aria-expanded="true" aria-controls="collapseOne">
+                                                                    <h5 class="card-title fw-semibold mb-1 fs-13 font-type"><span class="text-orange font-type">{{salaryhis.EFFECTIVE_DATE}}</span></h5>
+                                                                </button>
+                                                            </h2>
+                                                            <div id="{{salaryhis.ID}}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#default-accordion-example">
+                                                                <div class="accordion-body">
+                                                                    <div>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-borderless mb-0 font-type">
+                                                                                <tbody>
+                                                                                    <tr  *ngFor="let menus of salaryhis.SALARY_COMPONENTS; let i = index" >
+                                                                                        <td>{{menus.COMPONENT_NAME}}</td>
+                                                                                        <td class="text-end fw-semibold fs-14">{{menus.COMPONENT_AMOUNT}}</td>
+                                                                                    </tr>
+                                                                                    <tr class="table-active bg-light-blue font-type">
+                                                                                        <th class="ma-10">Total (AED) :</th>
+                                                                                        <td class="text-end font-type fs-14">
+                                                                                            <span class="fw-semibold text-blue fs-16" id="cart-total">
+                                                                                                {{salaryhis.GROSS_SALARY}}
+                                                                                            </span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <!-- end table-responsive -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>                                                    
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                <!-- end card body -->
+                                            </div>
+                                            <div class="mt-auto text-center">
+                                                <img src="assets\styles\img\img567.png" alt="Task" class="img-size" />
+                                            </div>
+                                            <!-- end card -->
+                                        </div>
+                                        <!-- end col -->
+                                    </div>
+                                    <!-- end row -->
+                                </div>
+                                <!-- end tab pane -->
+                                <div class="tab-pane fade" id="payslips" role="tabpanel">
+                                    <div class="card">
+                                        <div class="card-header bg-light-blue h1-50">
+                                            <div class="d-sm-flex align-items-center margin-up-7">
+                                                <div class="col-md-3">
+                                                    <div class="d-flex align-items-center gap-4">
+                                                    <span class="font-type fs-12 fw-semibold">Month </span>
+                                                    <input type="month" class="form-control font-type fs-11 mb-0 textbox-15" id="paymonth"  [value]="getDefaultMonth() | date:'yyyy-MM'" (change)="fetch_payslipDatafilter()" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-header p-0 border-0 bg-light-subtle">
+                                            <div class="row g-0 text-center">
+                                                <div class="col-lg-4 col-md-4" *ngIf="payslipdt && payslipdt.length > 0">
+                                                    <div class="p-3 border border-dashed border-start-0">
+                                                        <h5 class="mb-1 text-blue font-type fw-semibold fs-16">{{this.payslipdt[0].TOTAL_ADDITION}} AED</h5>
+                                                        <p class="mb-0 font-type fw-semibold">Earnings</p>
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-4 col-md-4" *ngIf="payslipdt && payslipdt.length > 0">
+                                                    <div class="p-3 border border-dashed border-start-0">
+                                                        <h5 class="mb-1 text-danger font-type fw-semibold fs-16">{{this.payslipdt[0].TOTAL_DEDUCTION}} AED</h5>
+                                                        <p class="mb-0 font-type fw-semibold">Deductions</p>
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-4 col-md-4" *ngIf="payslipdt && payslipdt.length > 0">
+                                                    <div class="p-3 border border-dashed border-start-0">
+                                                        <h5 class="mb-1 text-success font-type fw-semibold fs-16">{{this.payslipdt[0].NET_AMOUNT}} AED</h5>
+                                                        <p class="mb-0 font-type fw-semibold">Net Pay</p>
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                            </div>
+                                        </div><!-- end card header -->
+                                        <div class="card-header mb-2">
+                                            <div class="d-flex align-items-center">
+                                                <h5 class="card-title flex-grow-1 mb-0 font-type fw-semibold">Payslip for the month of <input type="text" class="mb-1 font-type fw-semibold fs-18" style="border: none;" name="datedisplay" id="datedisplay" [formControl]="datedisplay" readonly></h5>
+                                                <div class="flex-shrink-0">
+                                                    <a  class="btn btn-blue btn-sm font-type" (click)=convertToPDF()><i class="ri-download-2-fill align-middle me-1"></i> Download </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+                                        <div class="col-md-12 col-lg-12" *ngIf="payslipdt && payslipdt.length> 0">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-3 flex-grow-1 font-type fw-semibold text-blue fs-14">Employee Pay Summary</h4>
+                                            <form action="">
+                                                <div class="row mb-2">
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type">Employee Code</label>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type fw-semibold">{{this.payslipdt[0].EMP_CODE}}</label>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type">Employee Name</label>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type fw-semibold">{{this.payslipdt[0].EMP_NAME}}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type">Designation</label>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type fw-semibold">{{this.payslipdt[0].DESIG_VAL}}</label>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type">Bank</label>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type fw-semibold">{{this.payslipdt[0].BANK_NAME}}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type">IBAN NO</label>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type fw-semibold">{{this.payslipdt[0].IBAN_NO}}</label>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type">Days</label>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <label class="form-label font-type fw-semibold">{{this.payslipdt[0].DAYS_WORKED}}</label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        </div> 
+
+                                    <div class="p-3 border border-dashed border-start-0">
+                                    <div class="row">
+                                    <div class="col-md-6 col-lg-6">
+                                    <div class="card-body mb-3">
+                                    <div class="table-responsive table-card">
+                                        <table class="table align-middle table-nowrap mb-0 table-hover">
+                                            <thead class=" bg-light-blue">
+                                                <tr class="bg-light-blue font-type h-30 fs-13 text-uppercase">
+                                                    <th scope="col" class="bg-blue" colspan="2" style="text-align: center;">Earnings</th>
+                                                </tr>
+                                                <tr class="bg-light-blue font-type h-30 fs-13">
+                                                    <th scope="col" class="bg-blue">Description</th>
+                                                    <th scope="col" class="bg-blue">Amount (AED)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="font-type" *ngIf="payslipdt && payslipdt.length > 0 && payslipdt[0].EARNINGS && payslipdt[0].EARNINGS.length > 0">
+                                                <ng-container *ngFor="let payslip of payslipdt">
+                                                    <ng-container *ngFor="let salpay of payslip.EARNINGS; let i = index">
+                                                      <tr class="h1-50" *ngIf="salpay.STS === 1">
+                                                        <td>{{salpay.PAYMENT_CATEGORY}}</td>
+                                                        <td>{{salpay.AMOUNT}}</td>
+                                                      </tr>
+                                                    </ng-container>
+                                                  </ng-container>
+                                            </tbody>
+                                            <tfoot class="bg-light-blue font-type text-blue" *ngIf="payslipdt && payslipdt.length > 0 && payslipdt[0].EARNINGS && payslipdt[0].EARNINGS.length > 0">
+                                                <tr>
+                                                    <td colspan="1" class="fw-semibold fs-15 text-blue">Gross Earnings</td>
+                                                    <td class="fw-semibold fs-15 text-blue">{{this.payslipdt[0].TOTAL_ADDITION}} AED </td>                                                   
+                                                </tr>
+                                            </tfoot>
+                                            <div *ngIf="!payslipdt || payslipdt.length === 0 || !payslipdt[0].EARNINGS || payslipdt[0].EARNINGS.length === 0">
+                                                <p style="margin-top: 10px;color: red;">No earnings data available</p>
+                                            </div>
+                                        </table><!-- end table -->
+                                    </div><!-- end table responsive -->
+                                    </div>
+                                    
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-6">
+                                    <div class="card-body">
+                                        <div class="table-responsive table-card">
+                                            <table class="table align-middle table-nowrap mb-0 table-hover">
+                                                <thead class="bg-danger">
+                                                    <tr class="bg-danger-subtle font-type h-30 fs-13 text-uppercase">
+                                                        <th scope="col" class="bg-blue text-uppercase" colspan="2" style="text-align: center;">Deductions</th>
+                                                    </tr>
+                                                    <tr class="bg-danger-subtle font-type h-30">
+                                                        <th scope="col" class="bg-blue">Description</th>
+                                                        <th scope="col" class="bg-blue">Amount (AED)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="font-type" *ngIf="payslipdt && payslipdt.length > 0 && payslipdt[0].EARNINGS && payslipdt[0].EARNINGS.length > 0">
+                                                    <ng-container *ngFor="let payslip of payslipdt">
+                                                        <ng-container *ngFor="let salpay of payslip.EARNINGS; let i = index">
+                                                          <tr class="h1-50" *ngIf="salpay.STS === 2">
+                                                            <td>{{salpay.PAYMENT_CATEGORY}}</td>
+                                                            <td>{{salpay.AMOUNT}}</td>
+                                                          </tr>
+                                                        </ng-container>
+                                                      </ng-container>
+                                                </tbody><!-- end tbody -->
+                                                <tfoot class="bg-danger-subtle font-type text-danger" *ngIf="payslipdt && payslipdt.length > 0 && payslipdt[0].EARNINGS && payslipdt[0].EARNINGS.length > 0">
+                                                    <tr>
+                                                        <td colspan="1" class="fw-semibold fs-15">Gross Deductions</td>
+                                                        <td class="fw-semibold fs-15">{{this.payslipdt[0].TOTAL_DEDUCTION}} AED</td>
+                                                    </tr>
+                                                </tfoot>
+                                                <div *ngIf="!payslipdt || payslipdt.length === 0 || !payslipdt[0].EARNINGS || payslipdt[0].EARNINGS.length === 0">
+                                                    <p style="margin-top: 10px;color: red;">No deductions data available</p>
+                                                </div>
+                                            </table><!-- end table -->
+                                        </div><!-- end table responsive -->
+                                    </div>
+                                    
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="card" style="opacity: 0;">
+                                        <div class="card-header" style="padding:10px">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <div class="align-items-center d-flex ">
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Payslip</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div id="htmlElementId" >
+                                                <div class="card-body">
+                                                    <div class="row gy-3" style="border-bottom: 3px solid #1a6fd8;">
+                                                        <div class="col-md-3">
+                                                            <!-- <img src={{hostname}}{{this.companyData[0].DATA_VALUE}} alt="" class="img-size"> -->
+                                                            <div class="avatar-title-lg p-1" *ngIf="this.companyData[0].COMPANY_ID=='Worldwide Oilfield Machine Middle East' || this.companyData[0].COMPANY_ID=='Worldwide Oilfield Machine Sales and Marketing Ltd' ">
+                                                                <img src="assets\styles\img\WOM Logo - 2024.png" alt="" class="img-sizes">
+                                                            </div>
+                                                            <div class="avatar-title-lg p-1" *ngIf="this.companyData[0].COMPANY_ID=='WOM Valves & Controls International FZE' ">
+                                                                <img src="assets\styles\img\WVC-LOGO-2024.png" alt="" class="img-sizes">
+                                                            </div>
+                                                            <div class="avatar-title-lg p-1" *ngIf="this.companyData[0].COMPANY_ID=='Magnum Technology Center FZE' ">
+                                                                <img src="assets\styles\img\MTC logo.png" alt="" class="img-sizes">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-9  text-center">
+                                                            <h2 class="text-truncate text-blue font-type hdclr" style="font-weight: bold;font-size: 38px;">{{this.companyData[0].COMPANY_ID}}</h2>
+                                                            <h5 class="text-truncate text-blue font-type hdclr" >{{this.companyData[0].DESCRIPTION}}</h5>
+                                                            <h5 class="text-truncate text-blue font-type hdclr" style="margin-bottom: 20px;" >(UAE); {{this.companyData[0].PHONE_NO}}; {{this.companyData[0].EMAI_ID}}</h5> 
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="mt-4 text-center mb-4" style="margin-top: 40px!important;">
+                                                        <h5 class="card-title flex-grow-1 mb-0 font-type fw-semibold payslip">PAY SLIP<input type="text" class="mb-1 font-type fw-semibold  payslip" style="border: none;" name="datedisplay" id="datedisplay" [formControl]="datedisplay" readonly></h5>
+                                                    </div>
+                    
+                                                    <div class="row mb-2">
+                                                        <div class="col-md-6 col-lg-6">
+                                                            <div class="table-responsive">
+                                                                <table class="table  table-bordered border-black">
+                                                                    <tbody class="font-type" *ngIf="payslipdt && payslipdt.length > 0">
+                                                                        <tr class="h-30 bordrsty">
+                                                                            <td class="fw-semibold fcolour bordrsty payslip">Employee Code</td>
+                                                                            <td class="fcolour">{{this.payslipdt[0].EMP_CODE}}</td>
+                                                                        </tr>
+                                                                        <tr class="h-30 bordrsty">
+                                                                            <td class="fw-semibold fcolour bordrsty payslip">Employee Name</td>
+                                                                            <td class="fcolour">{{this.payslipdt[0].EMP_NAME}}</td>
+                                                                        </tr>
+                                                                        <tr class="h-30 bordrsty">
+                                                                            <td class="fw-semibold fcolour bordrsty payslip">Designation</td>
+                                                                            <td class="fcolour">{{this.payslipdt[0].DESIG_VAL}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-lg-6">
+                                                            <div class="table-responsive">
+                                                                <table class="table  table-bordered border-black">
+                                                                    <tbody class="font-type" *ngIf="payslipdt && payslipdt.length > 0">
+                                                                        <tr class="h-30 bordrsty">
+                                                                            <td class="fw-semibold fcolour bordrsty payslip">Bank</td>
+                                                                            <td class="fcolour">{{this.payslipdt[0].BANK_NAME}}</td>
+                                                                        </tr>
+                                                                        <tr class="h-30 bordrsty">
+                                                                            <td class="fw-semibold fcolour bordrsty payslip">IBAN No.</td>
+                                                                            <td class="fcolour">{{this.payslipdt[0].IBAN_NO}}</td>
+                                                                        </tr>
+                                                                        <tr class="h-30 bordrsty">
+                                                                            <td class="fw-semibold fcolour bordrsty payslip">Days</td>
+                                                                            <td class="fcolour">{{this.payslipdt[0].DAYS_WORKED}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                    
+                    
+                                                     <!--Add&Ded-->
+                                                     <div class="row mb-4">
+                                                        <div class="col-md-6 col-lg-6">
+                                                        <div class="table-responsive">
+                                                            <table class="table align-middle table-nowrap mb-0  table-bordered">
+                                                                <thead class=" bg-light-blue">
+                                                                    <tr class="bg-light-blue font-type h-30 fs-15 text-uppercase  table-bordered  bordrsty">
+                                                                        <th scope="col" class="bg-blue payslip" colspan="2" style="text-align: center;background-color: #5bb4ec;">Earnings</th>
+                                                                    </tr>
+                                                                    <tr class="bg-light-blue font-type h-30 fs-15  table-bordered bordrsty" style="background-color: #5bb4ec;">
+                                                                        <th scope="col" class="bg-blue text-center  bordrsty payslip">Description</th>
+                                                                        <th scope="col" class="bg-blue text-center payslip">Amount (AED)</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="font-type" *ngIf="payslipdt && payslipdt.length > 0 && payslipdt[0].EARNINGS && payslipdt[0].EARNINGS.length > 0">
+                                                                    <ng-container *ngFor="let payslip of payslipdt">
+                                                                        <ng-container *ngFor="let salpay of payslip.EARNINGS; let i = index">
+                                                                          <tr class="h1-50 bordrsty" *ngIf="salpay.STS === 1">
+                                                                            <td class="fcolour bordrsty">{{salpay.PAYMENT_CATEGORY}}</td>
+                                                                            <td class="fcolour" style="text-align: center;">{{salpay.AMOUNT}}</td>
+                                                                          </tr>
+                                                                        </ng-container>
+                                                                      </ng-container>
+                                                                    <!-- <tr class="h1-50">
+                                                                        <td>
+                                                                            <h6 class="font-type">Other Additions</h6>
+                                                                            <h6 class="font-type text-danger" style="font-style: italic;">(type of addition to be reflected)</h6>
+                                                                        </td>
+                                                                        <td class="text-center">0.00</td>
+                                                                    </tr> -->
+                                                                </tbody><!-- end tbody -->
+                                                                <tfoot class="font-type" *ngIf="payslipdt && payslipdt.length > 0 && payslipdt[0].EARNINGS && payslipdt[0].EARNINGS.length > 0">
+                                                                    <tr class="bordrsty">
+                                                                        <td colspan="1" class="fw-semibold text-blue bordrsty payslip">Gross Earnings</td>
+                                                                        <td class="fw-semibold text-blue text-center payslip">{{this.payslipdt[0].TOTAL_ADDITION}} AED</td>
+                        
+                                                                    </tr>
+                                                                </tfoot>
+                                                            </table><!-- end table -->
+                                                        </div><!-- end table responsive -->
+                                                       
+                                                        </div>
+                    
+                                                        <div class="col-md-6 col-lg-6">
+                                                            <div class="table-responsive">
+                                                                <table class="table align-middle table-nowrap mb-0  table-bordered">
+                                                                    <thead class=" bg-light-blue">
+                                                                        <tr class="bg-light-blue font-type h-30 fs-15 text-uppercase  table-bordered  bordrsty">
+                                                                            <th scope="col" class="bg-blue payslip" colspan="2" style="text-align: center;background-color: #5bb4ec;">DEDUCTIONS</th>
+                                                                        </tr>
+                                                                        <tr class="bg-light-blue font-type h-30 fs-15  table-bordered bordrsty" style="background-color: #5bb4ec;">
+                                                                            <th scope="col" class="bg-blue text-center payslip bordrsty">Description</th>
+                                                                            <th scope="col" class="bg-blue text-center payslip">Amount (AED)</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody class="font-type" *ngIf="payslipdt && payslipdt.length > 0 && payslipdt[0].EARNINGS && payslipdt[0].EARNINGS.length > 0">
+                    
+                                                                        <ng-container *ngFor="let payslip of payslipdt">
+                                                                            <ng-container *ngFor="let salpay of payslip.EARNINGS; let i = index">
+                                                                              <tr class="h1-50 bordrsty" *ngIf="salpay.STS === 2">
+                                                                                <td class="fcolour bordrsty">{{salpay.PAYMENT_CATEGORY}}</td>
+                                                                                <td class="fcolour" style="text-align: center;">{{salpay.AMOUNT}}</td>
+                                                                              </tr>
+                                                                            </ng-container>
+                                                                        </ng-container>
+                                                                       
+                                                                        <!-- <tr class="h1-50">
+                                                                            <td>
+                                                                                <h6 class="font-type">Other Deductions</h6>
+                                                                                <h6 class="font-type text-danger" style="font-style: italic;">(type of deduction to be reflected)</h6>
+                                                                            </td>
+                                                                            <td class="text-center">0.00</td>
+                                                                            
+                                                                        </tr> -->
+                                                                    </tbody><!-- end tbody -->
+                                                                    <tfoot class="font-type" *ngIf="payslipdt && payslipdt.length > 0 && payslipdt[0].EARNINGS && payslipdt[0].EARNINGS.length > 0">
+                                                                        <tr class="bordrsty">
+                                                                            <td colspan="1" class="fw-semibold text-blue bordrsty payslip">Gross Deductions</td>
+                                                                            <td class="fw-semibold text-blue text-center payslip">{{this.payslipdt[0].TOTAL_DEDUCTION}} AED</td>
+                                                                        </tr>
+                                                                    </tfoot>
+                                                                </table><!-- end table -->
+                                                            </div><!-- end table responsive -->
+                                                        </div>
+                                                     </div>
+                    
+                                                       <!--Total-->
+                                                        <div class="col-md-12 col-lg-12">
+                                                                <div class="table-responsive">
+                                                                    <table class="table align-middle table-nowrap mb-0  table-bordered">
+                                                                        <tfoot class="font-type bg-light-blue" *ngIf="payslipdt && payslipdt.length > 0">
+                                                                            <tr class="bordrsty" style="background-color: #5bb4ec;">
+                                                                                <td colspan="1" class="fw-semibold  text-blue bordrsty text-uppercase payslip">Net Pay</td>
+                                                                                <td class="fw-semibold fs-15 font-type" style="text-align: right;border-left-style: none;">
+                                                                                    <h6 class="font-type fw-semibold fcolour payslip" >UAE Dirham {{this.payslipdt[0].NET_AMOUNT}}</h6>
+                                                                                    <h6 class="font-type fw-semibold fcolour payslip" >UAE Dirham {{ convertToWords(payslipdt[0].NET_AMOUNT) }} Only</h6>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tfoot>
+                                                                    </table><!-- end table -->
+                                                                </div><!-- end table responsive -->
+                                                        </div>
+                    
+                                                        <div class="mt-4 text-center mb-4">
+                                                            <h5 class="mb-1 font-type fw-semibold" style="color: #000000;font-size: 18px !important;">This is an electronically generated payslip and will not require a signature.</h5>
+                                                        </div>
+                    
+                                                    </div>
+                                             </div>
+                                     
+                                        </div>
+                                    </div>
+                               
+                                  
+                                </div>
+                                <!-- end tab pane -->
+                                <div class="tab-pane fade" id="Annual-Earnings" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header" style="padding:10px">
+                                                    <div class="row align-items-center gy-3">
+                                                        <div class="col-sm">
+                                                            <div class="align-items-center d-flex ">
+                                                                <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Annual Earnings Summary</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-auto">
+                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                <div class="">
+                                                                    <select class="form-select font-type fs-11 textbox-15" name="year" id="year" (change)="fetch_annual_earnings()">
+                                                                        <option value="">Select Year</option>
+                                                                        <option  *ngFor="let yrlist of yearlist" value="{{yrlist.DISPLAY_FIELD}}">
+                                                                            {{yrlist.DISPLAY_FIELD}} 
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-responsive table-card mb-0 table-hover">
+                                                        <table class="table table-nowrap align-middle table-bordered border-blue table-hover">
+                                                            <thead class="bg-blue text-white font-type">
+                                                            <tr class="border-blue">
+                                                                <th>Month</th>
+                                                                <th>Payout</th>
+                                                                <th>Amount (AED)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="list form-check-all font-type fs-11">
+                                                            <tr class="font-type mb-1 h-30"  *ngFor="let ann_ear of ann_earnings" >
+                                                                <td>{{ann_ear.month}}</td>
+                                                                <td>{{ann_ear.descr}}</td>
+                                                                <td>{{ann_ear.amount}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot class="bg-blue font-type text-white">
+                                                            <tr>
+                                                                <td colspan="2" class="fw-semibold fs-15 text-blue">Total Earnings</td>
+                                                                <td>
+                                                                    <input type="text" class="form-control fw-semibold fs-15 text-white" style="background-color: #54b4e4;border: none;" name="totalearn" id="totalearn" [formControl]="totalearn"> 
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                             
+                                                </div>
+                                            </div>
+                                        </div><!--end col-->
+                                    </div>
+                                </div>
+                                <!-- end tab pane -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+     
+            <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+
+        <button id="openModalButtonForalert"  [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuRecordModal">Open Modal</button>
+  
+        <div class="modal fade zoomIn" id="SuRecordModal" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-orange padding-up-5">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                    </div>
+                    <div class="modal-body text-center padding-down-5"  *ngIf="showModal==1">
+                        
+                        <div class="text-center">
+                            <h5 class="fs-13 font-type">{{success}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+

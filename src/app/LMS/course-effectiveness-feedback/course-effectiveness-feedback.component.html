@@ -1,0 +1,257 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+    <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                     <!-- start page title -->
+                     <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between font-type">
+                                <h4 class="mb-sm-0 text-uppercase font-type padding-up-5"   style="letter-spacing: 0.2px;">Effectiveness Feedback Form</h4>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- End start page title -->
+
+                    <div class="topbar-up row">
+                        <div class="col-lg-12">
+                                    <div class="card shadow-lg">
+                                        <div class="card-body">
+                                            <!--Employee Info-->
+                                            <div class="row p-0 margin-up-15">
+                                            <div class=" bg-blue border-0 rounded-0 m-0 pa-5-7">
+                                                <div class="row">
+                                                <div class="col-lg-4 col-md-4">
+                                                        <h6 class="fs-12 font-type text-white">Employee</h6> 
+                                                        <h6 class="fs-12 font-type fw-semibold text-white">{{empname}}</h6>     
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                        <h6 class="font-type fs-12 text-white">Designation</h6>
+                                                        <h6 class="fs-12 font-type fw-semibold text-white">{{designame}}</h6>     
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <h6 class="font-type fs-12 text-white">Company</h6>
+                                                    <h6 class="fs-12 font-type fw-semibold text-white">{{companyname}}</h6>     
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <!--End Employee Info-->
+
+                                            <!--Training Info-->
+
+                                        <div class="row p-0">
+                                            <div class="bg-light-subtle border-top-dashed border border-start-0 border-end-0 border-bottom-dashed mb-2">
+                                                <div class="row align-items-end">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="p-2" style="text-align: center;">
+                                                            <h6 class="fs-14 lh-base font-type fw-semibold text-blue">{{triningName}}</h6>
+                                                            <h6 class="fs-12 font-type fw-semibold">Date : {{triningDate | date:"dd, MMM yyyy"}}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End Training Info-->
+                                        <form autocomplete="off" [formGroup]="requestForm" (ngSubmit)="validateForm()" [ngClass]="{'disabled': isDisabled}">
+                                        <div class="row align-items-end mb-3">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="p-2">
+                                                        <h6 class="fs-12 lh-base font-type fw-semibold">Since the employee attended the training how has the employee's performance with regard to this subject changed?</h6>
+                                                        <textarea class="form-control textbox-15 font-type" required rows="4" formControlName="qus1"></textarea>  
+                                                        <div *ngIf="requestForm.get('qus1')!.hasError('required') && requestForm.get('qus1')!.touched" class="text-danger">Please, Fill the field.</div>
+                                                    </div>
+                                                </div>
+                                        </div>
+
+                                        <!--TABLE-->
+                                        <div class="row p-3">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="table-responsive table-card">
+                                                        <table class="table table-nowrap align-middle table-hover table-bordered border-blue">
+                                                            <thead class="font-type bg-light-blue">
+                                                            <tr class="border-blue">
+                                                                <th rowspan="2" style="white-space: pre-wrap;">Please rate the following based on your employees performance since completing the course.</th>
+                                                                <th class="text-center" rowspan="1">Strongly<br>Disagree</th>
+                                                                <th class="text-center" rowspan="1">Disagree</th>
+                                                                <th class="text-center" rowspan="1">Neither <br> Agree or <br>Disagree </th>
+                                                                <th class="text-center" rowspan="1">Agree</th>
+                                                                <th class="text-center" rowspan="1">strongly <br/> Agree</th>
+                                                            </tr>
+                                                            <tr class="border-blue text-center">
+                                                                <th>1</th>
+                                                                <th>2</th>
+                                                                <th>3</th>
+                                                                <th>4</th>
+                                                                <th>5</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="list form-check-all font-type fs-11">
+                                                        <tr class="font-type h-30">
+                                                            <td style="white-space: pre-wrap;" class="fs-13">Employee has interacted with me at a higher level regarding the subject matter.
+                                                                <div *ngIf="requestForm.get('Radio1')!.hasError('required') && requestForm.get('Radio1')!.touched" class="text-danger">Please select the ratings</div>
+                                                            </td>
+                                                            <td class="text-center ma-5"> 
+                                                                <input type="radio" name="Radio1" class="ma-5" formControlName="Radio1" value="1"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio1" class="ma-5" formControlName="Radio1" value="2"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio1" class="ma-5" formControlName="Radio1" value="3"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio1" class="ma-5" formControlName="Radio1" value="4"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio1" class="ma-5" formControlName="Radio1" value="5"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="font-type h-30">
+                                                            <td style="white-space: pre-wrap;" class="fs-13">The training was beneficial to employee's position.
+                                                                <div *ngIf="requestForm.get('Radio2')!.hasError('required') && requestForm.get('Radio2')!.touched" class="text-danger">Please select the ratings</div>
+                                                            </td>
+                                                            <td class="text-center ma-5"> 
+                                                                <input type="radio" name="Radio2" class="ma-5" formControlName="Radio2" value="1"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio2" class="ma-5" formControlName="Radio2" value="2"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio2" class="ma-5" formControlName="Radio2" value="3"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio2" class="ma-5" formControlName="Radio2" value="4"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio2" class="ma-5" formControlName="Radio2" value="5"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="font-type h-30">
+                                                            <td style="white-space: pre-wrap;" class="fs-13">The training was beneficial for the company.
+                                                                <div *ngIf="requestForm.get('Radio3')!.hasError('required') && requestForm.get('Radio3')!.touched" class="text-danger">Please select the ratings</div>
+                                                            </td>
+                                                            <td class="text-center ma-5"> 
+                                                                <input type="radio" name="Radio3" class="ma-5" formControlName="Radio3" value="1"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio3" class="ma-5" formControlName="Radio3" value="2"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio3" class="ma-5" formControlName="Radio3" value="3"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio3" class="ma-5" formControlName="Radio3" value="4"/>
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio3" class="ma-5" formControlName="Radio3" value="5"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="font-type h-30">
+                                                                <td style="white-space: pre-wrap;" class="fs-13">There are still some knowledge gaps with regard to this subject.  (If answer is 3, 4 or 5 please specify below).
+                                                                    <div *ngIf="requestForm.get('Radio4')!.hasError('required') && requestForm.get('Radio4')!.touched" class="text-danger">Please select the ratings</div>
+                                                                </td>
+                                                                <td class="text-center ma-5"> 
+                                                                    <input type="radio" name="Radio4" class="ma-5" formControlName="Radio4" value="1"/>
+                                                                </td>
+                                                                <td class="text-center"> 
+                                                                    <input type="radio" name="Radio4" class="ma-5" formControlName="Radio4" value="2"/>
+                                                                </td>
+                                                                <td class="text-center"> 
+                                                                    <input type="radio" name="Radio4" class="ma-5" formControlName="Radio4" value="3"/>
+                                                                </td>
+                                                                <td class="text-center"> 
+                                                                    <input type="radio" name="Radio4" class="ma-5" formControlName="Radio4" value="4"/>
+                                                                </td>
+                                                                <td class="text-center"> 
+                                                                    <input type="radio" name="Radio4" class="ma-5" formControlName="Radio4" value="5"/>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-end mb-0 margin-up-5">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="p-2">
+                                                        <h6 class="fs-12 lh-base font-type fw-semibold">Knowledge Gaps</h6>
+                                                        <textarea class="form-control textbox-15 font-type mb-2" required rows="4" formControlName="qus2"></textarea>  
+                                                        <div *ngIf="requestForm.get('qus2')!.hasError('required') && requestForm.get('qus2')!.touched" class="text-danger">Please, Fill the field.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12" [hidden]="view == 1">
+                                                <div class="d-flex align-items-center flex-wrap gap-2">
+                                                    <div class="flex-grow-1 text-center">
+                                                        <div  *ngIf="!requestForm.valid">
+                                                            <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" [disabled]="requestForm.valid" id="validate-btn"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                            <button type="button" class="btn btn-blue btn-label right nexttab nexttab font-type" (click)="Clear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                        </div>
+                                                        <div *ngIf="requestForm.valid">
+                                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" id="add-btn" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="Submit()"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                            <button type="button" class="btn btn-blue btn-label right nexttab nexttab font-type" (click)="Clear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-shrink-0">
+                                                        <div class="hstack text-nowrap gap-2">
+                                                            <a href="course_effectiveness"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </form>
+                                            <div class="col-lg-12" [hidden]="view == 0">
+                                                <div class="hstack gap-1 justify-content-end">
+                                                    <a href="course_effectiveness">
+                                                    <button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                         <!-- end card-body-->
+                                         </div>
+
+                                        <!--Modal For Success Message Start-->
+                                        <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-orange padding-up-5">
+                                                        <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                                    </div>
+                                                    <div class="modal-body" *ngIf="showModal==1"> 
+                                                        <div class="container">
+                                                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                                    
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-body" *ngIf="showModal==2">
+                                                    <div class="container">
+                                                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                                        
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div> <!-- end col-->
+                                </div>
+                            </div>
+                            <!--End Content-->
+                        </div>
+                    </div>
+                    <app-footer></app-footer>
+                </div>
+                <!-- end main content-->
+            </div>
+            <!-- END layout-wrapper -->

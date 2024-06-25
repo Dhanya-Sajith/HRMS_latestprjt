@@ -1,0 +1,1091 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+    
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu> 
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+    
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content" style="overflow-x: hidden;">
+    
+        <div class="page-content">
+            <div class="container-fluid">
+    
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Family Airticket Request</h4>
+                            <div class="page-title-right padding-up-5" *ngIf="viewflag == 1">
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group"  *ngIf="this.grpname.includes('HR')">
+                                    <input type="radio" class="btn-check" name="user" id="btnradio1" [(ngModel)]="user" value="personal" (change)="SelectTeamorpersonal(user)">
+                                    <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio1">Personal</label>
+                                    <input type="radio" class="btn-check" name="user" id="btnradio2" [(ngModel)]="user" value="team" (change)="SelectTeamorpersonal(user)">
+                                    <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio2">Team</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end row-->
+             
+                <!-- Radio Button -->
+                <div class="row" id="id-Radios"  *ngIf="user == 'personal' && viewflag == 1">
+                    <div class="col-lg-12">
+                        <div class="card mt-n4 mx-n4 mb-n5">
+                            <div class="bg-light-blue">
+                                <div class="card-body pb-3 mb-5">
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-auto">
+                                                    <div class="avatar-sm">
+                                                        <span class="avatar-title bg-white rounded">
+                                                            <img src="assets\styles\img\icons8-plane-64.png" alt="" class="avatar-sm p-1">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-md">
+                                                    <div class="hstack gap-3 flex-wrap">
+                                                        <div class="form-check form-check-inline form-check-info">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="WithoutinlineRadio1" value="oneway" [(ngModel)]="radioselected" (change)="onradioselected()">
+                                                            <label class="form-check-label font-type fw-semibold text-blue fs-14 text-uppercase" for="inlineRadio1">One Way</label>
+                                                        </div>
+                                                        <div class="vr"></div>
+                                                        <div class="form-check form-check-inline form-check-info">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="WithoutinlineRadio2" value="return" [(ngModel)]="radioselected" (change)="onradioselected()">
+                                                            <label class="form-check-label font-type fw-semibold text-blue fs-14 font-type" for="inlineRadio2">RETURN</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                            </div>
+                                            <!--end row-->
+                                        </div>
+                                    </div>
+                                    <!--end row-->
+                                </div><!-- end card body -->
+                            </div>
+                        </div><!-- end card -->
+                    </div><!-- end col -->
+                </div><!-- end row -->
+                <!-- End Radio Button -->
+    
+    
+                <!-- Team -->
+                <div id="Team" *ngIf="user == 'team'">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header" style="padding:10px">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <div class="align-items-center d-flex ">
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Airticket Request Summary</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div class="search-box">
+                                                    <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..." [(ngModel)]="searchInput">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                                <div>
+                                                    <select class="form-select font-type fs-11 textbox-15" name="selecttraveltype" [(ngModel)]="selecttraveltype" (change)="FetchFamilyAirTicketDetails()">
+                                                        <option value="-1">All Travel Type</option>
+                                                        <option *ngFor="let trtype of traveltype" value="{{trtype.KEY_ID}}">{{trtype.DATA_VALUE}}</option>
+                                                      </select>  
+                                                </div>
+                                                <div>
+                                                    <select class="form-select font-type fs-11 textbox-15" name="selectstatus" [(ngModel)]="selectstatus" (change)="FetchFamilyAirTicketDetails()">
+                                                        <option value="-1">All Status</option>
+                                                        <option *ngFor="let Status of listStatus" [hidden]="Status.DATA_VALUE == 'Cancelled'"value="{{Status.KEY_ID}}" [selected]="Status.DATA_VALUE == 'Pending for Approval'">{{Status.DATA_VALUE}}</option>
+                                                    </select>  
+                                                </div>
+                                                <div>
+                                                    <select class="form-select font-type fs-12 textbox-15 h-30" name="selectyear" [(ngModel)]="selectyear" (change)="FetchFamilyAirTicketDetails()">
+                                                        <option value="-1" selected disabled>Year</option>
+                                                        <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD">{{ combo.DISPLAY_FIELD }}</option>
+                                                    </select>  
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-orange w-100 h-30 text-white"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive table-card mb-0">
+                                        <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                            <thead class="table-light text-white font-type">
+                                            <tr>
+                                                <th>Emp ID</th>
+                                                <th>Emp Name</th>
+                                                <th>Departure</th>
+                                                <th>Destination</th>
+                                                <th>Travel Type</th>
+                                                <th>Departing</th>
+                                                <th>Returning</th>
+                                                <th>Passengers</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11">
+                                        <tr class="font-type" *ngFor="let teamdata of AirTicketDetails | search : searchInput | pagination: currentPage: itemsPerPage;index as i">
+                                            <td class="fw-semibold">{{teamdata.EMP_CODE}}</td>
+                                            <td style="white-space: pre-wrap;">{{teamdata.EMP_NAME}}</td>
+                                            <td style="white-space: pre-wrap;">{{teamdata.DEPARTURE_AIRPORT}}</td>
+                                            <td style="white-space: pre-wrap;">{{teamdata.ARRIVAL_AIRPORT}}</td>
+                                            <td>{{teamdata.TICKET_TYPE}}</td>
+                                            <td>{{teamdata.DEPARTURE_DATE | date:'dd-MM-yyyy'}}</td>
+                                            <td>
+                                                <ng-container *ngIf="teamdata.ARRIVAL_DATE == null">
+                                                    {{teamdata.ARRIVAL_DATE}}
+                                                </ng-container>
+                                                <ng-container>
+                                                {{teamdata.ARRIVAL_DATE | date:'dd-MM-yyyy'}}
+                                                </ng-container>
+                                            </td>
+                                            <td><a href="#DetailsModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-11" style="text-decoration: underline;" (click)="passengerdetails(teamdata.REQ_ID,teamdata.EMP_CODE,teamdata.APPLICATION_STATUS)">View Details</a></td>
+                                            <td class="status">
+                                                <ng-container *ngIf="teamdata.APPLICATION_STATUS == 0">
+                                                    <span class="badge bg-blue text-white  width-budge fs-11 fw-medium">{{teamdata.APPLICATION_STATUS_VAL}}</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="teamdata.APPLICATION_STATUS == 1">
+                                                    <span class="badge bg-success text-white  width-budge fs-11 fw-medium">{{teamdata.APPLICATION_STATUS_VAL}}</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="teamdata.APPLICATION_STATUS == 7">
+                                                    <span class="badge bg-danger text-white  width-budge fs-11 fw-medium">{{teamdata.APPLICATION_STATUS_VAL}}</span>
+                                                </ng-container>
+                                            </td>
+                                            <td>
+                                                <ul class="list-inline hstack gap-2 mb-0">
+                                                    <li class="list-inline-item text-primary d-inline-block edit-item-btn" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve">
+                                                        <button type="button" class="btn btn-success btn-sm" id="buttonApprove" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click) = "approveData(teamdata.EMP_CODE,teamdata.REQ_ID,1)"  [disabled]="teamdata.APPLICATION_STATUS_VAL!='Pending for Approval'"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                    </li>
+                                                    
+                                                    <li class="list-inline-item remove-item-btn" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reject">
+                                                        <button type="button" class="btn btn-danger btn-sm" id="buttonReject"  data-bs-toggle="modal" data-bs-target="#RejectModal" (click) = "approveData(teamdata.EMP_CODE,teamdata.REQ_ID,2)"  [disabled]="teamdata.APPLICATION_STATUS_VAL!='Pending for Approval'"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div *ngIf="AirTicketDetails">
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                        <div class="col-sm">
+                                          <div class="font-type fs-12 text-muted">
+                                            Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                            - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                            of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                          </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="font-type fs-12 text-muted">
+                                                Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div>
+                                                    <div class="input-group">
+                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                            
+                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                      </div>
+                                    </div>
+                                         
+                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                            </li>
+                                            <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                              <li class="page-item">
+                                                <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                              </li>
+                                            </ng-container>
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                </div> 
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                    </div>
+                </div>
+                <!--End Team -->
+    
+                 <!--Personal -->
+                <div id="Personal" *ngIf="user == 'personal'">
+                <!-- OneWay -->
+                <div id="OneWay" *ngIf="radioselected=='oneway' && viewflag == 1">
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <div class="card">
+                            <div class="card-body p-3">
+                                <form class="tablelist-form" autocomplete="off"  [formGroup]="onywayForm" (ngSubmit)="validateonywayForm()">
+                                <div class="border border-dashed rounded p-3 pa-0">
+                                <div class="row topbar-up">
+                                        <div class="col-lg-3 pt-3">
+                                                <h6 class="fs-12 font-type fw-semibold"><span>Leaving From</span></h6>
+                                                <input type="text" class="form-control font-type textbox-15 fs-12" placeholder="City or Airport" name="leavingfrom" formControlName="leavingfrom"/>    
+                                                <div *ngIf="onywayForm.get('leavingfrom')!.hasError('required') && onywayForm.get('leavingfrom')!.touched" class="text-danger">
+                                                    Please fill the field!
+                                                </div>   
+                                        </div>
+                                        <div class="col-lg-3 pt-3">
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Going to </span></h6>
+                                                <input type="text" class="form-control font-type textbox-15 fs-12" placeholder="City or Airport" name="goingto" formControlName="goingto"/>
+                                                <div *ngIf="onywayForm.get('goingto')!.hasError('required') && onywayForm.get('goingto')!.touched" class="text-danger">
+                                                    Please fill the field!
+                                                </div>    
+                                        
+                                        </div>
+                                        <div class="col-lg-3 pt-3">  
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Departing </span></h6>
+                                                <input type="date" class="form-control font-type mb-0 textbox-15" name="departing" formControlName="departing">
+                                                <div *ngIf="onywayForm.get('departing')!.hasError('required') && onywayForm.get('departing')!.touched" class="text-danger">
+                                                    Please fill the field!
+                                                </div>                        
+                                        </div>
+                                        <div class="col-lg-3 pt-3">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Passengers</span></h6>
+                                            <ng-multiselect-dropdown #dropdown
+                                            [settings]="dropdownSettings"
+                                            formControlName="passengers"
+                                            [data]="listpassengers">     
+                                            </ng-multiselect-dropdown> 
+                                            <div *ngIf="onywayForm.get('passengers')!.hasError('required') && onywayForm.get('passengers')!.touched" class="text-danger">
+                                                Please fill the field!
+                                            </div>   
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="hstack gap-2 justify-content-end ma-10">
+                                        <div *ngIf="!onywayForm.valid">
+                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " [disabled]="onywayForm.valid" id="validate-btn" (click)="validateonywayForm()"><i class="ri-chat-forward-line label-icon align-middle fs-16 ms-2"></i>Book Tickets</button>
+                                        </div>
+                                    
+                                        <div *ngIf="onywayForm.valid">
+                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Booknow_oneway()"><i class="ri-chat-forward-line label-icon align-middle fs-16 ms-2"></i>Book Tickets</button>
+                                        </div> 
+                                    <!-- <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " ><i class="ri-chat-forward-line label-icon align-middle fs-16 ms-2"></i>Book Tickets</button> -->
+                                    <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " (click)="ClearOneway()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+    
+                         
+                        </div>
+                        <!--end card-->
+                    </div>
+                   
+                </div>
+                 <!--end row-->
+    
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header" style="padding:10px">
+                                <div class="row align-items-center gy-3">
+                                    <div class="col-sm">
+                                        <div class="align-items-center d-flex ">
+                                            <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Airticket Request Summary - One Way</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-auto">
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            <div class="search-box">
+                                                <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..." [(ngModel)]="onewaysearchInput">
+                                                <i class="ri-search-line search-icon"></i>
+                                            </div>
+                                            <div>
+                                                <select class="form-select font-type fs-11 textbox-15" name="selectstatus" [(ngModel)]="onewayselectstatus" (change)="FetchFamilyAirTicketDetails_oneway()">
+                                                    <option value="-1">All Status</option>
+                                                    <option *ngFor="let Status of listStatus" value="{{Status.KEY_ID}}" [selected]="Status.DATA_VALUE == 'Pending for Approval'">{{Status.DATA_VALUE}}</option>
+                                                </select>  
+                                            </div>
+                                            <div>
+                                                <select class="form-select font-type fs-12 textbox-15 h-30" name="selectyear" [(ngModel)]="onewayselectyear" (change)="FetchFamilyAirTicketDetails_oneway()">
+                                                    <option value="-1" selected disabled>Year</option>
+                                                    <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD">{{ combo.DISPLAY_FIELD }}</option>
+                                                </select>   
+                                            </div>
+                                            <div>
+                                                <button type="button" class="btn btn-orange w-100 h-30 text-white"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive table-card mb-0">
+                                    <table class="table table-nowrap align-middle table-bordered border-orange">
+                                        <thead class="table-light text-white font-type">
+                                        <tr>
+                                            <th>SL No</th>
+                                            <th>Departure</th>
+                                            <th>Destination</th>
+                                            <th>Departing</th>
+                                            <th>Passengers</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list form-check-all font-type fs-11">
+                                    <tr class="font-type" *ngFor="let onewaydata of AirTicketDetails_oneway | search : onewaysearchInput | pagination: onewaycurrentPage: itemsPerPage;index as i">
+                                        <td>{{i+1}}</td>
+                                        <td>{{onewaydata.DEPARTURE_AIRPORT}}</td>
+                                        <td>{{onewaydata.ARRIVAL_AIRPORT}}</td>
+                                        <td>{{onewaydata.DEPARTURE_DATE | date:'dd-MM-yyyy'}}</td>
+                                        <td><a href="#DetailsModalPersonal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-11" style="text-decoration: underline;" (click)="passengerdetails(onewaydata.REQ_ID,onewaydata.EMP_CODE,onewaydata.APPLICATION_STATUS)">View Details</a></td>
+                                        <td class="status">
+                                            <ng-container *ngIf="onewaydata.APPLICATION_STATUS == 0">
+                                                <span class="badge bg-blue text-white  width-budge fs-11 fw-medium">{{onewaydata.APPLICATION_STATUS_VAL}}</span>
+                                            </ng-container>
+                                            <ng-container *ngIf="onewaydata.APPLICATION_STATUS == 1">
+                                                <span class="badge bg-success text-white  width-budge fs-11 fw-medium">{{onewaydata.APPLICATION_STATUS_VAL}}</span>
+                                            </ng-container>
+                                            <ng-container *ngIf="onewaydata.APPLICATION_STATUS == 7">
+                                                <span class="badge bg-danger text-white  width-budge fs-11 fw-medium">{{onewaydata.APPLICATION_STATUS_VAL}}</span>
+                                            </ng-container>
+                                            <ng-container *ngIf="onewaydata.APPLICATION_STATUS == 6">
+                                                <span class="badge bg-orange text-white  width-budge fs-11 fw-medium">{{onewaydata.APPLICATION_STATUS_VAL}}</span>
+                                            </ng-container>
+                                        </td>
+                                        
+                                        <td>
+                                                <ul class="list-inline hstack gap-2 mb-0">
+                                                    <li *ngIf="onewaydata.APPLICATION_STATUS == 0" class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                        <a href="#EditModalOneway" data-bs-toggle="modal" class="text-blue d-inline-block edit-item-btn" (click)="viewrequestdtl(onewaydata)">
+                                                            <span class="badge bg-blue text-white  width-budge fs-11 fw-medium"><i class="ri-pencil-fill fs-16"></i></span>
+                                                        </a>
+                                                    </li>
+                                                    <li *ngIf="onewaydata.APPLICATION_STATUS == 0" class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Delete">
+                                                        <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#CancelModal" (click)="Activerequest(onewaydata.REQ_ID)">
+                                                            <span class="badge bg-danger text-white  width-budge fs-11 fw-medium"><i class="ri-delete-bin-5-fill fs-16"></i></span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Tickets" [hidden]="onewaydata.DOCUMENT ==''">
+                                                        <a href="#AirDocModal" data-bs-toggle="modal" class="text-info d-inline-block edit-item-btn" (click)="Activerequest(onewaydata.REQ_ID)">
+                                                            <span class="badge bg-orange text-white  width-budge fs-11 fw-medium"><i class="ri-eye-line fs-16"></i></span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div *ngIf="AirTicketDetails_oneway">
+                                <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="onewaytotalSearchResults>0">
+                                    <div class="col-sm">
+                                      <div class="font-type fs-12 text-muted">
+                                        Showing <span class="fw-semibold">{{ onewaygetEntriesStart() }}</span>
+                                        - <span class="fw-semibold">{{ onewaygetEntriesEnd() }}</span>
+                                        of <span class="fw-semibold">{{ onewaytotalSearchResults }}</span> Results
+                                      </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="font-type fs-12 text-muted">
+                                            Total Pages : <span class="fw-semibold"> {{ onewaygetTotalPages() }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-auto mt-4 mt-sm-0">
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            <div>
+                                                <div class="input-group">
+                                        <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                        
+                                       <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="onewaygoToPage()" tabindex="2">Go</button>
+                                  </div>
+                                </div>
+                                     
+                                    <div class="col-sm-auto mt-3 mt-sm-0">
+                                      <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                        <li class="page-item">
+                                          <button class="page-link" (click)="onewaychangePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                        </li>
+                                        <ng-container *ngFor="let pageNumber of onewaygetPageNumbers(currentPage)">
+                                          <li class="page-item">
+                                            <button class="page-link" (click)="onewaychangePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                          </li>
+                                        </ng-container>
+                                        <li class="page-item">
+                                          <button class="page-link" (click)="onewaychangePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= onewaytotalSearchResults">→</button>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            </div> 
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div>
+                </div>
+                <!-- End OneWay -->
+    
+    
+                <!-- Return -->
+                <div id="Return" *ngIf="radioselected=='return' && viewflag == 1">
+                    <div class="row">
+                        <div class="col-xxl-12">
+                            <div class="card">
+                                <div class="card-body p-3">
+                                <form class="tablelist-form" autocomplete="off"  [formGroup]="returnForm" (ngSubmit)="validatereturnForm()">
+                                <div class="border border-dashed rounded p-3 pa-0">
+                                <div class="row mb-2 topbar-up">
+                                        <div class="col-lg-4 pt-3">
+                                                <h6 class="fs-12 font-type fw-semibold"><span>Leaving From</span></h6>
+                                                <input type="text" class="form-control font-type textbox-15 fs-12" placeholder="City or Airport"  name="rleavingfrom" formControlName="rleavingfrom"/>      
+                                                <div *ngIf="returnForm.get('rleavingfrom')!.hasError('required') && returnForm.get('rleavingfrom')!.touched" class="text-danger">
+                                                    Please fill the field!
+                                                </div>  
+                                        </div>
+                                        <div class="col-lg-4 pt-3">
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Going to </span></h6>
+                                                <input type="text" class="form-control font-type textbox-15 fs-12" placeholder="City or Airport"  name="rgoingto" formControlName="rgoingto"/> 
+                                                <div *ngIf="returnForm.get('rgoingto')!.hasError('required') && returnForm.get('rgoingto')!.touched" class="text-danger">
+                                                    Please fill the field!
+                                                </div> 
+                                         
+                                        </div>
+                                        <div class="col-lg-2 pt-3">  
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Departing </span></h6>
+                                                <input type="date" class="form-control font-type mb-0 textbox-15" name="rdeparting" formControlName="rdeparting">  
+                                                <div *ngIf="returnForm.get('rdeparting')!.hasError('required') && returnForm.get('rdeparting')!.touched" class="text-danger">
+                                                    Please fill the field!
+                                                </div>                    
+                                        </div>
+                                        <div class="col-lg-2 pt-3">  
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Return </span></h6>
+                                            <input type="date" class="form-control font-type mb-0 textbox-15" name="rreturn" formControlName="rreturn">  
+                                            <div *ngIf="returnForm.get('rreturn')!.hasError('required') && returnForm.get('rreturn')!.touched" class="text-danger">
+                                                Please fill the field!
+                                            </div>                    
+                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 pt-1">
+                                        <h6 class="fs-12 font-type fw-semibold"><span>Passengers</span></h6>
+                                          <ng-multiselect-dropdown #dropdown
+                                          [settings]="dropdownSettings"
+                                          formControlName="rpassengers"
+                                          [data]="listpassengers">     
+                                          </ng-multiselect-dropdown>    
+                                          <div *ngIf="returnForm.get('rpassengers')!.hasError('required') && returnForm.get('rpassengers')!.touched" class="text-danger">
+                                            Please fill the field!
+                                        </div> 
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="hstack gap-2 justify-content-end ma-10">
+                                        <div *ngIf="!returnForm.valid">
+                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " [disabled]="returnForm.valid" id="validate-btn" (click)="validatereturnForm()"><i class="ri-chat-forward-line label-icon align-middle fs-16 ms-2"></i>Book Tickets</button>
+                                        </div>
+                                    
+                                        <div *ngIf="returnForm.valid">
+                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Booknow_return()"><i class="ri-chat-forward-line label-icon align-middle fs-16 ms-2"></i>Book Tickets</button>
+                                        </div> 
+                                        <!-- <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " ><i class="ri-chat-forward-line label-icon align-middle fs-16 ms-2"></i>Book Tickets</button> -->
+                                        <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " (click)="Clearreturn()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                                </div>
+                            </div>
+                            <!--end card-->
+                        </div>
+                    </div>
+                     <!--end row-->
+    
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header" style="padding:10px">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <div class="align-items-center d-flex ">
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Airticket Request Summary - Return</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div class="search-box">
+                                                    <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..." [(ngModel)]="returnsearchInput">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                                <div>
+                                                    <select class="form-select font-type fs-11 textbox-15" name="selectstatus" [(ngModel)]="returnselectstatus" (change)="FetchFamilyAirTicketDetails_return()">
+                                                        <option value="-1">All Status</option>
+                                                        <option *ngFor="let Status of listStatus" value="{{Status.KEY_ID}}" [selected]="Status.DATA_VALUE == 'Pending for Approval'">{{Status.DATA_VALUE}}</option>
+                                                    </select>  
+                                                </div>
+                                                <div>
+                                                    <select class="form-select font-type fs-12 textbox-15 h-30" name="selectyear" [(ngModel)]="returnselectyear" (change)="FetchFamilyAirTicketDetails_return()">
+                                                        <option value="-1" selected disabled>Year</option>
+                                                        <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD">{{ combo.DISPLAY_FIELD }}</option>
+                                                    </select>   
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-orange w-100 h-30 text-white"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive table-card mb-0">
+                                        <table class="table table-nowrap align-middle table-bordered border-orange">
+                                            <thead class="table-light text-white font-type">
+                                            <tr>
+                                                <th>SL No</th>
+                                                <th>Departure</th>
+                                                <th>Destination</th>
+                                                <th>Departing</th>
+                                                <th>Returning</th>
+                                                <th>Passengers</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11">
+                                        <tr class="font-type" *ngFor="let returndata of AirTicketDetails_return | search : returnsearchInput | pagination: returncurrentPage: itemsPerPage;index as i">
+                                            <td>{{i+1}}</td>
+                                            <td>{{returndata.DEPARTURE_AIRPORT}}</td>
+                                            <td>{{returndata.ARRIVAL_AIRPORT}}</td>
+                                            <td>{{returndata.DEPARTURE_DATE | date:'dd-MM-yyyy'}}</td>
+                                            <td>{{returndata.ARRIVAL_DATE | date:'dd-MM-yyyy'}}</td>
+                                            <td><a href="#DetailsModalPersonal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-11" style="text-decoration: underline;" (click)="passengerdetails(returndata.REQ_ID,returndata.EMP_CODE,returndata.APPLICATION_STATUS)">View Details</a></td>
+                                            <td class="status">
+                                                <ng-container *ngIf="returndata.APPLICATION_STATUS == 0">
+                                                    <span class="badge bg-blue text-white  width-budge fs-11 fw-medium">{{returndata.APPLICATION_STATUS_VAL}}</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="returndata.APPLICATION_STATUS == 1">
+                                                    <span class="badge bg-success text-white  width-budge fs-11 fw-medium">{{returndata.APPLICATION_STATUS_VAL}}</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="returndata.APPLICATION_STATUS == 7">
+                                                    <span class="badge bg-danger text-white  width-budge fs-11 fw-medium">{{returndata.APPLICATION_STATUS_VAL}}</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="returndata.APPLICATION_STATUS == 6">
+                                                    <span class="badge bg-orange text-white  width-budge fs-11 fw-medium">{{returndata.APPLICATION_STATUS_VAL}}</span>
+                                                </ng-container>
+                                            </td>
+                                            <td>
+                                                <ul class="list-inline hstack gap-2 mb-0">
+                                                    <li *ngIf="returndata.APPLICATION_STATUS == 0" class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                        <a href="#EditModalTwoway" data-bs-toggle="modal" class="text-blue d-inline-block edit-item-btn" (click)="viewretunrequestdtl(returndata)">
+                                                            <span class="badge bg-blue text-white  width-budge fs-11 fw-medium"><i class="ri-pencil-fill fs-16"></i></span>
+                                                        </a>
+                                                    </li>
+                                                    <li *ngIf="returndata.APPLICATION_STATUS == 0" class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Delete">
+                                                        <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#CancelModal"  (click)="Activerequest(returndata.REQ_ID)">
+                                                            <span class="badge bg-danger text-white  width-budge fs-11 fw-medium"><i class="ri-delete-bin-5-fill fs-16"></i></span>
+                                                        </a>
+                                                    </li>    
+                                                     <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Tickets" [hidden]="returndata.DOCUMENT ==''">
+                                                        <a href="#AirDocModal" data-bs-toggle="modal" class="text-info d-inline-block edit-item-btn" (click)="Activerequest(returndata.REQ_ID)">
+                                                            <span class="badge bg-orange text-white  width-budge fs-11 fw-medium"><i class="ri-eye-line fs-16"></i></span>
+                                                        </a>
+                                                    </li>
+                                                 
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div *ngIf="AirTicketDetails_return">
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="returntotalSearchResults>0">
+                                        <div class="col-sm">
+                                          <div class="font-type fs-12 text-muted">
+                                            Showing <span class="fw-semibold">{{ returngetEntriesStart() }}</span>
+                                            - <span class="fw-semibold">{{ returngetEntriesEnd() }}</span>
+                                            of <span class="fw-semibold">{{ returntotalSearchResults }}</span> Results
+                                          </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="font-type fs-12 text-muted">
+                                                Total Pages : <span class="fw-semibold"> {{ returngetTotalPages() }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div>
+                                                    <div class="input-group">
+                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                            
+                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="returngoToPage()" tabindex="2">Go</button>
+                                      </div>
+                                    </div>
+                                         
+                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="returnchangePage(currentPage - 1)" [class.disabled-button]="returncurrentPage === 1">←</button>
+                                            </li>
+                                            <ng-container *ngFor="let pageNumber of returngetPageNumbers(currentPage)">
+                                              <li class="page-item">
+                                                <button class="page-link" (click)="returnchangePage(pageNumber)" [class.active]="returncurrentPage === pageNumber">{{ pageNumber }}</button>
+                                              </li>
+                                            </ng-container>
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="returnchangePage(currentPage + 1)" [class.disabled-button]="returncurrentPage * itemsPerPage >= returntotalSearchResults">→</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                </div> 
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                    </div>
+                </div>
+                   <!-- End Return -->
+    
+                <!--  family airticket access = 0 (na access) -->
+                <div *ngIf="viewflag == 0">
+    
+                <!--Input Control-->
+                <div class="topbar-up row">
+                    <div class="col-lg-12">
+                        <div class="card">                  
+                            <div class="card-body border border-top-0 border-end-0 border-start-0">
+                                <div class="row" style="justify-content: center;">
+                                    <div class="alert alert-danger alert-dismissible" style="width:450px;">                                
+                                        <strong>No Access</strong> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--EndInput Control-->
+                </div>
+    
+                </div>
+                <!-- End Personal -->
+    
+    
+                <!--MODAL BOX-->
+                    <!--Passenger Details Model Team-->
+                    <div class="modal fade zoomIn" id="DetailsModal" tabindex="-1" aria-labelledby="DetailsModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-white padding-up-5">
+                                    <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off">
+                                    <div class="modal-body ">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="mb-1">
+                                            <div class="card-body">
+                                                <div class="table-responsive table-card">
+                                                    <table class="table table-nowrap align-middle table-bordered border-orange">
+                                                        <thead class="table-light text-white font-type">
+                                                        <tr>
+                                                            <th>Passengers</th>
+                                                            <th>DOB</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list form-check-all font-type fs-11">
+                                                    <tr class="font-type" *ngFor="let passengerdata of passengerslist">
+                                                        <th>{{passengerdata.MEMBER_NAME}}</th>
+                                                        <td>{{passengerdata.MEMBER_DOB | date:'dd-MM-yyyy'}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Passenger Details Model Team-->
+    
+    
+                    <!--Passenger Details Model Personal-->
+                    <div class="modal fade zoomIn" id="DetailsModalPersonal" tabindex="-1" aria-labelledby="DetailsModalPersonal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-white padding-up-5">
+                                    <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off">
+                                    <div class="modal-body ">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="mb-1">
+                                            <div class="card-body">
+                                                <div class="table-responsive table-card">
+                                                    <table class="table table-nowrap align-middle table-bordered border-orange">
+                                                        <thead class="table-light text-white font-type">
+                                                        <tr>
+                                                            <th>Passengers</th>
+                                                            <th>DOB</th>
+                                                            <th width="5%" *ngIf="showflag == 0">
+                                                                Action
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list form-check-all font-type fs-11">
+                                                        <tr class="font-type" *ngFor="let passengerdata of passengerslist">
+                                                            <th>{{passengerdata.MEMBER_NAME}}</th>
+                                                            <td>{{passengerdata.MEMBER_DOB | date:'dd-MM-yyyy'}}</td>
+                                                            <td class="align-items-center" *ngIf="showflag == 0">
+                                                                <ul class="list-inline hstack gap-2 mb-0 ">
+                                                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
+                                                                        <a class="text-danger d-inline-block remove-item-btn text-center" data-bs-toggle="modal" href="#SuccessRecordModal" (click)="RemovePassengers(passengerdata.MEMBER_ID)">
+                                                                            <i class="ri-delete-bin-5-fill fs-16"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Passenger Details Model Team-->
+    
+                    <!--Modal For Success Message Start-->
+                    <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==1"> 
+                                    <div class="container">
+                                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                
+                                    </div>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==2">
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                    
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End-->
+    
+    
+                    <!-- Reject Model-->
+                    <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                    <button type="button" #closebutton class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" style="margin-top:-30px;"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off"  (ngSubmit)="onReject()" >
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="mb-3">
+                                            <label class="form-label">Reason</label>
+                                            <textarea class="form-control" required name="remarks" id="remarks" [(ngModel)]="remarks" required></textarea>  
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="hstack gap-2">
+                        
+                                            <button class="btn btn-danger" id="delete-record" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Reject</button>
+                                            <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Reject Model-->
+    
+                    <!--Edit Model-->
+                    <div class="modal fade" id="AirDocModal" tabindex="-1" aria-labelledby="AirDocModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off">
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                            <h6 class="mb-3 fw-semibold text-uppercase font-type">Ticket</h6>
+                                            <div class="row g-3">
+                                                <div class="col-xxl-4 col-lg-12">
+                                                    <div class="border rounded border-dashed p-2">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-3">
+                                                                <div class="avatar-sm">
+                                                                    <div class="avatar-title bg-light text-secondary rounded fs-24">
+                                                                        <i class="fa fa-ticket"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-shrink-0 ms-2">
+                                                                <div class="d-flex gap-1">
+                                                                    <button type="button" class="btn btn-icon text-muted btn-sm fs-18" (click)="download_airticket()"><i class="ri-download-2-line"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <!-- end row -->
+                                    </div>  
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Edit Model-->
+    
+                    <!--Cancel Request Model-->
+                    <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="modal-title">&nbsp;</h5>
+                                    <button type="button" #cancelclosebutton class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <div class="text-center">
+                                        <h5 class="fs-14">You are about to cancel your request ?</h5>
+                                        <p class="text-muted fs-12 mb-4 pt-1">Do you want to continue?</p>
+                                        <div class="hstack gap-2 justify-content-center remove">
+                                            <button class="btn btn-danger" id="delete-record" (click)="CancelRequest(Activereqid)" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Yes</button>
+                                            <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End cancel Request Model-->
+    
+                                <!-- Oneway Edit Model Box -->    
+                                <div class="modal fade" id="EditModalOneway" tabindex="-1" aria-labelledby="EditModalOneway" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-orange padding-up-5">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                            </div>
+                                            <form class="tablelist-form" autocomplete="off" [formGroup]="onywayFormEdit" (ngSubmit)="validateonywayFormEdit()">
+                                                <div class="modal-body">
+                                                    <input type="hidden" id="id-field"  name="onewayreqid" formControlName="onewayreqid"/>
+                                                    <div class="row mb-3">
+                                                        <div class="col-lg-3">
+                                                            <h6 class="fs-12 font-type fw-semibold">Leaving From</h6>
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <div class="div-space">
+                                                                <input type="text" class="form-control font-type textbox-15 fs-12" placeholder="City or Airport" name="eleavingfrom" formControlName="eleavingfrom"/>    
+                                                                <div *ngIf="onywayFormEdit.get('eleavingfrom')!.hasError('required') && onywayFormEdit.get('eleavingfrom')!.touched" class="text-danger">
+                                                                    Please fill the field!
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-lg-3">
+                                                            <h6 class="fs-12 font-type fw-semibold">Going to</h6>
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <div class="div-space">
+                                                                <input type="text" class="form-control font-type textbox-15 fs-12" placeholder="City or Airport"  name="egoingto" formControlName="egoingto"/>
+                                                                <div *ngIf="onywayFormEdit.get('egoingto')!.hasError('required') && onywayFormEdit.get('egoingto')!.touched" class="text-danger">
+                                                                    Please fill the field!
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                            <div class="col-lg-3">
+                                                                <h6 class="fs-12 font-type fw-semibold">Departing</h6>
+                                                            </div>
+                                                            <div class="col-lg-9">
+                                                                <td><input type="date" class="form-control font-type fs-11 mb-0 textbox-15 h-30"  name="edeparting" formControlName="edeparting">
+                                                                    <div *ngIf="onywayFormEdit.get('edeparting')!.hasError('required') && onywayFormEdit.get('edeparting')!.touched" class="text-danger">
+                                                                        Please fill the field!
+                                                                    </div></td>
+                                                            </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-lg-3">
+                                                            <h6 class="fs-12 font-type fw-semibold">Passengers</h6>
+                                                        </div>
+                                                        <!-- <div class="col-lg-9"> -->
+                                                            <td>
+                                                                <ng-multiselect-dropdown #dropdown
+                                                                [settings]="dropdownSettings"
+                                                                formControlName="epassengers"
+                                                                [data]="listpassengers">     
+                                                                </ng-multiselect-dropdown> 
+                                                                <div *ngIf="onywayFormEdit.get('epassengers')!.hasError('required') && onywayFormEdit.get('epassengers')!.touched" class="text-danger">
+                                                                    Please fill the field!
+                                                                </div> 
+                                                            </td>
+                                                        <!-- </div> -->
+                                                </div>
+                                                <div class="col-lg-12 pt-2">
+                                                        <div class="hstack gap-2 justify-content-end">
+                                                            <div *ngIf="!onywayFormEdit.valid">
+                                                                <button type="button" class="btn btn-orange font-type " [disabled]="onywayFormEdit.valid" id="validate-btn" (click)="validateonywayFormEdit()">Update</button>
+                                                            </div>
+                                                        
+                                                            <div *ngIf="onywayFormEdit.valid">
+                                                                <button type="button" class="btn btn-orange font-type " id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Edit_Booknow_oneway()">Update</button>
+                                                            </div> 
+                                                            <button class="btn btn-blue font-type" (click)="ClearEditOneway()">Cancel</button>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>     
+                                <!-- End Oneway Edit Model Box  -->
+    
+                        </div>
+                        <!-- container-fluid -->
+                    </div>
+                    <!-- End Page-content -->
+    
+    
+                    <app-footer></app-footer>
+    
+                     <!-- Twoway Edit Model Box -->    
+                     <div class="modal fade" id="EditModalTwoway" tabindex="-1" aria-labelledby="EditModalTwoway" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off" [formGroup]="returnFormEdit" (ngSubmit)="validatereturnFormEdit()">
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" name="returnreqid" formControlName="returnreqid"/>
+                                        <div class="row mb-3">
+                                            <div class="col-lg-3">
+                                                <h6 class="fs-12 font-type fw-semibold">Leaving From</h6>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <div class="div-space">
+                                                    <input type="text" class="form-control font-type textbox-15 fs-12" placeholder="City or Airport"  name="erleavingfrom" formControlName="erleavingfrom"/>
+                                                    <div *ngIf="returnFormEdit.get('erleavingfrom')!.hasError('required') && returnFormEdit.get('erleavingfrom')!.touched" class="text-danger">
+                                                        Please fill the field!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-lg-3">
+                                                <h6 class="fs-12 font-type fw-semibold">Going to</h6>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <div class="div-space">
+                                                    <input type="text" class="form-control font-type textbox-15 fs-12" placeholder="City or Airport"  name="ergoingto" formControlName="ergoingto"/>
+                                                    <div *ngIf="returnFormEdit.get('ergoingto')!.hasError('required') && returnFormEdit.get('ergoingto')!.touched" class="text-danger">
+                                                        Please fill the field!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                                <div class="col-lg-3">
+                                                    <h6 class="fs-12 font-type fw-semibold">Departing</h6>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <td><input type="date" class="form-control font-type fs-11 mb-0 textbox-15 h-30" value="2024-04-23" name="erdeparting" formControlName="erdeparting">
+                                                        <div *ngIf="returnFormEdit.get('erdeparting')!.hasError('required') && returnFormEdit.get('erdeparting')!.touched" class="text-danger">
+                                                            Please fill the field!
+                                                        </div>
+                                                    </td>
+                                                </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-lg-3">
+                                                <h6 class="fs-12 font-type fw-semibold">Return</h6>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <td><input type="date" class="form-control font-type fs-11 mb-0 textbox-15 h-30" value="2024-04-23" name="erreturn" formControlName="erreturn">
+                                                    <div *ngIf="returnFormEdit.get('erreturn')!.hasError('required') && returnFormEdit.get('erreturn')!.touched" class="text-danger">
+                                                        Please fill the field!
+                                                    </div>
+                                                </td>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-lg-3">
+                                                <h6 class="fs-12 font-type fw-semibold">Passengers</h6>
+                                            </div>
+                                            <!-- <div class="col-lg-9"> -->
+                                                <td>
+                                                    <ng-multiselect-dropdown #dropdown
+                                                    [settings]="dropdownSettings"
+                                                    formControlName="erpassengers"
+                                                    [data]="listpassengers">     
+                                                    </ng-multiselect-dropdown> 
+                                                    <div *ngIf="returnFormEdit.get('erpassengers')!.hasError('required') && returnFormEdit.get('erpassengers')!.touched" class="text-danger">
+                                                        Please fill the field!
+                                                    </div> 
+                                                </td>
+                                            <!-- </div> -->
+                                    </div>
+                                    <div class="col-lg-12 pt-2">
+                                            <div class="hstack gap-2 justify-content-end">
+                                                <div *ngIf="!returnFormEdit.valid">
+                                                    <button type="button" class="btn btn-orange font-type " [disabled]="returnFormEdit.valid" id="validate-btn" (click)="validatereturnFormEdit()">Update</button>
+                                                </div>
+                                            
+                                                <div *ngIf="returnFormEdit.valid">
+                                                    <button type="button" class="btn btn-orange font-type " id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Edit_Booknow_return()">Update</button>
+                                                </div> 
+                                                <button class="btn btn-blue font-type" (click)="ClearEditReturn()">Cancel</button>
+                                            </div>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>     
+                    <!-- End Twoway Edit Model Box  -->         
+    
+    
+    </div>
+    <!-- end main content-->
+    
+    </div>
+    <!-- END layout-wrapper -->

@@ -1,0 +1,549 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+   
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content" style="overflow-x: hidden;">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card mt-n4 mx-n4 mb-n5">
+                                    <div class="bg-info-subtle">
+                                        <div class="card-body pb-4 mb-5">
+                                            <div class="row">
+                                                <div class="col-md">
+                                                    <div class="row align-items-center">
+                                                        <div class="d-flex align-items-center ma-5">
+                                                            <div class="flex-shrink-0">
+                                                                <div class="avatar-sm">
+                                                                    <span class="avatar-title bg-info-subtle">
+                                                                        <img src="assets\styles\img\icons8-calculation-64.png" alt="" width="100%">
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-2 ma-5">
+                                                                <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">EOS Statement</h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--end row-->
+                                                </div>
+                                            </div>
+                                            <!--end row-->
+                                        </div><!-- end card body -->
+                                    </div>
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+                        </div>
+                        <!-- end start page title -->
+
+                        <!-- employee details -->
+                        <div class="topbar-up row">
+                            <div class="col-lg-12 col-md-12">
+                               <div class="d-flex flex-column h-100">
+                                   <div class="row">
+                                       <div class="col-lg-12 col-md-12">
+                                        <div class="card pricing-box card-animate shadow-lg" style="padding-bottom:0px;">
+                                            <div class="card-body bg-light-subtle m-2 p-2" >
+                                                   <div class="d-flex align-items-center">
+                                                       <div class="flex-grow-1 overflow-hidden ms-2" *ngFor="let empdata of Empdetails">
+                                                        <div class="row">
+                                                            <div class="col-md-3 col-lg-3 pt-1">
+                                                                <h6 class="fs-12 font-type fw-medium">Employee Code</h6>
+                                                                <h6 class="fs-12 font-type fw-semibold">{{empdata.EMP_CODE}}</h6>                                                                    
+                                                            </div>
+                                                            <div class="col-md-3 col-lg-3 pt-1">
+                                                                <h6 class="fs-12 font-type fw-medium">Employee</h6>
+                                                                <h6 class="fs-12 font-type fw-semibold">{{empdata.EMP_NAME}}</h6>
+                                                            </div>
+                                                            <div class="col-md-3 col-lg-3 pt-1">
+                                                                <h6 class="fs-12 font-type fw-medium">Joining Date</h6>
+                                                                <h6 class="fs-12 font-type fw-semibold">{{empdata.DATE_OF_JOINING | date : 'dd-MM-yyyy'}}</h6>
+                                                             </div>
+                                                             <div class="col-md-3 col-lg-3 pt-1">
+                                                                <h6 class="fs-12 font-type fw-medium">Department</h6>
+                                                                <h6 class="fs-12 font-type fw-semibold">{{empdata.DEPARTMENT}}</h6>
+                                                             </div>
+                                                        </div>
+                                                        <div class="row ma-10">
+                                                            <div class="col-md-3 col-lg-3 pt-1">
+                                                                <h6 class="fs-12 font-type fw-medium">Designation</h6>
+                                                                <h6 class="fs-12 font-type fw-semibold">{{empdata.DESIGNATION}}</h6>        
+                                                            </div>
+                                                            <div class="col-md-3 col-lg-3 pt-1">
+                                                                <h6 class="fs-12 font-type fw-medium">Last Day of Work</h6>
+                                                                <h6 class="fs-12 font-type fw-semibold">{{empdata.LAST_WORKING_DATE | date : 'dd-MM-yyyy'}}</h6>
+                                                            </div>
+                                                            <div class="col-md-5 col-lg-5 pt-1">
+                                                                <h6 class="fs-12 font-type fw-medium">Completed Period </h6>
+                                                                <h6 class="fs-12 font-type fw-semibold">{{empdata.COMPLETED_DAYS}} days - {{empdata.COMPLETED_PERIOD}}</h6>
+                                                             </div>
+                                                        </div>
+                                                       </div>
+                                                   </div>
+                                               </div><!-- end card body -->
+                                           </div><!-- end card -->
+                                       </div><!--end col-->
+                                   </div>
+                               </div>
+                            </div>
+                         </div>
+                        <!--end employee details -->
+
+
+
+                    <!-- Total Salary -->
+                    <div class="accordion bg-info shadow-lg" id="accordionFill">
+                        <div class="accordion-item material-shadow">
+                            <h2 class="accordion-header font-type bg-light-blue text-blue fs-14" id="accordionFillExample1">
+                                <button class="accordion-button text-blue bg-light-blue fs-13 text-uppercase fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#accor_fill1" aria-expanded="true" aria-controls="collapseOne">
+                                    Salary Details
+                                </button>
+                            </h2>
+                            <div id="accor_fill1" class="accordion-collapse collapse show" aria-labelledby="accordionFillExample1" data-bs-parent="#accordionFill">
+                                <div class="accordion-body pa-8">
+                                    <div class="row topbar-up">
+                                        <div class="col-md-12 col-lg-12">
+                                        <div class="table-responsive">
+                                            <table class="table align-middle table-nowrap mb-0 table-borderless table-hover">
+                                                <tbody class="font-type">
+                                                    <tr class="h-30" *ngFor="let salarydata of salarydetails">
+                                                        <td>{{salarydata.ALLOWANCE_NAME}}</td>
+                                                        <td>{{salarydata.AMOUNT}}</td>
+                                                    </tr>
+                                                </tbody><!-- end tbody -->
+                                                <tfoot class="font-type ma-10 border-blue">
+                                                    <tr>
+                                                        <td colspan="1" class="fw-semibold fs-12 text-blue">Total Salary</td>
+                                                        <td class="fw-semibold fs-12 text-blue">{{GROSS_SALARY}}</td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table><!-- end table -->
+                                        </div><!-- end table responsive -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- End Total Salary -->
+
+                    <!-- Additions -->
+                    <div class="accordion bg-info shadow-lg ma-20" id="accordionFill2">
+                        <div class="accordion-item material-shadow">
+                            <h2 class="accordion-header bg-light-blue text-blue fs-14" id="accordionFill2Example1">
+                                <button class="accordion-button text-blue bg-light-blue fs-14 text-uppercase fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#accor_fill21" aria-expanded="true" aria-controls="accor_fill21">
+                                    Additions
+                                </button>
+                            </h2>
+                            <div id="accor_fill21" class="accordion-collapse collapse show" aria-labelledby="accordionFill2Example1" data-bs-parent="#accordionFill2">
+                                <div class="accordion-body pa-8">
+                                    <!-- GRATUITY Table -->
+                                    <div class="row margin-up-7 mb-4">
+                                        <div class="col-lg-12 col-md-12">
+                                           <h6 class="fs-13 font-type fw-semibold ma-5 text-blue mb-3" style="text-decoration: underline;">GRATUITY PER YEAR</h6>
+                                                 <div class="table-responsive">
+                                                    <table class="table align-middle table-nowrap mb-0 table-bordered table-hover border-blue">
+                                                       <tbody class="font-type">
+                                                        <tr class="h-30">
+                                                            <td width="50%" class="fw-semibold" style="white-space: pre-wrap;">{{yearofservice}}</td>
+                                                            <td class="fw-semibold">{{gratuityamount}}</td>
+                                                         </tr>
+                                                          <tr class="h-30">
+                                                             <td style="white-space: pre-wrap;">Gratuity</td>
+                                                             <td>{{gratuityamount}}</td>
+                                                          </tr>
+                                                       </tbody>
+                                                       <!-- end tbody -->
+                                                    </table>
+                                                    <!-- end table -->
+                                                 </div>
+                                                 <!-- end table responsive -->
+                                        </div>
+                                    </div>                                                  
+                                    <!-- End GRATUITY Table -->
+
+                                     <!-- Addition Table -->
+                                     <div class="row  border border-dashed border-end-0 border-start-0 border-bottom-0 mb-2">
+                                            <div class="col-md-12 col-lg-12">
+                                            <h6 class="fs-13 font-type fw-semibold ma-20 text-blue mb-2 text-uppercase" style="text-decoration: underline;">Additions</h6>
+                                            <div class="table-responsive ma-5">
+                                                <table class="table align-middle table-nowrap mb-0 table-borderless table-hover">
+                                                    <tbody class="font-type" id="newlink">
+                                                        <tr class="h-30"  *ngFor="let item of payType1Data">
+                                                            <td style="white-space: pre-wrap;" width="50%">{{ item.PAY_CATEGORY }}</td>
+                                                            <td>{{ item.AMOUNT.toFixed(2) }}</td>  
+                                                            <td *ngIf="item.SOURCE_FLAG != 0 && view == 1" [hidden]="successflag == 1">
+                                                                <ul class="list-inline  mb-0">
+                                                                    <li class="list-inline-item"><a class="edit-item-btn text-blue" href="#EditAdditionModal" data-bs-toggle="modal" (click)="EditAdd(item)"><i class="ri-pencil-fill align-bottom me-2 text-blue fs-14"></i></a></li>
+                                                                    <li class="list-inline-item">
+                                                                        <a class="remove-item-btn" href="#SuccessRecordModal" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="RemoveAddition(item)">
+                                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-danger fs-14"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>                                                 
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr id="newForm" style="display: none;"><td class="d-none"><p>Add New Form</p></td></tr>
+                                                        <tr *ngIf="view == 1" [hidden]="successflag == 1">
+                                                            <td class="ma-10">
+                                                                <a href="#AdditionModal" data-bs-toggle="modal" data-bs-target="#AdditionModal" id="add-item" class="ma-10 btn btn-soft-info fw-medium font-type mb-2"><i class="ri-add-fill me-1 align-bottom"></i> Add Item</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot class="font-type">
+                                                        <tr class="ma-5">
+                                                            <td colspan="1" class="fw-semibold fs-13 text-blue">Total Additions</td>
+                                                            <td class="fw-semibold fs-13 text-blue">{{TOTAL_ADDITION}}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table><!-- end table -->
+                                            </div><!-- end table responsive -->
+                                            </div>
+                                    </div>
+                                    <!-- End Addition Table -->                  
+                                </div>
+                            </div>
+                       </div>
+                    </div>
+                     <!-- End Additions -->
+
+
+                    <!--DEDUCTIONS -->
+                     <div class="accordion bg-info shadow-lg ma-20" id="accordionFill3">
+                        <div class="accordion-item material-shadow">
+                            <h2 class="accordion-header bg-light-blue text-blue" id="accordionFill3Example1">
+                                <button class="accordion-button text-blue bg-light-blue fs-13 text-uppercase fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#accor_fill31" aria-expanded="true" aria-controls="accor_fill31">
+                                    DEDUCTIONS
+                                </button>
+                            </h2>
+                            <div id="accor_fill31" class="accordion-collapse collapse show" aria-labelledby="accordionFill3Example1" data-bs-parent="#accordionFill3">
+                                <div class="accordion-body pa-8">
+                                    <div class="row topbar-up">
+                                        <div class="col-md-12 col-lg-12">
+                                        <div class="table-responsive">
+                                            <table class="table align-middle table-nowrap mb-0 table-borderless">
+                                                <tbody class="font-type" id="newlink-Deduction">
+                                                    <tr class="h-30"  *ngFor="let item2 of payType2Data">
+                                                        <td style="white-space: pre-wrap;" width="50%">{{ item2.PAY_CATEGORY }}</td>
+                                                        <td>{{ item2.AMOUNT }}</td>   
+                                                        <td *ngIf="item2.SOURCE_FLAG != 0 && view == 1" [hidden]="successflag == 1">
+                                                            <ul class="list-inline  mb-0">
+                                                                <li class="list-inline-item"><a class="edit-item-btn text-blue" href="#EditDeductionModal" data-bs-toggle="modal" (click)="EditDed(item2)"><i class="ri-pencil-fill align-bottom me-2 text-blue fs-14"></i></a></li>
+                                                                <li class="list-inline-item">
+                                                                    <a class="remove-item-btn" href="#SuccessRecordModal" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="RemoveDeduction(item2)">
+                                                                        <i class="ri-delete-bin-fill align-bottom me-2 text-danger fs-14"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>                                                   
+                                                    </tr>
+                                                </tbody>
+                                                <tbody>
+                                                    <tr id="newForm" style="display: none;"><td class="d-none"><p>Add New Form</p></td></tr>
+                                                    <tr  *ngIf="view == 1" [hidden]="successflag == 1">
+                                                        <td class="ma-10">
+                                                            <a href="#DeductionModal" data-bs-toggle="modal" data-bs-target="#DeductionModal" id="add-item" class="ma-10 btn btn-soft-info fw-medium font-type mb-2"><i class="ri-add-fill me-1 align-bottom"></i> Add Item</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot class="font-type">
+                                                    <tr class="ma-5">
+                                                        <td colspan="1" class="fw-semibold fs-13 text-blue">Total Deductions</td>
+                                                        <td class="fw-semibold fs-13 text-blue">{{TOTAL_DEDUCTION}}</td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table><!-- end table -->
+                                        </div><!-- end table responsive -->                                      
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                     </div>
+                     <!-- End DEDUCTIONS -->
+
+                     <!-- NET PAYABLE -->
+                     <div class="card ma-20 shadow-lg">
+                        <div class="card-header pa-6-8 bg-light-blue">
+                            <div class="row align-items-center">
+                                <div class="col-sm">
+                                    <div class="align-items-center d-flex">
+                                        <h5 class="card-title fw-semibold text-uppercase text-blue ma-5">Net Payable</h5>
+                                    </div>
+                                </div>
+                                <div class="col-sm-auto">
+                                    <div class="d-flex gap-1 flex-wrap">
+                                        <h5 class="fw-semibold fs-15 text-blue ma-5">{{NET_AMOUNT}}</h5>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+               
+                     <div class="hstack gap-2 justify-content-end d-print-none margin-up-7 mb-3">
+                        <a *ngIf="view == 1"  [hidden]="successflag == 1" href="#SuccessRecordModal" data-bs-toggle="modal" class="btn btn-success font-type" (click)="SendtoVP()"><i class="ri-send-plane-fill align-bottom me-1"></i> Send to VP</a>
+                        <a routerLink="/ResignationApprovalHR" [queryParams]="{ tab: 'tab2' }" class="btn btn-orange font-type text-white"><i class="ri-arrow-go-back-fill align-bottom me-1"></i> Back</a>
+                     </div>     
+
+                </div>
+                 <!-- end container-fluid-->
+            </div>
+               <!-- end page content-->
+
+                <!-- MODAL BOXES-->
+                <!--Addition Model-->
+                <div class="modal fade zoomIn " id="AdditionModal" tabindex="-1" aria-labelledby="AdditionModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="AdditionForm" (ngSubmit)="validateAdditionForm()">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Description</span></h6>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control fs-12 font-type height-check" required  formControlName="adddesc" name="adddesc">  
+                                            <div *ngIf="AdditionForm.get('adddesc')!.hasError('required') && AdditionForm.get('adddesc')!.touched" class="text-danger">
+                                                Please fill the field!
+                                            </div>     
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <h6 class="fs-12 font-type fw-semibold">Amount</h6>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="number" name="addamount" class="form-control fs-12 font-type height-check" required  formControlName="addamount"> 
+                                            <div *ngIf="AdditionForm.get('addamount')!.hasError('required') && AdditionForm.get('addamount')!.touched" class="text-danger">
+                                                Please fill the field!
+                                            </div>  
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-12 pt-2">
+                                        <div class="modal-footer" style="padding-bottom: 0px;">
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <div *ngIf="!AdditionForm.valid">
+                                                <button type="submit" class="btn btn-orange font-type text-white" [disabled]="AdditionForm.valid" id="validate-btn" (click)="validateAdditionForm()">Submit</button>
+                                            </div>
+                                        
+                                            <div *ngIf="AdditionForm.valid">
+                                                <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Addition()">Submit</button>
+                                            </div>
+                                            <button type="button" class="btn btn-blue" (click)="Clear(AdditionForm)">Cancel</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> 
+                <!--End Request Model-->
+                <!--Deduction Model-->
+                <div class="modal fade zoomIn " id="DeductionModal" tabindex="-1" aria-labelledby="DeductionModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="DeductionForm" (ngSubmit)="validateDeductionForm()">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Description</span></h6>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="text" name="deddesc" class="form-control fs-12 font-type height-check" required  formControlName="deddesc">  
+                                            <div *ngIf="DeductionForm.get('deddesc')!.hasError('required') && DeductionForm.get('deddesc')!.touched" class="text-danger">
+                                                Please fill the field!
+                                            </div>       
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <h6 class="fs-12 font-type fw-semibold">Amount</h6>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="number" name="dedamount" class="form-control fs-12 font-type height-check" required  formControlName="dedamount">  
+                                            <div *ngIf="DeductionForm.get('dedamount')!.hasError('required') && DeductionForm.get('dedamount')!.touched" class="text-danger">
+                                                Please fill the field!
+                                            </div>  
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-12 pt-2">
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <div *ngIf="!DeductionForm.valid">
+                                                <button type="submit" class="btn btn-orange font-type text-white" [disabled]="DeductionForm.valid" id="validate-btn" (click)="validateDeductionForm()">Submit</button>
+                                            </div>
+                                        
+                                            <div *ngIf="DeductionForm.valid">
+                                                <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Deduction()">Submit</button>
+                                            </div>                                            
+                                            <button type="button" class="btn btn-blue" (click)="Clear(DeductionForm)">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> 
+                <!--End Request Model-->
+
+                 <!--Edit Addition Model-->
+                 <div class="modal fade zoomIn " id="EditAdditionModal" tabindex="-1" aria-labelledby="EditAdditionModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="EditAdditionForm" (ngSubmit)="validateEditAdditionForm()">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Description</span></h6>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control fs-12 font-type height-check" required  formControlName="eadddesc" name="eadddesc">  
+                                            <div *ngIf="EditAdditionForm.get('eadddesc')!.hasError('required') && EditAdditionForm.get('eadddesc')!.touched" class="text-danger">
+                                                Please fill the field!
+                                            </div>     
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <h6 class="fs-12 font-type fw-semibold">Amount</h6>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="number" name="eaddamount" class="form-control fs-12 font-type height-check" required  formControlName="eaddamount"> 
+                                            <div *ngIf="EditAdditionForm.get('eaddamount')!.hasError('required') && EditAdditionForm.get('eaddamount')!.touched" class="text-danger">
+                                                Please fill the field!
+                                            </div>  
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-12 pt-2">
+                                        <div class="modal-footer" style="padding-bottom: 0px;">
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <div *ngIf="!EditAdditionForm.valid">
+                                                <button type="submit" class="btn btn-orange font-type text-white" [disabled]="EditAdditionForm.valid" id="validate-btn" (click)="validateEditAdditionForm()">Update</button>
+                                            </div>
+                                        
+                                            <div *ngIf="EditAdditionForm.valid">
+                                                <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="EditAddition()">Update</button>
+                                            </div>
+                                            <button type="button" class="btn btn-blue" (click)="Clear(EditAdditionForm)">Cancel</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> 
+                <!--End Request Model-->
+                <!--Deduction Model-->
+                <div class="modal fade zoomIn " id="EditDeductionModal" tabindex="-1" aria-labelledby="EditDeductionModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="EditDeductionForm" (ngSubmit)="validateEditDeductionForm()">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Description</span></h6>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="text" name="ededdesc" class="form-control fs-12 font-type height-check" required  formControlName="ededdesc">  
+                                            <div *ngIf="EditDeductionForm.get('ededdesc')!.hasError('required') && EditDeductionForm.get('ededdesc')!.touched" class="text-danger">
+                                                Please fill the field!
+                                            </div>       
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <h6 class="fs-12 font-type fw-semibold">Amount</h6>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="number" name="eaddamount" class="form-control fs-12 font-type height-check" required  formControlName="ededamount">  
+                                            <div *ngIf="EditDeductionForm.get('ededamount')!.hasError('required') && EditDeductionForm.get('ededamount')!.touched" class="text-danger">
+                                                Please fill the field!
+                                            </div>  
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-12 pt-2">
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <div *ngIf="!EditDeductionForm.valid">
+                                                <button type="submit" class="btn btn-orange font-type text-white" [disabled]="EditDeductionForm.valid" id="validate-btn" (click)="validateEditDeductionForm()">Submit</button>
+                                            </div>
+                                        
+                                            <div *ngIf="EditDeductionForm.valid">
+                                                <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="EditDeduction()">Submit</button>
+                                            </div>                                            
+                                            <button type="button" class="btn btn-blue" (click)="Clear(EditDeductionForm)">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> 
+                <!--End Request Model-->
+
+                <!--Modal For Success Message Start-->
+                <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==1"> 
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                            
+                                </div>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==2">
+                            <div class="container">
+                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal For Success Message End-->
+
+                <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->

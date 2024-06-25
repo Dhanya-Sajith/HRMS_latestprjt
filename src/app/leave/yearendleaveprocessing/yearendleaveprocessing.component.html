@@ -1,0 +1,211 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+    <app-sidemenu></app-sidemenu>
+    <!-- ========== App Menu ========== -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Year End Leave Processing</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row margin-up-10">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header border-0 pa-6-8">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <div class="align-items-center d-flex ">
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Employees Leave Account - {{newyear}}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <!-- <div class="search-box">
+                                                    <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search Employee...">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div> -->
+                                                <div>
+                                                    <select class="form-select font-type fs-12 textbox-15" id="yrendCmpny" name="yrendCmpny" (change)="FetchLeaveProcessing()" >
+                                                        <option value="-1">Company Name</option>
+                                                        <option  *ngFor="let CompanyList of listCompany"  value="{{CompanyList.KEY_ID}}" [selected]="CompanyList.DATA_VALUE === storedValue">
+                                                            {{CompanyList.DATA_VALUE}}
+                                                            </option>
+                                                      </select>  
+                                                </div>
+                                              
+                                                <div>
+                                                    <button type="button" class="btn btn-info font-type h-30" (click)="download_to_excel()"><i class="ri-file-download-line align-bottom me-1"></i> Download</button>  
+                                                </div>
+                                                <a href="leavesettings"><button class="btn btn-danger"><i class="fa fa-angle-double-left"></i> Exit </button></a>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+
+                                <div class="card-body border border-dashed border-end-0 border-start-0">
+                                </div>
+
+                                <div class="card-body pt-0">
+                                        <div class="table-responsive  table-card mb-0">
+                                            <table class="table table-nowrap align-middle table-bordered border-orange">
+                                                <thead class="table-light text-white font-type">
+                                                    <tr class="border-orange">
+                                                        <th hidden>No</th>
+                                                        <th>Comp.</th>
+                                                        <th>Emp ID</th>
+                                                        <th>Emp Name</th>
+                                                        <th>Balance</th>
+                                                        <th>Expired Leave</th>
+                                                        <th>Days Carried Forward</th>
+                                                        <th >Eligible</th>
+                                                        <th >Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all font-type fs-11">
+                                                    <tr class="trstyle fs-12 h1-50" *ngFor="let YearEndProcess of listyearendleaveProcess | pagination: currentPage: itemsPerPage;let i = index">
+                                                        <td hidden>{{i+1}}</td>
+                                                        <td>{{YearEndProcess.COMPANY_ID}}</td>
+                                                        <td>{{YearEndProcess.EMP_CODE}}</td>
+                                                        <td>{{YearEndProcess.EMP_NAME}}</td>
+                                                        <td>{{YearEndProcess.BALANCE_LEAVE}}</td>
+                                                        <td>{{YearEndProcess.EXPIRED_LEAVES}}</td>
+                                                                      <td> 
+                                                            <ul class="list-inline hstack gap-2 mb-0">
+                                                                <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                                    <div class="form-check form-check-info">
+                                                                        <input class="form-check-input" type="checkbox"  id="isChecked" name="isChecked" [(ngModel)]="YearEndProcess.isChecked" (click)="checkCarry()"  >
+                                                                        <label class="form-check-label" for="isChecked">  Other</label>
+                                                                        
+                                                                    </div>
+                                                
+                                                                </li>
+                                                                
+                                                                <li class="list-inline-item">
+                                                                    <input type="number" class="form-control font-type textbox-15 " value="rrt" id="txtCarry" [style.background-color]="YearEndProcess.isChecked ? 'white' : '#f5e5cb'" [attr.readonly]="YearEndProcess.isChecked ? null : true" [(ngModel)]="YearEndProcess.FORWARDED_LEAVES"  >
+                                                                   
+                                                                </li>
+                                                                <li class="list-inline-item">
+                                                                <button type="button" class="btn btn-success font-type fs-12 add-button text-white"  style="height:30px;width:50px;margin-top: 1px;" (click)="Saveopeningleave(YearEndProcess)" [disabled]="!YearEndProcess.isChecked"><i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                            </li>
+                                                            <i>{{YearEndProcess.msg}}</i>
+                                                            </ul>
+                                                        </td>
+                                                        <td>{{YearEndProcess.ELIGIBLE_LEAVES}}</td>
+                                                        <td>{{YearEndProcess.TOTAL}}</td>
+                                                        <!-- <td [hidden]="isclicked">{{YearEndProcess.OPENING_BALANCE}}</td>
+                                                        <td *ngIf="isclicked">{{YearEndProcess.openLve}}</td> -->
+
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot class="table-orange font-type bg-orange">
+                                                    <tr>
+                                                        <td colspan="8">Total Items : <span class="fw-semibold fs-13">{{ listyearendleaveProcess.length}}</span></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+                                        <div *ngIf="listyearendleaveProcess">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                    </div>
+                                </div>
+                                        </div> 
+                                        <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                                <!--Modal For Success Message Start-->
+                                <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-orange padding-up-5">
+                                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                            </div>
+                                           
+                                            <div class="modal-body" *ngIf="showModal==2">
+                                            <div class="container">
+                                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                                
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!--Modal For Success Message End-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--end col-->
+
+                        <div class="col-lg-12">
+                            <div class="hstack gap-1 justify-content-end">
+                                
+                                <a class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " href='leavesettings'><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- </div>
+            </div>
+</div>
+</div> -->
+            
+            <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+  
+    </div>
+    <!-- END layout-wrapper -->
+
+    

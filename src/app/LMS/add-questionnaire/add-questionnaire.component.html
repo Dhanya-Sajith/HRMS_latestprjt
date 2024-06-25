@@ -1,0 +1,264 @@
+
+    <!-- Begin page -->
+<div id="layout-wrapper">
+       
+    <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+       
+        <app-sidemenu></app-sidemenu>
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content" style="overflow-x: hidden;">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Add Questionnaire</h4>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- End page title -->
+
+                    <div class="card topbar-up">
+                        <div class="card-body">
+                        <div class="row border border-dashed rounded p-2 pa-0 mb-2">
+                            <div class="col-md-8">
+                                <h6 class="fs-12 font-type  fw-semibold ma-5 ms-2">Training Name : <span class="fs-13 fw-semibold text-blue">{{this.listTrainingDtls.SUBJECT_NAME}}</span> </h6>
+                                <input type="hidden"   value="{{this.listTrainingDtls.TRAINING_ID}}" name="training_id" id="training_id"  readonly>
+                                <input type="hidden"   value="{{this.assessmentid}}" name="assessmentid" id="assessmentid"  readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="fs-12 font-type  fw-semibold ma-5 ms-2">Assessment ID : <span class="fs-13 fw-semibold text-blue">{{this.assessmentid}}</span> </h6>
+                            </div>
+                        </div>
+                            <div class="row mb-2">
+                                <div class="col-md-12 col-lg-12 pt-1">
+                                            <h6 class="fs-12 font-type fw-semibold">Question : </h6>
+                                            <textarea class="form-control textbox-15 font-type" required rows="1" placeholder="Enter the Question" name="question" id="question" [(ngModel)]="listquestions.QUESTION"></textarea> 
+                                            <input type="hidden" class="form-control h-30 textbox-15 font-type ma-5"  name="questId" id="questId" [(ngModel)]="listquestions.QUEST_ID">   
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-3 col-lg-3 pt-1">
+                                            <h6 class="fs-12 font-type fw-semibold">Option 1</h6>
+                                            <textarea class="form-control textbox-15 font-type" required rows="1" placeholder="Enter the Option" name="option_a" id="option_a" [(ngModel)]="listquestions.OPT_A"></textarea>    
+                                </div>
+                                <div class="col-md-3 col-lg-3 pt-1">
+                                    <h6 class="fs-12 font-type fw-semibold">Option 2</h6>
+                                    <textarea class="form-control textbox-15 font-type" required rows="1" placeholder="Enter the Option" name="option_b" id="option_b" [(ngModel)]="listquestions.OPT_B"></textarea>   
+                                </div>
+                                <div class="col-md-3 col-lg-3 pt-1">
+                                    <h6 class="fs-12 font-type fw-semibold">Option 3</h6>
+                                    <textarea class="form-control textbox-15 font-type" required rows="1" placeholder="Enter the Option" name="option_c" id="option_c" [(ngModel)]="listquestions.OPT_C"></textarea>  
+                                </div>
+                                <div class="col-md-3 col-lg-3 pt-1">
+                                    <h6 class="fs-12 font-type fw-semibold">Option 4</h6>
+                                    <textarea class="form-control textbox-15 font-type" required rows="1" placeholder="Enter the Option" name="option_d" id="option_d" [(ngModel)]="listquestions.OPT_D"></textarea>
+                                 </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-3 col-lg-3 pt-1">
+                                            <h6 class="fs-12 font-type fw-semibold"> Answer</h6>
+                                            <input type="text" class="form-control h-30 textbox-15 font-type ma-5" placeholder="Enter the Answer" name="answer" id="answer" [(ngModel)]="listquestions.ANSWER">
+                                 </div>
+                                 <div class="col-md-3 col-lg-3 pt-3 ma-5" style="margin-top: 12px;" >
+                                    <a class="d-inline-block text-center"  title="Add" (click)="addquestions()"  *ngIf="this.addUpdateSts==0 && this.noQuest > totalSearchResults" >
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="#54b4e4"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11H7V13H11V17H13V13H17V11H13V7H11V11Z"></path></svg>
+                                    </a>
+                                    <span *ngIf="this.addUpdateSts==0 && totalSearchResults >= this.noQuest" style="color: red;" >You cannot add more questions. You reach the maximum number of questions.</span>
+                                    <button type="button" class="btn btn-orange btn-label font-type text-white" *ngIf="this.addUpdateSts==1"  (click)="updatequestionDetails()"><i class="ri-add-circle-line label-icon align-middle fs-16 ms-2"></i>Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <!-- LIST-->
+                        <div class="row" style="justify-content: center;">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="card">
+                                        <div class="card-header" style="padding:10px">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <div class="align-items-center d-flex ">
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Questionnaire List</h4>          
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div class="search-box">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search...">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                        <div>
+                                                            <button type="button" class="btn btn-success text-white h-30 font-type" id="btn_assign" style="display: none;"> <i class="ri-check-line align-bottom me-1"></i>Assign Assessment</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive table-card mb-0">
+                                                <table class="table table-nowrap align-middle table-hover border-orange table-bordered">
+                                                    <thead class="table-light text-white font-type">
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Question</th>
+                                                        <th>Option 1</th>
+                                                        <th>Option 2</th>
+                                                        <th>Option 3</th>
+                                                        <th>Option 4</th>
+                                                        <th>Answer</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all font-type fs-11">
+                                                    <tr class="font-type h-30" *ngFor="let listquest of listquestions| search : searchInput ; index as i;">
+                                                        <td class="fw-semibold">{{listquest.QUEST_ID}}</td>
+                                                        <td  style="white-space: pre-wrap;">{{listquest.QUESTION}}</td>
+                                                        <td style="white-space: pre-wrap;">{{listquest.OPT_A}}</td>
+                                                        <td style="white-space: pre-wrap;">{{listquest.OPT_B}}</td>
+                                                        <td style="white-space: pre-wrap;">{{listquest.OPT_C}}</td>
+                                                        <td style="white-space: pre-wrap;">{{listquest.OPT_D}}</td>
+                                                        <td style="white-space: pre-wrap;">{{listquest.ANSWER}}</td>
+                                                        <td>
+                                                            <ul class="list-inline hstack gap-1 mb-0">
+                                                                <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                                    <a href="#" class="text-blue d-inline-block edit-item-btn" (click)="dataforEdit(listquest)">
+                                                                        <i class="ri-pencil-fill fs-16"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
+                                                                    <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#CancelModal" (click)="removeQuestion(this.listTrainingDtls.TRAINING_ID,this.assessmentid,listquest.QUEST_ID)">
+                                                                        <i class="ri-delete-bin-5-fill fs-18"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>  
+                                                </tbody>
+                                            </table>
+                                             </div>
+                                             <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                        </div>
+                         <!--END LIST -->
+                        <div class="col-lg-12">
+                            <div class="hstack gap-1 justify-content-end">
+                                <a href="addAssessment.html">
+                                <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button>
+                                </a>
+                            </div>
+                        </div>
+                
+                     
+                </div>
+                <!-- container-fluid -->   
+                </div>
+                <!-- End Page-content -->
+
+                 <!--Delete Entry Model-->
+                  <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="text-center">
+                                    <h5 class="fs-13 font-type">You are about to delete an entry ?</h5>
+                                    <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                                    <div class="hstack gap-2 justify-content-center remove">   
+                                        <button class="btn btn-success font-type" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close">No, Go back!</button>
+                                        <button class="btn btn-danger font-type" (click)="confirmRemoveQuest(this.trngid,this.assessid,this.questid)">Yes, Continue</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Delete Entry Model-->
+
+                <button id="openModalButtonForalertsuccess"  [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuRecordModals">Open Modal</button>
+  
+                    <div class="modal fade zoomIn" id="SuRecordModals" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <div class="modal-body text-center padding-down-5"  *ngIf="showModals==1">
+                                    
+                                    <div class="text-center">
+                                        <h5 class="fs-13 font-type">{{successs}}</h5>
+                                    </div>
+                                </div>
+                                <div class="modal-body text-center padding-down-5"  *ngIf="showModals==2">
+                                    
+                                    <div class="text-center">
+                                        <h5 class="fs-13 font-type">{{faileds}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                <app-footer></app-footer>
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+ 

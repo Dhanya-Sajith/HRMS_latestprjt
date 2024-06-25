@@ -1,0 +1,278 @@
+    
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <app-header></app-header>
+                <!-- ========== App Menu ========== --> 
+                <app-sidemenu></app-sidemenu>
+                <!-- Left Sidebar End -->
+                <!-- Vertical Overlay-->
+                <div class="vertical-overlay"></div>
+                <!-- ============================================================== -->
+                <!-- Start right Content here -->
+                <!-- ============================================================== -->
+                <div class="main-content">
+                    <div class="page-content">
+                        <div class="container-fluid">
+        
+                            <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        <h4 class="mb-sm-0">Monthly Salary Review Report</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end page title -->
+                            
+                      
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card" id="searchInput">
+                                     
+                                        <div class="card-body border-bottom-dashed border-bottom">
+                                            <form>
+                                                <div class="row g-3">
+                                                  <div class="alert alert-danger alert-dismissible" *ngIf="message">                                
+                                                        <strong><i class="fa fa-times-circle text-danger" style="font-size: 25px;"></i> {{message}}</strong>
+                                                         
+                                                     </div>  
+                                                      
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <h3 class="font-type fs-12"><span>Year</span></h3>
+                                                        <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="year" (change)="onYearSelected()" name="year" id="year">                                                            
+                                                            <option value="-1" selected disabled>Select</option>
+                                                            <option  *ngFor="let item of yearlist" value="{{item.DISPLAY_FIELD}}">
+                                                                {{item.DISPLAY_FIELD}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <div>
+                                                            <h3 class="font-type fs-12"><span>Month</span></h3>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="month" name="month" id="month">                                                            
+                                                                <option value="-1" selected disabled>Select</option>
+                                                                <option  *ngFor="let item of monthlist" value="{{item.VALUE_FIELD}}">
+                                                                    {{item.DISPLAY_FIELD}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <h3 class="font-type fs-12"><span>Company</span></h3>
+                                                        <div>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="companycode"  name="comcode" id="comcode">
+                                                                <option value="-1" selected disabled>Select</option>
+                                                                <option  *ngFor="let item of company" value="{{item.KEY_ID}}">
+                                                                    {{item.DATA_VALUE}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-sm-6" >
+                                                        <label></label>
+                                                        <div>
+                                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="filter()"> <i class="ri-file-text-line"></i>
+                                                                View Report
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                  
+                                                    <!--end col-->
+                                                </div>
+        
+                                              
+                                                <!--end row-->
+                                            </form>
+                                        </div>
+                                      
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card" id="orderList">
+                                        <div class="card-header border-bottom" style="padding-bottom: 10px;padding-top: 10px;">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <h6 class="card-title">Monthly Salary Review Report</h6>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                 
+        
+                                                        <div class="search-box" >
+                                                            <input type="text" class="form-control searchInput"  id="searchInput" [(ngModel)]="searchInput" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+        
+                                                
+                                                </div>
+                                                 <div class="col-sm-auto">
+                                                    <div class="d-flex flex-wrap">
+        
+                                                     <button type="button" class="btn btn-soft-success" (click)="download_to_excel()"><i class="ri-file-excel-2-line" ></i>Download</button>
+                                                        
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="card-body border-bottom">
+                                              
+                                       
+                                            <!--end col-->
+                                    
+                                        <div class="col-xxl-12">
+                                            <div class="card card-height-100">
+                                             
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-nowrap align-middle mb-0"  style="padding-top:0px" >
+                                                            <thead>                                                               
+                                                                <tr class="table-light text-white font-type">
+                                                                    <th scope="col" style="text-align: center;">EmpCode</th>                                                                    
+                                                                    <th scope="col" style="text-align: center;">Employee</th>
+                                                                    <th scope="col" style="text-align: center;">Basic</th>
+                                                                    <th scope="col" style="text-align: center;">Transport</th>
+                                                                    <th scope="col" style="text-align: center;">Accommodation</th>
+                                                                    <th scope="col" style="text-align: center;">Other Allowances</th>
+                                                                    <th scope="col" style="text-align: center;">HRA</th>
+                                                                    <th scope="col" style="text-align: center;">Gross Salary</th>
+                                                                    <th scope="col" style="text-align: center;">Overtime</th>
+                                                                    <th scope="col" style="text-align: center;">Expense Claims</th>
+                                                                    <th scope="col" style="text-align: center;">Loan</th>
+                                                                    <th scope="col" style="text-align: center;">Other Addition</th>
+                                                                    <th scope="col" style="text-align: center;">Total Addition</th>                                                               
+                                                                    <th scope="col" style="text-align: center;">Loan Amount</th>
+                                                                    <th scope="col" style="text-align: center;">Leave Amount</th>
+                                                                    <th scope="col" style="text-align: center;">Other Deduction</th>
+                                                                    <th scope="col" style="text-align: center;">Total Deduction</th>
+                                                                    <th scope="col" style="text-align: center;">Net Amount</th>
+                                                                    <th scope="col" style="text-align: center;">Payment Mode</th>
+                                                                </tr>
+                                                            </thead>
+                
+                                                            <tbody class="list form-check-all font-type fs-11">
+                                                                <tr class="trstyle fs-11" *ngFor="let data of salarydata | search : searchInput  | pagination: currentPage: itemsPerPage;index as i">
+                                                                    <td>{{data.EMP_CODE}}</td>                                                                    
+                                                                    <td>{{data.EMP_NAME}}</td>
+                                                                    <td>{{data.BASIC}}</td>
+                                                                    <td>{{data.TRANSPORT}}</td>
+                                                                    <td>{{data.ACCOMMODATION}}</td>
+                                                                    <td>{{data.OTHER_ALLOWANCE}}</td>
+                                                                    <td>{{data.HRA}}</td>
+                                                                    <td>{{data.GROSS_SALARY}}</td>
+                                                                    <td>{{data.OVERTIME}}</td>
+                                                                    <td>{{data.EXPENSE_CLAIM}}</td>
+                                                                    <td>{{data.LOAN}}</td>
+                                                                    <td>{{data.OTHER_ADDITION}}</td>
+                                                                    <td>{{data.TOTAL_ADDITION}}</td>
+                                                                    <td>{{data.LOAN_AMOUNT}}</td>
+                                                                    <td>{{data.LEAVE_AMOUNT}}</td>
+                                                                    <td>{{data.OTHER_DEDUCTION}}</td>
+                                                                    <td>{{data.TOTAL_DEDUCTION}}</td>
+                                                                    <td>{{data.NET_AMOUNT}}</td>
+                                                                    <td>{{data.PAYMENT_MODE}}</td>
+                                                                </tr>                                                                
+                                 
+                                                            </tbody>                                   
+                                                               
+                                                        </table>
+                                                       
+                                                     
+                                                    </div><!-- end table responsive -->
+                                                    <div *ngIf="salarydata">                                            
+                                
+                                                        <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                                            <div class="col-sm">
+                                                              <div class="font-type fs-12 text-muted">
+                                                                Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                                - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                                of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-sm">
+                                                                <div class="font-type fs-12 text-muted">
+                                                                    Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-auto mt-4 mt-sm-0">
+                                                                <div class="d-flex gap-1 flex-wrap">
+                                                                    <div>
+                                                                        <div class="input-group">
+                                                                <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                                
+                                                               <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                                          </div>
+                                                        </div>
+                                                             
+                                                            <div class="col-sm-auto mt-3 mt-sm-0">
+                                                              <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                                <li class="page-item">
+                                                                  <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                                </li>
+                                                                <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                                  <li class="page-item">
+                                                                    <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                                  </li>
+                                                                </ng-container>
+                                                                <li class="page-item">
+                                                                  <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                                </li>
+                                                              </ul>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button>
+                                                <!--Modal For Success Message Start-->
+                                                <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-orange padding-up-5">
+                                                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                                            </div>
+                                                            
+                                                            <div class="modal-body" *ngIf="showModal==2">
+                                                            <div class="container">
+                                                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <!--Modal For Success Message End--> 
+                                                   
+                                                </div><!-- end card body -->
+                                            </div><!-- end card -->
+                                        </div> 
+                                              
+                                           
+                                          
+                                 
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+        
+                        </div>
+                        <!-- container-fluid -->
+                    </div>
+                    <!-- End Page-content -->
+                    <app-footer></app-footer>
+                </div>
+                <!-- end main content-->
+            </div>
+            <!-- END layout-wrapper -->
+        
+

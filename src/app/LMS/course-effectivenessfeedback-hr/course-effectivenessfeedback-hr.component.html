@@ -1,0 +1,226 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu> 
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+                 <!-- start page title -->
+                 <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between font-type">
+                            <h4 class="mb-0 text-uppercase font-type padding-up-5"   style="letter-spacing: 0.2px;">Efectiveness Feedback</h4>
+                        </div>
+                    </div>
+                </div>
+                 <!-- End start page title -->
+                 
+                 <div class="topbar-up row">
+                    <div class="col-lg-12 col-md-12">
+                       <div class="d-flex flex-column h-100">
+                           <div class="row">
+                               <div class="col-lg-12 col-md-12">
+                                   <div class="card card-animate overflow-hidden shadow-lg">
+                                       <div class="position-absolute start-0" style="z-index: 0;">
+                                           <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+                                               <style>
+                                                   .s0 {
+                                                       opacity: .08;
+                                                       fill: var(--vz-info)
+                                                   }
+                                               </style>
+                                               <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
+                                           </svg>
+                                       </div>
+                                       <div class="card-body" style="z-index:1 ;">
+                                           <div class="d-flex align-items-center">
+                                               <div class="flex-grow-1 overflow-hidden">
+                                                   <div class="row">
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <h6 class="fs-12 font-type">Company</h6>
+                                                        <h6 class="fs-12 font-type fw-semibold">{{trainingdata?.COMPANY_NAME}}</h6> 
+                                                    </div>
+                                                       <div class="col-lg-6 col-md-6">
+                                                               <h6 class="font-type fs-12">Training Name </h6>
+                                                               <h6 class="fs-12 font-type fw-semibold">{{trainingdata?.SUBJECT_NAME}}</h6>
+                                                       </div>
+                                                       <div class="col-lg-3 col-lg-3">
+                                                           <h6 class="font-type fs-12">Training Date</h6>
+                                                           <h6 class="fs-12 font-type fw-semibold">{{trainingdata?.TRAINING_DATE | date: 'dd-MM-yyyy'}}</h6>
+                                                       </div>
+                                                </div>
+                                               </div>
+                                           </div>
+                                       </div><!-- end card body -->
+                                   </div><!-- end card -->
+                               </div><!--end col-->
+                           </div>
+                           <div class="row">
+                               <div class="col-lg-3 col-md-3">
+                                   <div class="card shadow-lg card-animate">
+                                       <div class="card-body">
+                                           <div class="d-flex align-items-center">
+                                               <div class="avatar-sm flex-shrink-0">
+                                                   <span class="avatar-title bg-light text-primary rounded-circle fs-3">
+                                                       <i class="ri-dashboard-fill text-blue align-middle"></i>
+                                                   </span>
+                                               </div>
+                                               <div class="flex-grow-1 ms-3">
+                                                   <p class="text-uppercase fw-semibold fs-12 text-muted mb-1 font-type"> Total</p>
+                                                   <h4 class="mb-0 font-type fw-semibold fs-16">{{totalCount}}</h4>
+                                               </div>
+                                           </div>
+                                       </div><!-- end card body -->
+                                   </div><!-- end card -->
+                               </div><!-- end col -->
+                               <div class="col-lg-3 col-md-3">
+                                   <div class="card shadow-lg card-animate">
+                                       <div class="card-body ">
+                                           <div class="d-flex align-items-center">
+                                               <div class="avatar-sm flex-shrink-0">
+                                                   <span class="avatar-title bg-light text-primary rounded-circle fs-3">
+                                                       <i class="ri-task-fill text-blue align-middle text-success"></i>
+                                                   </span>
+                                               </div>
+                                               <div class="flex-grow-1 ms-3">
+                                                   <p class="text-uppercase fw-semibold fs-12 text-muted mb-1 font-type">Submitted</p>
+                                                   <h4 class="mb-0 font-type fw-semibold fs-16">{{submittedCount}}</h4>
+                                               </div>
+                                           </div>
+                                       </div><!-- end card body -->
+                                   </div><!-- end card -->
+                               </div><!-- end col -->
+                               <div class="col-lg-3 col-md-3">
+                                   <div class="card shadow-lg card-animate">
+                                       <div class="card-body">
+                                           <div class="d-flex align-items-center">
+                                               <div class="avatar-sm flex-shrink-0">
+                                                   <span class="avatar-title bg-light text-primary rounded-circle fs-3">
+                                                       <i class="ri-time-fill text-blue align-middle text-warning"></i>
+                                                   </span>
+                                               </div>
+                                               <div class="flex-grow-1 ms-3">
+                                                   <p class="text-uppercase fw-semibold fs-12 text-muted mb-1 font-type">Pending</p>
+                                                   <h4 class="mb-0 font-type fw-semibold fs-16">{{pendingCount}}</h4>
+                                               </div>
+                                           </div>
+                                       </div><!-- end card body -->
+                                   </div><!-- end card -->
+                               </div><!-- end col -->
+                               <div class="col-lg-3 col-md-3">
+                                   <div class="card shadow-lg card-animate">
+                                       <div class="card-body">
+                                           <div class="d-flex align-items-center">
+                                               <div class="avatar-sm flex-shrink-0">
+                                                   <span class="avatar-title bg-light text-primary rounded-circle fs-3">
+                                                       <i class="ri-error-warning-fill text-blue align-middle text-danger"></i>
+                                                   </span>
+                                               </div>
+                                               <div class="flex-grow-1 ms-3">
+                                                   <p class="text-uppercase fw-semibold fs-12 text-muted mb-1 font-type">Overdue</p>
+                                                   <h4 class="mb-0 font-type fw-semibold fs-16">{{overdueCount}}</h4>
+                                               </div>
+                                           </div>
+                                       </div><!-- end card body -->
+                                   </div><!-- end card -->
+                               </div><!-- end col -->
+                           </div>
+                       </div>
+                    </div>
+                    </div>
+
+                    <!-- TABLE DETAILS -->
+                    <div class="row margin-up-5" style="justify-content: center;">
+                            <div class="col-md-12 col-lg-12">
+                                    <div class="card shadow-lg">
+                                        <div class="card-header border-0 pa-6-8">
+                                            <div class="row align-items-center gy-2">
+                                                <div class="col-sm">
+                                                    <div class="align-items-center d-flex ">
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Course Efectiveness Feedback List</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div class="search-box">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInput">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                        <div>
+                                                            <select class="form-select font-type fs-12 textbox-15 h-30" [(ngModel)]="selectedstatus" (change)="filter();">
+                                                                <option value="-1">All</option>
+                                                                <option value="0">Pending</option>
+                                                                <option value="1">Submitted</option>                                                                
+                                                                <option value="2">Overdue</option>
+                                                              </select>  
+                                                        </div>
+                                                        <div>
+                                                            <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab font-type h-30"(click)="downloadtoExcel()"><i class="ri-file-excel-2-line label-icon align-middle fs-16 ms-2"></i>Consolidated Report</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end card header -->
+                                        <div class="card-body ">
+                                            <div class="table-responsive  table-card mb-0">
+                                            <!-- Tables Border Colors -->
+                                                <table class="table align-middle table-nowrap pl-10 table-hover table-borderd border-orange">
+                                                    <thead class="table-light text-white font-type">
+                                                        <tr>
+                                                            <th>Emp Code</th>
+                                                            <th>Employee</th>
+                                                            <th>Department</th>
+                                                            <th>Designation</th>
+                                                            <th>Manager</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody >
+                                                        <tr class="font-type h-30" *ngFor="let item of tabledata | search : searchInput">
+                                                            <td>{{item.EMP_CODE}}</td>
+                                                            <td>{{item.EMP_NAME}}</td>
+                                                            <td>{{item.DEPARTMENT}}</td>
+                                                            <td>{{item.DESIGNATION}}</td>
+                                                            <td>{{item.MANAGER}}</td>
+                                                            <td class="status"><span class="badge bg-warning text-white  width-budge fs-11 fw-medium"*ngIf="item.FEEDBACK_STATUS==0">Pending</span>
+                                                            <span class="badge bg-success text-white  width-budge fs-11 fw-medium"*ngIf="item.FEEDBACK_STATUS==1">Submitted</span>
+                                                            <span class="badge bg-danger text-white  width-budge fs-11 fw-medium"*ngIf="item.FEEDBACK_STATUS==2">Overdue</span></td>
+                                                        </tr>                                                       
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- end tab content -->
+                                         </div>
+                                    </div>
+                                        <!-- end card body -->
+                            </div>
+                                    <!-- end card -->
+                    </div><!-- end row -->
+                    <!--END TABLE DETAILS -->
+                    <div class="col-lg-12">
+                        <div class="hstack gap-1 justify-content-end">
+                            <a routerLink="/training-plan">
+                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button>
+                            </a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

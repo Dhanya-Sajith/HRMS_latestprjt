@@ -1,0 +1,589 @@
+  <!-- Begin page -->
+  <div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>  
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+                 <!-- start page title -->
+                 <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between font-type">
+                            <h4 class="mb-sm-0 text-uppercase font-type padding-up-5" style="letter-spacing: 0.2px;">Employee  Master  Report</h4>
+                        </div>
+                    </div>
+                </div>
+                 <!-- End start page title -->
+                 
+                    <div class="card topbar-up">
+                    <div class="card-body"> 
+                    <div class="border border-dashed rounded p-3 pa-0">                          
+                            <div class="row mb-1 margin-up-10"style="justify-content: center;">
+                                <!-- <div class="col-lg-2"></div> -->
+                                    <div class="col-lg-3 pt-2 ">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>                                           
+                                                <select class="form-select font-type fs-12 " [(ngModel)]="selectedCompanyid" (change)="onCompanySelected(selectedCompanyid)" aria-label="Default select example" required>
+                                                    <option value="-1" selected disabled >Select</option>
+                                                    <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                </select>       
+                                    </div>
+                                    <div class="col-lg-3 pt-2">
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Department </span></h6>                                           
+                                                
+                                                <ng-multiselect-dropdown
+                                                [settings]="dropdownSettingsDept"
+                                                [(ngModel)]="selectedItems_Dept"
+                                                [data]="deptdata"(onSelect)="onDeptSelected($event)" (onDeSelect)="onDeptSelected($event)" >     
+                                            </ng-multiselect-dropdown> 
+                                    </div>
+                                    <div class="col-lg-3 pt-2">  
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>                                            
+                                            <ng-multiselect-dropdown #dropdown
+                                                [settings]="dropdownSettings"
+                                                [(ngModel)]="selectedItems_list"
+                                                [data]="empdata">     
+                                            </ng-multiselect-dropdown>                                             
+                                    </div>                                      
+                            </div>
+                    </div>
+                       
+                    </div>
+                    </div>
+                    
+
+                    <!-- TABLE DETAILS -->
+
+                    <div class="row"id="tb_EmpDetails">
+                            <div class="col-xxl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <ul class="nav nav-tabs-custom rounded card-header-tabs border-bottom-0" role="tablist"style="justify-content: center;">
+                                                <li class="nav-item" >
+                                                        <button id="openalert0"  class="nav-link active font-type" data-bs-toggle="tab"  role="tab" href="#Basic-Information" (click)="ontabselected('B')">Basic-Information</button> 
+                                                </li>
+                                                <li class="nav-item">
+                                                        <button id="openalert1"  class="nav-link  font-type" data-bs-toggle="tab"  role="tab" href="#Contact-Info" (click)="ontabselected('C')">Contact-Info</button>
+                                                </li>
+                                                <li class="nav-item">
+                                                        <button id="openalert2"   class="nav-link font-type" data-bs-toggle="tab"  role="tab" href="#Documents" (click)="ontabselected('D')">Documents</button>
+                                                </li>
+        
+                                                <li class="nav-item">
+                                                        <button id="openalert3"  class="nav-link font-type" data-bs-toggle="tab"  role="tab" href="#Bank-Salary" (click)="ontabselected('S')">Bank-Salary</button>
+                                                </li>
+                                                <li class="nav-item">
+                                                  
+                                                        <button id="openalert4"  class="nav-link font-type" data-bs-toggle="tab"  role="tab" href="#Employee-Data" (click)="ontabselected('P')">Professional Details</button>
+                                                </li>
+                                                <li class="nav-item">
+                                                        <button id="openalert5"  class="nav-link font-type" data-bs-toggle="tab"  role="tab" href="#Nominee" (click)="ontabselected('N')">Nominee</button>
+                                                </li>
+                                                <li class="nav-item">
+                                                        <button id="openalert6"  class="nav-link font-type" data-bs-toggle="tab"  role="tab" href="#Assets" (click)="ontabselected('A')">Assets</button>
+                                                </li>
+                                                <li class="nav-item">
+                                                        <button id="openalert7"  class="nav-link font-type" data-bs-toggle="tab"  role="tab"  href="#Other" (click)="ontabselected('F')">Family Details</button>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        <div class="card-body">
+                    <div class="tab-content">
+                     <div class="tab-pane active" id="Basic-Information" role="tabpanel">
+                      <!-- TABLE DETAILS -->
+                        <div class="row margin-up-5 " style="justify-content: center;" id="tb_EmpDetails">
+                                <div class="col-xl-4 col-lg-8">
+                                        <div class="card">
+                                            <div class="card-header border-0 pa-6-8 bg-light-blue">
+                                                <div class="row align-items-center gy-2">
+                                                    <div class="col-sm-auto">
+                                                        <div class="d-flex gap-1 flex-wrap">
+                                                            <label class="form-check-label font-type" for="formCheckB" >
+                                                                All
+                                                            </label>
+                                                            <div class="form-check form-check-info mb-0">
+                                                                
+                                                                <input class="form-check-input" type="checkbox" id="formCheckB" (change)="checkAllB($event)">
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                        <div class="align-items-center d-flex ">
+                                                            <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold text-blue">BASIC & JOB INFORMATION</h4>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                            <!-- end card header -->
+                                            <div class="card-body ">
+                                                <div class="table-responsive  table-card mb-0">
+                                                <!-- Tables Border Colors -->
+                                                    <table class="table table-bordered border-blue align-middle table-nowrap pl-10" style="border-color:#87CEEB;">
+                                                        <tbody >
+                                                            <tr class="font-type" *ngFor="let item of tabdataB">
+                                                                <td class="text-center"> 
+                                                                    <div class="form-check form-check-info text-center">
+                                                                      <input class="form-check-input" type="checkbox"[(ngModel)]="item.checked" >
+                                                                    </div>
+                                                                  </td>
+                                                                <td>{{ item.DATA_VALUE }}</td>
+                                                                
+                                                              </tr>                                                            
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- end tab content -->
+                                                
+                                                </div>
+                                        </div>
+                                            <!-- end card body -->
+                                </div>
+                                        <!-- end card -->
+                        </div><!-- end row -->
+                        <!--END TABLE DETAILS -->
+                                                        </div>
+                                          </div>
+                                          <div class="tab-content">
+                                            <div class="tab-pane " id="Contact-Info" role="tabpanel">
+                                             <!-- TABLE DETAILS -->
+                                               <div class="row margin-up-5 " style="justify-content: center;" id="tb_EmpDetails">
+                                                       <div class="col-xl-4 col-lg-8">
+                                                               <div class="card">
+                                                                   <div class="card-header border-0 pa-6-8 bg-light-blue">
+                                                                       <div class="row align-items-center gy-2">
+                                                                           
+                                                                           <div class="col-sm-auto">
+                                                                               <div class="d-flex gap-1 flex-wrap">
+                                                                                <label class="form-check-label font-type" for="formCheckC">
+                                                                                    All
+                                                                                </label>
+                                                                                   <div class="form-check form-check-info mb-0">
+                                                                                       <input class="form-check-input" type="checkbox" id="formCheckC" (change)="checkAllC($event)">
+                                                                                       
+                                                                                   </div>
+                                                                               </div>
+                                                                           </div>
+                                                                           <div class="col-sm">
+                                                                            <div class="align-items-center d-flex ">
+                                                                                <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold text-blue">CONTACT INFORMATION</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                       </div>
+                                                                   </div>
+                                                                   <!-- end card header -->
+                                                                   <div class="card-body ">
+                                                                       <div class="table-responsive  table-card mb-0">
+                                                                       <!-- Tables Border Colors -->
+                                                                           <table class="table table-bordered border-blue align-middle table-nowrap pl-10" style="border-color:#87CEEB;">
+                                                                               <tbody >
+                                                                                   <tr class="font-type" *ngFor="let item of tabdataC">
+                                                                                    <td class="text-center"> 
+                                                                                        <div class="form-check form-check-info text-center">
+                                                                                          <input class="form-check-input" type="checkbox" [(ngModel)]="item.checked" >
+                                                                                        </div>
+                                                                                      </td>
+                                                                                       <td>{{ item.DATA_VALUE }}</td>                                                                                      
+                                                                                     </tr>                                                            
+                                                                               </tbody>
+                                                                           </table>
+                                                                       </div>
+                                                                       <!-- end tab content -->
+                                                                       
+                                                                       </div>
+                                                               </div>
+                                                                   <!-- end card body -->
+                                                       </div>
+                                                               <!-- end card -->
+                                               </div><!-- end row -->
+                                               <!--END TABLE DETAILS -->
+                                                                               </div>
+                                                                 </div>
+                                                                 <div class="tab-content">
+                                                                    <div class="tab-pane " id="Documents" role="tabpanel">
+                                                                     <!-- TABLE DETAILS -->
+                                                                       <div class="row margin-up-5 " style="justify-content: center;" id="tb_EmpDetails">
+                                                                               <div class="col-xl-4 col-lg-8">
+                                                                                       <div class="card">
+                                                                                           <div class="card-header border-0 pa-6-8 bg-light-blue">
+                                                                                               <div class="row align-items-center gy-2">
+                                                                                                <div class="col-sm-auto">
+                                                                                                    <div class="d-flex gap-1 flex-wrap">
+                                                                                                     <label class="form-check-label font-type" for="formCheckD">
+                                                                                                         All
+                                                                                                     </label>
+                                                                                                        <div class="form-check form-check-info mb-0">
+                                                                                                            <input class="form-check-input" type="checkbox" id="formCheckD" (change)="checkAllD($event)">
+                                                                                                            
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                   <div class="col-sm">
+                                                                                                       <div class="align-items-center d-flex ">
+                                                                                                           <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold text-blue">DOCUMENTS</h4>
+                                                                                                       </div>
+                                                                                                   </div>
+                                                                                                   
+                                                                                               </div>
+                                                                                           </div>
+                                                                                           <!-- end card header -->
+                                                                                           <div class="card-body ">
+                                                                                               <div class="table-responsive  table-card mb-0">
+                                                                                               <!-- Tables Border Colors -->
+                                                                                                   <table class="table table-bordered border-blue align-middle table-nowrap pl-10" style="border-color:#87CEEB;">
+                                                                                                       <tbody >
+                                                                                                           <tr class="font-type" *ngFor="let item of tabdataD">
+                                                                                                            <td class="text-center"> 
+                                                                                                                 <div class="form-check form-check-info text-center">
+                                                                                                                   <input class="form-check-input" type="checkbox"[(ngModel)]="item.checked">
+                                                                                                                 </div>
+                                                                                                               </td>
+                                                                                                               <td>{{ item.DATA_VALUE }}</td>                                                                                                               
+                                                                                                             </tr>                                                            
+                                                                                                       </tbody>
+                                                                                                   </table>
+                                                                                               </div>
+                                                                                               <!-- end tab content -->
+                                                                                              
+                                                                                               </div>
+                                                                                       </div>
+                                                                                           <!-- end card body -->
+                                                                               </div>
+                                                                                       <!-- end card -->
+                                                                       </div><!-- end row -->
+                                                                       <!--END TABLE DETAILS -->
+                                                                                                       </div>
+                                                                                         </div>
+                                                                                         <div class="tab-content">
+                                                                                            <div class="tab-pane " id="Bank-Salary" role="tabpanel">
+                                                                                             <!-- TABLE DETAILS -->
+                                                                                               <div class="row margin-up-5 " style="justify-content: center;" id="tb_EmpDetails">
+                                                                                                       <div class="col-xl-4 col-lg-8">
+                                                                                                               <div class="card">
+                                                                                                                   <div class="card-header border-0 pa-6-8 bg-light-blue">
+                                                                                                                       <div class="row align-items-center gy-2">
+                                                                                                                        <div class="col-sm-auto">
+                                                                                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                                                                             <label class="form-check-label font-type" for="formCheckS">
+                                                                                                                                 All
+                                                                                                                             </label>
+                                                                                                                                <div class="form-check form-check-info mb-0">
+                                                                                                                                    <input class="form-check-input" type="checkbox" id="formCheckS" (change)="checkAllS($event)">
+                                                                                                                                    
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                           <div class="col-sm">
+                                                                                                                               <div class="align-items-center d-flex ">
+                                                                                                                                   <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold text-blue">BANK-SALARY</h4>
+                                                                                                                               </div>
+                                                                                                                           </div>
+                                                                                                                          
+                                                                                                                       </div>
+                                                                                                                   </div>
+                                                                                                                   <!-- end card header -->
+                                                                                                                   <div class="card-body ">
+                                                                                                                       <div class="table-responsive  table-card mb-0">
+                                                                                                                       <!-- Tables Border Colors -->
+                                                                                                                           <table class="table table-bordered border-blue align-middle table-nowrap pl-10" style="border-color:#87CEEB;">
+                                                                                                                               <tbody >
+                                                                                                                                   <tr class="font-type" *ngFor="let item of tabdataS">
+                                                                                                                                    <td class="text-center"> 
+                                                                                                                                        <div class="form-check form-check-info text-center">
+                                                                                                                                          <input class="form-check-input" type="checkbox"[(ngModel)]="item.checked">
+                                                                                                                                        </div>
+                                                                                                                                      </td>
+                                                                                                                                       <td>{{ item.DATA_VALUE }}</td>
+                                                                                                                                       
+                                                                                                                                     </tr>                                                            
+                                                                                                                               </tbody>
+                                                                                                                           </table>
+                                                                                                                       </div>
+                                                                                                                       <!-- end tab content -->
+                                                                                                                       
+                                                                                                                       </div>
+                                                                                                               </div>
+                                                                                                                   <!-- end card body -->
+                                                                                                       </div>
+                                                                                                               <!-- end card -->
+                                                                                               </div><!-- end row -->
+                                                                                               <!--END TABLE DETAILS -->
+                                                                                                                               </div>
+                                                                                                                 </div>
+                                                                                                                 <div class="tab-content">
+                                                                                                                    <div class="tab-pane " id="Employee-Data" role="tabpanel">
+                                                                                                                     <!-- TABLE DETAILS -->
+                                                                                                                       <div class="row margin-up-5 " style="justify-content: center;" id="tb_EmpDetails">
+                                                                                                                               <div class="col-xl-4 col-lg-8">
+                                                                                                                                       <div class="card">
+                                                                                                                                           <div class="card-header border-0 pa-6-8 bg-light-blue">
+                                                                                                                                               <div class="row align-items-center gy-2">
+                                                                                                                                                <div class="col-sm-auto">
+                                                                                                                                                    <div class="d-flex gap-1 flex-wrap">
+                                                                                                                                                     <label class="form-check-label font-type" for="formCheckP">
+                                                                                                                                                         All
+                                                                                                                                                     </label>
+                                                                                                                                                        <div class="form-check form-check-info mb-0">
+                                                                                                                                                         
+                                                                                                                                                            <input class="form-check-input" type="checkbox" id="formCheckP" (change)="checkAllP($event)">
+                                                                                                                                                            
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
+                                                                                                                                                   <div class="col-sm">
+                                                                                                                                                       <div class="align-items-center d-flex ">
+                                                                                                                                                           <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold text-blue">PROFESSIONAL DETAILS</h4>
+                                                                                                                                                       </div>
+                                                                                                                                                   </div>
+                                                                                                                                                   
+                                                                                                                                               </div>
+                                                                                                                                           </div>
+                                                                                                                                           <!-- end card header -->
+                                                                                                                                           <div class="card-body ">
+                                                                                                                                               <div class="table-responsive  table-card mb-0">
+                                                                                                                                               <!-- Tables Border Colors -->
+                                                                                                                                                   <table class="table table-bordered border-blue align-middle table-nowrap pl-10" style="border-color:#87CEEB;">
+                                                                                                                                                       <tbody >
+                                                                                                                                                           <tr class="font-type" *ngFor="let item of tabdataP">
+                                                                                                                                                            <td class="text-center"> 
+                                                                                                                                                                <div class="form-check form-check-info text-center">
+                                                                                                                                                                  <input class="form-check-input" type="checkbox"[(ngModel)]="item.checked">
+                                                                                                                                                                </div>
+                                                                                                                                                              </td>
+                                                                                                                                                               <td>{{ item.DATA_VALUE }}</td>
+                                                                                                                                                               
+                                                                                                                                                             </tr>                                                            
+                                                                                                                                                       </tbody>
+                                                                                                                                                   </table>
+                                                                                                                                               </div>
+                                                                                                                                               <!-- end tab content -->
+                                                                                                                                              
+                                                                                                                                               </div>
+                                                                                                                                       </div>
+                                                                                                                                           <!-- end card body -->
+                                                                                                                               </div>
+                                                                                                                                       <!-- end card -->
+                                                                                                                       </div><!-- end row -->
+                                                                                                                       <!--END TABLE DETAILS -->
+                                                                                                                                                       </div>
+                                                                                                                                         </div>
+                                                                                                                                         <div class="tab-content">
+                                                                                                                                            <div class="tab-pane " id="Nominee" role="tabpanel">
+                                                                                                                                             <!-- TABLE DETAILS -->
+                                                                                                                                               <div class="row margin-up-5 " style="justify-content: center;" id="tb_EmpDetails">
+                                                                                                                                                       <div class="col-xl-4 col-lg-8">
+                                                                                                                                                               <div class="card">
+                                                                                                                                                                   <div class="card-header border-0 pa-6-8 bg-light-blue">
+                                                                                                                                                                       <div class="row align-items-center gy-2">
+                                                                                                                                                                        <div class="col-sm-auto">
+                                                                                                                                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                                                                                                                             <label class="form-check-label font-type" for="formCheckN">
+                                                                                                                                                                                 All
+                                                                                                                                                                             </label>
+                                                                                                                                                                                <div class="form-check form-check-info mb-0">
+                                                                                                                                                                                    <input class="form-check-input" type="checkbox" id="formCheckN" (change)="checkAllN($event)">
+                                                                                                                                                                                    
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div>
+                                                                                                                                                                        </div>
+                                                                                                                                                                           <div class="col-sm">
+                                                                                                                                                                               <div class="align-items-center d-flex ">
+                                                                                                                                                                                   <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold text-blue">NOMINEE</h4>
+                                                                                                                                                                               </div>
+                                                                                                                                                                           </div>
+                                                                                                                                                                          
+                                                                                                                                                                       </div>
+                                                                                                                                                                   </div>
+                                                                                                                                                                   <!-- end card header -->
+                                                                                                                                                                   <div class="card-body ">
+                                                                                                                                                                       <div class="table-responsive  table-card mb-0">
+                                                                                                                                                                       <!-- Tables Border Colors -->
+                                                                                                                                                                           <table class="table table-bordered border-blue align-middle table-nowrap pl-10" style="border-color:#87CEEB;">
+                                                                                                                                                                               <tbody >
+                                                                                                                                                                                   <tr class="font-type" *ngFor="let item of tabdataN">
+                                                                                                                                                                                    <td class="text-center"> 
+                                                                                                                                                                                        <div class="form-check form-check-info text-center">
+                                                                                                                                                                                          <input class="form-check-input" type="checkbox"[(ngModel)]="item.checked">
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                      </td>
+                                                                                                                                                                                       <td>{{ item.DATA_VALUE }}</td>
+                                                                                                                                                                                       
+                                                                                                                                                                                     </tr>                                                            
+                                                                                                                                                                               </tbody>
+                                                                                                                                                                           </table>
+                                                                                                                                                                       </div>
+                                                                                                                                                                       <!-- end tab content -->
+                                                                                                                                                                       
+                                                                                                                                                                       </div>
+                                                                                                                                                               </div>
+                                                                                                                                                                   <!-- end card body -->
+                                                                                                                                                       </div>
+                                                                                                                                                               <!-- end card -->
+                                                                                                                                               </div><!-- end row -->
+                                                                                                                                               <!--END TABLE DETAILS -->
+                                                                                                                                                                               </div>
+                                                                                                                                                                 </div>
+                                                                                                                                                                 <div class="tab-content">
+                                                                                                                                                                    <div class="tab-pane " id="Assets" role="tabpanel">
+                                                                                                                                                                     <!-- TABLE DETAILS -->
+                                                                                                                                                                       <div class="row margin-up-5 " style="justify-content: center;" id="tb_EmpDetails">
+                                                                                                                                                                               <div class="col-xl-4 col-lg-8">
+                                                                                                                                                                                       <div class="card">
+                                                                                                                                                                                           <div class="card-header border-0 pa-6-8 bg-light-blue">
+                                                                                                                                                                                               <div class="row align-items-center gy-2">
+                                                                                                                                                                                                <div class="col-sm-auto">
+                                                                                                                                                                                                    <div class="d-flex gap-1 flex-wrap">
+                                                                                                                                                                                                     <label class="form-check-label font-type" for="formCheckA">
+                                                                                                                                                                                                         All
+                                                                                                                                                                                                     </label>
+                                                                                                                                                                                                        <div class="form-check form-check-info mb-0">
+                                                                                                                                                                                                            <input class="form-check-input" type="checkbox" id="formCheckA" (change)="checkAllA($event)">
+                                                                                                                                                                                                            
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                                   <div class="col-sm">
+                                                                                                                                                                                                       <div class="align-items-center d-flex ">
+                                                                                                                                                                                                           <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold text-blue">ASSETS</h4>
+                                                                                                                                                                                                       </div>
+                                                                                                                                                                                                   </div>
+                                                                                                                                                                                                  
+                                                                                                                                                                                               </div>
+                                                                                                                                                                                           </div>
+                                                                                                                                                                                           <!-- end card header -->
+                                                                                                                                                                                           <div class="card-body ">
+                                                                                                                                                                                               <div class="table-responsive  table-card mb-0">
+                                                                                                                                                                                               <!-- Tables Border Colors -->
+                                                                                                                                                                                                   <table class="table table-bordered border-blue align-middle table-nowrap pl-10" style="border-color:#87CEEB;">
+                                                                                                                                                                                                       <tbody >
+                                                                                                                                                                                                           <tr class="font-type" *ngFor="let item of tabdataA">
+                                                                                                                                                                                                            <td class="text-center"> 
+                                                                                                                                                                                                                <div class="form-check form-check-info text-center">
+                                                                                                                                                                                                                  <input class="form-check-input" type="checkbox" [(ngModel)]="item.checked" >
+                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                              </td>
+                                                                                                                                                                                                               <td>{{ item.DATA_VALUE }}</td>
+                                                                                                                                                                                                               
+                                                                                                                                                                                                             </tr>                                                            
+                                                                                                                                                                                                       </tbody>
+                                                                                                                                                                                                   </table>
+                                                                                                                                                                                               </div>
+                                                                                                                                                                                               <!-- end tab content -->
+                                                                                                                                                                                               
+                                                                                                                                                                                               </div>
+                                                                                                                                                                                       </div>
+                                                                                                                                                                                           <!-- end card body -->
+                                                                                                                                                                               </div>
+                                                                                                                                                                                       <!-- end card -->
+                                                                                                                                                                       </div><!-- end row -->
+                                                                                                                                                                       <!--END TABLE DETAILS -->
+                                                                                                                                                                                                       </div>
+                                                                                                                                                                                         </div>
+                                                                                                                                                                                         <div class="tab-content">
+                                                                                                                                                                                            <div class="tab-pane " id="Other" role="tabpanel">
+                                                                                                                                                                                             <!-- TABLE DETAILS -->
+                                                                                                                                                                                               <div class="row margin-up-5 " style="justify-content: center;" id="tb_EmpDetails">
+                                                                                                                                                                                                       <div class="col-xl-4 col-lg-8">
+                                                                                                                                                                                                               <div class="card">
+                                                                                                                                                                                                                   <div class="card-header border-0 pa-6-8 bg-light-blue">
+                                                                                                                                                                                                                       <div class="row align-items-center gy-2">
+                                                                                                                                                                                                                        <div class="col-sm-auto">
+                                                                                                                                                                                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                                                                                                                                                                             <label class="form-check-label font-type" for="formCheckF">
+                                                                                                                                                                                                                                 All
+                                                                                                                                                                                                                             </label>
+                                                                                                                                                                                                                                <div class="form-check form-check-info mb-0">
+                                                                                                                                                                                                                                    <input class="form-check-input" type="checkbox" id="formCheckF" (change)="checkAllF($event)">
+                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                           <div class="col-sm">
+                                                                                                                                                                                                                               <div class="align-items-center d-flex ">
+                                                                                                                                                                                                                                   <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold text-blue">FAMILY DETAILS</h4>
+                                                                                                                                                                                                                               </div>
+                                                                                                                                                                                                                           </div>
+                                                                                                                                                                                                                          
+                                                                                                                                                                                                                       </div>
+                                                                                                                                                                                                                   </div>
+                                                                                                                                                                                                                   <!-- end card header -->
+                                                                                                                                                                                                                   <div class="card-body ">
+                                                                                                                                                                                                                       <div class="table-responsive  table-card mb-0">
+                                                                                                                                                                                                                       <!-- Tables Border Colors -->
+                                                                                                                                                                                                                           <table class="table table-bordered border-blue align-middle table-nowrap pl-10" style="border-color:#87CEEB;">
+                                                                                                                                                                                                                               <tbody >
+                                                                                                                                                                                                                                   <tr class="font-type" *ngFor="let item of tabdataF">
+                                                                                                                                                                                                                                    <td class="text-center"> 
+                                                                                                                                                                                                                                        <div class="form-check form-check-info text-center">
+                                                                                                                                                                                                                                          <input class="form-check-input" type="checkbox" [(ngModel)]="item.checked" >
+                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                      </td>
+                                                                                                                                                                                                                                       <td>{{ item.DATA_VALUE }}</td>
+                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                     </tr>                                                            
+                                                                                                                                                                                                                               </tbody>
+                                                                                                                                                                                                                           </table>
+                                                                                                                                                                                                                       </div>
+                                                                                                                                                                                                                       <!-- end tab content -->
+                                                                                                                                                                                                                       
+                                                                                                                                                                                                                       </div>
+                                                                                                                                                                                                               </div>
+                                                                                                                                                                                                                   <!-- end card body -->
+                                                                                                                                                                                                       </div>
+                                                                                                                                                                                                               <!-- end card -->
+                                                                                                                                                                                               </div><!-- end row -->
+                                                                                                                                                                                               <!--END TABLE DETAILS -->
+                                                                                                                                                                                                                               </div>
+                                                                                                                                                                                                                 </div>
+                                                                                                                                                                                                                 <div class="col-lg-12">
+                                                                                                                                                                                                                    <div class="hstack gap-2 justify-content-end ma-10">
+                                                                                                                                                                                                                    <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab font-type " (click)="onSubmit()" ><i class="ri-file-excel-2-line label-icon align-middle fs-16 ms-2"></i>Download Excel</button>
+                                                                                                                                                                                                                    <button type="button" class="btn btn-danger btn-label right  nexttab  nexttab font-type " (click)="clearAll()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Clear All</button>
+                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                </div>
+                                                            </div>
+                                    </div>
+                                        <!-- end card body -->
+                            </div>
+                                    <!-- end card -->
+                    </div><!-- end row -->
+                    <!--END TABLE DETAILS -->
+                    <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                                <!--Modal For Success Message Start-->
+                            <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-orange padding-up-5">
+                                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                            </div>
+                                            
+                                            <div class="modal-body" *ngIf="showModal==2">
+                                            <div class="container">
+                                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                                
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

@@ -1,0 +1,97 @@
+<div class="app-menu navbar-menu">
+    <!-- LOGO -->
+<div class="navbar-brand-box">
+      
+        <a href="/DashboardEmp" class="logo logo-dark">
+            <span class="logo-sm">
+                <img src="assets/images/logo-sm.png" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+                <img src="assets/images/logo-dark.png" alt="" height="17">
+            </span>
+        </a>
+     
+        <a href="/DashboardEmp" class="logo logo-light">
+            <span class="logo-sm">
+               <img src="assets\styles\img\Logo-icon-.png" alt="" width="80%">
+            </span>
+            <span class="logo-lg" >
+                <img src="assets\styles\img\logo_latest-removebg-preview.png" alt="" width="100%">
+            </span>
+        </a>
+        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+            <i class="ri-record-circle-line"></i>
+        </button>
+</div>
+
+  
+    <div id="scrollbar" class="ScrollStyle">
+        <div class="container-fluid">
+         <div class="user-box text-center">
+            <a class="logo logo-light">
+                <span class="logo-lg" >
+                <img src="assets\styles\img\Admin 2.png" alt="user-img" title="{{ename}}" style="width: 50px;height: 50px;"
+                    class="avatar-md" height="110px" width="150px" *ngIf="!profilepic">
+                <img class="rounded-circle avatar-md" src="{{hostname}}/File/GetEmployeeDocs/1/{{empcode}}/2/{{profilepic}}"  alt=""*ngIf="profilepic">
+                
+                </span></a>
+                <div class="dropdown">
+                    <a href="javascript: void(0);" class="logo logo-light fs-13 h6 mt-2 mb-1 d-block fw-semibold font-type text-black"
+                        data-toggle="dropdown">
+                            <span class="logo-lg" id="sideEname">{{ename}}</span></a>
+                </div>
+                <a class="logo logo-light"><span class="logo-lg" >
+                <p class="mb-0 fs-12 font-type fw-semibold text-black" id="sideDesig">{{designame}}</p></span></a>
+                <br/>
+                <a class="logo logo-light"><span class="logo-lg" ><p class="mb-0 fs-12 font-type fw-semibold text-black" id="sideEcode">ID - {{empcode}}</p></span></a>
+        </div>
+            <div id="two-column-menu">
+            </div>
+       
+            <ul class="navbar-nav " id="navbar-nav" >
+                <li class="menu-title"><span data-key="t-menu"><a href="DashboardEmp" class="text-black" (click)="HomeMenu()">Home</a></span></li>
+                
+                <ng-container *ngFor="let MainMenu of sidemenus">                        
+                    <li class="nav-item"  *ngFor="let menus of MainMenu.Menu; let i = index" >
+                        <a class="nav-link menu-link"  id="{{menus.MenuID}}"  
+                        href="#sidebarDashboards{{i+1}}"
+                        data-bs-toggle="collapse"
+                        role="button"
+                        aria-expanded="false"
+
+                        aria-controls="sidebarDashboards" > 
+                        <i class="{{menus.MenuIcon}}"></i> <span data-key="t-dashboards" >{{menus.MenuName}}</span>
+                        </a>
+                    <div class="collapse menu-dropdown"  id="sidebarDashboards{{i+1}}" [ngClass]="{'red': menus.MenuID == selectedRootMenu}">
+                        <ul class="nav nav-sm flex-column">
+                        <ng-container *ngFor="let submenu of menus.SubMenu; let l = index">
+                            <li class="nav-item" *ngIf="submenu.ChildMenu && submenu.ChildMenu.length == 0" [ngClass]="{'active': submenu.SubMenuName === selectedMenu}">
+                            <a href="{{submenu.SubMenuUrl}}" class="nav-link" data-key="t-ecommerce" (click)="selectMenu(submenu.SubMenuName,menus.MenuID,0)"><span class="font-type">{{submenu.SubMenuName}}</span></a>
+                            </li>
+                            <li class="nav-item" *ngIf="submenu.ChildMenu && submenu.ChildMenu.length > 0">
+                            <a href="#sidebarnft{{l+1}}" id="{{submenu.SubMenuID}}" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarnft" data-key="t-nft-marketplace">
+                                <span class="font-type">{{submenu.SubMenuName}}</span>
+                            </a>
+                
+                            <div class="collapse menu-dropdown" id="sidebarnft{{l+1}}" [ngClass]="{'red': submenu.SubMenuID == selectedSubRootMenu}">
+                                <ul class="nav nav-sm flex-column" *ngFor="let submenus of submenu.ChildMenu">
+                                <li class="nav-item font-type" [ngClass]="{'active': submenus.ChildSubMenuName === selectedMenu}">
+                                    <a href="{{submenus.ChildSubMenuUrl}}" class="nav-link" data-key="t-marketplace" (click)="selectMenu(submenus.ChildSubMenuName,menus.MenuID,submenu.SubMenuID)"><span class="font-type">{{submenus.ChildSubMenuName}}</span></a>
+                                </li>
+                                </ul>
+                            </div>
+                
+                            </li>
+                        </ng-container>
+                        </ul>
+                    </div>
+                    </li>
+                </ng-container>
+            </ul>
+         
+        </div>
+        <!-- Sidebar --> 
+    </div>
+
+<div class="sidebar-background"></div>
+</div>

@@ -1,0 +1,463 @@
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <app-header></app-header>
+            <!-- ========== App Menu ========== -->
+            <app-sidemenu></app-sidemenu>
+            <!-- Left Sidebar End -->
+            <!-- Vertical Overlay-->
+            <div class="vertical-overlay"></div>
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card mt-n4 mx-n4 mb-n5">
+                                <div class="bg-info-subtle">
+                                    <div class="card-body pb-4 mb-5">
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <div class="row align-items-center">
+                                                    <div class="d-flex align-items-center ma-5">
+                                                        <div class="flex-shrink-0">
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-1 ma-5">
+                                                            <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">SHIFT ASSIGNMENT</h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                        </div>
+                                        <!--end row-->
+                                    </div><!-- end card body -->
+                                </div>
+                            </div><!-- end card -->
+                        </div><!-- end col -->
+                    </div>
+
+                    <div class="row topbar-up">
+                         <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border-bottom" style="padding-bottom: 10px;padding-top: 10px;">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm-4">
+                                            <h6 class="card-title"><b>Assign Shift</b></h6>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="text-sm-end">
+                                                <a href="viewshift" class="btn btn-danger"><i class="fa fa-angle-double-left"></i> Exit </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>      
+                                <div class="card-body">
+                                    <div class="border border-dashed rounded p-3">
+                                        <div class="row mb-3">
+                                            <div class="col-lg-3 pt-2">  
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
+                                                <ng-multiselect-dropdown #dropdown
+                                                    [settings]="dropdownSettings"
+                                                    [(ngModel)]="selectedItems"
+                                                    [data]="listEmployee">     
+                                                </ng-multiselect-dropdown>                 
+                                            </div>
+                                            <div class="col-lg-3 pt-2">
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Shift Dates</span></h6>
+                                                <input type="text" class="form-control date" placeholder="Select dates" id="shiftdate" autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-3 pt-2">
+                                                <h6 class="font-type fs-12 fw-semibold"><span>New Shift</span></h6>
+                                                <select class="form-select font-type fs-11" aria-label="Default select example" id="shift" name="shift" #shift required>
+                                                    <option value="-1">Select</option>
+                                                    <option  *ngFor="let shifts of listshift" value="{{shifts.VALUE_FIELD}}">{{shifts.DISPLAY_FIELD}}</option>
+                                                    <option value="0">Week Off</option>
+                                                </select>                                           
+                                             </div>
+                                             <div class="col-lg-3 pt-4">
+                                                <!-- <h6 class="font-type fs-12 fw-semibold" ></h6> -->
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <button type="button" class="btn btn-orange font-type fs-12 add-button text-white" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Addshift()">Add Shift</button>
+                                                    <button type="button" class="btn btn-blue font-type fs-12 add-button text-white" (click)="Cancel()">Cancel</button>
+                                                </div>                                         
+                                             </div>
+                                          
+                                        </div>
+                                    </div>
+                                    <!--end row-->
+                                </div>
+                            </div>
+                            <!--end col-->
+                        </div>
+                    </div>
+                           
+                    
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card" id="orderList">
+                                <div class="card-header border-bottom" style="padding-bottom: 10px;padding-top: 10px;">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <h6 class="card-title"><b>View Shift Assignments</b></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-lg-2 col-sm-6">
+                                            <h3 class="fs-12 font-type"><span>Select Date</span></h3>
+                                            <input type="week" class="form-control font-type fs-11 mb-0" id="week" name="week" [(ngModel)]="week" (change)="filldaterange()">
+
+                                        </div>
+
+                                        <div class="col-lg-2 col-sm-6">
+                                            <h3 class="fs-12 font-type"><span>Date Range</span></h3>
+                                            <input type="text" class="form-control font-type fs-11 mb-0" value="{{startDay | date:'dd/MM/yyyy'}} - {{endDay | date:'dd/MM/yyyy'}}" readonly>
+                                        </div>
+                                        
+                                        <!--end col-->
+                                     
+                                        <div class="col-lg-3 col-sm-6">
+                                            <h6 class="font-type fs-12"><span>Employee Name</span></h6>
+                                            <!-- <div id="Multiselects" class="multiselect">
+                                              <div id="Labeles" class="selectBox" onclick="toggleCheckboxes()">
+                                                <select class="form-select">
+                                                  <option id="employeesflt"></option>
+                                                </select>
+                                                <div class="overSelect"></div>
+                                              </div>
+                                              <div id="SelectOpt">
+                                                <label for="checks"><input type="checkbox" id="checks" onchange="checkboxStatus();" value="ALL" /> ALL</label>
+                                                <table>
+                                                    <tr *ngFor="let EmployeeList of listEmployee;  let i = index">
+                                                        <td><label for="checks{{i+1}}"><input type="checkbox" id="checks{{i+1}}" onchange="checkboxStatus();" value="{{EmployeeList.EMP_CODE}}" /> {{EmployeeList.EMP_NAME}}</label></td>
+                                                    </tr>
+                                                </table>
+                                              </div>
+                                            </div> -->
+                                            <ng-multiselect-dropdown #dropdown
+                                                [settings]="dropdownSettings"
+                                                [(ngModel)]="selectedItems_list"
+                                                [data]="listEmployee">     
+                                            </ng-multiselect-dropdown>  
+                                        </div>
+                                           
+                                        <div class="col-lg-2 col-sm-6">
+                                            <label></label>
+                                            <div>
+                                                <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="fetchshiftdetails()"> <i class="ri-file-text-line"></i>
+                                                        View Shift
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!--end col-->
+                                        <div class="col-lg-3 col-sm-6"></div>
+                                        
+                                    </div>
+                                    <!--end row-->
+                                </div>                           
+                                <!--end row-->          
+
+                        <div class="card-body">
+                            <div class="table-responsive table-card mb-0" >
+                                <table class="table table-bordered table-nowrap align-middle">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col" class="text-center">Employee Code</th>
+                                        <th scope="col" class="text-center">Employee Name</th>
+                                        <th *ngFor="let item of weekdays">
+                                            <div class="d-flex justify-content-center align-items-center mb-0">
+                                                <h2 class="me-3 ff-secondary mb-0">{{item | date:"dd"}}</h2>
+                                                <div>
+                                                    <p class="mb-0">{{item | date:"EEE"}}</p>
+                                                    <p class="text-muted fw-medium mb-0">
+                                                        {{item | date:"MMM"}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let employee of listshiftdetails | search : searchInput | pagination: currentPage: itemsPerPage">
+                                        <tr>
+                                            <td>{{employee.EMP_CODE}}</td>
+                                            <td>{{employee.EMP_NAME}}</td>
+                                            <td *ngFor="let workday of employee.workdays" style="padding:2px;">
+                                                <div class="card-box bg-info-subtle" *ngIf="workday.SHIFT_ID == 1 || workday.SHIFT_ID == 5 || workday.SHIFT_ID == 7 || workday.SHIFT_ID == 11" [hidden]="workday.SHIFT_ID == '-2' || workday.SHIFT_ID == '0'">
+                                                    <div class="d-flex align-items-center">
+                                                       <div class="flex-grow-1 overflow-hidden">
+                                                          <p class="mb-0 fs-12">{{ workday.START_TIME }} - {{ workday.END_TIME }}</p>
+                                                       </div>
+                                                       <div class="flex-shrink-0" [hidden]="workday.EFFECT_DATE <= todayDate">
+                                                          <h5 class="text-success fs-14 mb-0">
+                                                             <a href="#EditShiftModal" data-bs-toggle="modal" class="text-blue d-inline-block edit-item-btn" title="Edit" (click) = "shiftdetail(employee.EMP_CODE,workday.SHIFT_ID,workday.EFFECT_DATE)">
+                                                             <i class="ri-pencil-fill fs-16"></i>
+                                                             </a>
+                                                          </h5>
+                                                       </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between py-0">
+                                                       <span class="text-muted fw-medium fs-12">{{ workday.SHIFT_HOURS }} Hrs.</span>
+                                                       <div *ngIf="workday.ABS_STATUS == 'L' || workday.ABS_STATUS == 'B' || workday.ABS_STATUS == 'C'">
+                                                          <p class="fw-medium mb-0"><i class="ri-checkbox-blank-circle-fill text-danger align-middle me-2" title="On Leave"></i> </p>
+                                                       </div>
+                                                    </div>
+                                                 </div>
+
+                                                 <div class="card-box bg-warning-subtle" *ngIf="workday.SHIFT_ID == 2 || workday.SHIFT_ID == 6 || workday.SHIFT_ID == 8 || workday.SHIFT_ID == 12" [hidden]="workday.SHIFT_ID == '-2' || workday.SHIFT_ID == '0'">
+                                                    <div class="d-flex align-items-center">
+                                                       <div class="flex-grow-1 overflow-hidden">
+                                                          <p class="mb-0 fs-12">{{ workday.START_TIME }} - {{ workday.END_TIME }}</p>
+                                                       </div>
+                                                       <div class="flex-shrink-0" [hidden]="workday.EFFECT_DATE <= todayDate">
+                                                          <h5 class="text-success fs-14 mb-0">
+                                                             <a href="#EditShiftModal" data-bs-toggle="modal" class="text-blue d-inline-block edit-item-btn" title="Edit" (click) = "shiftdetail(employee.EMP_CODE,workday.SHIFT_ID,workday.EFFECT_DATE)">
+                                                             <i class="ri-pencil-fill fs-16"></i>
+                                                             </a>
+                                                          </h5>
+                                                       </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between py-0">
+                                                       <span class="text-muted fw-medium fs-12">{{ workday.SHIFT_HOURS }} Hrs.</span>
+                                                       <div *ngIf="workday.ABS_STATUS == 'L' || workday.ABS_STATUS == 'B' || workday.ABS_STATUS == 'C'">
+                                                          <p class="fw-medium mb-0"><i class="ri-checkbox-blank-circle-fill text-danger align-middle me-2" title="On Leave"></i> </p>
+                                                       </div>
+                                                    </div>
+                                                 </div>
+
+                                                 <div class="card-box bg-success-subtle" *ngIf="workday.SHIFT_ID == 3 || workday.SHIFT_ID == 9 || workday.SHIFT_ID == 13 || workday.SHIFT_ID == 15" [hidden]="workday.SHIFT_ID == '-2' || workday.SHIFT_ID == '0'">
+                                                    <div class="d-flex align-items-center">
+                                                       <div class="flex-grow-1 overflow-hidden">
+                                                          <p class="mb-0 fs-12">{{ workday.START_TIME }} - {{ workday.END_TIME }}</p>
+                                                       </div>
+                                                       <div class="flex-shrink-0" [hidden]="workday.EFFECT_DATE <= todayDate">
+                                                          <h5 class="text-success fs-14 mb-0">
+                                                             <a href="#EditShiftModal" data-bs-toggle="modal" class="text-blue d-inline-block edit-item-btn" title="Edit" (click) = "shiftdetail(employee.EMP_CODE,workday.SHIFT_ID,workday.EFFECT_DATE)">
+                                                             <i class="ri-pencil-fill fs-16"></i>
+                                                             </a>
+                                                          </h5>
+                                                       </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between py-0">
+                                                       <span class="text-muted fw-medium fs-12">{{ workday.SHIFT_HOURS }} Hrs.</span>
+                                                       <div *ngIf="workday.ABS_STATUS == 'L' || workday.ABS_STATUS == 'B' || workday.ABS_STATUS == 'C'">
+                                                          <p class="fw-medium mb-0"><i class="ri-checkbox-blank-circle-fill text-danger align-middle me-2" title="On Leave"></i> </p>
+                                                       </div>
+                                                    </div>
+                                                 </div>
+
+                                                 <div class="card-box bg-orange-subtle" *ngIf="workday.SHIFT_ID == 10 || workday.SHIFT_ID == 4 || workday.SHIFT_ID == 14 || workday.SHIFT_ID > 15" [hidden]="workday.SHIFT_ID == '-2' || workday.SHIFT_ID == '0'">
+                                                    <div class="d-flex align-items-center">
+                                                       <div class="flex-grow-1 overflow-hidden">
+                                                          <p class="mb-0 fs-12">{{ workday.START_TIME }} - {{ workday.END_TIME }}</p>
+                                                       </div>
+                                                       <div class="flex-shrink-0" [hidden]="workday.EFFECT_DATE <= todayDate">
+                                                          <h5 class="text-success fs-14 mb-0">
+                                                             <a href="#EditShiftModal" data-bs-toggle="modal" class="text-blue d-inline-block edit-item-btn" title="Edit" (click) = "shiftdetail(employee.EMP_CODE,workday.SHIFT_ID,workday.EFFECT_DATE)">
+                                                             <i class="ri-pencil-fill fs-16"></i>
+                                                             </a>
+                                                          </h5>
+                                                       </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between py-0">
+                                                       <span class="text-muted fw-medium fs-12">{{ workday.SHIFT_HOURS }} Hrs.</span>
+                                                       <div *ngIf="workday.ABS_STATUS == 'L' || workday.ABS_STATUS == 'B' || workday.ABS_STATUS == 'C'">
+                                                          <p class="fw-medium mb-0"><i class="ri-checkbox-blank-circle-fill text-danger align-middle me-2" title="On Leave"></i> </p>
+                                                       </div>
+                                                    </div>
+                                                 </div>
+                                                 
+                                                <div class="week-box bg-dark-subtle" *ngIf="workday.SHIFT_ID == 0 || workday.ABS_STATUS == 'WE'" [hidden]="workday.SHIFT_ID >= 1">
+                                                   <div class="d-flex">
+                                                        <div class="flex-grow-1">
+                                                             <p class="mb-0 text-center middle-text">Week Off</p>
+                                                        </div>
+                                                        <div class="flex-shrink-0" [hidden]="workday.EFFECT_DATE <= todayDate">
+                                                            <a href="#AddShiftModal" data-bs-toggle="modal" class="text-blue d-inline-block edit-item-btn" title="Edit" (click) = "shiftdetail(employee.EMP_CODE,workday.SHIFT_ID,workday.EFFECT_DATE)">
+                                                            <i class="ri-pencil-fill fs-16"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div style="text-align: center;" *ngIf="workday.SHIFT_ID == -2"  [hidden]="workday.SHIFT_ID == 0 || workday.ABS_STATUS == 'WE'">
+                                                    <div class="d-flex">
+                                                        <div class="flex-grow-1" [hidden]="workday.EFFECT_DATE <= todayDate">
+                                                            <a href="#AddShiftModal" data-bs-toggle="modal" (click) = "shiftdetail(employee.EMP_CODE,workday.SHIFT_ID,workday.EFFECT_DATE)">
+                                                                <i class="fa fa-plus" style="color: #54b4e4" title="Add Shift"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="flex-shrink-0" *ngIf="workday.ABS_STATUS == 'L' || workday.ABS_STATUS == 'B' || workday.ABS_STATUS == 'C'">
+                                                            <i class="fa fa-circle" style="color: red;" title="On Leave"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </td>
+                                            
+                                        </tr>
+                                     
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end table responsive -->
+
+                            <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                <div class="col-sm">
+                                    <div class="font-type fs-12 text-muted">
+                                        Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                        - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                        of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                    </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="font-type fs-12 text-muted">
+                                            Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-auto mt-4 mt-sm-0">
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            <div>
+                                                <div class="input-group">
+                                        <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                        
+                                    <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                </div>
+                                </div>
+                                    
+                                    <div class="col-sm-auto mt-3 mt-sm-0">
+                                    <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                        <li class="page-item">
+                                        <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                        </li>
+                                        <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                        <li class="page-item">
+                                            <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                        </li>
+                                        </ng-container>
+                                        <li class="page-item">
+                                        <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                        </li>
+                                    </ul>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <!--Modal For Success Message Start-->
+                            <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                        </div>
+                                        <div class="modal-body" *ngIf="showModal==1"> 
+                                            <div class="container">
+                                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                        
+                                            </div>
+                                        </div>
+                                        <div class="modal-body" *ngIf="showModal==2">
+                                        <div class="container">
+                                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                            
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Add Shift Model-->
+                            <div class="modal fade" id="AddShiftModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                        </div>
+                                        <form class="tablelist-form" autocomplete="off" [formGroup]="AddShiftForm">
+                                            <div class="modal-body">
+                                                <input type="hidden" id="id-field" />
+                                                <div class="mb-3">
+                                                    <label for="NewShift" class="form-label">New shift</label>
+                                                    <select class="form-select font-type fs-11" aria-label="Default select example" name="addnewshift" id="addnewshift" formControlName="addnewshift" required>
+                                                        <option value="-1" selected>Select</option>
+                                                        <option  *ngFor="let ShiftList of listshift"  [ngValue]="ShiftList">
+                                                                {{ShiftList.DISPLAY_FIELD}}
+                                                        </option>   
+                                                        <option value="0">Week Off</option>                                                                    
+                                                    </select>
+                                                    <div *ngIf="AddShiftForm.get('addnewshift')!.hasError('required') && AddShiftForm.get('addnewshift')!.touched" class="text-danger">
+                                                        Please, select the new shift.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="hstack gap-2" *ngIf="!AddShiftForm.valid">
+                                                    <button type="submit" class="btn btn-orange font-type text-white" [disabled]="AddShiftForm.valid" id="validate-btn" (click)="validateForm()">Submit</button>
+                                                </div>
+                                                <div class="hstack gap-2 justify-content-center" *ngIf="AddShiftForm.valid">
+                                                    <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="AddSingleShift()">Submit</button>
+                                                </div>
+                                            </div> 
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end row-->
+
+                            <!--Edit Shift Model-->
+                            <div class="modal fade" id="EditShiftModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                        </div>
+                                        <form class="tablelist-form" autocomplete="off" [formGroup]="EditShiftForm">
+                                            <div class="modal-body">
+                                                <input type="hidden" id="id-field" />
+                                                <div class="mb-3">
+                                                    <label for="NewShift" class="form-label">New shift</label>
+                                                    <select class="form-select font-type fs-11" aria-label="Default select example" name="newshift" id="newshift" formControlName="newshift" required>
+                                                        <option value="-1" selected>Select</option>
+                                                        <option  *ngFor="let ShiftList of listshift"  [ngValue]="ShiftList">
+                                                                {{ShiftList.DISPLAY_FIELD}}
+                                                        </option>  
+                                                        <option value="0">Week Off</option>                                                                     
+                                                    </select>
+                                                    <div *ngIf="EditShiftForm.get('newshift')!.hasError('required') && EditShiftForm.get('newshift')!.touched" class="text-danger">
+                                                        Please, select the new shift.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="hstack gap-2" *ngIf="!EditShiftForm.valid">
+                                                    <button type="submit" class="btn btn-orange font-type text-white" [disabled]="EditShiftForm.valid" id="validate-btn" (click)="editvalidateForm()">Submit</button>
+                                                </div>
+                                                <div class="hstack gap-2 justify-content-center" *ngIf="EditShiftForm.valid">
+                                                    <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="EditSingleShift()">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end row-->
+
+                        </div>
+
+                    </div>
+                    <!--end col-->
+                </div>
+            </div>
+            <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+                <app-footer></app-footer>
+            </div>
+            <!-- end main content-->
+        </div>
+        <!-- END layout-wrapper -->

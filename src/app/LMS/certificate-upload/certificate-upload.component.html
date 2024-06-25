@@ -1,0 +1,266 @@
+
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header>
+
+        <!-- ========== App Menu ========== -->
+      
+        <app-sidemenu></app-sidemenu>
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                     <!-- start page title -->
+                     <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between font-type">
+                                <h4 class="mb-0 text-uppercase font-type padding-up-5"   style="letter-spacing: 0.2px;">Certificate of Training</h4>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- End start page title -->
+                     
+                     <div class="topbar-up row">
+                        <div class="col-lg-12 col-md-12">
+                           <div class="d-flex flex-column h-100">
+                               <div class="row">
+                                   <div class="col-lg-12 col-md-12">
+                                       <div class="card card-animate overflow-hidden shadow-lg">
+                                           <div class="position-absolute start-0" style="z-index: 0;">
+                                               <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+                                                   <style>
+                                                       .s0 {
+                                                           opacity: .08;
+                                                           fill: var(--vz-info)
+                                                       }
+                                                   </style>
+                                                   <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
+                                               </svg>
+                                           </div>
+                                           <div class="card-body" style="z-index:1 ;">
+                                               <div class="d-flex align-items-center">
+                                                   <div class="flex-grow-1 overflow-hidden">
+                                                       <div class="row">
+                                                           <div class="col-lg-3">
+                                                               <h6 class="fs-12 font-type">Area </h6>
+                                                               <h6 class="fs-12 font-type fw-semibold">{{this.listTrainingDtls.AREA}}</h6> 
+                                                           </div>
+                                                           <div class="col-lg-6">
+                                                                   <h6 class="font-type fs-12">Training Name </h6>
+                                                                   <h6 class="fs-12 font-type fw-semibold">{{this.listTrainingDtls.SUBJECT_NAME}}</h6>
+                                                           </div>
+                                                           <div class="col-lg-3">
+                                                               <h6 class="font-type fs-12">Training Date</h6>
+                                                               <h6 class="fs-12 font-type fw-semibold">{{ this.listTrainingDtls.TRAINING_DATE | date : "dd MMMM, yyyy" }}</h6>
+                                                           </div>
+                                                    </div>
+                                                   </div>
+                                               </div>
+                                           </div><!-- end card body -->
+                                       </div><!-- end card -->
+                                   </div><!--end col-->
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+    
+                        <!-- TABLE DETAILS -->
+                        <div class="row margin-up-5" style="justify-content: center;">
+                                <div class="col-md-12 col-lg-12">
+                                        <div class="card shadow-lg">
+                                            <div class="card-header border-0 pa-6-8">
+                                                <div class="row align-items-center gy-2">
+                                                    <div class="col-sm">
+                                                        <div class="align-items-center d-flex ">
+                                                            <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">List of Certificates</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-auto">
+                                                        <div class="d-flex gap-1 flex-wrap">
+                                                            <div>
+                                                                <h4 class="mb-0 flex-grow-1 fs-12 font-type fw-semibold ma-10">Expiry Date : </h4>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <input type="date" id="expirydate" name="expirydate" class="form-control font-type fs-12 mb-0 textbox-15 h-30"> 
+                                                            </div>
+                                                                <div class="search-box me-2 mb-2 d-inline-block">
+                                                                    <div class="position-relative">
+                                                                        <input type="text" class="form-control searchInput"  id="searchInput" style="width: 245px;" [(ngModel)]="searchInput"  name="searchInput" placeholder="Search..." aria-label="search" aria-describedby="search_icon">
+                                                                        <i class="ri-search-line search-icon"></i>
+                                                                    </div>
+                                                                </div>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end card header -->
+                                            <div class="card-body ">
+                                                <div class="table-responsive  table-card mb-0">
+                                                <!-- Tables Border Colors -->
+                                                    <table class="table border-orange align-middle table-nowrap pl-10 table-hover">
+                                                        <thead class="table-light text-white font-type">
+                                                            <tr>
+                                                                <th>SL No</th>
+                                                                <th>Emp. Code</th>
+                                                                <th>Employee</th>
+                                                                <th>Expiry Date</th>
+                                                                <th>Upload Certificate</th>
+                                                                <th>Action</th>
+                                                                <th>View Certificate</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody >
+                                                            <tr class="font-type h1-50" *ngFor="let FetchCert of fetchCertificateOnload | search : searchInput | pagination: currentPage: itemsPerPage;index as i;">
+                                                                <td>{{ i + 1 }}</td>
+                                                                <td>{{FetchCert.EMP_CODE}}</td>
+                                                                <td>{{FetchCert.EMP_NAME}}</td>
+                                                                <td>
+                                                                    <ng-container [ngSwitch]="true">
+                                                                        <div *ngSwitchCase="FetchCert.EXPIRY_DATE!=null">
+                                                                            <!-- <td class="text-center"><span><i class="ri-file-pdf-fill fs-20 text-blue"></i></span></td> -->
+                                                                            <td class="text-center">{{FetchCert.EXPIRY_DATE | date : "dd MMMM, yyyy"}}</td>
+                                                                        </div>
+                                                                        <div *ngSwitchCase="FetchCert.EXPIRY_DATE==null">
+                                                                            <td class="text-center"><span>-----</span></td>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </td>
+                                                                <td> 
+                                                                  <div>
+                                                                    <input class="form-control font-type fs-12 textbox-15 " type="file"  #upfile name="upFile" id="upFile_{{i+1}}">
+                                                                    <!-- <input class="form-control font-type fs-12 textbox-15 ma-10" type="file" id="doc_path" #upfile  name="doc_path" >   -->
+                                                                  </div>
+                                                                </td>
+                                                                <td> <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab font-type" (click)="uploadCertificate(upfile.value,FetchCert.EMP_CODE,upfile.id)"><i class="ri-upload-2-line label-icon align-middle fs-16 ms-2"></i>Upload</button></td>
+                                                                <td>
+                                                                    <ng-container [ngSwitch]="true">
+                                                                        <div *ngSwitchCase="FetchCert.CERT_ID==1">
+                                                                            <!-- <td class="text-center"><span><i class="ri-file-pdf-fill fs-20 text-blue"></i></span></td> -->
+                                                                            <a  href=""  (click)="ViewFiles(FetchCert.CERT_PATH,FetchCert.EMP_CODE)"  ><i class="ri-file-pdf-fill fs-20 text-blue"></i></a>
+                                                                        </div>
+                                                                        <div *ngSwitchCase="FetchCert.CERT_ID!=1">
+                                                                            <td class="text-center"><span>-----</span></td>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                <div *ngIf="fetchCertificateOnload">
+                                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                                        <div class="col-sm">
+                                                          <div class="font-type fs-12 text-muted">
+                                                            Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                            - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                            of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <div class="font-type fs-12 text-muted">
+                                                                Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                <div>
+                                                                    <div class="input-group">
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            
+                                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                                      </div>
+                                                    </div>
+                                                         
+                                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                            </li>
+                                                            <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                              <li class="page-item">
+                                                                <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                              </li>
+                                                            </ng-container>
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                            </li>
+                                                          </ul>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                    </div>
+
+
+                                                <!-- end tab content -->
+                                                <div class="col-lg-12">
+                                                    <div class="hstack gap-2 justify-content-end ma-5">
+                                                    <!-- <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab font-type " ><i class="ri-upload-2-line label-icon align-middle fs-16 ms-2"></i>Upload</button> -->
+                                                    <!-- <button type="button" class="btn btn-danger btn-label right  nexttab  nexttab font-type "><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <!-- end card body -->
+                                </div>
+                                        <!-- end card -->
+                        </div><!-- end row -->
+                        <!--END TABLE DETAILS -->
+                        <div class="col-lg-12">
+                            <div class="hstack gap-1 justify-content-end">
+                                <a href="training-plan">
+                                <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button>
+                                </a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+                     <!-- success model -->
+
+ <button id="openModalButtonForalertsuccess"  [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuRecordModals">Open Modal</button>
+  
+ <div class="modal fade zoomIn" id="SuRecordModals" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header bg-orange padding-up-5">
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModals==1">
+                 
+                 <div class="text-center">
+                     <h5 class="fs-13 font-type">{{successs}}</h5>
+                 </div>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModals==2">
+                 
+                <div class="text-center">
+                    <h5 class="fs-13 font-type">{{faileds}}</h5>
+                </div>
+            </div>
+         </div>
+     </div>
+ </div>
+
+
+            <app-footer></app-footer>
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+ 

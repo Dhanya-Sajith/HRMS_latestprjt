@@ -1,0 +1,1185 @@
+<div id="layout-wrapper">
+    <app-header></app-header>
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <div class="profile-foreground position-relative mx-n4 mt-n4">
+                    <div class="profile-wid-bg">
+                        <img src="assets\styles\img\slide2.jpg" alt="" class="profile-wid-img" />
+                    </div>
+                </div>
+                
+                 <div class="pt-4 mb-0 mb-lg-3 pb-lg-2 profile-wrapper" *ngFor="let basic of basiclist;">
+                    <div class="row g-2">
+                        <!-- <div class="col-md-auto">
+                            <div class="avatar-md">
+                                <div class="avatar-title bg-white rounded-circle">
+                                    <img src="assets\styles\img\Admin 2.png" alt="" class="avatar-lg rounded-circle">
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <ng-container [ngSwitch]="true">
+                            <div *ngSwitchCase="basic.PHOTO_PATH == ''">
+                                <div class="col-md-auto">
+                                    <div class="avatar-md">
+                                        <div class="avatar-title bg-white rounded-circle">
+                                            <img src="assets\styles\img\Admin 2.png" alt="" class="avatar-lg rounded-circle">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="basic.PHOTO_PATH != ''">
+                                <div>
+                                    <img class="avatar-lg rounded-circle" src={{hostname}}{{basic.PROFILE_PIC}} alt="">
+                                </div>
+                            </div>
+                        </ng-container>
+
+
+
+                        <div class="col">
+                            <div class="p-0 ms-1">
+                                <h2 class="text-white mb-1 font-type">{{basic.EMP_NAME }}</h2>
+                                <p class="text-white text-opacity-60 font-type">{{basic.DESIG_VAL}}</p>
+                           
+                                <div class="hstack gap-2 flex-wrap font-type text-white">
+                                    <div><i class="ri-map-pin-line align-bottom me-1 font-type"></i> {{basic.LOCATION_VAL}}</div>
+                                    <div class="vr"></div>
+                                    <div *ngFor="let contact of contactlist;"><i class="ri-phone-fill align-bottom me-1 font-type"></i> <span class="fw-medium">{{contact.OFFICIAL_MOBILE}}</span></div>
+                                    <div class="vr"></div>
+                                   
+                                    <div *ngFor="let contact of contactlist;"><i class="ri-mail-open-fill align-bottom me-1 font-type"></i> <span class="fw-medium">{{contact.OFFICIAL_EMAIL}}</span></div>
+                                    <div class="vr"></div>
+                                    <div><i class="ri-building-line align-bottom me-1 font-type"></i> <span class="fw-medium">{{basic.COMPANY}}</span></div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-auto col-lg-auto order-last order-lg-0 pb-p1">
+                            <div class="row text text-white-50">
+                                <div class="col-lg-12 col-12">
+                                    <div class="p-1 font-type">
+                                        <p class="mb-1 font-type fs-13">EMP NO</p>
+                                        <h6 class="fs-12 mb-0 text-white font-type fw-semibold">{{basic.EMP_CODE}}</h6>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="row" style="padding-bottom: 5px;">
+                    <div class="col-lg-12">
+                            <div class="d-flex profile-wrapper">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-pills animation-nav profile-nav gap-0 flex-grow-1 font-type fw-semibold" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link fs-13 active" data-bs-toggle="tab" href="#overview-tab" role="tab">
+                                            <i class="ri-user-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Basic Info</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link fs-13" data-bs-toggle="tab" href="#Contact" role="tab" (click)="ContactDetails()">
+                                            <i class="ri-phone-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Contact Info</span>
+                                        </a>
+                                    </li>
+                                  
+                                    <li class="nav-item">
+                                        <a class="nav-link fs-13" data-bs-toggle="tab" href="#Bank-Salary" role="tab" (click)="SalaryDetails()">
+                                            <i class="ri-bank-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Bank & Salary</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link fs-13" data-bs-toggle="tab" href="#professional" role="tab" (click)="ProfessionalDetails()">
+                                            <i class="ri-suitcase-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Professional-Info</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link fs-13" data-bs-toggle="tab" href="#Nominee" role="tab" (click)="NomineeDetails()">
+                                            <i class="ri-user-heart-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Nominee</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link fs-13" data-bs-toggle="tab" href="#Asset-info" role="tab" (click)="AssetDetails()">
+                                          
+                                            <i class=" ri-input-method-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Assets</span>
+                                        </a>
+                                    </li>
+                                  
+                                    <li class="nav-item">
+                                        <a class="nav-link fs-13" data-bs-toggle="tab" href="#documents" role="tab" (click)="DocumentDetails()">
+                                            <i class="ri-file-copy-2-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Documents</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link fs-13" data-bs-toggle="tab" href="#famdet" role="tab" (click)="FamDetails()">
+                                            <i class="ri-file-copy-2-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Family Details</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <div class="flex-shrink-0 font-type">
+                                 <a href="employee_profile_directory"><button class="btn btn-danger"><i class="fa fa-angle-double-left"></i> Exit </button></a>
+                                </div>&nbsp;&nbsp;
+                                <div class="flex-shrink-0 font-type" *ngIf="this.grpname.includes('HR') && this.urlval=='emp_profile_view_from_directory'">
+                                    <a href="edit_emp_profile" *ngFor="let basic of basiclist;" (click)="navigateToEditProfile(basic.EMP_CODE)" class="btn btn-orange">
+                                        <i class="ri-edit-box-line align-bottom"></i> Edit Profile
+                                    </a>
+                                </div> 
+                                <div class="flex-shrink-0 font-type" *ngIf="this.urlval=='employee_profile_view'">
+                                    <a href="profile_limited_edit" *ngFor="let basic of basiclist;" (click)="navigateToEditProfile(basic.EMP_CODE)" class="btn btn-orange">
+                                        <i class="ri-edit-box-line align-bottom"></i> Edit Details
+                                    </a>
+                                </div> 
+
+                                </div>
+                            <!-- Tab panes -->
+
+                            <!--TAB 1 BASIC INFO-->
+
+                            <div class="tab-content pt-3 text-muted" *ngFor="let basic of basiclist;">
+                                <div class="tab-pane active" id="overview-tab" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-5 col-lg-4">
+                                            <div class="card " style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                <div class="card-body b1-h1">
+                                                        <div class="mt-0  font-type">
+                                                            <h5 class="mb-3 text-uppercase fw-semibold fs-16">Personal information</h5>
+                                                       
+                                                        </div>
+                                                        <ul class="list-unstyled mt-3 font-type">
+                                                            <li class="font-type mb-0">
+                                                                <div class="d-flex font-type">
+                                                                  
+                                                                    <i class="ri-user-3-line text-blue fs-4"></i>
+                                                                    <div class="ms-3 font-type">
+                                                                        <h6 class="fs-13 mb-1 font-type fw-semibold">Full Name</h6>
+                                                                        <p class="fs-13 mb-0 font-type">{{basic.EMP_NAME }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mt-3">
+                                                                <div class="d-flex">
+                                                                    <i class="ri-cake-2-line text-blue fs-4"></i>
+                                                                    <div class="ms-3">
+                                                                        <h6 class="fs-13 mb-1 font-type fw-semibold">Date of Birth</h6>
+                                                                        <p class=" fs-13 mb-0 font-type">{{basic.DOB | date:"dd MMM, yyyy" }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mt-3">
+                                                                <div class="d-flex">
+                                                                    
+                                                                    <i class="ri-map-pin-line text-blue fs-4"></i>
+                                                                    <div class="ms-3">
+                                                                        <h6 class="fs-13 mb-1 font-type fw-semibold">Nationality</h6>
+                                                                        <p class=" fs-13 mb-0 font-type">{{basic.COUNTRY_NAME }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mt-3">
+                                                                <div class="d-flex">
+                                                                    <i class="ri-graduation-cap-line text-blue fs-4"></i>
+                                                                 
+                                                                    <div class="ms-3">
+                                                                        <h6 class="fs-13 mb-1 font-type fw-semibold">Qualification</h6>
+                                                                        <p class=" fs-13 mb-0 font-type">{{latest}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mt-3">
+                                                                <div class="d-flex">
+                                                                  
+                                                                    <i class="ri-empathize-line text-blue fs-4"></i>
+                                                                    <div class="ms-3">
+                                                                        <h6 class="fs-13 mb-1 font-type fw-semibold">Marital Status</h6>
+                                                                        <p class=" fs-13 mb-0 font-type">{{basic.MARRIED_VAL}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mt-3">
+                                                                <div class="d-flex">
+                                                                  
+                                                                    <i class="ri-speak-line text-blue fs-4"></i>
+                                                                    <div class="ms-3 font-type">
+                                                                        <h6 class="fs-13 mb-1 font-type fw-semibold">Languages Known</h6>
+                                                                        <p class=" fs-13 mb-0 font-type" *ngFor="let lanuage of lanuagelist">{{lanuage.CATEGORY_NAME}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    
+                                                </div>
+                                            </div>
+                               
+                                            <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" *ngIf="reportees_count>0">
+                                                <div class="card-body">
+                                                    <div class="mt-0  font-type margin-up-5">
+                                                        <h5 class="mb-4 text-uppercase fw-semibold fs-16">My Reportees<span class="fs-13 text-blue"> ({{reportees_count}})</span></h5>
+                                                   
+                                                    </div>
+                                                    <div data-simplebar  class="mx-n3 px-3 margin-up-5">
+                                                        <div class="vstack gap-3 font-type" *ngFor="let reportees of reportesslist">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-xs flex-shrink-0 me-3">
+                                                                    <img src="styles\img\Admin 2.png" alt="" class="img-fluid rounded-circle">
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block font-type fw-semibold fs-13">{{reportees.EMP_NAME}}</a></h5>
+                                                                </div>
+                                                                <a href="employee_profile_directory_view">
+                                                                    <div class="flex-shrink-0">
+                                                                        <div class="d-flex align-items-center gap-1">
+                                                                            <button  type="button" class="btn btn-orange btn-sm font-type" (click)="Idpassing(reportees.EMP_CODE)" >View Profile</button>
+                                                                        
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <!-- end member item -->
+
+                                                        </div>
+                                               
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                         
+                                        </div>
+
+                                        <!--Job Details-->
+                                        <div class="col-lg-8 col-md-7">
+                                            <div class="card font-type" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                <div class="card-header" style="border-bottom: none;">
+                                                    <h5 class="mb-0 font-type text-uppercase fw-semibold fs-15">Job Details</h5>
+                                                </div>
+                                                <div class="card-body margin-up-7">
+                                                    <div class="table-responsive table-card" >
+                                                        <table class="table mb-0 l2-h2">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="fw-semibold" width="25%">Employee Code</td>
+                                                                    <td>{{basic.EMP_CODE}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Role</td>
+                                                                    <td>{{basic.ROLE_VAL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Company Name</td>
+                                                                    <td>{{basic.COMPANY}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Date of Joining</td>
+                                                                    <td><span class="23-06-2019">{{basic.DATE_OF_JOINING | date:"dd MMM, yyyy" }}</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Department</td>
+                                                                    <td>{{basic.DEPT_VAL}}</td>
+                                                                </tr>
+                                                               
+                                                                <tr>
+                                                                    <td class="fw-semibold">Designation</td>
+                                                                    <td>{{basic.DESIG_VAL}}</td>                                                                        
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Work Location</td>
+                                                                    <td>{{basic.LOCATION_VAL}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="this.gradevw==1">
+                                                                    <td class="fw-semibold">Grade</td>
+                                                                    <td>{{basic.GRADE_VAL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Reporting Manager</td>
+                                                                    <td>{{basic.REP_MGR_VAL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Project Coordinator</td>
+                                                                    <td>{{basic.CORDINATOR_VAL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Probation Period</td>
+                                                                    <td>{{basic.PROBATION_PERIOD }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Employee Type</td>
+                                                                    <td>{{basic.EMP_TYPE_VAL }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Contractor Name</td>
+                                                                    <td>{{basic.CONTRACTOR_NAME}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Per Hour Rate</td>
+                                                                    <td>{{basic.PER_HOUR_RATE }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Sponsor Details</td>
+                                                                    <td>{{basic.SPONSOR_VAL }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Shift Timings</td>
+                                                                    <td>{{basic.SHIFT_TIME }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Working Day</td>
+                                                                    <td>{{basic.WORK_TYPE_VAL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Week Off</td>
+                                                                    <td>{{basic.WEEK_OFF_VAL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Overtime Eligible</td>
+                                                                    <td>{{basic.OVERTIME_ELIGIBILTY_VAL  }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Airport Destination</td>
+                                                                    <td>{{basic.AIRPORT_DEST_VAL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold">Air Ticket eligibility</td>
+                                                                    <td>{{basic.AIRTICKET_VAL }}</td>
+                                                                </tr>
+            
+                                                                <tr>
+                                                                    <td class="fw-semibold">Accommodation Code</td>
+                                                                    <td>{{basic.ACCOMMODATION_CODE}}</td>
+                                                                </tr>
+                                                              
+                                                                <tr>
+                                                                    <td class="fw-semibold">Insurance Type</td>
+                                                                    <td>{{basic.INSURANCE_VAL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fw-semibold" style="border-bottom: none;">Job Description</td>
+                                                                    <a  href=""  (click)="ViewFiles(basic.JD_FILE,2,2)"  target="_blank" *ngIf="basic.JD_FILE!=''" ><i class="ri-eye-fill fs-16"></i> {{basic.JD_FILE}} </a>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                        <!--end table-->
+                                                    </div>
+                                                    <div class="mt-3 pt-2 hstack gap-2">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         <!--End Job Details-->
+                                    </div><!--end row-->
+                                        </div>
+                                      <!--End Tab Employee Info-->  
+
+
+                                      <!--Tab Contact Info-->  
+
+                                        <div class="tab-pane" id="Contact" role="tabpanel">
+                                            <div class="row" *ngFor="let contact of contactlist;">
+
+                                                <!--PERSONAL Contact Info-->  
+
+                                                <div class="col-md-4 col-lg-4">
+                                                    <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                        <div class="card-body b1-h1">
+                                                            <div class="mt-0  font-type margin-up-5">
+                                                                <h5 class=" mb-0 text-uppercase fw-semibold fs-15">PERSONAL</h5>
+                                                            </div>
+                                                            <ul class="list-unstyled mt-3 font-type">
+                                                                <li>
+                                                                    <div class="d-flex">
+                                                                        <i class="ri-mail-line fs-4 text-blue"></i>
+                                                                       
+                                                                        <div class="ms-3">
+                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Email</h6>
+                                                                            <p class=" fs-13 mb-0 font-type">{{contact.PERS_EMAIL}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="mt-3">
+                                                                    <div class="d-flex">
+                                                                        <i class="ri-phone-line fs-4 text-blue"></i>
+                                                                       
+                                                                        <div class="ms-3">
+                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Mobile</h6>
+                                                                            <p class="fs-13 mb-0 font-type">{{contact.PERS_MOBILE}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="mt-3">
+                                                                    <div class="d-flex">
+                                                                        <i class="ri-map-pin-line fs-4 text-blue"></i>
+                                                                       
+                                                                        <div class="ms-3">
+                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Residence Address</h6>
+                                                                            <p class="fs-13 text-break mb-0 font-type">{{contact.RES_ADDRESS}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="mt-3">
+                                                                    <div class="d-flex">
+                                                                        <i class="ri-phone-line fs-4 text-blue"></i>
+                                                                        <div class="ms-3">
+                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Residence Tel.No</h6>
+                                                                            <p class="fs-13 text-break mb-0 font-type"> {{contact.RES_TELEPHONE}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="mt-3">
+                                                                    <div class="d-flex">
+                                                                        <i class="ri-map-pin-line fs-4 text-blue"></i>
+                                                                       
+                                                                        <div class="ms-3">
+                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Orgin Address</h6>
+                                                                            <p class="fs-13 text-break mb-0 font-type">{{contact.ORIGIN_CTRY_ADDRESS}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="mt-3">
+                                                                    <div class="d-flex">
+                                                                        <i class="ri-phone-line fs-4 text-blue"></i>
+                                                                        <div class="ms-3">
+                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Orgin Tel.No</h6>
+                                                                            <p class="fs-13 text-break mb-0 font-type"> {{contact.ORIGIN_CONTACT}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                           <!--End PERSONAL Contact Info-->  
+
+                                              <!--Emergency Contact Info-->  
+
+                                                <div class="col-md-4 col-lg-4">
+                                                   <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                    <div class="card-body b1-h1">
+                                                        <div class="mt-0  font-type margin-up-5">
+                                                            <h5 class=" mb-0 text-uppercase fw-semibold fs-15">Emergency</h5>
+                                                        </div>
+                                                        <ul class="list-unstyled mt-3 font-type">
+                                                            <li>
+                                                                <div class="d-flex">
+                                                                    <i class="ri-user-3-line fs-4 text-blue"></i>
+                                                                    <div class="ms-3">
+                                                                        <h6 class="fs-13 mb-2 font-type fw-semibold">Name of Local Contact</h6>
+                                                                        <p class=" fs-13 mb-0 font-type">{{contact.EMR_LOCALCONT_NAME}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mt-3">
+                                                                <div class="d-flex">
+                                                                    <i class="ri-phone-line fs-4 text-blue"></i>  
+                                                                    <div class="ms-3">
+                                                                        <h6 class="fs-13 mb-2 font-type fw-semibold">Mobile</h6>
+                                                                        <p class="fs-13 mb-0 font-type">{{contact.EMR_LOCAL_CONT_NO}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mt-3">
+                                                                <div class="d-flex">
+                                                                    <i class="ri-group-line fs-4 text-blue"></i>
+                                                                    <div class="ms-3">
+                                                                        <h6 class="fs-13 mb-2 font-type fw-semibold">Relation</h6>
+                                                                        <p class="fs-13 text-break mb-0 font-type">{{contact.LOCAL_RELATION_NAME}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mt-3">
+                                                                <div class="d-flex">
+                                                                    <i class="ri-user-3-line fs-4 text-blue"></i>
+                                                                    <div class="ms-3">
+                                                                        <h6 class="fs-13 mb-2 font-type fw-semibold">Name of Orgin Contact</h6>
+                                                                        <p class="fs-13 text-break mb-0 font-type"> {{contact.EMR_HOME_CONT_NAME}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mt-3">
+                                                                <div class="d-flex">
+                                                                    <i class="ri-phone-line fs-4 text-blue"></i>
+                                                                    <div class="ms-3">
+                                                                        <h6 class="fs-13 mb-2 font-type fw-semibold">Mobile</h6>
+                                                                        <p class="fs-13 mb-0 font-type">{{contact.EMR_HOME_CONT_NO}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="mt-3">
+                                                                <div class="d-flex">
+                                                                    <i class="ri-group-line fs-4 text-blue"></i>
+                                                                    <div class="ms-3">
+                                                                        <h6 class="fs-13 mb-2 font-type fw-semibold">Relation</h6>
+                                                                        <p class="fs-13 text-break mb-0 font-type">{{contact.RELATION_NAME}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                             <!--End Emergency Contact Info--> 
+
+                                            <!--Official Contact Info--> 
+                                                <div class="col-md-4 col-lg-4">
+                                                  <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                        <div class="card-body b1-h1">
+                                                            <div class="mt-0 font-type margin-up-5 fw-semibold">
+                                                                <h5 class=" mb-0 text-uppercase fw-semibold fs-15">Official</h5>
+                                                            </div>
+                                                            <ul class="list-unstyled mt-3 font-type">
+                                                                <li>
+                                                                    <div class="d-flex">
+                                                                        <i class="ri-mail-line fs-4 text-blue"></i>
+                                                                       
+                                                                        <div class="ms-3">
+                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Email</h6>
+                                                                            <p class=" fs-13 mb-0 font-type">{{contact.OFFICIAL_EMAIL}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="mt-3">
+                                                                    <div class="d-flex">
+                                                                        <i class="ri-phone-line fs-4 text-blue"></i>
+                                                                       
+                                                                        <div class="ms-3">
+                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Mobile</h6>
+                                                                            <p class="fs-13 mb-0 font-type">{{contact.OFFICIAL_MOBILE}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                           
+                                                                <li class="mt-3">
+                                                                    <div class="d-flex">
+                                                                        <i class="ri-phone-line fs-4 text-blue"></i>
+                                                                        <div class="ms-3">
+                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Extension.No</h6>
+                                                                            <p class="fs-13 text-break mb-0 font-type"> {{contact.EXTENSON_NO}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                         
+                                                             
+                                                            </ul>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                                <!--End Official Contact Info--> 
+
+                                                </div>
+                                                </div>
+                                            <!--End Tab Contact Info--> 
+
+
+                                            <!--Tab Bank & Salary--> 
+                                        
+                                       
+                                            <div class="tab-pane" id="Bank-Salary" role="tabpanel">
+  
+                                                <div [hidden]="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')"><b style="color: red;">Access restricted</b></div>
+                                                 <!-- Bank Details--> 
+                                                <div class="row" *ngFor="let salary of salarylist">
+                                                    <ng-container *ngIf="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')">
+                                                    <div class="col-md-12 col-lg-12">
+                                                        <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                            <div class="card-body b1-h1">
+                                                                <div class="mt-0 font-type margin-up-5">
+                                                                    <h5 class="mb-0 text-uppercase "><i class="ri-bank-line fs-4 text-blue"></i><span class="ms-1 fs-15 fw-semibold"> BANK DETAILS</span></h5>
+                                                                </div>
+                                                                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                                                                        <div class="accordion-item border-0 mb-0">
+                                                                            <div class="accordion accordion-flush filter-accordion">
+                                                                                <div class="accordion-body accordion-item b2-h2">
+                                                                                    <div id="accordionFlushExample4" class="accordion-collapse" aria-labelledby="accordionFlushExample1">
+                                                                                        <div class="text-body">
+                                                                                                <div class="row"> 
+                                                                                                    <div class="col-lg-4">
+                                                                                                        <div class="mb-3">
+                                                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Bank Name</h6>
+                                                                                                            <p class="fs-12 text-break mb-0 font-type"> {{salary.BANK_NAME}}</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <!--end col-->
+                                                                                                    <div class="col-lg-4">
+                                                                                                        <div class="mb-3">
+                                                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Account No.</h6>
+                                                                                                            <p class="fs-12 text-break mb-0 font-type"> {{salary.ACCOUNT_NO}}</p>
+                                                                                                           
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-lg-4">
+                                                                                                        <div class="mb-3">
+                                                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">IBAN No.</h6>
+                                                                                                            <p class="fs-12 text-break mb-0 font-type"> {{salary.IBAN_NO}}</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-lg-4">
+                                                                                                        <div class="mb-3">
+                                                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Routing Code</h6>
+                                                                                                            <p class="fs-12 text-break mb-0 font-type">{{salary.ROUTING_CODE}}</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-lg-4">
+                                                                                                        <div class="mb-3">
+                                                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">MOL No</h6>
+                                                                                                            <p class="fs-12 text-break mb-0 font-type">{{salary.MOL_NO}}</p>
+                                                                                                           
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-lg-4">
+                                                                                                        <div class="mb-3">
+                                                                                                            <h6 class="fs-13 mb-2 font-type fw-semibold">Employee WPS Company</h6>
+                                                                                                            <p class="fs-12 text-break mb-0 font-type"> {{salary.EMP_WPS_COMPANY}}</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>  
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                     <!--End Bank Details--> 
+
+                                                     <!-- Salary Details--> 
+
+                                                    <div class="col-md-12 col-lg-12">
+                                                        <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                            <div class="card-body b1-h1">
+                                                                <div class="mt-0  font-type margin-up-5">
+                                                                    
+                                                                    <h5 class="mb-0 text-uppercase">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#54b4e4"><path d="M3.00488 3.00293H21.0049C21.5572 3.00293 22.0049 3.45064 22.0049 4.00293V20.0029C22.0049 20.5552 21.5572 21.0029 21.0049 21.0029H3.00488C2.4526 21.0029 2.00488 20.5552 2.00488 20.0029V4.00293C2.00488 3.45064 2.4526 3.00293 3.00488 3.00293ZM4.00488 5.00293V19.0029H20.0049V5.00293H4.00488ZM8.50488 14.0029H14.0049C14.281 14.0029 14.5049 13.7791 14.5049 13.5029C14.5049 13.2268 14.281 13.0029 14.0049 13.0029H10.0049C8.62417 13.0029 7.50488 11.8836 7.50488 10.5029C7.50488 9.12222 8.62417 8.00293 10.0049 8.00293H11.0049V6.00293H13.0049V8.00293H15.5049V10.0029H10.0049C9.72874 10.0029 9.50488 10.2268 9.50488 10.5029C9.50488 10.7791 9.72874 11.0029 10.0049 11.0029H14.0049C15.3856 11.0029 16.5049 12.1222 16.5049 13.5029C16.5049 14.8836 15.3856 16.0029 14.0049 16.0029H13.0049V18.0029H11.0049V16.0029H8.50488V14.0029Z"></path></svg>
+                                                                        <span class="ms-1 fs-15 fw-semibold"> Salary Details</span></h5>                                                      
+                                                                </div>
+                                                                <div class="accordion accordion-flush filter-accordion">
+                                                                    <div class="accordion-item">
+                                                                       
+                                                                        <div id="accordionFlushExample5" class="accordion-collapse " aria-labelledby="accordionFlushExample5">
+                                                                            <div class="accordion-body text-body pt-3">
+                                                                                    <div class="row" style="justify-content:center;text-align: center;">
+                                                                                        <!-- <div class="col-lg-6 col-md-6">
+                                                                                            <div class="mb-3">
+                                                                                                <h6 class="fs-13 mb-1 font-type fw-semibold">Component(s)</h6>
+                                                                                                <p class="fs-12 text-break mb-0 font-type"><i class="ri-check-line fs-5 text-orange"></i> <span class="ms-1">Basic</span></p>
+                                                                                            </div>
+                                                                                        </div> -->
+                                                                                        <!-- <div class="col-lg-6 col-md-6">
+                                                                                            <div class="mb-3">
+                                                                                                <h6 class="fs-13 mb-2 font-type fw-semibold">Value(s)</h6>
+                                                                                                <p class="fs-12 text-break mb-2 font-type">{{salary.BASIC_SALARY}}</p>
+                                                                                            </div>
+                                                                                        </div>      -->
+                                                                                    </div>
+                                                                                    <div class="row" style="justify-content:center;text-align: center;"  *ngFor="let allowance of allowancelist;">
+                                                                                        <div class="col-lg-6 col-md-6">
+                                                                                            <div class="mb-3">
+                                                                                                <p class="fs-12 text-break mb-0 font-type"><i class="ri-check-line fs-5 text-orange"></i> <span class="ms-1">{{allowance.ALLOWANCE_NAME}}</span></p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-6 col-md-6">
+                                                                                            <div class="mb-3">
+                                                                                                <p class="fs-12 text-break mb-2 font-type">{{allowance.AMOUNT}}</p>
+                                                                                            </div>
+                                                                                        </div>     
+                                                                                    </div>
+                                                                                    <div class="row" style="justify-content:center;text-align: center;">
+                                                                                        <div class="col-lg-6 col-md-6">
+                                                                                            <div class="mb-0">
+                                                                                                <h6 class="fs-13 mb-2 font-type fw-semibold">Gross Salary</h6>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-6 col-md-6">
+                                                                                            <div class="mb-0">
+                                                                                              
+                                                                                                <p class="fs-12 text-break mb-0 font-type"><span class="badge bg-info-subtle fs-12 text-black">{{salary.GROSS_SALARY}}</span></p>
+                                                                                              
+                                                                                            </div>
+                                                                                        </div>     
+                                                                                    </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </ng-container>
+                                                    <!-- End Salary Details-->
+                                                </div>
+                                            </div>
+
+
+                                            <!--End Tab Bank & Salary--> 
+
+                                            <!--Tab Professional Info--> 
+                                            <div class="tab-pane" id="professional" role="tabpanel">
+                                                <div class="row">
+                                                   
+                                                     <!--Education Info--> 
+                                                    <div class="col-md-12 col-lg-12">
+                                                        <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                            <div class="card-body  b1-h1">
+                                                                <div class="mt-0  font-type margin-up-5">
+                                                                    <h5 class="mb-2 text-uppercase fs-15 fw-semibold">Education</h5>
+                                                                </div>
+                                                                <div class="profile-timeline" *ngFor="let education of educationlist;">
+                                                                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                                                                        <div class="accordion-item border-0 mb-0">
+                                                                            <div class="accordion-header" id="headingOne">
+                                                                                <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <div class="flex-shrink-0 avatar-xs">
+                                                                                            <div class="avatar-title bg-info-subtle rounded-circle text-blue">
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#54b4e4"><path d="M4 11.3333L0 9L12 2L24 9V17.5H22V10.1667L20 11.3333V18.0113L19.7774 18.2864C17.9457 20.5499 15.1418 22 12 22C8.85817 22 6.05429 20.5499 4.22263 18.2864L4 18.0113V11.3333ZM6 12.5V17.2917C7.46721 18.954 9.61112 20 12 20C14.3889 20 16.5328 18.954 18 17.2917V12.5L12 16L6 12.5ZM3.96927 9L12 13.6846L20.0307 9L12 4.31541L3.96927 9Z"></path></svg>
+                                                                                        
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="flex-grow-1 ms-3">
+                                                                                            <h6 class="fs-13 mb-0 fw-semibold font-type margin-up-10">{{education.CATEGORY_NAME}}</h6>
+                                                                                                
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                                                <div class="accordion-body ms-2 ps-5 pt-0 margin-up-5">
+                                                                                    <h6 class="mb-0 font-type fs-13 margin-up-10">{{education.CATEGORY_VALUE}}</h6>
+                                                                                   
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>                                                                    
+                                                                    </div>
+                                                                    <!--end accordion-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--End Education Info--> 
+                                                  
+                                                     <!--Work Info--> 
+
+                                                    <div class="col-md-12 col-lg-12">
+                                                        <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                            <div class="card-body  b1-h1">
+                                                                <div class="mt-0  font-type margin-up-5">
+                                                                    <h5 class="mb-2 text-uppercase fs-15 fw-semibold">WORK EXPERIENCE</h5>
+                                                               
+                                                                </div>
+                                                            
+                                                                <div class="profile-timeline"  *ngFor="let work of worklist;">
+                                                                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                                                                        <div class="accordion-item border-0 mb-0">
+                                                                            <div class="accordion-header" id="headingOne">
+                                                                                <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <div class="flex-shrink-0 avatar-xs">
+                                                                                            <div class="avatar-title bg-info-subtle rounded-circle text-blue">
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill=" #54b4e4"><path d="M15 3C15.5523 3 16 3.44772 16 4V6H21C21.5523 6 22 6.44772 22 7V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V7C2 6.44772 2.44772 6 3 6H8V4C8 3.44772 8.44772 3 9 3H15ZM16 8H8V19H16V8ZM4 8V19H6V8H4ZM14 5H10V6H14V5ZM18 8V19H20V8H18Z"></path></svg>
+                                                                                        
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="flex-grow-1 ms-3">
+                                                                                            <h6 class="fs-13 mb-0 fw-semibold font-type margin-up-10">{{work.CATEGORY_NAME}}</h6>
+                                                                                                
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                                                <div class="accordion-body ms-2 ps-5 pt-0 margin-up-5">
+                                                                                    <h6 class="mb-0 font-type fs-13 margin-up-10">{{work.CATEGORY_VALUE}}</h6>
+                                                                                   
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--end accordion-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                   
+                                                    </div>
+                                                     <!--End Work Info--> 
+
+                                                    <!--Cerifications--> 
+
+                                                    <div class="col-md-12 col-lg-12">
+                                                        <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                            <div class="card-body  b1-h1">
+                                                                <div class="mt-0  font-type margin-up-5">
+                                                                    <h5 class="mb-2 text-uppercase fs-15 fw-semibold">Certifications</h5>
+                                                               
+                                                                </div>
+                                                            
+                                                            
+                                                                    <div class=" accordion-flush" id="accordionFlushExample" *ngFor="let certification of certificationllist;">
+                                                                        <div class="accordion-item border-0 mb-0">
+                                                                            <div class="accordion-header" id="headingOne">
+                                                                                <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <div class="flex-shrink-0 avatar-xs">
+                                                                                         
+                                                                                            <div class="avatar-title bg-info-subtle text-info rounded-3 fs-18">
+                                                                                                <i class="ri-award-line"></i>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="flex-grow-1 ms-3">
+                                                                                            <h6 class="fs-13 mb-0 fw-semibold font-type margin-up-10">{{certification.CATEGORY_NAME}}</h6>
+                                                                                                
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                                                <div class="accordion-body ms-2 ps-5 pt-0 margin-up-5">
+                                                                                    <h6 class="mb-1 font-type fs-13 margin-up-10">{{certification.CATEGORY_VALUE}}</h6>
+                                                                                   
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--end accordion-->
+                                                              
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!--End Cerifications--> 
+                                                </div><!--end row-->
+
+                                            </div>
+
+                                             <!--End Tab Professional Info--> 
+
+                                            <!--Tab Nominee Info--> 
+
+                                                <div class="tab-pane" id="Nominee" role="tabpanel">
+                                                    <div class="row" *ngFor="let nominee of nomineelist;index as i">
+                                                        <!--Nominee1--> 
+                                                        <div class="col-md-12 col-lg-12">
+                                                            <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                                <div class="card-body b1-h1">
+                                                                    <div class="mt-0  font-type margin-up-5">
+                                                                        <h5 class=" mb-0 font-type fw-semibold  fs-15">Nominee {{i+1}} : <span class="text-blue text-uppercase font-type" >{{nominee.NAME}}</span> </h5>
+                                                                    </div>
+                                                                    <div class="accordion-body">
+                                                                        <div class="card-body" style="padding-bottom: 0px;">
+                                                                            <div class="live-preview">
+                                                                                <form action="javascript:void(0);">
+                                                                                  
+                                                                                    <div class="row mb-2">
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">DOB</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{nominee.NOMINEE_DOB | date:"dd MMM, yyyy"}}</h5>
+                                                                                        </div>
+                                                                                  
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Age</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{nominee.AGE}} Years</h5>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row mb-2">
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Relationship</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{nominee.RELATION_NAME}}</h5>
+                                                                                        </div>
+                                                                                  
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Nationality</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{nominee.NATIONALTY_NAME}}</h5>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row mb-2">
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Passport Number</h4>
+                                                                                            
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{nominee.PASSPORT_NO}}</h5>
+                                                                                        </div>
+                                                                                
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Permanent Address</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{nominee.PERMENANT_ADDRESS}}</h5>
+                                                                                            
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row mb-2">
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Local Contact Address</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{nominee.LOCAL_CONTACT_ADDRESS}}</h5>
+                                                                                            
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Contact Number</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{nominee.NOMINEE_CONTACT}}</h5>
+                                                                                            
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row mb-2">
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">% To be Given</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{nominee.APPLICABLE_PERCENTAGE}}</h5>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                  
+                                                                                </form>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--End Nominee1--> 
+                                                    </div><!--end row-->
+                                                </div>
+                                            <!--End Tab Nominee Info--> 
+
+
+                                            <!--Tab Asset Info--> 
+                                                <div class="tab-pane" id="Asset-info" role="tabpanel">
+                                                    <div class="row" *ngFor="let asset of assetlist;index as i">
+                                                         <!-- Asset 1--> 
+                                                        <div class="col-md-12 col-lg-12">
+                                                            <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                                <div class="card-body b1-h1">
+                                                                    <div class="mt-0  font-type margin-up-5">
+                                                                        <h5 class=" mb-0 font-type fw-semibold  fs-15">Asset {{i+1}} : <span class="text-blue text-uppercase font-type" >{{asset.ASSET_NAME}}</span> </h5>
+                                                                    </div>
+                                                                    <div class="accordion-body">
+                                                                        <div class="card-body ">
+                                                                            <div class="live-preview">
+                                                                                <form action="javascript:void(0);">
+                                                                                 
+                                                                                    <div class="row mb-2">
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Category</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{asset.CATEGORYNM}}</h5>
+                                                                                        </div>
+
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Cost</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{asset.ASSET_COST}}</h5>
+                                                                                        </div> 
+                                                                                    </div>
+                                                                                    <div class="row mb-2">
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Date of Issue</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{asset.DATE_OF_ISSUE | date:"dd MMM, yyyy"}}</h5>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Status</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{asset.STATUS}}</h5>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row mb-0">
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Date of Return</h4>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{asset.DATE_OF_RETURN | date:"dd MMM, yyyy"}}</h5>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h4 class="fw-semibold font-type fs-13">Description</h4>       
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <h5 class="font-type fs-13">{{asset.DESCRIPTION}}</h5>
+                                                                                        </div>
+                                                                                    </div>  
+                                                                                </form>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- End Asset 1--> 
+
+                                                        
+                                                    </div>
+                                                </div>
+                                            <!--End Tab Asset Info-->     
+                                          
+                                             <!--Tab Documents Info-->   
+
+                                                <div class="tab-pane fade" id="documents" role="tabpanel">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="table-responsive font-type">
+                                                                        <table class="table table-borderless align-middle mb-0">
+                                                                            <thead class="table-light header-table">
+                                                                                <tr class="text-white">
+                                                                              
+                                                                                    <th scope="col">Doc Type</th>
+                                                                                    <th scope="col">Doc Number</th>
+                                                                                    <th scope="col">Expiry Date</th>
+                                                                                    <th scope="col">Action</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr class="font-type" *ngFor="let document of documentlist">
+                                                                                  
+                                                                                    
+                                                                                    <td>
+                                                                                        <div class="d-flex align-items-center">
+                                                                                            <div class="ms-1 flex-grow-1 font-type">
+                                                                                                <h6 class="fs-13 mb-0 font-type fw-semibold">{{document.DOCUMENT_TYPE}}
+                                                                                                </h6>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>{{document.DOCUMENT_NO}}</td>
+                                                                                
+                                                                                    <td>{{document.EXPIRY_DATE| date: 'dd-MM-yyyy'}}</td>
+                                                                                    <td *ngIf="document.DOC_PATH!=''">
+                                                                                        <div class="dropdown">
+                                                                                            <a href="javascript:void(0);" class="btn btn-light btn-icon" id="dropdownMenuLink15" data-bs-toggle="dropdown" aria-expanded="true">
+                                                                                                <div class="avatar-title bg-info-subtle text-blue rounded fs-20" title="PDF Document">
+                                                                                                <i class="ri-file-pdf-fill"></i>
+                                                                                                </div>
+                                                                                            </a>
+                                                                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink15">
+                                                                                                <!-- <li><a class="dropdown-item" (click)="ViewFiles(document.DOC_PATH,document.DOCUMENT_ID,1)"><i class="ri-eye-fill me-2 align-middle text-blue"></i>View</a></li> -->
+                                                                                                <li><a class="dropdown-item"(click)="ViewFiles(document.DOC_PATH,document.DOCUMENT_ID,1)"><i class="ri-download-2-fill me-2 align-middle text-blue"></i>Download</a></li>
+                                                                                               
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                  
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                        <!--end col-->
+
+<!--Tab family Info-->   
+
+<div class="tab-pane fade" id="famdet" role="tabpanel">
+    <div [hidden]="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')"><b style="color: red;">Access restricted</b></div>
+    <div class="card" *ngIf="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive font-type">
+                        <h3 class="font-type fs-13" style="color: #000000;"><b>Family Eligibility For : </b></h3>
+                        <div class="row mb-2" *ngFor="let familysts of famsts">
+                            <div class="col-lg-3">
+                                 <h5 class="font-type fs-13"> <i class="fa fa-dot-circle-o" aria-hidden="true" style="color: #e9823d;"></i> {{familysts.DATA_VALUE}}</h5>
+                            </div> 
+                        </div>
+
+                        <table class="table table-borderless align-middle mb-0">
+                            <thead class="table-light header-table">
+                                <tr class="text-white">
+                              
+                                    <th scope="col">Member Name</th>
+                                    <th scope="col">Member DOB</th>
+                                    <th scope="col">Relation</th>
+                                    <th scope="col">Contact Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="font-type" *ngFor="let family of famlist">
+                                  
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="ms-1 flex-grow-1 font-type">
+                                                <h6 class="fs-13 mb-0 font-type fw-semibold">{{family.MEMBER_NAME}}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><h6 class="fs-13 mb-0 font-type fw-semibold">{{family.MEMBER_DOB|date: 'dd-MM-yyyy'}}</h6></td>
+                                    <td><h6 class="fs-13 mb-0 font-type fw-semibold">{{family.RELATION}}</h6></td>
+                                    <td><h6 class="fs-13 mb-0 font-type fw-semibold">{{family.MEMBER_CONTACT}}</h6></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--end col-->
+
+                                      
+                                        <!--end col-->
+                                 
+                                    <!--end row-->
+                                </div>
+                          
+                           
+                           
+                                <!--end tab-pane-->
+                           
+                            <!--end tab-content-->
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+
+            </div>
+            <!-- container-fluid -->
+
+        <!-- End Page-content -->
+
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->
+

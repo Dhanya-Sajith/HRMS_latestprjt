@@ -1,0 +1,121 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+                <!--Download PDF Button-->
+                <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+                    <div class="flex-grow-1"></div>
+                    <div class="flex-shrink-0">
+                        <div class="hstack text-nowrap gap-2">
+                            <button class="btn btn-success font-type"(click)="convertToPDF()"><i class="ri-file-pdf-line me-1 align-bottom"></i> Download PDF</button>
+                        </div>
+                    </div>
+                </div>
+                <!--End Download PDF Button-->
+
+                <!--Acceptance Letter Style-->
+                
+                <div class="div-middle shadow-lg mb-3">
+                        <div class="card p-3" id="htmlElementId">
+
+                            <!--Header-->
+                            <div class="row gy-3 ma-5">
+                                <div class="col-sm-auto">
+                                    <div class="avatar-title-lg p-1">
+                                        <img *ngIf="companydata?.length > 0" src="assets\styles\img\{{companydata[0].LOGO}}" alt="" class="img-fluid-lg" width="350px" height="100px">
+                                        <img src="" id="tableBanner" />
+                                    </div>
+                                </div>
+                                <div class="col-sm text-center">
+                                    <h2 class="text-blue font-type" style="font-weight: bold;"*ngIf="companydata?.length > 0">{{companydata[0].COMPANY_ID}}</h2>
+                                    <h5 class="text-blue font-type" *ngIf="companydata?.length > 0">{{companydata[0].DESCRIPTION}}</h5>
+                                    <h5 class="text-blue font-type" *ngIf="companydata?.length > 0">(UAE); {{companydata[0].PHONE_NO}}; {{companydata[0].EMAI_ID}}</h5> 
+                                </div>
+                            </div>
+                            <hr>
+                            <!--end Header-->
+
+                            <!--Details-->   
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="p-2">
+                                        <h6 class="fs-13 font-type fw-medium">Date : <span class="fw-semibold fs-13 text-italic"*ngIf="experiencedata?.length > 0">{{experiencedata[0].REQUEST_DATE | date:"dd-MM-yyyy"}}</span></h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-2 text-center mb-3">
+                                <h5 class="mb-1 font-type fw-semibold fs-18" style="text-decoration: underline;">EXPERIENCE CERTIFICATE</h5>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="p-2">
+                                        <h6 class="fs-13 font-type fw-medium"*ngIf="experiencedata?.length > 0">This is to certify that <span class="fw-semibold fs-13 text-italic"><span>{{ experiencedata[0].GENDER === '1' ? 'Mr.' : 'Ms.' }}</span>{{experiencedata[0].EMP_NAME}}</span> holder of {{experiencedata[0].PLACE}} Passport number <span>{{experiencedata[0].DOCUMENT_NO}}</span> has worked in <span>{{experiencedata[0].COMPANY}}</span> from <span>{{experiencedata[0].DATE_OF_JOINING | date:"dd-MM-yyyy"}}</span> to <span>{{experiencedata[0].LAST_WORKING_DATE | date:"dd-MM-yyyy"}}</span>.  At the time of leaving the company <span>{{ experiencedata[0].GENDER === '1' ? 'he' : 'she' }}</span> was designated as <span>{{experiencedata[0].DESIGNATION}}</span>.</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="p-2">
+                                        <h6 class="fs-13 font-type fw-medium">During <span>{{ experiencedata[0].GENDER === '1' ? 'his' : 'her' }}</span> tenure with us we found <span>{{ experiencedata[0].GENDER === '1' ? 'him' : 'her' }}</span> sincere, trustworthy and hardworking.  We wish <span>{{ experiencedata[0].GENDER === '1' ? 'him' : 'her' }}</span> all the best in <span>{{ experiencedata[0].GENDER === '1' ? 'his' : 'her' }}</span> future endeavors.</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-5">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="p-2">
+                                        <h6 class="fs-13 font-type fw-medium">For <span *ngIf="experiencedata?.length > 0">{{experiencedata[0].COMPANY}}</span></h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ma-10">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="p-2">
+                                        <hr style="width:30%;text-align:left;margin-left:0">
+                                        <h6 class="fs-13 font-type fw-semibold"*ngIf="experiencedata?.length > 0">{{experiencedata[0].HR_NAME}}</h6>
+                                        <h6 class="fs-13 font-type">HR Manager</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--End Details-->   
+                        </div>
+                           <!-- card body -->
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="hstack gap-1 justify-content-end">
+                        <a href="javascript:history.back()">
+                        <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button>
+                        </a>
+                    </div>
+                </div>
+
+             </div>
+               <!-- container-fluid --> 
+            </div>
+              <!-- End Page-content -->
+
+              <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

@@ -1,0 +1,157 @@
+                        
+  <!-- Begin page -->
+  <div id="layout-wrapper">
+
+    <app-header></app-header>
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>  
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Change Reporting Manager</h4></div>
+                    </div>
+                </div>
+            
+                <!--Input Control-->
+         
+                <div class="topbar-up row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">                  
+                        <div class="card-body border border-top-0 border-end-0 border-start-0">                    
+                            <div class="card border border-top-0 border-end-0 border-start-0" style="margin-left: 20%; background-color: rgb(207, 216, 232); width:60%;">
+                                <div class="row ">
+                                    <div class="col-md-5">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="col-md-6" style="margin-top: 30px;">
+                                                <span class="font-type fs-13 fw-semibold" style="margin-left: 61px;">Manager</span>
+                                            </div>
+                                            <div class="col-md-8" style="margin-left: 103px;"></div>
+                                            <div class="col-md-5" style="margin-top: 30px;">
+                                                <span class="font-type fs-13 fw-semibold">New Manager</span>
+                                            </div>                              
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row" style="margin-left: 49px;">
+                                    <div class="col-md-4">
+                                        <select class="form-select font-type fs-12 textbox-15 mb-1" [(ngModel)]="oldManager" (change)="onManagerSelected();">                                    
+                                            <option value="0" selected disabled>Select</option>
+                                            <option *ngFor="let combo of managerlist" [value]="combo.KEY_ID">{{combo.DATA_VALUE}}</option>                                       
+                                        </select>  
+                                                            
+                                        
+                                    </div> 
+                                    <div class="col-md-4">
+                                    <select class="form-select font-type fs-12 textbox-15 mb-1" style="margin-left: 167px;" [(ngModel)]="newManager" >                                    
+                                        <option value="0" selected disabled>Select</option>                                         
+                                            <option *ngFor="let combo of managerlist" [value]="combo.KEY_ID">{{combo.DATA_VALUE}}</option>                                        
+                                    </select> 
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 49px;">
+                                    <div class="col-md-4">                                       
+                                            <table class="table table-bordered textbox-15" style="background-color: white; width: 208px; margin-top: 15px;" *ngIf="employeelist && employeelist.length > 0">
+                                                <tbody>
+                                                    <tr *ngFor="let item of employeelist; let i = index">
+                                                        <td style="padding-left: 10px; padding-top: 10px;">
+                                                            <input type="checkbox" id="checkbox{{i}}" name="checkbox{{i}}" [value]="item.EMP_CODE" [(ngModel)]="item.selected" (change)="onCheckboxChange(item)">
+                                                            <label for="checkbox{{i}}">{{ item.EMP_NAME }}</label>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                       
+                                        <textarea class="table table-bordered textbox-15" style="width: 208px; margin-top: 15px; height: 157px;" *ngIf="!employeelist || employeelist.length == 0"></textarea>
+                                    </div>
+                                    
+                                    
+                                    <div class="col-md-2">
+                                         <!-- Button here -->
+                                <div style="margin-top: 60px; display: flex; justify-content: center;margin-left: 50px;">
+                                    <button type="button" class="btn btn-primary" (click)="populateTextarea()">>></button>
+                                </div>
+                                <!-- End of button -->
+                    
+                                    </div>
+                                    <div class="col-md-4">
+                                        <textarea class="table table-bordered textbox-15" style="margin-left: 50px; width: 208px; margin-top: 15px; height: 157px;">{{ getEmployeeNames() }}</textarea>                                      
+                                    </div>
+                                </div>
+                               
+                                
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end ma-10">
+                                <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab font-type"(click)="save()"><i class="ri-save-2-line label-icon align-middle fs-16 ms-2" ></i>Save</button>
+                                <button type="button" class="btn btn-danger btn-label right  nexttab  nexttab font-type" (click)="clear()" ><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                    
+                    
+                    
+
+                </div>
+                </div>
+
+                <!--EndInput Control-->
+
+
+                
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+        <app-footer></app-footer>
+              
+
+
+            <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+            <!--Modal For Success Message Start-->
+        <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                        </div>
+                        <div class="modal-body" *ngIf="showModal==1"> 
+                            <div class="container">
+                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                        
+                            </div>
+                        </div>
+                        <div class="modal-body" *ngIf="showModal==2">
+                        <div class="container">
+                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                            
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        <!--Modal For Success Message End-->
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

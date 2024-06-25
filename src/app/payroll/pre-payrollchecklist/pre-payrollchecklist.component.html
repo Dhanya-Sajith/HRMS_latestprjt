@@ -1,0 +1,460 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+   
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Pre-Payroll Checklist</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="topbar-up row">
+                        <div class="col-lg-12">
+                            <div class="card" >
+                               <div class="card-body pa-6-8">
+                                <div class="row" style="justify-content: center;">
+                                        <div class="col-lg-4 col-sm-6">
+                                            <div class="p-1">
+                                                <div class="d-flex align-items-center"> 
+                                                    <div class="avatar-sm me-2">
+                                                        <div class="avatar-title rounded bg-transparent text-success fs-24">
+                                                            <img src="assets\styles\img\icons8-company-64.png" class="avatar-sm"> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2">
+                                                        <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
+                                                        <select class="form-select font-type fs-11 textbox-15" #comval id="comname">
+                                                            <option value="">Select</option>
+                                                            <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}" [selected]="CompanyList.KEY_ID == this.company_code" >
+                                                                {{CompanyList.DATA_VALUE}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>    
+                                        <div class="col-lg-4 col-sm-6">
+                                            <div class="p-1">
+                                                <div class="d-flex">
+                                                    <div class="avatar-sm me-2">
+                                                        <div class="avatar-title rounded bg-transparent text-success fs-24 ma-5">
+                                                            <img src="assets\styles\img\icons8-calendar-64.png" class="avatar-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2">
+                                                        <h6 class="fs-12 font-type fw-semibold"><span>Month</span></h6>
+                                                        <select class="form-select font-type fs-11 textbox-15" #monthval  id="monthname">
+                                                            <option value="">Select</option>
+                                                            <option  *ngFor="let Companylist of listMonth" value="{{Companylist.VALUE_FIELD}}"  [selected]="Companylist.VALUE_FIELD == this.loadMonthdt"  >
+                                                                {{Companylist.DISPLAY_FIELD}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                </div>
+                            </div><!-- end card-body -->
+                            </div><!-- end card -->
+                        </div>
+                        <!-- end col -->
+                    </div>
+                  
+                    <div class="row topbar-up">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card">
+                            <div class="card-header border-bottom-dashed align-items-center bg-light-blue">
+                                <div class="d-flex align-items-center flex-wrap gap-2">
+                                    <div class="flex-grow-1">
+                                        <div class="form-check form-check-info">
+                                            <input class="form-check-input" type="checkbox" id="formCheck11" [(ngModel)]="selectAll" (change)="onSelectAllChange()" >
+                                            <label class="form-check-label font-type fw-semibold fs-13" for="formCheck11">
+                                               Select All
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div class="hstack text-nowrap gap-2">
+                                            <button type="button" class="btn btn-sm btn-info font-type fs-13"  (click)="runChecklist(comval.value,monthval.value)"><i class="ri-loop-right-line align-middle me-1"></i>Run Checklist</button>
+                                            <button class="btn btn-success font-type" (click)="download_to_excel()"><i class="ri-download-2-line me-1 align-bottom"></i> Download Findings</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ma-10"  style="justify-content: center;" [ngClass]="{'disabledAll': isDisabledAll}">
+                            <div class="col-md-8 col-md-8">
+                            <div class="card-body p-0 topbar-up">
+                                <div class="p-3" style="margin-top: 25px;">
+                                    <div class="acitivity-timeline acitivity-main">
+                                        
+                                        <div class="acitivity-item d-flex py-2">
+
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.prsts== '0'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-danger text-white rounded-circle"  style="z-index: 1;position: relative;" >
+                                                            <i class="ri-question-mark"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.prsts== '1'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-success text-white rounded-circle" style="z-index: 1;position: relative;">
+                                                            <i class="ri-check-line"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.prsts== '3'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-success text-white rounded-circle" style="z-index: 1;position: relative;">
+                                                            <i class="ri-close-circle-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+
+                                            <div class="flex-grow-1 ms-3 ">
+                                                <div class="col-lg-10 col-md-10">
+                                                    <div class="card-body border border-dashed pa-6-5">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-xs flex-shrink-0">
+                                                                    <input type="checkbox" class="form-check form-check-info ms-0" id="task_one"  [(ngModel)]="checkbox1" #check1  (change)="onCheckboxChange()">
+                                                                </div>
+                                                                <div class="avatar-xs flex-shrink-0 ms-1">
+                                                                    <span class="avatar-title bg-info-subtle text-info rounded-circle fs-4">
+                                                                        <i class="ri-user-3-fill align-middle"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <p class="fw-semibold mb-0 font-type">Employee Payroll Data Check</p>
+                                                                </div>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.prsts== '1'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-success fs-12">No Findings Found</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.prsts== '0'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-danger fs-12">Findings Found : <span class="fs-15 fw-semibold">{{this.PROFILE}}</span></h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.prsts== '3'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-success fs-12">Not Selected</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="acitivity-item py-2 d-flex">
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.leavests== '0'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-danger text-white rounded-circle"  style="z-index: 1;position: relative;" >
+                                                            <i class="ri-question-mark"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.leavests== '1'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-success text-white rounded-circle" style="z-index: 1;position: relative;">
+                                                            <i class="ri-check-line"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.leavests== '3'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-success text-white rounded-circle" style="z-index: 1;position: relative;">
+                                                            <i class="ri-close-circle-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <div class="flex-grow-1 ms-3 ">
+                                                <div class="col-lg-10 col-md-10">
+                                                    <div class="card-body border border-dashed  pa-6-5">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-xs flex-shrink-0">
+                                                                    <input type="checkbox" class="form-check form-check-info ms-0" id="task_two" [(ngModel)]="checkbox2" (change)="onCheckboxChange()">
+                                                                </div>
+                                                                <div class="avatar-xs flex-shrink-0">
+                                                                    <span class="avatar-title bg-info-subtle text-info rounded-circle fs-4">
+                                                                        
+                                                                    <i class="ri-calendar-fill"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <p class="fw-semibold mb-0 font-type">Leave & Regularization Requests Check</p>
+                                                                    
+                                                                </div>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.leavests== '1'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-success fs-12">No Findings Found</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.leavests== '0'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-danger fs-12">Findings Found : <span class="fs-15 fw-semibold">{{this.lEAVE}}</span></h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.leavests== '3'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-success fs-12">Not Selected</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="acitivity-item py-2 d-flex">
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.otsts== '0'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-danger text-white rounded-circle"  style="z-index: 1;position: relative;" >
+                                                            <i class="ri-question-mark"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.otsts== '1'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-success text-white rounded-circle" style="z-index: 1;position: relative;">
+                                                            <i class="ri-check-line"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.otsts== '3'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-success text-white rounded-circle" style="z-index: 1;position: relative;">
+                                                            <i class="ri-close-circle-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <div class="flex-grow-1 ms-3 ">
+                                                <div class="col-lg-10 col-md-10">
+                                                    <div class="card-body border border-dashed  pa-6-5">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-xs flex-shrink-0">
+                                                                    <input type="checkbox" class="form-check form-check-info ms-0" id="task_three" [(ngModel)]="checkbox3" (change)="onCheckboxChange()">
+                                                                </div>
+                                                                <div class="avatar-xs flex-shrink-0">
+                                                                    <span class="avatar-title bg-info-subtle text-info rounded-circle fs-4">
+                                                                        <i class="ri-line-chart-fill"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <p class="fw-semibold mb-0 font-type">OT Request Check</p>
+                                                                
+                                                                </div>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.otsts== '1'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-success fs-12">No Findings Found</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.otsts== '0'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-danger fs-12">Findings Found : <span class="fs-15 fw-semibold">{{this.OT}}</span></h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.otsts== '3'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-success fs-12">Not Selected</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                           </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="acitivity-item py-2 d-flex">
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.lopsts== '0'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-danger text-white rounded-circle"  style="z-index: 1;position: relative;" >
+                                                            <i class="ri-question-mark"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.lopsts== '1'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-success text-white rounded-circle" style="z-index: 1;position: relative;">
+                                                            <i class="ri-check-line"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container [ngSwitch]="true">
+                                                <div *ngSwitchCase="this.lopsts== '3'">
+                                                    <div class="flex-shrink-0 avatar-xs acitivity-avatar">
+                                                        <div class="avatar-title bg-success text-white rounded-circle" style="z-index: 1;position: relative;">
+                                                            <i class="ri-close-circle-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <div class="flex-grow-1 ms-3 ">
+                                                <div class="col-lg-10 col-md-10">
+                                                    <div class="card-body border border-dashed  pa-6-5">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-xs flex-shrink-0">
+                                                                    <input type="checkbox" class="form-check form-check-info ms-0" id="task_four" [(ngModel)]="checkbox4" (change)="onCheckboxChange()">
+                                                                </div>
+                                                                <div class="avatar-xs flex-shrink-0">
+                                                                    <span class="avatar-title bg-info-subtle text-info rounded-circle fs-4">
+                                                                        <i class="ri-align-bottom"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <p class="fw-semibold mb-0 font-type">LOP List</p>
+                                                                    
+                                                                </div>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.lopsts== '1'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-success fs-12">No Findings Found</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.lopsts== '0'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-danger fs-12">Findings Found : <span class="fs-15 fw-semibold">{{this.LOP}}</span></h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.lopsts== '3'">
+                                                                        <div class="flex-shrink-0 align-self-end">
+                                                                            <h6 class=" mb-0  font-type text-success fs-12">Not Selected</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+<!-- 
+                                        <div class="flex-shrink-0" style="margin-top: 10px;float: right;">
+                                            <div class="hstack text-nowrap gap-2">
+                                                <button type="button" class="btn btn-sm btn-orange font-type fs-13" ><i class="ri-loop-right-line align-middle me-1"></i>Confirm for Salary Processing</button>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="demo-container" *ngIf="showProgressBar">
+                                            <div class="progress-bar">
+                                              <div class="progress-bar-value"></div>
+                                            </div>
+                                        </div> -->
+
+                                        <div id="loading-bar-spinner" class="spinner" *ngIf="showProgressBar"><div class="spinner-icon"></div></div>
+
+                                    </div>
+                                </div>
+                            </div><!-- end card body -->
+                            </div>
+                            </div>
+                        </div><!-- end card -->
+                    </div>
+                </div><!-- end row -->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+     
+            <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+
+    <button id="openModalButtonForalert"  [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuRecordModal">Open Modal</button>
+  
+    <div class="modal fade zoomIn" id="SuRecordModal" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-orange padding-up-5">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                </div>
+                <div class="modal-body text-center padding-down-5"  *ngIf="showModal==1">
+                    
+                    <div class="text-center">
+                        <h5 class="fs-13 font-type">{{success}}</h5>
+                    </div>
+                </div>
+                <!-- <div class="modal-body text-center padding-down-5"  *ngIf="showModal==2">
+                   <div class="text-center">
+                       <h5 class="fs-13 font-type">{{failed}}</h5>
+                   </div>
+               </div> -->
+            </div>
+        </div>
+    </div>

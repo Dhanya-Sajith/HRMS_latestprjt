@@ -1,0 +1,260 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+    <app-header></app-header>
+    <!-- ========== App Menu ========== -->   
+    <app-sidemenu></app-sidemenu>
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Bonus Allowance</h4>
+                        </div>
+                    </div>
+                </div>
+                <!--Radiobutton-->
+                <div class="topbar-up row">
+                    <div class="col-lg-12">
+                        <div class="card bg-info-subtle" >
+                           <div class="card-body pa-6-8">
+                            <div class="col-lg-12" style="text-align: center;">
+                                <div class="mt-3 mt-lg-0" >
+                                    <div class="form-check form-check-inline form-check-info">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="WithoutinlineRadio1" checked value="individual" [(ngModel)]="user" (change)="radioselection(user)">
+                                        <label class="form-check-label font-type fw-semibold text-blue fs-14" for="inlineRadio1">Individual</label>
+                                    </div>
+                                
+                                    <div class="form-check form-check-inline form-check-info">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="WithoutinlineRadio2" value="bulk" [(ngModel)]="user" (change)="radioselection(user)">
+                                        <label class="form-check-label font-type fw-semibold text-blue fs-14" for="inlineRadio2">Bulk Upload</label>
+                                    </div>
+                                
+                                </div>
+                            </div>
+                            </div><!-- end card-body -->
+                        </div><!-- end card -->
+                    </div>
+                    <!-- end col -->
+                </div>
+
+<!-- Individual -->
+                <div *ngIf="user==='individual'">
+                <div class="topbar-up row">
+                <div class="col-lg-12">
+                   <div class="card" id="divIndividual">                  
+                    <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5" id="teaminput">
+                       
+                            <div class="row mb-3">
+                                        <div class="col-lg-4 pt-2">
+                                                <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>                                               
+                                                <select class="form-select font-type fs-11 textbox-15" #selectedCompany (change)="onCompanySelected(selectedCompany.value)" aria-label="Default select example" required>
+                                                        <option value="-1" selected disabled>Select</option>
+                                                        <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                    </select>        
+                                        </div>
+                                        <div class="col-lg-4 pt-2">
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Department </span></h6>
+                                                
+                                                <select class="form-select font-type fs-11 textbox-15" #selectedDept (change)="onDeptSelected(selectedDept.value)" aria-label="Default select example" required>
+                                                        <option value="-1" selected disabled>Select</option>
+                                                        <option *ngFor="let combo of deptdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                    </select>
+                                         
+                                        </div>
+                                        <div class="col-lg-4 pt-2">  
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
+                                               
+                                                    <select class="form-select font-type fs-11 textbox-15" id="employeename" #selectedEmp (change)="onEmpSelected(selectedEmp.value)" aria-label="Default select example" required>
+                                                        <option value="-1" selected disabled>Select</option>
+                                                        <option *ngFor="let combo of empdata" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
+                                                    </select>                           
+                                        </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card bg-info-subtle" id="employeeDetails" >
+                                        <div class="card-body pa-6-8">
+                                            <div class="d-lg-flex align-items-center">
+                                                <div class="flex-grow-1">
+                                                    <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type">Emp Code : <span class="fs-13 fw-semibold">{{ selectedEmpCode }}</span></h6>
+                                                 </div>
+                                                 <div class="flex-grow-1">
+                                                    <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type">Emp Name : <span class="fs-13 fw-semibold">{{empName}}</span></h6>
+                                                 </div>
+                                                <div class="flex-shrink-0 mt-lg-0 ">
+                                                    <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type">Designation : <span class="fs-13 fw-semibold">{{desig}}</span></h6>
+                                                </div>
+                                            </div>
+                                         
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            
+                            <div>
+                            <form [formGroup]="bonusForm"  >
+                            <div class="row">
+                                
+                                        <div class="col-lg-2 pt-2">  
+                                                <h6 class=" font-type fs-12 fw-semibold"><span>Bonus Amount </span></h6>
+                                                <input type="text" class="form-control font-type fs-11 textbox-15" placeholder="Enter the Amount" formControlName="amount"> 
+                                                <div *ngIf="bonusForm.get('amount')!.hasError('required') && bonusForm.get('amount')!.touched" class="text-danger">
+                                                    Please enter amount!
+                                                  </div>
+                                            </div>
+                                        <div class="col-lg-2 pt-2">  
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Payout Mode </span></h6>
+                                            <select class="form-select font-type fs-11 textbox-15" id="payoutmode"  formControlName="payoutMode" aria-label="Default select example" required>
+                                                <option value="" selected disabled>Select</option>
+                                                <option *ngFor="let combo of payoutdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                            </select> 
+                                            <div *ngIf="bonusForm.get('payoutMode')!.hasError('required') && bonusForm.get('payoutMode')!.touched" class="text-danger">
+                                                Please select payout mode!
+                                              </div>                    
+                                    </div>
+                                        <div class="col-lg-2 pt-2">
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Payout Month </span></h6>
+                                                <input type="month" class="form-control font-type fs-11 mb-0 textbox-15"  formControlName="payoutMonth">      
+                                                <div *ngIf="bonusForm.get('payoutMonth')!.hasError('required') && bonusForm.get('payoutMonth')!.touched" class="text-danger">
+                                                    Please select payout month!
+                                                  </div> 
+                                        </div>
+                                        <div class="col-lg-6 pt-2">
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Remarks </span></h6>
+                                                <textarea class="form-control font-type textbox-15 fs-11" placeholder="Enter Remarks" rows="2" formControlName="remarks"></textarea>
+                                                <div *ngIf="bonusForm.get('remarks')!.hasError('required') && bonusForm.get('remarks')!.touched" class="text-danger">
+                                                    Please enter remarks!
+                                                  </div>
+                                        </div>
+                                   
+                                    </div>
+                                </form>
+                                </div>
+                    </div>     
+                </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="submit" class="btn btn-orange font-type"*ngIf="!bonusForm.valid" [disabled]="bonusForm.valid" id="validate-btn" (click)="validateForm()">Submit</button>
+                        <button type="button" class="btn btn-orange font-type"*ngIf="bonusForm.valid"id="add-btn"  (click)="save()">Submit</button>
+                    
+                        <button type="button" class="btn btn-blue font-type" (click)="cancel()">Clear</button>
+                    </div>
+                
+                </div>
+            </div>
+            
+            </div>
+
+         <!-- End Individual -->
+
+           <!-- Bulk Order -->
+           <div *ngIf="user==='bulk'">
+            <div>
+                <form [formGroup]="bulkForm"  >
+                    <div class="row">
+                            <div class="col-lg-12">
+                               <div class="card"  id="divbulkUpload" >                  
+                                <div class="card-body border border-top-0 border-end-0 border-start-0"  >
+                                    <div class="col-lg-12 margin-up-10  pt-2" id="divsubmit" >
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <button type="button" class="btn btn-orange font-type text-white" (click)="download_to_excel()" ><span>Download Template</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-lg-4 pt-2">
+                                        <h6 class="font-type fs-12 fw-semibold"><span>Upload Your Excel Document </span></h6>
+                                        <input class="form-control font-type fs-12 textbox-15" type="file" id="formFile" name="formFile" formControlName="doc" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                        <div *ngIf="bulkForm.get('doc')!.hasError('required') && bulkForm.get('doc')!.touched" class="text-danger">
+                                            Please select a file!
+                                          </div>                                          
+                                    </div>
+                                    <div class="col-lg-4 pt-2">
+                                        <h6 class="font-type fs-12 fw-semibold"><span>Payout Mode </span></h6>
+                                            <select class="form-select font-type fs-11 textbox-15" id="payoutmode"  formControlName="payoutmode" >
+                                                <option value="" selected disabled>Select</option>
+                                                <option *ngFor="let combo of payoutdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                            </select>  
+                                            <div *ngIf="bulkForm.get('payoutmode')!.hasError('required') && bulkForm.get('payoutmode')!.touched" class="text-danger">
+                                                Please select payout mode!
+                                              </div>    
+                                    </div>
+                                    <div class="col-lg-4 pt-2">
+                                        <h6 class="font-type fs-12 fw-semibold"><span>Payout Month </span></h6>
+                                        <input type="month" class="form-control font-type fs-11 mb-0 textbox-15"  formControlName="payoutmonth">      
+                                                <div *ngIf="bulkForm.get('payoutmonth')!.hasError('required') && bulkForm.get('payoutmonth')!.touched" class="text-danger">
+                                                    Please select payout month!
+                                                  </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>                   
+
+                        <div class="col-lg-12">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="submit" class="btn btn-orange font-type"*ngIf="!bulkForm.valid" [disabled]="bulkForm.valid" id="validate-btn" (click)="validateBulkForm()">Submit</button>
+                                <button type="button" class="btn btn-orange font-type"*ngIf="bulkForm.valid" id="add-btn" (click)="upload()">Submit</button>
+                                <button type="button" class="btn btn-blue font-type"(click)="clearBulk()">Clear</button>
+                            </div>
+                        </div>
+                        </form>
+                        </div>
+              </div>
+            <!--End  Bulk Order -->
+            <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SaveModal">Open Modal</button>
+ <!-- SAVE MODEL -->
+ <div class="modal fade zoomIn" id="SaveModal" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <div class="modal-body text-center padding-down-5" *ngIf="showModal==1">
+                
+                <div class="text-center">
+                    <h5 class="bar-text fs-12 font-type">{{success}}</h5>
+                     
+                </div>
+            </div>
+            <div class="modal-body text-center padding-down-5" *ngIf="showModal==2">
+                
+                <div class="text-center">
+                    <h5 class="bar-text fs-12 font-type">{{failed}}</h5>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+<!-- END SAVE MODEL -->
+           
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+ 
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->
+

@@ -1,0 +1,800 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content" style="overflow-x: hidden;">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card mt-n4 mx-n4 mb-n5">
+                                <div class="bg-info-subtle">
+                                    <div class="card-body pb-4 mb-5">
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <div class="row align-items-center">
+                                                    <div class="d-flex align-items-center ma-5">
+                                                        <div class="flex-shrink-0">
+                                                            <div class="avatar-sm">
+                                                                <span class="avatar-title bg-info-subtle">
+                                                                    <img src="assets\styles\img\icons8-training-100 (1).png" alt="" width="100%">
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-2 ma-5">
+                                                            <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Trainings</h2>
+                                                        </div>
+                                                        <div class="flex-shrink-0 ms-1 pr-20">
+                                                            <div class="page-title-right padding-up-5">
+                                                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group"  *ngIf="this.grpname.includes('HOD')">
+                                                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="personal"  name="user" [(ngModel)]="user" (change)="teamselection(user)">
+                                                                    <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio1">Personal</label>
+                                                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="team" name="user" [(ngModel)]="user" (change)="teamselection(user)">
+                                                                    <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio2">Team</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                        </div>
+                                        <!--end row-->
+                                    </div><!-- end card body -->
+                                </div>
+                            </div><!-- end card -->
+                        </div><!-- end col -->
+                    </div>
+
+                     <!-- PERSONAL -->
+                    <div id="divPersonal" *ngIf="user === 'personal'">
+                        <div class="topbar-up row">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-7 col-lg-9">
+                                        <div class="card textbox-15 shadow-lg">
+                                            <div class="card-body p-0">
+                                                <div class="alert bg-blue border-0 rounded-0 m-0 d-flex align-items-center h-30">
+                                                    <div class="flex-grow-1 text-truncate font-type text-white fs-13">
+                                                        Upcoming Training
+                                                    </div>
+                                                </div>
+                                                <div class="row align-items-end mb-1">
+                                                    <div class="col-sm-12">
+                                                        <div class="p-2">
+                                                        <div class="d-flex mb-3">
+                                                                <div class="flex-grow-1 ma-5">
+                                                                    <p class="text-truncate fs-14 mb-0"><i class="ri-stop-fill align-middle fs-15 text-blue"></i><span class="ms-2 font-type text-muted">{{Upcomingdt  | date: 'dd MMM yyyy'}} - </span><span class="mb-0 fs-13 fw-semibold font-type ms-1" style="white-space: pre-wrap;">{{Upcomingtraining}}</span></p>
+                                                                </div>
+                                                            </div>
+                                                        <div class="hstack gap-2 justify-content-end">
+                                                            <a href="mytrainings" class="btn btn-blue font-type text-white"><i class="ri-calendar-2-line me-2 align-bottom fs-16"></i>My Trainings</a>
+                                                            <a href="training_provider" class="btn btn-soft-blue font-type" *ngIf="BtnActive == 1"><i class="ri-user-settings-line me-2 align-bottom fs-16"></i>Employee Trainings</a>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end card-body-->
+                                        </div>
+                                    </div> <!-- end col-->
+                                    <div class="col-md-5 col-lg-3">
+                                        <div class="card textbox-15 shadow-lg">
+                                            <div class="card-body p-0">
+                                                <div class="alert bg-blue border-0 rounded-0 m-0 d-flex align-items-center">
+                                                    <div class="flex-grow-1 text-truncate font-type text-white fs-13">
+                                                        Training Hours
+                                                    </div>
+                                                </div>
+                                                <div class="row align-items-end mb-1">
+                                                    <div class="col-sm-12">
+                                                        <div class="p-2">
+                                                        <div class="d-flex mb-1">
+                                                                <div class="flex-grow-1 ma-5">
+                                                                    <p class="text-truncate fs-13 mb-0"><i class="ri-stop-fill align-middle fs-15 text-orange"></i><span class="ms-2 font-type">Assigned</span></p>
+                                                                </div>
+                                                                <div class="flex-shrink-0 ma-5">
+                                                                    <p class="text-truncate mb-0"><span class="ms-2 font-type text-orange fw-semibold fs-14">{{assignedhrs}}hrs</span></p>                      
+                                                                </div>
+                                                        </div>
+                                                        <div class="d-flex mb-0">
+                                                            <div class="flex-grow-1 ma-5">
+                                                                <p class="text-truncate fs-13 mb-0"><i class="ri-stop-fill align-middle fs-15 text-blue"></i><span class="ms-2 font-type">Pending</span></p>
+                                                            </div>
+                                                            <div class="flex-shrink-0 ma-5">
+                                                                <p class="text-truncate mb-0"><span class="ms-2 font-type text-blue fw-semibold fs-14">{{pendinghrs}}hrs</span></p>   
+                                                            </div>
+                                                         </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end card-body-->
+                                        </div>
+                                    </div> <!-- end col-->
+                                </div> <!-- end row-->
+                                </div>  
+                            </div>
+    
+                        
+                    <!-- PERSONAL LIST-->
+                        <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header" style="padding:10px">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <div class="align-items-center d-flex ">
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Training Request Summary</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div class="search-box">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..." [(ngModel)]="searchInput">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                        <div>
+                                                            <select class="form-select h-30 font-type textbox-15" [(ngModel)]="filter_year" (change)="FetchTrainingRequest()">
+                                                                <option value="-1">Year</option>
+                                                                <option *ngFor="let year of listYear" value="{{year.DISPLAY_FIELD}}">
+                                                                    {{year.DISPLAY_FIELD}}
+                                                                </option>
+                                                            </select>  
+                                                        </div>
+                                                        <div>
+                                                            <select class="form-select font-type fs-12 textbox-15 h-30" [(ngModel)]="filter_status" (change)="FetchTrainingRequest()">
+                                                                <option value="-1">All Status</option>
+                                                                <option *ngFor="let lstatus of liststatus" value="{{lstatus.KEY_ID}}">
+                                                                    {{lstatus.DATA_VALUE}}
+                                                                </option>
+                                                              </select>  
+                                                        </div>
+                                                        <div>
+                                                                <a data-bs-toggle="modal" href="#AddRequestModal">
+                                                                <button type="button" class="btn btn-orange w-100 h-30 text-white  font-type"> <i class="ri-file-add-line align-bottom me-1"></i>New Request</button>
+                                                                </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive table-card mb-0">
+                                                <table class="table table-nowrap align-middle table-hover table-bordered border-orange">
+                                                    <thead class="table-light text-white font-type">
+                                                    <tr>
+                                                        <th>SL No</th>
+                                                        <th>Areas</th>
+                                                        <th>Training Name</th>
+                                                        <th>Provider</th>
+                                                        <th>Convenient <br/> Schedule</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all font-type fs-11">
+                                                <tr class="font-type h-30" *ngFor="let empdata of listtrainings | search : searchInput | pagination: currentPagePersonal: itemsPerPage;">
+                                                    <td>{{empdata.PLAN_ID}}</td>
+                                                    <td>{{empdata.AREA_NAME}}</td>
+                                                    <td style="white-space: pre-wrap;">{{empdata.SUBJECT_NAME}}</td>
+                                                    <td>{{empdata.TRAINING_TYPE}}</td>
+                                                    <td>{{empdata.PROPOSED_QUARTER}}</td>
+                                                    <td class="status"><a href="#statusModal" class="text-white d-inline-block w-100"><span [ngStyle]="getStatusStyles(empdata.PLAN_STATUS)" class="badge text-white width-budge fs-11 fw-medium">{{empdata.PLAN_STATUS_VAL}}</span></a></td>
+                                                    <td>
+                                                        <ul class="list-inline hstack gap-2 mb-0 ms-2">
+                                                            <!--The cancellation option is only available when a request is created by an employee and the HOD has not approved the request.-->
+                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel"  *ngIf="empdata.PLAN_STATUS == 0">
+                                                                <a class="d-inline-block" data-bs-toggle="modal" href="#CancelModal" (click)="setSelectedRequestID(empdata.PLAN_ID)">
+                                                                    <i class="ri-close-circle-fill fs-20 text-danger text-center"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    </tr>
+                                                  
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div *ngIf="listtrainings">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsPersonal>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStartPersonal() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEndPersonal() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResultsPersonal }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPagesPersonal() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPagePersonal" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPagePersonal()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePagePersonal(currentPagePersonal - 1)" [class.disabled-button]="currentPagePersonal === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumberPersonal of getPageNumbersPersonal(currentPagePersonal)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePagePersonal(pageNumberPersonal)" [class.active]="currentPagePersonal === pageNumberPersonal">{{ pageNumberPersonal }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePagePersonal(currentPagePersonal + 1)" [class.disabled-button]="currentPagePersonal * itemsPerPage >= totalSearchResultsPersonal">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                                </div>
+                                            </div>
+                                        </div>  
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                                </div>
+                            </div>
+                                <!--END PERSONAL -->
+
+
+                                <!-- TEAM -->
+                                 <div class="row topbar-up" id="divTeam"  *ngIf="user === 'team'">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header pa-6-8">
+                                                <div class="row align-items-center gy-3">
+                                                    <div class="col-sm">
+                                                        <div class="d-flex gap-1 flex-wrap">
+                                                            <div class="search-box">
+                                                                <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..." [(ngModel)]="searchInput">
+                                                                <i class="ri-search-line search-icon"></i>
+                                                            </div>
+                                                            <div>
+                                                                <select class="form-select h-30 font-type textbox-15" [(ngModel)]="HOD_year" (change)="FetchTrainingRequest_HOD()">
+                                                                    <option value="-1">Year</option>
+                                                                    <option *ngFor="let year of listYear" value="{{year.DISPLAY_FIELD}}">
+                                                                        {{year.DISPLAY_FIELD}}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div>
+                                                                <select class="form-select font-type fs-12 textbox-15 h-30" [(ngModel)]="HOD_status" (change)="FetchTrainingRequest_HOD()">
+                                                                    <option value="-1">All Status</option>
+                                                                    <option *ngFor="let lstatus of liststatus" value="{{lstatus.KEY_ID}}">
+                                                                        {{lstatus.DATA_VALUE}}
+                                                                    </option>
+                                                                </select>  
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-auto">
+                                                        <a href="#" class="btn btn-orange btn-sm font-type fs-13 font-type text-white" data-bs-toggle="modal" id="AddRequestModalTeam-btn" data-bs-target="#AddRequestModalTeam"><i class="ri-file-add-line align-middle me-1"></i>New Request</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive table-card mb-0">
+                                                    <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                                        <thead class="font-type table-light text-white">
+                                                        <tr class="text-center">
+                                                            <th>SL No</th>
+                                                            <th>Areas</th>
+                                                            <th>Training Name</th>
+                                                            <th scope="col" class="bg-blue fs-12 font-type">Employee</th>
+                                                            <th>Convenient<br>Schedule</th>
+                                                            <th>Status</th>
+                                                            <th>Action</th>
+                                                        </tr>   
+                                                    </thead>
+                                                    <tbody class="list form-check-all font-type fs-11">
+                                                        <ng-container *ngFor="let hdata of listtrainings_HOD | search : searchInput | pagination: currentPage: itemsPerPage; let i=index">
+                                                            <tr class="font-type" *ngFor="let employee of hdata.Employees; let isFirst = first">
+                                                                <ng-container *ngIf="isFirst">
+                                                                    <td [attr.rowspan]="hdata.Employees.length">{{hdata.PLAN_ID}}</td>
+                                                                    <td [attr.rowspan]="hdata.Employees.length" style="white-space: pre-wrap;">{{hdata.AREA_NAME}}</td>
+                                                                    <td [attr.rowspan]="hdata.Employees.length" style="white-space: pre-wrap;">{{hdata.SUBJECT_NAME}}</td>
+                                                                    <td class="p-1">{{employee.EMP_NAME}}</td>
+                                                                    <td [attr.rowspan]="hdata.Employees.length">{{hdata.PROPOSED_QUARTER}}</td>
+                                                                    <td [attr.rowspan]="hdata.Employees.length" class="status">
+                                                                        <span [ngStyle]="getStatusStyles(hdata.PLAN_STATUS)" class="badge text-white width-budge fs-11 fw-medium">{{hdata.PLAN_STATUS_VAL}}</span>
+                                                                    </td>
+                                                                    <td [attr.rowspan]="hdata.Employees.length">
+                                                                        <ul class="list-inline hstack gap-1 mb-0" [hidden]="hdata.PLAN_STATUS == 7">
+                                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit Request" *ngIf="hdata.PLAN_STATUS == 0 || hdata.PLAN_STATUS == 1">
+                                                                                <a href="#EditRequestModalTeam" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn" (click)="SelectPlanID(hdata.PLAN_ID)">
+                                                                                    <i class="ri-edit-circle-fill fs-22 text-orange text-center"></i>
+                                                                                </a>
+                                                                            </li>
+    
+                                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve Request" *ngIf="hdata.PLAN_STATUS == 0">
+                                                                                <a href="#SuccessRecordModal" data-bs-toggle="modal" class="text-primary d-inline-block" (click)="approve(hdata.PLAN_ID)">
+                                                                                    <i class="ri-checkbox-circle-fill fs-22 text-success text-center"></i>
+                                                                                </a>
+                                                                            </li> 
+    
+                                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reject Request">
+                                                                                <a class="remove-item-btn" data-bs-toggle="modal" href="#RejectModal" (click)="SelectPlanID(hdata.PLAN_ID)">
+                                                                                    <i class="ri-close-circle-fill fs-22 text-danger text-center"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Training Details" *ngIf="hdata.PLAN_STATUS == 5 || hdata.PLAN_STATUS == 8">
+                                                                                <a class="d-inline-block"  data-bs-toggle="modal" href="#viewTrainingDetailsTeam" (click)="ViewTrainingDtl(hdata.PLAN_ID)">
+                                                                                    <i class="ri-eye-fill fs-22 text-success text-center"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="!isFirst">
+                                                                    <td class="p-1">{{employee.EMP_NAME}}</td>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </ng-container>
+                                                        
+                                                        
+                                                   
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div *ngIf="listtrainings_HOD">
+                                                <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                                    <div class="col-sm">
+                                                      <div class="font-type fs-12 text-muted">
+                                                        Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                        - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                        of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                      </div>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                        <div class="font-type fs-12 text-muted">
+                                                            Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-auto mt-4 mt-sm-0">
+                                                        <div class="d-flex gap-1 flex-wrap">
+                                                            <div>
+                                                                <div class="input-group">
+                                                        <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                        
+                                                       <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                                  </div>
+                                                </div>
+                                                     
+                                                    <div class="col-sm-auto mt-3 mt-sm-0">
+                                                      <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                        <li class="page-item">
+                                                          <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                        </li>
+                                                        <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                          <li class="page-item">
+                                                            <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                          </li>
+                                                        </ng-container>
+                                                        <li class="page-item">
+                                                          <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                        </li>
+                                                      </ul>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                               </div>
+                                              </div>    
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                 </div>
+                                 <!-- END TEAM -->
+                </div>
+                <!-- container-fluid -->   
+                </div>
+                <!-- End Page-content -->
+
+                <!--PERSONAL MODEL BOXES-->
+
+                             <!--Add Training Request Model Team-->
+                             <div class="modal fade zoomIn " id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                        </div>
+                                        <form class="tablelist-form" autocomplete="off"  [formGroup]="requestForm" (ngSubmit)="validateForm()">
+                                            <div class="modal-body">
+                                                <input type="hidden" id="id-field" />
+                                                <div class="row topbar-up mb-2">
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="fs-12 font-type fw-semibold"><span>Training Name</span></h6>
+                                                                    <select class="form-select font-type fs-12 textbox-15" formControlName="trainingname">
+                                                                        <option value="">Select</option>
+                                                                        <option *ngFor="let training of listtraining" value="{{training.VALUE_FIELD}}">{{training.DISPLAY_FIELD}}</option>
+                                                                    </select> 
+                                                                    <div *ngIf="requestForm.get('trainingname')!.hasError('required') && requestForm.get('trainingname')!.touched" class="text-danger">Please select the training</div>   
+                                                            </div>
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="fs-12 font-type fw-semibold"><span>Convenient Schedule</span></h6>
+                                                                <select class="form-select h-30 font-type textbox-15" formControlName="schedule">
+                                                                    <option value="">Select</option>
+                                                                    <option *ngFor="let qut of listQuarter" value="{{qut.KEY_ID}}"> {{qut.DATA_VALUE}}</option>
+                                                                </select>    
+                                                                <div *ngIf="requestForm.get('schedule')!.hasError('required') && requestForm.get('schedule')!.touched" class="text-danger">Please select the convenient schedule</div>
+                                                            </div>
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="fs-12 font-type fw-semibold"><span>Provider</span></h6>
+                                                                <select class="form-select font-type fs-12 textbox-15" formControlName="provider">
+                                                                    <option value="">Select</option>
+                                                                    <option *ngFor="let provid of listprovider" value="{{provid.KEY_ID}}"> {{provid.DATA_VALUE}}</option>
+                                                                </select>   
+                                                                <div *ngIf="requestForm.get('provider')!.hasError('required') && requestForm.get('provider')!.touched" class="text-danger">Please select the provider</div>    
+                                                            </div>
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold"><span>Areas</span></h6>
+                                                                <select class="form-select h-30 font-type textbox-15" formControlName="area">
+                                                                    <option value="">Select</option>
+                                                                    <option *ngFor="let area of listarea" value="{{area.KEY_ID}}"> {{area.DATA_VALUE}}</option>
+                                                                </select>
+                                                                <div *ngIf="requestForm.get('area')!.hasError('required') && requestForm.get('area')!.touched" class="text-danger">Please select the area</div>
+                                                            </div>
+                                                    </div>
+                                                    <div class="col-lg-12 pt-2">
+                                                        <div class="hstack gap-2 justify-content-end">
+                                                            <div  *ngIf="!requestForm.valid">
+                                                                <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" [disabled]="requestForm.valid" id="validate-btn"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                            </div>
+                                                            <div *ngIf="requestForm.valid">
+                                                                <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" id="add-btn" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="AddRequests()"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                            </div>
+                                                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " (click)="Clear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!--End Training Request Model Team-->
+
+                            <!-- Status Model-->
+                            <div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-bottom" style="float:right">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                        </div>
+                                        <div class="modal-body text-center ma-5">
+                                            <div class="mb-1">
+                                                <div class="table-responsive table-card">
+                                                    <table class="table table-nowrap mb-0 table-bordered border-dark">
+                                                        <thead class="font-type">
+                                                            <tr>
+                                                                <th scope="col">Levels</th>
+                                                                <th scope="col">Approver</th>
+                                                                <th scope="col">Date</th>
+                                                                <th scope="col">Status</th>
+                                                                <th scope="col">Remarks/Reason</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="fs-12 font-type">
+                                                                <td>L1</td>
+                                                                <td>HOD</td>
+                                                                <td>07 Feb, 2024</td>
+                                                                <td><span class="badge bg-success width-budge fs-11 fw-medium">Approved</span></td>
+                                                                <td style="white-space: pre-wrap;">The performance review evaluates how well one learns new skills and information through training programs, and applies that new knowledge in the job.</td>
+                                                            </tr>
+                                                            <tr class="fs-12 font-type">
+                                                                <td>L2</td>
+                                                                <td>HR</td>
+                                                                <td>07 Feb, 2024</td>
+                                                                <td><span class="badge bg-success width-budge fs-11 fw-medium">Approved</span></td>
+                                                                <td style="white-space: pre-wrap;">The performance review evaluates how well one learns new skills and information through training programs, and applies that new knowledge in the job.</td>
+                                                            </tr>
+                                                            <tr class="fs-12 font-type">
+                                                                <td>L3</td>
+                                                                <td>VP</td>
+                                                                <td>07 Feb, 2024</td>
+                                                                <td><span class="badge bg-blue width-budge fs-11 fw-medium">Pending</span></td>
+                                                                <td style="white-space: pre-wrap;">The performance review evaluates how well one learns new skills and information through training programs, and applies that new knowledge in the job.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Status Model-->
+
+                     <!--Modal For Success Message Start-->
+                     <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==1"> 
+                                    <div class="container">
+                                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                
+                                    </div>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==2">
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                    
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!--Cancel Request Model-->
+                <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <h5 class="modal-title">&nbsp;</h5>
+                                <button type="button" #cancelclosebutton class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="text-center">
+                                    <h5 class="fs-14">You are about to cancel your request ?</h5>
+                                    <p class="text-muted fs-12 mb-4 pt-1">Do you want to continue?</p>
+                                    <div class="hstack gap-2 justify-content-center remove">
+                                        <button class="btn btn-danger" id="delete-record" (click)="CancelRequest(selectedRequestID)" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Yes</button>
+                                        <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End cancel Request Model-->
+
+                <!--END PERSONAL MODEL BOXES-->
+      
+     
+                <app-footer></app-footer>
+
+                <!--TEAM MODEL BOXES-->
+
+                 <!--Add Training Request Model Team-->
+                 <div class="modal fade zoomIn " id="AddRequestModalTeam" tabindex="-1" aria-labelledby="AddRequestModalTeam" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="HODrequestForm" (ngSubmit)="HODvalidateForm()">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="row topbar-up mb-2">
+                                        <div class="col-lg-3 pt-2">
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Areas</span></h6>
+                                            <select class="form-select h-30 font-type textbox-15" formControlName="harea">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let area of listarea" value="{{area.KEY_ID}}"> {{area.DATA_VALUE}}</option>
+                                            </select>
+                                            <div *ngIf="HODrequestForm.get('harea')!.hasError('required') && HODrequestForm.get('harea')!.touched" class="text-danger">Please select the area</div>
+                                        </div>
+                                        <div class="col-lg-3 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Training Name</span></h6>
+                                            <select class="form-select font-type fs-12 textbox-15" formControlName="htrainingname">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let training of listtraining" value="{{training.VALUE_FIELD}}">{{training.DISPLAY_FIELD}}</option>
+                                            </select> 
+                                            <div *ngIf="HODrequestForm.get('htrainingname')!.hasError('required') && HODrequestForm.get('htrainingname')!.touched" class="text-danger">Please select the training</div>   
+                                        </div>
+                                        <div class="col-lg-6 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Employee</span></h6>
+                                            <ng-multiselect-dropdown #dropdown
+                                                [settings]="dropdownSettings"
+                                                formControlName="hemployee"
+                                                [data]="listEmployee">     
+                                            </ng-multiselect-dropdown>    
+                                            <div *ngIf="HODrequestForm.get('hemployee')!.hasError('required') && HODrequestForm.get('hemployee')!.touched" class="text-danger">Please select employees</div>      
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-lg-3 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Provider</span></h6>
+                                            <select class="form-select font-type fs-12 textbox-15" formControlName="hprovider">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let provid of listprovider" value="{{provid.KEY_ID}}"> {{provid.DATA_VALUE}}</option>
+                                            </select>   
+                                            <div *ngIf="HODrequestForm.get('hprovider')!.hasError('required') && HODrequestForm.get('hprovider')!.touched" class="text-danger">Please select the provider</div>      
+                                    </div>
+                                    <div class="col-lg-3 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Convenient Schedule</span></h6>
+                                            <select class="form-select h-30 font-type textbox-15" formControlName="hschedule">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let qut of listQuarter" value="{{qut.KEY_ID}}"> {{qut.DATA_VALUE}}</option>
+                                            </select>    
+                                            <div *ngIf="HODrequestForm.get('hschedule')!.hasError('required') && HODrequestForm.get('hschedule')!.touched" class="text-danger">Please select the convenient schedule</div>  
+                                    </div>
+                                    <div class="col-lg-6 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Remarks</span></h6>
+                                            <textarea class="form-control textbox-15" required formControlName="remarks"></textarea> 
+                                            <div *ngIf="HODrequestForm.get('remarks')!.hasError('required') && HODrequestForm.get('remarks')!.touched" class="text-danger">Please fill remarks</div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 pt-2">
+                                            <div class="hstack gap-2 justify-content-end">
+                                                <div  *ngIf="!HODrequestForm.valid">
+                                                    <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" [disabled]="HODrequestForm.valid" id="validate-btn"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                </div>
+                                                <div *ngIf="HODrequestForm.valid">
+                                                    <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" id="add-btn" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="HODRequests()"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                </div>
+                                                <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " (click)="hClear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                            </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> 
+                 <!--End Business Request Model Team--> 
+                 
+                 <!--Add Training Request Model Team-->
+                 <div class="modal fade zoomIn " id="EditRequestModalTeam" tabindex="-1" aria-labelledby="EditRequestModalTeam" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="EditrequestForm" (ngSubmit)="EditvalidateForm()">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="row mb-2">
+                                        <div class="col-lg-3 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Provider</span></h6>
+                                            <select class="form-select font-type fs-12 textbox-15" formControlName="eprovider">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let provid of listprovider" value="{{provid.KEY_ID}}"> {{provid.DATA_VALUE}}</option>
+                                            </select>   
+                                            <div *ngIf="EditrequestForm.get('eprovider')!.hasError('required') && EditrequestForm.get('eprovider')!.touched" class="text-danger">Please select the provider</div>      
+                                    </div>
+                                    <div class="col-lg-3 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Convenient Schedule</span></h6>
+                                            <select class="form-select h-30 font-type textbox-15" formControlName="eschedule">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let qut of listQuarter" value="{{qut.KEY_ID}}"> {{qut.DATA_VALUE}}</option>
+                                            </select>    
+                                            <div *ngIf="EditrequestForm.get('eschedule')!.hasError('required') && EditrequestForm.get('eschedule')!.touched" class="text-danger">Please select the convenient schedule</div>  
+                                    </div>
+                                    <div class="col-lg-6 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Remarks</span></h6>
+                                            <textarea class="form-control textbox-15" required formControlName="eremarks"></textarea> 
+                                            <div *ngIf="EditrequestForm.get('eremarks')!.hasError('required') && EditrequestForm.get('eremarks')!.touched" class="text-danger">Please fill remarks</div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 pt-2">
+                                            <div class="hstack gap-2 justify-content-end">
+                                                <div  *ngIf="!EditrequestForm.valid">
+                                                    <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" [disabled]="EditrequestForm.valid" id="validate-btn"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                </div>
+                                                <div *ngIf="EditrequestForm.valid">
+                                                    <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" id="add-btn" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="EditRequests()"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                </div>
+                                                <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " (click)="EditClear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                            </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> 
+                 <!--End Business Request Model Team--> 
+                      
+                      
+                        <!-- Reject Model-->
+                        <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                    </div>
+                                    <form class="tablelist-form" autocomplete="off">
+                                        <div class="modal-body">
+                                            <input type="hidden" id="id-field" />
+                                            <div class="mb-3">
+                                                <label class="form-label font-type">Reason</label>
+                                                <textarea class="form-control" required name="remarks" id="remarks" [(ngModel)]="rejectresaon" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer margin-up-15">
+                                            <div class="hstack gap-2">
+                                                <button class="btn btn-danger font-type" id="delete-record" (click)="onReject(selectedplanId)" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" >Reject</button>
+                                                <button type="button" class="btn btn-blue font-type">Cancel</button> 
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>                                          
+                         <!-- End Reject Model-->
+                      
+
+                        <!-- View Training Details Model Team-->
+                        <div class="modal fade zoomIn " id="viewTrainingDetailsTeam" tabindex="-1" aria-labelledby="viewTrainingDetailsTeam" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                    </div>
+                                    <form class="tablelist-form" autocomplete="off">
+                                        <div class="modal-body mb-2 pa-0">
+                                            <input type="hidden" id="id-field" />
+                                            <div class="card-body ma-5">
+                                                <div class="table-responsive table-card">
+                                                    <table class="table table-nowrap align-middle table-bordered border-dark table-hover">
+                                                        <thead class="font-type">
+                                                        <tr>
+                                                            <th>Areas</th>
+                                                            <th>Training Name</th>
+                                                            <th>Employee</th>
+                                                            <th>Location</th>
+                                                            <th>Provider</th>
+                                                            <th>Proposed <br>Schedule</th>
+                                                            <th>Confirmed <br>Schedule</th>
+                                                            <th>Actual <br>Training<br>Date</th>
+                                                            <th>Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list form-check-all font-type fs-11">
+                                                    <ng-container *ngFor="let view of viewdtl; let i=index">
+                                                        <tr class="font-type" *ngFor="let employee of view.Employees; let isFirst = first">
+                                                            <ng-container *ngIf="isFirst">
+                                                                <td [attr.rowspan]="view.Employees.length" style="white-space: pre-wrap;">{{view.AREA_NAME}}</td>
+                                                                <td [attr.rowspan]="view.Employees.length" style="white-space: pre-wrap;">{{view.SUBJECT_NAME}}</td>
+                                                                <td class="p-1">{{employee.EMP_NAME}}</td>
+                                                                <td [attr.rowspan]="view.Employees.length" style="white-space: pre-wrap;">{{view.LOCATION}}</td>
+                                                                <td [attr.rowspan]="view.Employees.length" style="white-space: pre-wrap;">{{view.TRAINING_TYPE}}</td>
+                                                                <td [attr.rowspan]="view.Employees.length">{{view.PROPOSED_QUARTER}}</td>
+                                                                <td [attr.rowspan]="view.Employees.length">{{view.CONFIRMED_QUARTER}}</td>
+                                                                <td [attr.rowspan]="view.Employees.length">{{view.SCHEDULED_DATE | date:"dd-MM-yyyy"}}</td>
+                                                                <td [attr.rowspan]="view.Employees.length">{{view.REMARKS}}</td>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="!isFirst">
+                                                                <td class="p-1">{{employee.EMP_NAME}}</td>
+                                                            </ng-container>
+                                                        </tr>
+                                                    </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div> 
+                        <!-- End View Training Details Model Team-->
+
+                <!--END TEAM MODEL BOXES-->
+
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->

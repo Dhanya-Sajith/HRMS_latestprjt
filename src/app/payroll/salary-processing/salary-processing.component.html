@@ -1,0 +1,264 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+   
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+               
+                <div class="container-fluid" >
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card mt-n4 mx-n4 mb-n5">
+                                <div class="bg-info-subtle">
+                                    <div class="card-body pb-4 mb-5">
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <div class="row align-items-center">
+                                                    <div class="d-flex align-items-center ma-5">
+                                                        <div class="flex-shrink-0">
+                                                            <div class="avatar-sm">
+                                                                <span class="avatar-title bg-info-subtle">
+                                                                    <img src="assets\styles\img\salary-64.png" alt="" width="100%">
+                                                                </span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-1 ma-5">
+                                                            <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Salary Processing</h2>
+                                                        </div>
+                                                        <div class="flex-shrink-0 ms-1" style="padding-right: 20px;" *ngIf="this.grpname.includes('HR')">
+                                                            <a href="pre_payrollchecklist" class="btn btn-blue btn-sm font-type fs-14"><i class="ri-list-check align-middle me-1"></i> Checklist</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                        </div>
+                                        <!--end row-->
+                                    </div><!-- end card body -->
+                                </div>
+                            </div><!-- end card -->
+                        </div><!-- end col -->
+                    </div>
+                    <div id="loading-bar-spinner" class="spinner" *ngIf="loading"><div class="spinner-icon"></div></div>
+                    <div class="row topbar-up" [ngClass]="{'disabledAll': isDisabledAll}">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="row align-items-center gy-3 mb-2">
+                                                    <div class="row g-3 margin-up-7 mb-3" style="justify-content: center;">
+                                                        <div class="col-lg-6 col-md-3">
+                                                            <select class="form-select font-type fs-11"  aria-label="Default select example" [(ngModel)]="companyID" name="companyID">
+                                                                <option value="-1" selected>Select Company</option>
+                                                                <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                            </select> 
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3">
+                                                            <div class="">
+                                                                <select class="form-select font-type fs-11" aria-label="Default select example" name="month" [(ngModel)]="month">
+                                                                    <option value="-1">Select</option>
+                                                                    <option  *ngFor="let MonthList of listMonth" value="{{MonthList.VALUE_FIELD}}">
+                                                                        {{MonthList.DISPLAY_FIELD}}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-3">
+                                                            <!-- <label></label> -->
+                                                            <!-- <div> -->
+                                                                <button type="submit" class="btn btn-orange font-type fs-12  text-white" (click)="ViewSalaryProcess()" style="margin-top: 4px;"> <i class="ri-file-text-line"></i>
+                                                                    View List
+                                                                </button>
+                                                            <!-- </div> -->
+                                                        </div>
+                                                        <!--end col-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!--end row-->
+                                    <div class="pt-0 margin-up-7">
+                                        <div class="table-responsive  table-responsives  mb-0" >
+                                            <table class="table table-nowrap align-middle" >
+                                                <thead class="table-light text-white font-type">
+                                                    <tr>
+                                                        <th class="fs-12">Company</th>
+                                                        <th class="fs-12">Processing Month</th>
+                                                        <th  Width="15%" class="fs-12">Employee Count</th>
+                                                        <th  class="fs-12">Status</th>
+                                                        <th  class="fs-12">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all font-type fs-11">
+                                                    <tr class="h1-50" *ngFor="let data of processinglist">
+                                                        <td>{{data.COMPANY_NAME}}</td>
+                                                        <td>{{data.MONTH_NAME}}</td>
+                                                        <td>{{data.COUNT}}</td>
+                                                        <td>{{data.STATUS}}</td>
+                                                        <td>
+                                                            <ul class="list-inline hstack gap-2 mb-0">
+                                                                <li *ngIf="this.grpname.includes('HR') && data.STATUS_ID == -1">
+                                                                    <button type="button" class="btn btn-outline-info waves-effect waves-light" data-bs-toggle="modal" href="#SuccessRecordModal" (click)="Salaryprocessing(data.COMPANY_NAME,data.MONTH_ID,data.COMPANY_CODE)">Begin Salary Process</button>
+                                                               </li>
+                                                                <li *ngIf="data.STATUS_ID >= 0">
+                                                                     <a href="salary_report"><button type="button" class="btn btn-outline-success waves-effect waves-light" (click)="setLocalstorage(data.COMPANY_NAME,data.MONTH_ID,data.COMPANY_CODE)">View Salary Report</button></a>
+                                                                </li>
+                                                                <li *ngIf="this.grpname.includes('HR') && this.desig == 54" [hidden]="data.STATUS_ID == 1">
+                                                                    <div class="dropdown" style="overflow:visible;" *ngIf="data.STATUS_ID == 0 || data.STATUS_ID == 3">
+                                                                        <a href="javascript:void(0);" class="btn btn-soft-success btn-sm " data-bs-toggle="dropdown" aria-expanded="true"> 
+                                                                            <i class="ri-more-fill"></i>
+                                                                            More Actions
+                                                                        </a>
+                                                                        <ul class="dropdown-menu dropdown-menu-end text-blue">
+                                                                            <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" href="#SuccessRecordModal"  (click)="Salaryprocessing(data.COMPANY_NAME,data.MONTH_ID,data.COMPANY_CODE)"><i class="ri-loop-left-line me-2 align-bottom text-blue fs-14"></i><span class="text-blue">Re-run</span></a></li>
+                                                                            <li class="dropdown-divider"></li>
+                                                                            <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" href="#SuccessRecordModal" (click)="Approve(data,1)"><i class="ri-check-line me-2 align-bottom text-success fs-14"></i><span class="text-success">Approve</span></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li *ngIf="this.grpname.includes('AC')" [hidden]="data.STATUS_ID == 2">
+                                                                    <div class="dropdown" style="overflow:visible;" *ngIf="data.STATUS_ID == 1 || data.STATUS_ID == 5">
+                                                                        <a href="javascript:void(0);" class="btn btn-soft-success btn-sm " data-bs-toggle="dropdown" aria-expanded="true">
+                                                                            <i class="ri-more-fill"></i>
+                                                                            More Actions
+                                                                        </a>
+                                                                        <ul class="dropdown-menu dropdown-menu-end text-blue">
+                                                                            <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" href="#SuccessRecordModal" (click)="Approve(data,2)"><i class="ri-loop-left-line me-2 align-bottom text-success fs-14"></i><span class="text-success">Approve</span></a></li>
+                                                                            <li class="dropdown-divider"></li>
+                                                                            <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" href="#RejectModal" (click)="RejectStatus(data,3)"><i class="ri-check-line me-2 align-bottom text-danger fs-14"></i><span class="text-danger">Reject</span></a></li>
+                                                                            <li class="dropdown-divider"></li>
+                                                                            <li><a class="dropdown-item" href="edit_salary_report" (click)="setLocalstorage(data.COMPANY_NAME,data.MONTH_ID,data.COMPANY_CODE)"><i class="ri-check-line me-2 align-bottom text-blue fs-14"></i><span class="text-blue">Edit</span></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li *ngIf="this.grpname.includes('FC')">
+                                                                    <div class="dropdown" style="overflow:visible;" *ngIf="data.STATUS_ID == 2" [hidden]="data.STATUS_ID == 4">
+                                                                        <a href="javascript:void(0);" class="btn btn-soft-success btn-sm " data-bs-toggle="dropdown" aria-expanded="true">
+                                                                            <i class="ri-more-fill"></i>
+                                                                            More Actions
+                                                                        </a>
+                                                                        <ul class="dropdown-menu dropdown-menu-end text-blue">
+                                                                            <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" href="#SuccessRecordModal" (click)="Approve(data,4)"><i class="ri-loop-left-line me-2 align-bottom text-success fs-14"></i><span class="text-success">Approve</span></a></li>
+                                                                            <li class="dropdown-divider"></li>
+                                                                            <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" href="#RejectModal" (click)="RejectStatus(data,5)"><i class="ri-check-line me-2 align-bottom text-danger fs-14"></i><span class="text-danger">Reject</span></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li *ngIf="this.grpname.includes('HR') && data.STATUS_ID == 4">
+                                                                    <button type="button" class="btn btn-outline-danger waves-effect waves-light" data-bs-toggle="modal" href="#SuccessRecordModal" (click)="Payslip(data,8)">Generate Payslip</button>
+                                                                </li>
+                                                                <!-- <li *ngIf="this.grpname.includes('AC') && data.STATUS_ID == 4">
+                                                                    <button type="button" class="btn btn-outline-info waves-effect waves-light" disabled>Release Payment</button>
+                                                                </li> -->
+                                                                <li *ngIf="this.grpname.includes('AC') && (data.STATUS_ID == 4 || data.STATUS_ID == 8)">
+                                                                    <a href="generate_payment"><button type="button" class="btn btn-outline-danger waves-effect waves-light" disabled>Generate Report</button></a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                   
+                                                            <!-- <h6 class="fs-12 font-type ma-5">Processed</h6>
+                                                            <h6 class="fs-12 font-type text-muted margin-up-5">Processed on Dec 31, 2022</h6> -->
+                                                     
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- 
+                                        <div class="row font-type">
+                                            <div class="col-sm">
+                                                <div class="dataTables_info fs-12 text-muted" id="scroll-horizontal_info" role="status" aria-live="polite">Showing 3 to 10 of 3 entries</div>
+                                            </div>
+                                            
+                                            <div class="col-sm-auto  mt-3 mt-sm-0">
+                                                <div class="dataTables_paginate paging_simple_numbers" id="scroll-horizontal_paginate">
+                                                    <ul class="pagination">
+                                                        <li class="paginate_button page-item previous disabled" id="scroll-horizontal_previous"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+                                                        <li class="paginate_button page-item active"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                                                        <li class="paginate_button page-item "><a href="#" aria-controls="scroll-horizontal" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+                                                        <li class="paginate_button page-item next" id="scroll-horizontal_next"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                                    </div>
+                                </div>
+                                <!--end col-->
+                            </div>  
+
+                            <!--Modal For Success Message Start-->
+                            <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                        </div>
+                                        <div class="modal-body" *ngIf="showModal==1"> 
+                                            <div class="container">
+                                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                        
+                                            </div>
+                                        </div>
+                                        <div class="modal-body" *ngIf="showModal==2">
+                                        <div class="container">
+                                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                            
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Modal For Success Message End-->
+
+                             <!-- Reject Model-->
+                             <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                            <button type="button" #closebutton class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" style="margin-top:-30px;"></button>
+                                        </div>
+                                        <form class="tablelist-form" autocomplete="off">
+                                            <div class="modal-body">
+                                                <input type="hidden" id="id-field" />
+                                                <div class="mb-3">
+                                                    <label class="form-label">Reason</label>
+                                                    <textarea class="form-control" required name="remarks" id="remarks" [(ngModel)]="remarks" required></textarea>  
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="hstack gap-2">
+                                
+                                                    <button class="btn btn-danger" id="delete-record" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal "(click)="onReject()">Reject</button>
+                                                    <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Reject Model-->         
+                        </div>
+                    </div>
+                      
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+            <app-footer></app-footer>
+        </div>
+        <!-- end main content-->

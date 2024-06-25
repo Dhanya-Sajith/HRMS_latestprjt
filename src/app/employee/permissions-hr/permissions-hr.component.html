@@ -1,0 +1,543 @@
+
+    
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <app-header></app-header>
+                <!-- ========== App Menu ========== -->     
+                <app-sidemenu></app-sidemenu>         
+                <!-- Vertical Overlay-->
+                <div class="vertical-overlay"></div>
+                <!-- ============================================================== -->
+                <!-- Start right Content here -->
+                <!-- ============================================================== -->
+                <div class="main-content">
+                    <div class="page-content">
+                        <div class="container-fluid">
+        
+                            <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        <h4 class="mb-sm-1" style="margin-top: 10px;">REQUEST MANAGEMENT</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end page title -->
+
+                            <div class="row" >
+                                <div class="col-lg-12">
+                                    <div class="card" id="searchInput" >
+                                     
+                                        <div class="card-body border-bottom-dashed border-bottom">
+                                            <form>
+                                                <div class="row g-3" style="justify-content: center;text-align: center;">
+                                                   
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <button class="btn toggle-button  btn-info waves-effect waves-light h-70 text-uppercase font-type fw-semibold fs-14" role="button" style="width: 160px;" data-menu="attendance" (click)="selectmenu('attendance')"routerLink="/reqMgmt">Attendance</button>
+                                                    </div>
+                                        
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <button class="btn toggle-button selected btn-info waves-effect waves-light h-70 text-uppercase font-type fw-semibold fs-14" role="button" style="width: 160px;" data-menu="leave"(click)="selectmenu('leave')"routerLink="/leaveHR">Leave</button>
+                                                    </div>
+                                        
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <button class="btn toggle-button btn-info waves-effect waves-light h-70 text-uppercase font-type fw-semibold fs-14" role="button" style="width: 160px;" data-menu="payroll" (click)="selectmenu('payroll')" routerLink="/loanHR">Payroll</button>
+                                                    </div>
+                                                </div>
+                                                <!--end row-->
+                                
+                               <div class="row" style="margin-top: 20px;justify-content: center;">
+                                
+                               
+                                <div class="col-xl-2 col-md-6"(click)="navigateToLeave()">
+                                    <!-- card -->
+                                    <a href="leaveHR"><div class="card card-animate text-black"  style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" [ngStyle]="{'background-color':subMenu === 'leave' ? 'white' : '#e2f5ff' }" >
+                                        <div class="card-body p1-10">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">LEAVE</p>
+                                                </div>
+                                            </div>                                           
+                                            <div class="d-flex align-items-center margin-up-19">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="fw-medium text-truncate mb-0 font-type">Pending for Approval</p>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <h5 class="text-black fw-semibold fs-22 mb-0 font-type">
+                                                        {{leave}}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+                                </a>
+                                </div><!-- end col -->
+
+                                <div class="col-xl-2 col-md-6" (click)="navigateToCompoffHR()">
+                                    <!-- card -->
+                                    <a href="compoffHR"><div class="card card-animate text-black " style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" [ngStyle]="{'background-color':subMenu === 'compoff' ? 'white' : '#e2f5ff' }" >
+                                        <div class="card-body p1-10">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">COMP OFF</p>                                                
+                                                </div>
+                                            </div>                                            
+                                            <div class="d-flex align-items-center margin-up-19">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="fw-medium text-truncate mb-0 font-type">Pending for Approval</p>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <h5 class="text-black fw-semibold fs-22 mb-0 font-type">
+                                                        {{compoff}}	
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+                                </a>
+                                </div><!-- end col -->
+
+                                <div class="col-xl-2 col-md-6" (click)="navigateToBusTrip()" >
+                                    
+                                    <!-- card -->
+                                    <a href="bustripHR"><div class="card card-animate text-black" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" [ngStyle]="{'background-color':subMenu === 'bustrip' ? 'white' : '#e2f5ff' }">
+                                        <div class="card-body p1-10">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">BUSINESS TRIP</p>
+                                                </div>
+                                            </div>                                           
+                                            <div class="d-flex align-items-center margin-up-19">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="fw-medium text-truncate mb-0 font-type">Pending for Approval</p>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <h5 class="text-black fw-semibold fs-22 mb-0 font-type">
+                                                        {{business}}	
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+                                </a>
+                                </div><!-- end col -->
+                                <div class="col-xl-2 col-md-6" (click)="navigateToPermissions()" >
+                                    
+                                    <!-- card -->
+                                    <a href="permissionsHR"><div class="card card-animate text-black" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" [ngStyle]="{'background-color':subMenu === 'permissions' ? 'white' : '#e2f5ff' }">
+                                        <div class="card-body p1-10">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">PERMISSIONS</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="d-flex align-items-center margin-up-19">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="fw-medium text-truncate mb-0 font-type">Pending for Approval</p>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <h5 class="text-black fw-semibold fs-22 mb-0 font-type">
+                                                        {{permissions}}	
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+                                </a>
+                                </div><!-- end col -->
+
+                            </div>
+                                            </form>
+                                        </div>
+                                      
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                           
+                            
+                                         
+                            <div class="row"  >
+                                <div class="col-lg-12">
+                                    <div class="card" id="searchInput">
+                                     
+                                        <div class="card-body border-bottom-dashed border-bottom">
+                                            <form>
+                                                <div class="row g-3">
+                                                     
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <h3 class="font-type fs-12"><span>From Date</span></h3>
+
+                                                        <input type="date" class="form-control font-type fs-11" id="fromdt"  name="fromdate" [(ngModel)]="fromdate" (change)="filter()" >
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <div>
+                                                            <h3 class="font-type fs-12"><span>To Date</span></h3>
+
+                                                            <input type="date" class="form-control font-type fs-11" id="todt" name="todt" [(ngModel)]="todate" (change)="filter()">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <h6 class="fs-12 font-type"><span>Company</span></h6>
+                                                            <select class="form-select font-type fs-11" #selectedCompany (change)="onCompanySelected(selectedCompany.value)" aria-label="Default select example" required>
+                                                            <option value="-1" selected >All</option>
+                                                            <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                        </select>    
+                                                     </div>
+                                                     <div class="col-lg-2 col-sm-6">
+                                                        <h6 class="font-type fs-12"><span>Department </span></h6>                                                       
+                                                        <select class="form-select font-type fs-11" #selectedDept (change)="onDeptSelected(selectedDept.value)" aria-label="Default select example" required>
+                                                            <option value="-1" selected >All</option>
+                                                            <option *ngFor="let combo of deptdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                        </select>
+                                             
+                                                 
+                                                    </div>
+                                                     <div class="col-lg-2 col-sm-6">  
+                                                        <h6 class="font-type fs-12"><span>Employee Name </span></h6>
+                                                          <select class="form-select font-type fs-11 " id="employeename" #selectedEmp (change)="onEmpSelected(selectedEmp.value)" aria-label="Default select example" required>
+                                                            <option value="-1" selected >All</option>
+                                                            <option *ngFor="let combo of empdata" [value]="combo.EMP_CODE">{{combo.EMP_NAME}}</option>
+                                                        </select>   
+                                                    </div>
+                                                   
+                                                    <!--end col-->
+                                                    <div class="col-lg-2 col-sm-6">  
+                                                        <h6 class="font-type fs-12"><span>Status</span></h6>                                                                   
+                                                        <select class="form-select font-type fs-11" #selectedstat (change)="onStatSelected(selectedstat.value)" aria-label="Default select example" required>
+                                                            <option value="-1" selected>All</option>
+                                                            <option *ngFor="let combo of statusdata"   [value]="combo.KEY_ID" [selected]="combo.DATA_VALUE == 'Pending for Approval'">{{ combo.DATA_VALUE }}</option>
+                                                           </select>
+                                                    </div>
+                                                  
+                                                    <!--end col-->
+                                                </div>
+        
+                                              
+                                                <!--end row-->
+                                            </form>
+                                        </div>
+                                      
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card" id="orderList">
+                                        <div class="card-header border-bottom" style="padding-bottom: 10px;padding-top: 10px;">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <h6 class="card-title" style="font-weight: bold;">PERMISSION REQUESTS</h6>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                 
+         
+                                                    <div class="search-box" >
+                                                        <input type="text" class="form-control searchInput" id="searchInput"  name="searchInput" placeholder="Search" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" aria-label="search" aria-describedby="search_icon">
+                                                        <i class="ri-search-line search-icon"></i>
+                                                    </div>
+        
+                                                
+                                                </div>
+                                               
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="card-body border-bottom">
+                                              
+                                       
+                                            <!--end col-->
+                                    
+                                        <div class="col-xxl-12">
+                                            <div class="card card-height-100">
+                                             
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-nowrap align-middle" id="orderTable">
+                                                            <thead class="table-light text-white font-type">
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th hidden>ReqId</th>
+                                                                    <th id="th-company">Co.</th>
+                                                                    <th id="th-dept">Dept</th>
+                                                                    <th id="th-emp">Employee</th>
+                                                                    <th>Date</th>                                                        
+                                                                    <th>Session</th>
+                                                                    <th>Duration</th>
+                                                                    <th>Reason</th>                                                        
+                                                                    <th id="th-status">Status</th>
+                                                                    <th >Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="list form-check-all font-type fs-11">
+                                                               
+                                                                    <tr class="trstyle fs-11" *ngFor="let item of permissionsdata | search : searchInput | pagination: currentPage: itemsPerPage ;index as i">
+                                                                    <td>{{i+1}}</td>
+                                                                    <td hidden>{{item.REQ_ID}}</td>
+                                                                    <td id="td-company">{{item.COMPANY}}</td>
+                                                                    <td id="td-dept">{{item.DEPT}}</td>
+                                                                    <td id="td-emp">{{item.EMP_NAME}}</td>
+                                                                    <td>{{item.AVAIL_DATE | date: 'dd-MM-yyyy'}}</td>                                                        
+                                                                    <td>{{item.SESSION}}</td>
+                                                                    <td>{{item.DURATION}}</td>                                                     
+                                                                  
+                                                                    <td>
+                                                                        <a data-target="#ReasonModal" data-bs-toggle="modal"
+                                                                        href="#ReasonModal" class="textblack" (click)="reasonview(item.REASON)">{{item.REASON.substring(0,4)}}...</a>
+                                                                    </td>
+                                                                  
+                                                                    
+                                                                    <td id="td-status"><a data-target="#statusModal" data-bs-toggle="modal" href="#statusModal" (click)="Approvelist(item.REQ_ID)"> <span class="width-budge badge bg-success-subtle text-success p-2">{{item.STATUS_VAL}}</span></a></td>
+                                                                   
+                                                                    <td>
+                                                                        <ul class="list-inline hstack gap-2 mb-0">
+                                                                           
+                                                                           <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve">
+                                                                            
+                                                                            <button type="button" class="btn btn-success btn-sm" id="buttonApprove" [disabled]="item.STATUS_VAL!='Pending for Approval'" (click)="approve(item)"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"  ></i></button>
+                                                                          
+                                                                            </li>
+                                                                           
+                                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top">                                                                                
+                                                                                <button type="button" class="btn btn-danger btn-sm" id="buttonReject" data-bs-toggle="modal" title="Reject" data-bs-target="#RejectModal" [hidden]="item.STATUS_VAL=='Approved'" [disabled]="item.STATUS_VAL!='Pending for Approval'" (click)="setSelectedRequestID(item)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                                <button type="button" class="btn btn-danger btn-sm" id="buttonReject" title="Cancel"  [hidden]="item.STATUS_VAL!='Approved'"  data-bs-toggle="modal" href="#CancelModal" [disabled]="isButtonDisabled(item)" (click)="setSelectedRequestID(item)" ><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;color: #ffffff;"></i></button> 
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>                                                                                        
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                        
+                                                     
+                                                    </div><!-- end table responsive -->
+                                                    <br>
+                                                <div *ngIf="permissionsdata">
+                                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                                        <div class="col-sm">
+                                                          <div class="font-type fs-12 text-muted">
+                                                            Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                            - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                            of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <div class="font-type fs-12 text-muted">
+                                                                Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                <div>
+                                                                    <div class="input-group">
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            
+                                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                                      </div>
+                                                    </div>
+                                                         
+                                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                            </li>
+                                                            <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                              <li class="page-item">
+                                                                <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                              </li>
+                                                            </ng-container>
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                            </li>
+                                                          </ul>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                </div><!-- end card body -->
+                                            </div><!-- end card -->
+                                        </div> 
+                                     
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                                 <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                                <!--Modal For Success Message Start-->
+                            <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-orange padding-up-5">
+                                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                            </div>
+                                            <div class="modal-body" *ngIf="showModal==1"> 
+                                                <div class="container">
+                                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="modal-body" *ngIf="showModal==2">
+                                            <div class="container">
+                                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                                
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!--Modal For Success Message End-->
+                             <!-- Status Model-->
+                 <div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-bottom-right" >
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                            </div>
+                            <div class="table-responsive">
+                    
+                                <table class="table table-bordered table-nowrap align-middle mb-0">
+                                    <thead>
+                                        <tr class="font-type">
+                                            <th scope="col" style="width: 30%;">LEVEL_ID</th>
+                                            <th scope="col" style="width: 30%;">APPROVER </th>
+                                            <th scope="col" style="width: 20%;">STATUS </th>
+                                            <th scope="col" style="width: 20%;">DATE</th>
+                                            <th scope="col" style="width: 20%;">REMARKS</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="font-type">
+                                        <tr  *ngFor="let approvedtl of approvelist">
+                                            <td>{{approvedtl.LEVEL_ID}}</td>
+                                            <td>{{approvedtl.APPROVER}}</td>
+                                            <td>{{approvedtl.STATUS}}</td>
+                                            <td>{{approvedtl.VERIFIED_DATE | date: 'dd-MM-yyyy'}}</td>
+                                            <td>{{approvedtl.VERIFIED_REMARKS}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Status Model-->
+                 <!-- Approve Model-->
+                 <div   class="modal fade zoomIn" id="ApproveRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                
+                                <div class="text-center">
+                                    <h5 class="textgreen fs-14" >Request Approved!</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Approve Model-->
+                <!-- Reject Model-->
+                <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                <button type="button" #closebutton class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" style="margin-top:-10px;"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off"  (ngSubmit)="onReject()" >
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="mb-3">
+                                        <label class="form-label">Reason</label>
+                                        <textarea class="form-control" required name="remarks" id="remarks" [(ngModel)]="remarks" required></textarea>  
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="hstack gap-2">
+                    
+                                        <button class="btn btn-danger" id="delete-record" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Reject</button>
+                                       
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Reject Model-->
+                
+                <!-- Reason Model-->
+    
+                <div class="modal fade zoomIn" id="ReasonModal" tabindex="-1" aria-labelledby="ReasonModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-info-subtle" style="background-color: #e9823d!important;">
+                                <h5 class="modal-title">&nbsp;</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" style="margin-top:-30px;"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                
+                                <div>
+                                    <textarea  name="reasondisp" id="reasondisp"  [formControl]="reasondisp" cols="55" style="border: none;text-align: center;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             <!-- End Reason Model-->
+             <!-- Cancel Model-->
+<div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-center">
+                    <h5 class="fs-13 font-type">You are about to cancel your request.</h5>
+                    <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                    <div class="hstack gap-2 justify-content-center remove">   
+                        <button class="btn btn-danger font-type" id="delete-record" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#SaveModal" (click)="cancel()">Yes</button>
+                        <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Cancel Model-->
+
+
+                            </div>
+                            <!--end row-->
+        
+                        </div>
+                        <!-- container-fluid -->
+                    </div>
+                    <!-- End Page-content -->
+                    <app-footer></app-footer>
+                </div>
+                <!-- end main content-->
+            </div>
+            <!-- END layout-wrapper -->
+        
+
+
+

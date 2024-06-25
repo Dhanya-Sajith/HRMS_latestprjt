@@ -1,0 +1,188 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Salary Report</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row margin-up-10">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header border-0 pa-6-8">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <div class="align-items-center d-flex ">
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">{{CompanystoredValue}}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div class="search-box">
+                                                    <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..." id="searchInput" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" >
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                                <div>
+                                                    <select class="form-select font-type fs-11" #selectedEmp (change)="onEmpSelected(selectedEmp.value)" aria-label="Default select example" required>
+                                                        <option value="-1" selected>ALL EMPLOYEES</option>
+                                                        <option *ngFor="let combo of empdata" [value]="combo.EMP_CODE">{{combo.EMP_NAME}}</option>
+                                                    </select> 
+                                                </div>
+                                            
+                                                <div>
+                                                    <button type="button" class="btn btn-info font-type h-30" (click)="download_to_excel()"><i class="ri-file-download-line align-bottom me-1"></i> Download</button>  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body border border-dashed border-end-0 border-start-0">
+                                </div>
+
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive  table-card mb-0" style="overflow-x: scroll;">
+                                        <table class="table align-middle table-bordered border-orange">
+                                            <thead class="table-light text-white font-type">
+                                                <tr class="border-orange">
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Empcode</th>
+                                                        <th>EmpName</th>
+                                                        <th>Basic</th>
+                                                        <th>Transport</th>
+                                                        <th>Accommodation</th>
+                                                        <th>Other Allowance</th>
+                                                        <th>HRA</th>
+                                                        <th>Gross Salary</th>
+                                                        <th>Overtime</th>
+                                                        <th>Expense Claim</th>
+                                                        <th>Loan</th>
+                                                        <th>Other Addition</th>
+                                                        <th>Total Addition</th>
+                                                        <th>Loan Amount</th>
+                                                        <th>Leave Amount</th>
+                                                        <th>Other Deduction</th>
+                                                        <th>Total Deduction</th>
+                                                        <th>Net Salary</th>
+                                                        <th>Payment Mode</th>
+                                                    </tr>
+                                            </thead>
+                                            <tbody class="list form-check-all font-type fs-11">
+                                                <tr class="trstyle fs-12 h1-50" *ngFor="let item of salarylist | search : searchInput | pagination: currentPage: itemsPerPage;index as i">
+                                                    <th>{{i+1}}</th>
+                                                    <td>{{item.EMP_CODE}}</td>
+                                                    <td>{{item.EMP_NAME}}</td>
+                                                    <td>{{item.BASIC}}</td>
+                                                    <td>{{item.TRANSPORT}}</td>
+                                                    <td>{{item.ACCOMMODATION}}</td>
+                                                    <td>{{item.OTHER_ALLOWANCE}}</td>
+                                                    <td>{{item.HRA}}</td>
+                                                    <td>{{item.GROSS_SALARY}}</td>
+                                                    <td>{{item.OVERTIME}}</td>
+                                                    <td>{{item.EXPENSE_CLAIM}}</td>
+                                                    <td>{{item.LOAN}}</td>
+                                                    <td><a data-target="#DetailModal" data-bs-toggle="modal" href="#DetailModal" class="textblack"  (click)="DetailData(item.EMP_CODE,item.PROCESS_DATE,1)" title="Other Additions" style="color:cornflowerblue">{{item.OTHER_ADDITION}}</a></td>
+                                                    <td>{{item.TOTAL_ADDITION}}</td>
+                                                    <td>{{item.LOAN_AMOUNT}}</td>
+                                                    <td>{{item.LEAVE_AMOUNT}}</td>
+                                                    <td><a data-target="#DetailModal" data-bs-toggle="modal" href="#DetailModal" class="textblack"  (click)="DetailData(item.EMP_CODE,item.PROCESS_DATE,2)" title="Other Additions" style="color:cornflowerblue">{{item.OTHER_DEDUCTION}}</a></td>
+                                                    <td>{{item.TOTAL_DEDUCTION}}</td>
+                                                    <td>{{item.NET_AMOUNT}}</td>
+                                                    <td>{{item.PAYMENT_MODE}}</td>
+                                                </tr>
+                                            </tbody>
+                                           
+                                        </table>
+                                    </div><br>
+
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="salarylist.length > 0" style="padding-left: 15px;padding-right: 15px;">
+                                        <div class="col-sm">
+                                          <div class="font-type fs-11 text-muted">
+                                             Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                            - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                            of <span class="fw-semibold">{{ salarylist.length }}</span> Results
+                                        </div>
+                                        </div>
+                                        <div class="col-sm-auto  mt-3 mt-sm-0" >
+                                            <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                <li class="page-item " >                                                          
+                                                     <button class="page-link"  (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>                                                       
+                                                </li>
+                                                <li class="page-item active">
+                                                    <span class="page-link" [class.active]="currentPage">{{ currentPage }}</span> 
+                                                </li>
+                                                <li class="page-item">
+                                                  <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= salarylist.length">→</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end col-->
+
+                        <div class="col-lg-12">
+                            <div class="hstack gap-1 justify-content-end">
+                                <a href="salary_process">
+                                <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type "><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spilt Up Model-->
+                    <div class="modal fade zoomIn" id="DetailModal" tabindex="-1" aria-labelledby="DetailModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                    <button type="button" #closebutton class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-nowrap align-middle mb-0 text-center">
+                                        <thead>             
+                                            <tr class="font-type">
+                                                <th>PAYMENT CATEGORY</th>
+                                                <th>AMOUNT </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody class="font-type">
+                                            <tr  *ngFor="let approvedtl of Otherdtl">
+                                                <td>{{approvedtl.PAYMENT_CATEGORY}}</td>
+                                                <td>{{approvedtl.AMOUNT}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Spilt Up Model-->
+                </div>
+            </div>
+
+            
+            <!-- End Page-content -->
+            <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->

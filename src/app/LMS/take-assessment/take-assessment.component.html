@@ -1,0 +1,200 @@
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header>
+
+        <!-- ========== App Menu ========== -->
+
+        <app-sidemenu></app-sidemenu>
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- Start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-0 text-uppercase font-type padding-up-5">Assessment / Questionnaire</h4>
+                            </div>
+                        </div>
+                    </div>
+                      <!-- End start page title -->
+                  
+                    <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card textbox-15 shadow-lg bg-light-subtle">
+                            <!--Header-->
+                            <div class="card-header border-bottom-dashed align-items-center bg-warning-subtle h1-5">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="p-1">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0">
+                                                    <div class="avatar-sm ms-1">
+                                                        <span class="avatar-title bg-transparent">
+                                                            <img src="styles\img\icons8-questionnaire-100.png" alt="">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1 ma-5 ml-30">
+                                                    <div class="row col-md-12">
+                                                        <div class="col-md-2">
+                                                            <h6 class="fs-13 font-type fw-semibold"> Training Name </h6>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <h6 class="fs-13 font-type fw-semibold"> : </h6>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <span class="fw-semibold" style="font-size: 14px!important;"> {{this.listTrainingDtls.SUBJECT_NAME}} </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row col-md-12">
+                                                        <div class="col-md-2">
+                                                            <h6 class="fs-13 font-type fw-semibold"> Area </h6>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <h6 class="fs-13 font-type fw-semibold"> : </h6>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <span class="fw-semibold" style="font-size: 14px!important;"> {{this.listTrainingDtls.AREA}} </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row col-md-12">
+                                                        <div class="col-md-2">
+                                                            <h6 class="fs-13 font-type fw-semibold"> Training Date </h6>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <h6 class="fs-13 font-type fw-semibold"> : </h6>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <span class="fw-semibold" style="font-size: 14px!important;"> {{ this.listTrainingDtls.TRAINING_DATE | date : "dd MMMM, yyyy" }} </span>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <!--End Header-->
+
+                            <div class="row ma-10" >
+                            <div class="col-md-12 col-lg-12">
+                            <div class="card-body p-0 topbar-up">
+                                <div class="p-3">
+                                    <div class="row mb-3">
+                                        <div class="col-lg-12 col-md-12 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold">Assessment Details</h6>
+                                            <div class="border border-dashed rounded p-1 pa-0">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-sm me-2">
+                                                                    <div class="avatar-title rounded bg-transparent text-warning fs-24">
+                                                                        <i class="ri-question-fill"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h6 class="fs-12 font-type ma-10">Questions : <span class="fw-semibold">{{this.takeassessmntdtls[0].NO_OF_QUESTIONS}}</span></h6>
+                                                                </div>
+                                                            </div>
+                                                    </div> 
+                                                    <div class="col-lg-3 col-md-3">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-sm me-2">
+                                                                    <div class="avatar-title rounded bg-transparent text-warning fs-24">
+                                                                        <i class="ri-time-fill"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h6 class="fs-12 font-type ma-10">Duration : <span class="fw-semibold">{{this.takeassessmntdtls[0].DURATION}}</span></h6>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-sm me-2">
+                                                                    <div class="avatar-title rounded bg-transparent text-warning fs-24">
+                                                                       <i class="ri-checkbox-circle-fill"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h6 class="fs-12 font-type ma-10">Attemptes : <span class="fw-semibold">{{this.takeassessmntdtls[0].EMP_NO_OF_ATTEMPTS}}/{{this.takeassessmntdtls[0].NO_OF_ATTEMPTS}}</span></h6>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar-sm me-2">
+                                                                <div class="avatar-title rounded bg-transparent text-warning fs-24">
+                                                                   <i class="ri-checkbox-circle-fill"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="this.takeassessmntdtls[0].EMP_NO_OF_ATTEMPTS==0">
+                                                                        <h6 class="fs-12 font-type ma-10">Status : <span class="fw-semibold">Not Attempted</span></h6>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="this.takeassessmntdtls[0].EMP_NO_OF_ATTEMPTS>0 && this.takeassessmntdtls[0].EMP_NO_OF_ATTEMPTS!=this.takeassessmntdtls[0].NO_OF_ATTEMPTS">
+                                                                        <h6 class="fs-12 font-type ma-10">Status : <span class="fw-semibold">Attempted</span></h6>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="this.takeassessmntdtls[0].EMP_NO_OF_ATTEMPTS==this.takeassessmntdtls[0].NO_OF_ATTEMPTS">
+                                                                        <h6 class="fs-12 font-type ma-10">Status : <span class="fw-semibold">Completed</span></h6>
+                                                                    </div>
+                                                                </ng-container>
+
+                                                               
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                     </div>
+                                     <div class="col-lg-12">
+                                        <div class="hstack gap-2 justify-content-end" *ngIf="this.takeassessmntdtls[0].EMP_NO_OF_ATTEMPTS!=this.takeassessmntdtls[0].NO_OF_ATTEMPTS">
+                                            <!-- <a href="assessment_questions"> -->
+                                                <button type="submit" class="btn btn-orange font-type text-white" (click)="navigateTo_Questionspage(this.listTrainingDtls.TRAINING_ID,this.takeassessmntdtls[0].EMP_NO_OF_ATTEMPTS)" >Start</button>
+                                            <!-- </a> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- end card body -->
+                            </div>
+                            </div>
+                        </div><!-- end card -->
+                    </div>
+                    </div><!-- end row -->
+
+                    <div class="col-lg-12">
+                        <div class="hstack gap-2 justify-content-end ma-10">
+                            <a href="mytrainings"><button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type text-white "><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <app-footer></app-footer>
+           
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+   

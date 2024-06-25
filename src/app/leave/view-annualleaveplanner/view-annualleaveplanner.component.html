@@ -1,0 +1,257 @@
+    
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <app-header></app-header>
+                <!-- ========== App Menu ========== -->
+                <app-sidemenu></app-sidemenu>
+                <!-- Left Sidebar End -->
+                <!-- Vertical Overlay-->
+                <div class="vertical-overlay"></div>
+                <!-- ============================================================== -->
+                <!-- Start right Content here -->
+                <!-- ============================================================== -->
+                <div class="main-content">
+                    <div class="page-content">
+                        <div class="container-fluid">
+        
+                            <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        <h4 class="mb-sm-0">View Annual Leave Planner</h4>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end page title -->
+                            
+                      
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card" id="searchInput">
+                                     
+                                        <div class="card-body border-bottom-dashed border-bottom">
+                                            <form>
+                                                <div class="row g-3">
+
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <div>
+                                                            <h3 class="font-type fs-12"><span>Year</span></h3>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="year" id="year" #year (change)="listMonth()">
+                                                                <option  *ngFor="let YearList of listYear" value="{{YearList.DISPLAY_FIELD}}">
+                                                                    {{YearList.DISPLAY_FIELD}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <h3 class="font-type fs-12"><span>Company</span></h3>
+                                                        <div>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="comcode" id="comcode" #comcode (change)="DepartmentListFn(comcode.value)">
+                                                                <option value="-1">Select</option>
+                                                                <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
+                                                                    {{CompanyList.DATA_VALUE}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-sm-6" *ngIf="this.grpname.includes('HR') || this.grpname.includes('LM')">
+                                                        <h3 class="font-type fs-12"><span>Department</span></h3>
+                                                        <div>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example" name="department"  id="department" #department  (change)="ChangeDepartment(department.value)">
+                                                                <option  value="-1">Select</option>
+                                                                <option  *ngFor="let DepartmentList of listDepartment" value="{{DepartmentList.KEY_ID}}">{{DepartmentList.DATA_VALUE}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <label></label>
+                                                        <div>
+                                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="AnnualLeavePlanner(year.value,comcode.value)"> <i class="ri-file-text-line"></i>
+                                                                View Report
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3"  [hidden]="this.grpname.includes('HR') || this.grpname.includes('LM')"></div>
+                                                    <div class="col-lg-1 col-sm-6" >
+                                                        <label></label>
+                                                        <div>
+                                                            <a href="Annual_Leave_Planner" class="btn btn-danger"><i class="fa fa-angle-double-left"></i> Exit </a>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                  
+                                                    <!--end col-->
+                                                </div>
+        
+                                              
+                                                <!--end row-->
+                                            </form>
+                                        </div>
+                                      
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card" id="orderList">
+                                        <div class="card-header border-bottom" style="padding-bottom: 10px;padding-top: 10px;">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <h6 class="card-title">Annual Leave Planner</h6>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="search-box">
+                                                        <input type="text" class="form-control search h-30 textbox-15 font-type"id="searchInput" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                        <i class="ri-search-line search-icon"></i>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-sm-auto">
+                                                    <div class="d-flex flex-wrap">
+        
+                                                        <button type="button" class="btn btn-soft-success"><i class="ri-file-excel-2-line" ></i>Download</button>
+        
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="card-body border-bottom">
+                                              
+                                       
+                                            <!--end col-->
+                                    
+                                        <div class="col-xxl-12">
+                                            <div class="card card-height-100">
+                                             
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-nowrap align-middle mb-0"  style="padding-top:0px" >
+                                                            <thead class="table-light text-white font-type">
+                                                                <tr>
+                                                                    <th scope="col" style="width: 10%;text-align: center;">Emp Code</th>
+                                                                    <th scope="col" style="width: 10%;text-align: center;">Employee Name</th> 
+                                                                    <th scope="col" style="width: 10%;text-align: center;">Department</th> 
+                                                                    <th scope="col" style="width: 10%;text-align: center;">No.of Days</th>     
+                                                                    <th [attr.colspan]="getMonthDays" *ngFor="let monthlist of listMonth;" style="text-align: center;">{{ getAbbreviatedMonthName(monthlist.DISPLAY_FIELD)}}</th>
+                                                                </tr>
+                                                            </thead>
+                
+                                                            <tbody class="list form-check-all font-type fs-11" *ngFor="let leaves of listleaves  | search : searchInput | pagination: currentPage: itemsPerPage;index as i">
+                                                                <tr class="trstyle fs-11">
+                                                                    <td>{{leaves.EMP_CODE}}</td>
+                                                                    <td>{{leaves.EMP_FIRSTNAME}}</td>
+                                                                    <td>{{leaves.DEPARTMENT}}</td>
+                                                                    <td>{{leaves.OPENING_BALANCE}}</td>
+                                                                    <td>{{leaves.MONTH_JAN}}</td>
+                                                                    <td>{{leaves.MONTH_FEB}}</td>
+                                                                    <td>{{leaves.MONTH_MAR}}</td>
+                                                                    <td>{{leaves.MONTH_APR}}</td>
+                                                                    <td>{{leaves.MONTH_MAY}}</td>
+                                                                    <td>{{leaves.MONTH_JUN}}</td>
+                                                                    <td>{{leaves.MONTH_JUL}}</td>
+                                                                    <td>{{leaves.MONTH_AUG}}</td>
+                                                                    <td>{{leaves.MONTH_SEP}}</td>
+                                                                    <td>{{leaves.MONTH_OCT}}</td>
+                                                                    <td>{{leaves.MONTH_NOV}}</td>
+                                                                    <td>{{leaves.MONTH_DEC}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                       
+                                                     
+                                                    </div><!-- end table responsive -->
+                                                    <br>
+                                                    <div *ngIf="listleaves">
+                                                        <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                                            <div class="col-sm">
+                                                              <div class="font-type fs-12 text-muted">
+                                                                Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                                - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                                of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-sm">
+                                                                <div class="font-type fs-12 text-muted">
+                                                                    Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-auto mt-4 mt-sm-0">
+                                                                <div class="d-flex gap-1 flex-wrap">
+                                                                    <div>
+                                                                        <div class="input-group">
+                                                                <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                                
+                                                               <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                                          </div>
+                                                        </div>
+                                                             
+                                                            <div class="col-sm-auto mt-3 mt-sm-0">
+                                                              <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                                <li class="page-item">
+                                                                  <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                                </li>
+                                                                <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                                  <li class="page-item">
+                                                                    <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                                  </li>
+                                                                </ng-container>
+                                                                <li class="page-item">
+                                                                  <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                                </li>
+                                                              </ul>
+                                                            </div>
+                                                          </div>
+                                                </div>
+                                            </div>
+                                                    </div>
+                                                    <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                                                    <!--Modal For Success Message Start-->
+                                                    <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-orange padding-up-5">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                                                </div>
+                                                               
+                                                                <div class="modal-body" *ngIf="showModal==2">
+                                                                <div class="container">
+                                                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <!--Modal For Success Message End-->
+                                                </div><!-- end card body -->
+                                            </div><!-- end card -->
+                                        </div> 
+                                              
+                                           
+                                          
+                                 
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+        
+                        </div>
+                        <!-- container-fluid -->
+                    </div>
+                    <!-- End Page-content -->
+                    <app-footer></app-footer>
+                </div>
+                <!-- end main content-->
+            </div>
+            <!-- END layout-wrapper -->
+        
+
+

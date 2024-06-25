@@ -1,0 +1,202 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>  
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+                 <!-- start page title -->
+                 <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between font-type">
+                            <h4 class="mb-0 text-uppercase font-type padding-up-5"   style="letter-spacing: 0.2px;">Attendance Register</h4>
+                        </div>
+                    </div>
+                </div>
+                 <!-- End start page title -->
+
+                 <div class="topbar-up row">
+                    <div class="col-lg-12 col-md-12">
+                       <div class="d-flex flex-column h-100">
+                           <div class="row">
+                               <div class="col-lg-12 col-md-12">
+                                   <div class="card card-animate overflow-hidden shadow-lg">
+                                       <div class="position-absolute start-0" style="z-index: 0;">
+                                           <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+                                               <style>
+                                                   .s0 {
+                                                       opacity: .08;
+                                                       fill: var(--vz-info)
+                                                   }
+                                               </style>
+                                               <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
+                                           </svg>
+                                       </div>
+                                       <div class="card-body" style="z-index:1 ;">
+                                           <div class="d-flex align-items-center">
+                                               <div class="flex-grow-1 overflow-hidden">
+                                                   <div class="row">
+                                                        <div class="col-lg-3 col-md-6">
+                                                            <h6 class="fs-12 font-type">Company</h6>
+                                                            <h6 class="fs-12 font-type fw-semibold">{{this.tabledata?.COMPANY_NAME}}</h6> 
+                                                        </div>
+                                                       <div class="col-lg-6 col-md-6">
+                                                               <h6 class="font-type fs-12">Training Name </h6>
+                                                               <h6 class="fs-12 font-type fw-semibold">{{this.tabledata?.SUBJECT_NAME}}</h6>
+                                                       </div>
+                                                       <div class="col-lg-3 col-md-3">
+                                                           <h6 class="font-type fs-12">Training Date</h6>
+                                                           <h6 class="fs-12 font-type fw-semibold">{{this.tabledata?.TRAINING_DATE | date: 'dd-MM-yyyy'}}</h6>
+                                                       </div>
+                                                </div>
+                                               </div>
+                                           </div>
+                                       </div><!-- end card body -->
+                                   </div><!-- end card -->
+                               </div><!--end col-->
+                           </div>
+                       </div>
+                    </div>
+                 </div>
+                  
+                    <!-- TABLE DETAILS -->
+                    <div class="row margin-up-5" style="justify-content: center;">
+                            <div class="col-md-10 col-lg-10">
+                                    <div class="card shadow-lg">
+                                        <div class="card-header border-0 pa-6-8 bg-light-blue">
+                                            <div class="row align-items-center gy-2">
+                                                <div class="col-sm">
+
+                                                    <div class="align-items-center d-flex ">
+                                                        <div class="form-check form-check-info">
+                                                            <input class="form-check-input" type="checkbox" id="formCheck11"(change)="checkAll($event)">
+                                                        </div>
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-14 font-type fw-semibold text-blue">Employee Attendance Register</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="d-flex gap-0 flex-wrap">
+                                                        <div class="search-box">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..." [(ngModel)]="searchInput">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end card header -->
+                                        <div class="card-body ">
+                                            <div class="table-responsive  table-card mb-1">
+                                            <!-- Tables Border Colors -->
+                                                <table class="table table-bordered border-blue align-middle table-nowrap pl-10 table-hover">
+                                                    <thead class="bg-blue text-white font-type">
+                                                        <tr class="border-blue">
+                                                            <th width="6%">SL No</th>
+                                                            <th>Emp Code</th>
+                                                            <th>Employee</th>
+                                                            <th class="text-center">Mark</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody >
+                                                        <tr class="font-type" *ngFor="let item of tabledata?.Employees | search : searchInput; let i=index;">
+                                                            <td>{{ i+1 }}</td>
+                                                            <td>{{ item.EMP_CODE }}</td>
+                                                            <td>{{ item.EMP_NAME }}</td>
+                                                            <td class="text-center"> 
+                                                                <div class="form-check form-check-info text-center">                                                                    
+                                                                    <input class="form-check-input" type="checkbox" [(ngModel)]="item.checked" >
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                                                                               
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- end tab content -->
+                                            <div class="col-lg-12">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab font-type" [disabled]="disablesubmit" (click)="validate()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2" ></i>Mark Attendance</button>
+                                                <button type="button" class="btn btn-danger btn-label right  nexttab  nexttab font-type"(click)="clearAll()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Clear All</button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                    </div>
+                                        <!-- end card body -->
+                            </div>
+                                    <!-- end card -->
+                    </div><!-- end row -->
+                    <!--END TABLE DETAILS -->
+
+                    <div class="col-lg-12">
+                        <div class="hstack gap-1 justify-content-end">
+                            <a routerLink="/training-plan">
+                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" routerLink="training-plan"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button>
+                            </a>
+                        </div>
+                    </div>
+                    <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                    <!--Modal For Success Message Start-->
+                <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==1"> 
+                                    <div class="container">
+                                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                
+                                    </div>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==2">
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                    
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                <!--Modal For Success Message End-->
+                <button id="cancelModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#CancelModal">Open Modal</button> 
+                 <!--Delete Entry Modal-->
+                 <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-closeDelete"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="text-center">
+                                    <h5 class="fs-13 font-type">Are you sure you want to submit?</h5>
+                                    <p class="text-muted fs-12 mb-2 pt-1 font-type">Attendance once marked cannot be edited!</p>
+                                    <div class="hstack gap-2 justify-content-center remove">   
+                                        <button class="btn btn-success font-type" data-bs-dismiss="modal">No, Go back!</button>
+                                        <button class="btn btn-danger font-type"(click)="submit()">Yes, Continue</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Delete Entry Modal-->
+            </div>
+        </div>
+
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

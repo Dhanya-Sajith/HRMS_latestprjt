@@ -1,0 +1,86 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0">Training Matrix Report</h4>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card" id="searchInput">
+                            
+                            <div class="card-body border-bottom-dashed border-bottom">
+                                <form>
+                                    <div class="row g-3">
+                                        
+                                        <!--end col-->
+                                        <div class="col-lg-3 col-sm-6">
+                                            <h3 class="font-type fs-12"><span>Company</span></h3>
+                                            <div>
+                                                <select class="form-select font-type fs-11" aria-label="Default select example"  name="comcode" [(ngModel)]="comcode" (change)="EmployeeListFn()">
+                                                    <option value="-1">All</option>
+                                                    <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
+                                                        {{CompanyList.DATA_VALUE}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-sm-6">
+                                            <h3 class="font-type fs-12"><span>Employees</span></h3>
+                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="employee" [(ngModel)]="employee">
+                                                <option value="-1">All</option>
+                                                <option  *ngFor="let empList of listemployees" value="{{empList.EMP_CODE}}">
+                                                    {{empList.EMP_NAME}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-2 col-sm-6" >
+                                            <label></label>
+                                            <div>
+                                                <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="viewReport()"> <i class="ri-file-text-line"></i>
+                                                    View Report
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!--end col-->
+                                        <!--end col-->
+                                    </div>
+                                    <!--end row-->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+              
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
+        
+
+

@@ -1,0 +1,585 @@
+                      
+
+    
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <app-header></app-header>
+                <!-- ========== App Menu ========== -->   
+                <app-sidemenu></app-sidemenu>           
+                <!-- Vertical Overlay-->
+                <div class="vertical-overlay"></div>
+                <!-- ============================================================== -->
+                <!-- Start right Content here -->
+                <!-- ============================================================== -->
+                <div class="main-content">
+                    <div class="page-content">
+                        <div class="container-fluid">
+        
+                            <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        <h4 class="mb-sm-1" style="margin-top: 10px;">REQUEST MANAGEMENT</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end page title -->
+
+                            <div class="row" >
+                                <div class="col-lg-12">
+                                    <div class="card" id="searchInput" >
+                                     
+                                        <div class="card-body border-bottom-dashed border-bottom">
+                                            <form>
+                                                <div class="row g-3" style="justify-content: center;text-align: center;">
+                                                   
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <button class="btn toggle-button  btn-info waves-effect waves-light h-70 text-uppercase font-type fw-semibold fs-14" role="button" style="width: 160px;" data-menu="attendance" (click)="selectmenu('attendance')"routerLink="/reqMgmt">Attendance</button>
+                                                    </div>
+                                        
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <button class="btn toggle-button btn-info waves-effect waves-light h-70 text-uppercase font-type fw-semibold fs-14" role="button" style="width: 160px;" data-menu="leave"(click)="selectmenu('leave')"routerLink="/leaveHR">Leave</button>
+                                                    </div>
+                                        
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <button class="btn toggle-button selected  btn-info waves-effect waves-light h-70 text-uppercase font-type fw-semibold fs-14" role="button" style="width: 160px;" data-menu="payroll" (click)="selectmenu('payroll')" routerLink="/loanHR">Payroll</button>
+                                                    </div>
+                                                </div>
+                                                <!--end row-->
+                                
+                               <div class="row" style="margin-top: 20px;justify-content: center;">
+                                
+                               
+                                <div class="col-xl-2 col-md-6"(click)="navigateToLoan()">
+                                    <!-- card -->
+                                    <a href="loanHR"><div class="card card-animate text-black"  style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" [ngStyle]="{'background-color':subMenu === 'loan' ? 'white' : '#e2f5ff' }" >
+                                        <div class="card-body p1-10">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">LOAN</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="d-flex align-items-center margin-up-19">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="fw-medium text-truncate mb-0 font-type">Pending for Approval</p>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <h5 class="text-black fw-semibold fs-22 mb-0 font-type">
+                                                        {{loan}}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+                                </a>
+                                </div><!-- end col -->
+
+                                <div class="col-xl-2 col-md-6" (click)="navigateToExpense()">
+                                    <!-- card -->
+                                    <a href="expenseHR"><div class="card card-animate text-black " style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" [ngStyle]="{'background-color':subMenu === 'expense' ? 'white' : '#e2f5ff' }" >
+                                        <div class="card-body p1-10">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold">EXPENSE</p>                                                
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="d-flex align-items-center margin-up-19">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <p class="fw-medium text-truncate mb-0 font-type">Pending for Approval</p>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <h5 class="text-black fw-semibold fs-22 mb-0 font-type">
+                                                        {{expense}}	
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+                                </a>
+                                </div><!-- end col -->
+
+                                
+
+                            </div>
+                                            </form>
+                                        </div>
+                                      
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                           
+                            
+                                         
+                            <div class="row"  >
+                                <div class="col-lg-12">
+                                    <div class="card" id="searchInput">
+                                     
+                                        <div class="card-body border-bottom-dashed border-bottom">
+                                            <form>
+                                                <div class="row g-3">
+                                                     
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <h3 class="font-type fs-12"><span>From Date</span></h3>
+
+                                                        <input type="date" class="form-control font-type fs-11" id="fromdt"  name="fromdate" [(ngModel)]="fromdate" (change)="filter()" >
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <div>
+                                                            <h3 class="font-type fs-12"><span>To Date</span></h3>
+
+                                                            <input type="date" class="form-control font-type fs-11" id="todt" name="todt" [(ngModel)]="todate" (change)="filter()">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <h6 class="fs-12 font-type"><span>Company</span></h6>
+                                                            <select class="form-select font-type fs-11" #selectedCompany (change)="onCompanySelected(selectedCompany.value)" aria-label="Default select example" required>
+                                                            <option value="-1" selected >All</option>
+                                                            <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                        </select>    
+                                                     </div>
+                                                     <div class="col-lg-2 col-sm-6">
+                                                        <h6 class="font-type fs-12"><span>Department </span></h6>                                                       
+                                                        <select class="form-select font-type fs-11" #selectedDept (change)="onDeptSelected(selectedDept.value)" aria-label="Default select example" required>
+                                                            <option value="-1" selected >All</option>
+                                                            <option *ngFor="let combo of deptdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                        </select>
+                                             
+                                                 
+                                                    </div>
+                                                     <div class="col-lg-2 col-sm-6">  
+                                                        <h6 class="font-type fs-12"><span>Employee Name </span></h6>
+                                                          <select class="form-select font-type fs-11 " id="employeename" #selectedEmp (change)="onEmpSelected(selectedEmp.value)" aria-label="Default select example" required>
+                                                            <option value="-1" selected >All</option>
+                                                            <option *ngFor="let combo of empdata" [value]="combo.EMP_CODE">{{combo.EMP_NAME}}</option>
+                                                        </select>   
+                                                    </div>
+                                                   
+                                                    <!--end col-->
+                                                    <div class="col-lg-2 col-sm-6">  
+                                                        <h6 class="font-type fs-12"><span>Status</span></h6>                                                                   
+                                                        <select class="form-select font-type fs-11" #selectedstat (change)="onStatSelected(selectedstat.value)" aria-label="Default select example" required>
+                                                            <option value="-1" selected>All</option>
+                                                            <option *ngFor="let combo of statusdata"   [value]="combo.KEY_ID" [selected]="combo.DATA_VALUE == 'Pending for Approval'">{{ combo.DATA_VALUE }}</option>
+                                                           </select>
+                                                    </div>
+                                                  
+                                                    <!--end col-->
+                                                </div>
+        
+                                              
+                                                <!--end row-->
+                                            </form>
+                                        </div>
+                                      
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card" id="orderList">
+                                        <div class="card-header border-bottom" style="padding-bottom: 10px;padding-top: 10px;">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <h6 class="card-title" style="font-weight: bold;">LOAN REQUESTS</h6>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                 
+         
+                                                    <div class="search-box" >
+                                                        <input type="text" class="form-control searchInput" id="searchInput"  name="searchInput" placeholder="Search" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" aria-label="search" aria-describedby="search_icon">
+                                                        <i class="ri-search-line search-icon"></i>
+                                                    </div>
+        
+                                                
+                                                </div>
+                                               
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="card-body border-bottom">
+                                              
+                                       
+                                            <!--end col-->
+                                    
+                                        <div class="col-xxl-12">
+                                            <div class="card card-height-100">
+                                             
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-nowrap align-middle" id="orderTable">
+                                                            <thead class="table-light text-white font-type">
+                                                    
+                                                            <tr>
+                                                                
+                                                                <th>No</th>
+                                                                <th>Co.</th>
+                                                                <th>Dept.</th>
+                                                                <th>EmpName</th>
+                                                                <th>Amount</th>
+                                                                <th>No of INSTL</th>
+                                                                <th>INSTL Amount</th>
+                                                                <th>DSB Month & Year</th>
+                                                                <th>DED Start Month & Year</th>
+                                                                <th>Submitted Date</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
+                                                            
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="list form-check-all font-type fs-11">
+                                                        <tr class="font-type" *ngFor="let item of loandata | search : searchInput | pagination: currentPage: itemsPerPage;index as i">
+                                                        
+                                                            <th>{{i+1}}</th>
+                                                            <td>{{item.COMPANY_CODE}}</td>
+                                                            <td>{{item.DEPT_NAME}}</td>
+                                                            <td>{{item.EMP_NAME}}</td>
+                                                            <td>AED {{item.AMOUNT}}</td>
+                                                            <td>{{item.noOfInstal}}</td>
+                                                            <td>AED {{item.Instal_Amnt}}</td>
+                                                            <td>{{item.dSBMonth}} {{item.dSBYear}}</td>
+                                                            <td>{{item.dSMonth}} {{item.dSYear}}</td>
+                                                            <td>{{item.REQUEST_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                            <td class="status"><a  data-target="#statusModal" data-bs-toggle="modal" href="#statusModal" (click)="Approvelist(item.REQ_ID)"><span class="badge bg-info-subtle text-info  width-budge fs-11">{{item.APPROVED_STATUS}}</span></a>
+                                                                <td>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">                                                                                                                                     
+                                                                        
+                                                                        <!-- <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve" *ngIf="roleid != 2">
+                                                                            <button type="button" class="btn btn-success btn-sm" id="buttonApprove" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" [disabled]="item.APPROVED_STATUS!='Pending for Approval'" (click)="approve(item.REQ_ID,item.EMP_CODE)"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                        </li> -->
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve" >
+                                                                            <button type="button" class="btn btn-success btn-sm" id="buttonApprove" data-bs-toggle="modal" data-bs-target="#EditModal" [disabled]="item.APPROVED_STATUS!='Pending for Approval'" (click)="setSelectedRequestID(item)"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                        </li>
+                                                                        
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top">
+                                                                            <button type="button" class="btn btn-danger btn-sm" id="buttonReject" data-bs-toggle="modal"  title="Reject" data-bs-target="#RejectModal" [hidden]="item.APPROVED_STATUS=='Approved'" [disabled]="item.APPROVED_STATUS!='Pending for Approval'" (click)="setSelectedRequestID(item)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i>
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-danger btn-sm" id="buttonReject" title="Cancel"  [hidden]="item.APPROVED_STATUS!='Approved'"  data-bs-toggle="modal" href="#CancelModal" (click)="setSelectedRequestID(item)"[disabled]="isButtonDisabled(item)" ><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;color: #ffffff;"></i></button>       
+                                                                            
+                                                                        </li>
+                                                                        
+                                                                        <!-- <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit" *ngIf="roleid == 2">
+                                                                            <button type="button" class="btn btn-outline-warning btn-sm br_radius mr-2" data-bs-toggle="modal" data-bs-target="#EditModal" id="buttonEdit" (click)="setSelectedRequestID(item.REQ_ID,item.EMP_CODE,item)"><i class="fa fa-pencil-square-o ic_color" aria-hidden="true" style="font-size: 18px;"></i>
+                                                                            </button>   
+                                                                        </li> -->
+                                                                        <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Details" [hidden]="item.APPROVED_STATUS!='Approved'">
+                                                                            <a href="#" class="text-info d-inline-block"data-bs-toggle="modal" data-bs-target="#AddRequestModal" (click)="Fetchloanpayments(item)">  
+                                                                        
+                                                                                  <i class="ri-eye-fill fs-16"></i>
+                                                                             
+                                                                            </a> 
+                                                                        </li> 
+                                                                    </ul>
+                                                            </td>
+                                                            
+                                                        </tr>                                           
+                                                      
+                                                        </tbody>
+                                                    </table>
+                                                        
+                                                     
+                                                    </div><!-- end table responsive -->
+                                                    <br>
+                                                <div *ngIf="loandata">
+                                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                                        <div class="col-sm">
+                                                          <div class="font-type fs-12 text-muted">
+                                                            Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                            - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                            of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <div class="font-type fs-12 text-muted">
+                                                                Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                <div>
+                                                                    <div class="input-group">
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            
+                                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                                      </div>
+                                                    </div>
+                                                         
+                                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                            </li>
+                                                            <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                              <li class="page-item">
+                                                                <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                              </li>
+                                                            </ng-container>
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                            </li>
+                                                          </ul>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                </div><!-- end card body -->
+                                            </div><!-- end card -->
+                                        </div> 
+                                     
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                                 <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button>  
+                                <!--Modal For Success Message Start-->
+                            <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-orange padding-up-5">
+                                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                            </div>
+                                            <div class="modal-body" *ngIf="showModal==1"> 
+                                                <div class="container">
+                                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="modal-body" *ngIf="showModal==2">
+                                            <div class="container">
+                                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                                
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!--Modal For Success Message End-->
+                            
+                 <!-- Approve Model-->
+                 <div   class="modal fade zoomIn" id="ApproveRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                
+                                <div class="text-center">
+                                    <h5 class="textgreen fs-14" >Request Approved!</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Approve Model-->
+                <!-- Reject Model-->
+                <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                <button type="button" #closebutton class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" style="margin-top:-10px;"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off"  (ngSubmit)="onReject()" >
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="mb-3">
+                                        <label class="form-label">Reason</label>
+                                        <textarea class="form-control" required name="remarks" id="remarks" [(ngModel)]="remarks" required></textarea>  
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="hstack gap-2">
+                    
+                                        <button class="btn btn-danger" id="delete-record" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Reject</button>
+                                       
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Reject Model-->
+          
+<!-- View details modal --> 
+<div class="modal fade" id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" ></button>
+            </div>
+            <div class="modal-body ">
+                <div class="">
+            <div class="row align-items-center mb-4 padding-up-5">
+                <div class="col-sm">
+                    <div class="align-items-center d-flex ">
+                        <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold" style="text-decoration:underline;float: left;">Loan Repayment Details</h4>
+                    </div>
+                </div>
+                <div class="col-sm-auto">
+                    <div class="d-flex gap-1 flex-wrap">
+                        <h5 class="font-type fw-semibold fs-13 padding-up-5">Disbursement Date : <span class="text-orange">{{DISBURSEMENT_DATE}}</span></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive table-card mb-1">
+                <table class="table table-nowrap align-middle" id="orderTable">
+                    <thead class="font-type text-white" style="background-color:#fa9d5e">
+                <tr>
+                    <th>Payment Date</th>
+                    <th>Payment Amount</th>
+                    <th>Balance</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let payments of paymentdetails">
+                        <td>{{payments.Payment_Date | date:"dd"}} {{payments.Payment_Date | date:"MMM"}}, {{payments.Payment_Date | date:"YYYY"}}</td>
+                        <td>{{payments.Payment_Amnt}}</td>
+                        <td>{{payments.Balance_Amnt}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+        </div>
+        </div>
+    </div>
+</div> 
+</div> 
+<!--End View details modal -->
+ <!--Edit Model-->
+ <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="EditModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="clearEdit()"></button>
+            </div>
+            <form class="tablelist-form" autocomplete="off" [formGroup]="EditForm" (ngSubmit)="validateEditForm()" >
+                <div class="modal-body">
+                    <input type="hidden" id="id-field" />
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-2">
+                                <h3 class="fw-semibold fs-13 font-type"><span>Disbursement Month & Year</span></h3>
+                                <input type="month" min="{{currentmonthno}}" id="DSB" class="form-control fs-12 font-type height-check" required  formControlName="DSBdate"/>
+                               <div *ngIf="EditForm.get('DSBdate')!.hasError('required') && EditForm.get('DSBdate')!.touched" class="text-danger">
+                                Please select a month and year!
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-2">
+                                <h3 class="fw-semibold fs-13 font-type"><span>Deduction Start Month & Year</span></h3>
+                               <input type="month" min="{{currentmonthno}}" id="DED" class="form-control fs-12 font-type height-check" required  formControlName="DEDdate" (change)="datevalidation()"/>
+                               <div *ngIf="EditForm.get('DEDdate')!.hasError('required') && EditForm.get('DEDdate')!.touched" class="text-danger">
+                                Please select a month and year!
+                              </div>
+                              <div  class="text-danger" *ngIf="validdate">{{validdate}}</div>
+                            </div>
+                        </div>
+                    </div>                                       
+                       
+                <div class="modal-footer" style="padding-bottom: 0px;">
+                    <div class="hstack gap-2" *ngIf="!EditForm.valid">
+                        <button type="submit" class="btn btn-orange font-type text-white" [disabled]="EditForm.valid" id="validate-btn" (click)="validateEditForm()">Submit</button>
+                    </div>
+                
+                    <div class="hstack gap-2" *ngIf="EditForm.valid">
+                        <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Edit(item)">Submit</button>
+                    </div>
+                </div>
+                </div>
+            </form>
+    </div>
+</div> 
+</div>               
+ <!--End Edit Model-->   
+
+<!-- Status Model-->
+<div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true" style="float: right;">
+    <div class="modal-dialog modal-dialog-centered" style="float: right;">
+        <div class="modal-content" style="float: right;">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+            </div>
+            <div class="table-responsive">
+    
+                <table class="table table-bordered table-nowrap align-middle mb-0">
+                    <thead>
+                        <tr class="font-type">
+                            <th scope="col" style="width: 30%;">LEVEL_ID</th>
+                            <th scope="col" style="width: 30%;">APPROVER </th>
+                            <th scope="col" style="width: 20%;">STATUS </th>
+                            <th scope="col" style="width: 20%;">DATE</th>
+                            <th scope="col" style="width: 20%;">REMARKS</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="font-type">
+                        <tr  *ngFor="let approvedtl of approvelist">
+                            <td>{{approvedtl.LEVEL_ID}}</td>
+                            <td>{{approvedtl.APPROVER}}</td>
+                            <td>{{approvedtl.STATUS}}</td>
+                            <td>{{approvedtl.VERIFIED_DATE}}</td>
+                            <td>{{approvedtl.VERIFIED_REMARKS}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Status Model-->
+ <!-- Cancel Model-->
+ <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-center">
+                    <h5 class="fs-13 font-type">You are about to cancel your request.</h5>
+                    <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                    <div class="hstack gap-2 justify-content-center remove">   
+                        <button class="btn btn-danger font-type" id="delete-record" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#SaveModal" (click)="cancel()">Yes</button>
+                        <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Cancel Model-->
+
+                            </div>
+                            <!--end row-->
+        
+                        </div>
+                        <!-- container-fluid -->
+                    </div>
+                    <!-- End Page-content -->
+                    <app-footer></app-footer>
+                </div>
+                <!-- end main content-->
+            </div>
+            <!-- END layout-wrapper -->
+        
+
+
+

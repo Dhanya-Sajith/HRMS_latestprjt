@@ -1,0 +1,105 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+    
+                 
+                
+    
+                    <div class="row topbar-up">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                                 
+            
+
+                    <!-- div personal -->
+
+                    <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5 " id="teaminput" style="margin-top: 10px;">
+                        <h5 class="mb-sm-0 text-uppercase font-type padding-up-5" style="font-weight: bold;">PROCESSED ATTENDANCE </h5>
+                        <form>
+                            <div class="row align-items-center">
+                                <div class="col-lg-3 pt-2"></div>
+                                <div class="col-lg-2 pt-2">
+                                    <div>
+                                        <h6 class="font-type fs-12"><span>Start Date </span></h6>
+                                        <input type="datetime-local" class="form-control  font-type fs-11" format="dd-MM-yyyy" id="fromdate" name="fromdate"  > 
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 pt-2">
+                                    <div>
+                                        <h6 class="font-type fs-12"><span>End Date </span></h6>
+                                        <input type="datetime-local" class="form-control  font-type fs-11" id="todate" name="todate"  >
+                                    </div>
+                                </div>
+                                <div class="col-lg-1" style="margin-top: 25px;">
+                                    <div>
+                                        <input type="button" class="btn btn-orange"  value="Process" (click)="AttendanceProcessingFn()" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1" style="margin-top: 25px;">
+                                    <div>
+                                         <a href="attendancedata"><button type="button" class="btn btn-orange" id="" >Exit</button></a>
+                                    </div>
+                                </div>
+                          
+                                </div>
+                                
+                        </form>
+                    </div>
+
+                          
+                             </div>          
+                             <!-- End div personal -->
+                           
+
+                             
+                        <!--Modal For Success Message Start-->
+                    <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==1"> 
+                                    <div class="container">
+                                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                
+                                    </div>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==2">
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                    
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                <!--Modal For Success Message End-->
+                    
+                </div>
+               
+                    
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+            <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+    
+
+

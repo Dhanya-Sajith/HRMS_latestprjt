@@ -1,0 +1,342 @@
+Begin page -->
+    <div id="layout-wrapper">
+        <app-header></app-header>
+                <!-- ========== App Menu ========== -->
+                <app-sidemenu></app-sidemenu>
+                <!-- Left Sidebar End -->
+                <!-- Vertical Overlay-->
+                <div class="vertical-overlay"></div>
+                <!-- ============================================================== -->
+                <!-- Start right Content here -->
+                <!-- ============================================================== -->
+                <div class="main-content">
+                    <div class="page-content">
+                        <div class="containear-fluid">
+        
+                            <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        <h4 class="mb-sm-0">CANCELLATION REQUEST</h4>
+        
+                                        <div class="page-title-right">
+                                            <ol class="breadcrumb m-0">
+                                                <li class="breadcrumb-item">
+                                                    <a href="index.html"><span class="spanstyle">Home</span></a><i class="ri-arrow-right-s-line"></i> </li>
+        
+                                                    <li style="color:#212529">
+                                                        <a href="timetrackinghome.html" ><span class="spanstyle" >Time Tracking</span></a><i class="ri-arrow-right-s-line"></i></li>
+                                                <li>
+                                                    <a href="#" class="spancolor">Cancellation Request</a>
+                                                </li>  
+                                            </ol>
+                                        </div>
+        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end page title -->
+        
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card" id="orderList">
+                                        <!-- <div class="card-header border-0">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <h5 class="card-title mb-0">Cancellation Request</h5>
+                                                </div>
+                                              
+                                            </div>
+                                        </div> -->
+                                      
+                                              
+                                                <div class="card-body border border-dashed border-end-0 border-start-0" >
+                                                    <nav>
+                                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                          <button class="nav-link active card-title" id="nav-ot-tab" data-bs-toggle="tab" data-bs-target="#nav-ot" type="button" role="tab" aria-controls="nav-ot" aria-selected="true">OVERTIME CANCEL</button>
+                                                          <button class="nav-link card-title" id="nav-reg-tab" data-bs-toggle="tab" data-bs-target="#nav-reg" type="button" role="tab" aria-controls="nav-reg" aria-selected="false">REGULARIZATION CANCEL</button>
+                                                          <button class="nav-link card-title" id="nav-com-tab" data-bs-toggle="tab" data-bs-target="#nav-com" type="button" role="tab" aria-controls="nav-com" aria-selected="false">COMPENSATION CANCEL</button>
+                                                        </div>
+                                                      </nav>
+                                                      <div class="tab-content" id="nav-tabContent">
+                                                        <div class="tab-pane fade show active" id="nav-ot" role="tabpanel" aria-labelledby="nav-ot-tab">
+                                                            <div class="card-body border border-dashed border-end-0 border-start-0" >
+                                                                <form>
+                                                                    <div class="row" style="justify-content: center;">
+                                                                        <div class="col-lg-4">
+                                                                            <div class="mb-3">
+                                                                                <h3 class="fw-semibold" ><span>From date</span></h3>
+                                                                                <input type="date" class="form-control" id="end-datepicker" >
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--end col-->
+                                                                        <div class="col-lg-4">
+                                                                            <div class="mb-3">
+                                                                                <h3 class="fw-semibold"><span>To Date</span></h3>
+                                                                                <input type="date" class="form-control" id="end-datepicker" >
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--end col-->
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <div>
+                                                                    <ul class="nav nav-tabs nav-tabs-custom nav-success mb-3" role="tablist">   
+                                                                    </ul>
+                            
+                                                                    <div class="table-responsive table-card mb-1">
+                                                                        <table class="table table-nowrap align-middle" id="orderTable">
+                                                                            <thead class="text-muted table-light">
+                                                                                <tr>
+                                                                                  
+                                                                                    <th  data-sort="reqdt">Request Date</th>
+                                                                                    <th  data-sort="intime">In Time</th>
+                                                                                    <th  data-sort="outtime">Out Time</th>
+                                                                                    <th  data-sort="shifthr">Shift Hours</th>
+                                                                                    <th  data-sort="outhr">Out Hours</th>
+                                                                                    <th  data-sort="action">Action</th>
+                                                                                 
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody class="list form-check-all">
+                                                                                <tr class="trstyle">
+                                                                                    <td class="reqdt" class="trcolor">01/08/2023</td>
+                                                                                    <td class="intime">07:00</td>
+                                                                                    <td class="outtime">16:00</td>
+                                                                                    <td class="shifthr">07:00 AM to 03:30 PM</td> 
+                                                                                    <td class="outhr">01/08/2023</td> 
+                                                                                    <td>
+                                                                                        <div class="col-sm-auto">
+                                                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                                                <button type="button" class="btn btn-primary add-btn"> CANCEL</button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                      
+                                                                    </div>
+                                                                    <div class="align-items-center  pt-2 justify-content-between row text-center text-sm-start">
+                                                                        <div class="col-sm">
+                                                                            <div class="text-muted" style="font-size:12px;">
+                                                                                Showing <span class="fw-semibold">8</span> of <span class="fw-semibold">8</span> Results
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-auto  mt-3 mt-sm-0">
+                                                                            <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                                                <li class="page-item disabled">
+                                                                                    <a href="#" class="page-link">←</a>
+                                                                                </li>
+                                                                                <li class="page-item">
+                                                                                    <a href="#" class="page-link">1</a>
+                                                                                </li>
+                                                                                <li class="page-item active">
+                                                                                    <a href="#" class="page-link">2</a>
+                                                                                </li>
+                                                                                <li class="page-item">
+                                                                                    <a href="#" class="page-link">3</a>
+                                                                                </li>
+                                                                                <li class="page-item">
+                                                                                    <a href="#" class="page-link">→</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="nav-reg" role="tabpanel" aria-labelledby="nav-reg-tab">
+                                                            <div class="card-body border border-dashed border-end-0 border-start-0" >
+                                                                <form>
+                                                                    <div class="row" style="justify-content: center;">
+                                                                        <div class="col-lg-4">
+                                                                            <div class="mb-3">
+                                                                                <h3 class="fw-semibold" ><span>From date</span></h3>
+                                                                                <input type="date" class="form-control" id="end-datepicker" >
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--end col-->
+                                                                        <div class="col-lg-4">
+                                                                            <div class="mb-3">
+                                                                                <h3 class="fw-semibold"><span>To Date</span></h3>
+                                                                                <input type="date" class="form-control" id="end-datepicker" >
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--end col-->
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <div>
+                                                                    <ul class="nav nav-tabs nav-tabs-custom nav-success mb-3" role="tablist">   
+                                                                    </ul>
+                            
+                                                                    <div class="table-responsive table-card mb-1">
+                                                                        <table class="table table-nowrap align-middle" id="orderTable">
+                                                                            <thead class="text-muted table-light">
+                                                                                <tr>
+                                                                                  
+                                                                                    <th  data-sort="indate">In Date</th>
+                                                                                    <th  data-sort="intime">In Time</th>
+                                                                                    <th  data-sort="outdate">Out Date</th>
+                                                                                    <th  data-sort="outtime">Out Time</th>
+                                                                                    <th  data-sort="remarks">Remarks</th>
+                                                                                    <th  data-sort="action">Action</th>
+                                                                                 
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody class="list form-check-all">
+                                                                                <tr class="trstyle">
+                                                                                    <td class="indate" class="trcolor"><a href="">01/08/2023</a></td>
+                                                                                    <td class="intime">08:30</td>
+                                                                                    <td class="outdate">01/08/2023</td>
+                                                                                    <td class="outtime">16:00</td>
+                                                                                    <td class="remarks">Mis Punch</td>
+                                                                                    <td>                                                                          
+                                                                                        <div class="col-sm-auto">
+                                                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                                                <button type="button" class="btn btn-primary add-btn"> CANCEL</button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                      
+                                                                    </div>
+                                                                    <div class="align-items-center  pt-2 justify-content-between row text-center text-sm-start">
+                                                                        <div class="col-sm">
+                                                                            <div class="text-muted" style="font-size:12px;">
+                                                                                Showing <span class="fw-semibold">8</span> of <span class="fw-semibold">8</span> Results
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-auto  mt-3 mt-sm-0">
+                                                                            <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                                                <li class="page-item disabled">
+                                                                                    <a href="#" class="page-link">←</a>
+                                                                                </li>
+                                                                                <li class="page-item">
+                                                                                    <a href="#" class="page-link">1</a>
+                                                                                </li>
+                                                                                <li class="page-item active">
+                                                                                    <a href="#" class="page-link">2</a>
+                                                                                </li>
+                                                                                <li class="page-item">
+                                                                                    <a href="#" class="page-link">3</a>
+                                                                                </li>
+                                                                                <li class="page-item">
+                                                                                    <a href="#" class="page-link">→</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="nav-com" role="tabpanel" aria-labelledby="nav-com-tab">
+                                                            <div class="card-body border border-dashed border-end-0 border-start-0" >
+                                                                <form>
+                                                                    <div class="row" style="justify-content: center;">
+                                                                        <div class="col-lg-4">
+                                                                            <div class="mb-3">
+                                                                                <h3 class="fw-semibold" ><span>From date</span></h3>
+                                                                                <input type="date" class="form-control" id="end-datepicker" >
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--end col-->
+                                                                        <div class="col-lg-4">
+                                                                            <div class="mb-3">
+                                                                                <h3 class="fw-semibold"><span>To Date</span></h3>
+                                                                                <input type="date" class="form-control" id="end-datepicker" >
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--end col-->
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <div>
+                                                                    <ul class="nav nav-tabs nav-tabs-custom nav-success mb-3" role="tablist">   
+                                                                    </ul>
+                            
+                                                                    <div class="table-responsive table-card mb-1">
+                                                                        <table class="table table-nowrap align-middle" id="orderTable">
+                                                                            <thead class="text-muted table-light">
+                                                                                <tr>
+                                                                                  
+                                                                                    <th  data-sort="reqdt">Compensation Date</th>
+                                                                                    <th  data-sort="intime">In Time</th>
+                                                                                    <th  data-sort="outtime">Out Time</th>
+                                                                                    <th  data-sort="shifthr">OT Hours</th>
+                                                                                    <th  data-sort="action">Action</th>
+                                                                                 
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody class="list form-check-all">
+                                                                                <tr class="trstyle">
+                                                                                    <td class="reqdt" class="trcolor">01/08/2023</td>
+                                                                                    <td class="intime">07:00</td>
+                                                                                    <td class="outtime">16:00</td>
+                                                                                    <td class="shifthr">4</td> 
+                                                                                    <td>
+                                                                                    <div class="col-sm-auto">
+                                                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                                                <button type="button" class="btn btn-primary add-btn"> CANCEL</button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                      
+                                                                    </div>
+                                                                    <div class="align-items-center  pt-2 justify-content-between row text-center text-sm-start">
+                                                                        <div class="col-sm">
+                                                                            <div class="text-muted" style="font-size:12px;">
+                                                                                Showing <span class="fw-semibold">8</span> of <span class="fw-semibold">8</span> Results
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-auto  mt-3 mt-sm-0">
+                                                                            <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                                                <li class="page-item disabled">
+                                                                                    <a href="#" class="page-link">←</a>
+                                                                                </li>
+                                                                                <li class="page-item">
+                                                                                    <a href="#" class="page-link">1</a>
+                                                                                </li>
+                                                                                <li class="page-item active">
+                                                                                    <a href="#" class="page-link">2</a>
+                                                                                </li>
+                                                                                <li class="page-item">
+                                                                                    <a href="#" class="page-link">3</a>
+                                                                                </li>
+                                                                                <li class="page-item">
+                                                                                    <a href="#" class="page-link">→</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                    
+                                                </div>
+                                        
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                           
+                        </div>
+                        <!-- container-fluid -->
+                    </div>
+                    <!-- End Page-content -->
+                    <app-footer></app-footer>
+                </div>
+                <!-- end main content-->
+            </div>
+            <!-- END layout-wrapper -->

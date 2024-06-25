@@ -1,0 +1,222 @@
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header>
+
+        <!-- ========== App Menu ========== -->
+       
+        <app-sidemenu></app-sidemenu>
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-0 text-uppercase font-type padding-up-5">Assessment / Questionnaire</h4>
+                            </div>
+                        </div>
+                    </div>
+                 
+                    <div class="row" style="justify-content: center;">
+                        <div class="col-lg-10 col-md-10">
+                            <div class="card textbox-15 shadow-lg">
+                               
+                                <div class="card-header border-bottom-dashed align-items-center bg-warning-subtle">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="p-0">
+                                                <div class="d-flex align-items-center ma-7">
+                                                    <div class="flex-grow-1">
+                                                        <h6 class="fs-15 font-type text-warning">Assessment Question : <span class="fw-semibold fs-18">{{ currentQuestionIndex + 1 }}</span></h6>
+                                                    </div>
+                                                    <div class="flex-shrink-0">
+                                                        <h6 class="fs-12 font-type">Time : <span id="timer" class="fw-semibold fs-13">00:00</span></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                </div>
+                              
+                                <!-- <div class="row ma-10" >
+                                    <div class="col-md-12 col-lg-12">
+                                        <div class="card-body p-0 topbar-up">
+                                            <div class="p-3">
+                                                <div class="row mb-0">
+                                                    <div class="col-lg-12 col-md-12 pt-2">
+                                                        <h6 class="fs-13 font-type fw-semibold">Between which two months was there the smallest proportional increase or decrease in the mileage of Surveyor 1 in comparison to the previous month?</h6>    
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="alert alert-dismissible">
+                                                        <div class="form-check form-radio-warning mb-2">
+                                                            <input class="form-check-input" type="radio"  id="radio1" name="formradio">
+                                                            <label class="form-check-label font-type fs-13">
+                                                                Months 1 and 2
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-radio-warning mb-2">
+                                                            <input class="form-check-input" type="radio"  id="radio2" name="formradio">
+                                                            <label class="form-check-label font-type fs-13">
+                                                                Months 3 and 4
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-radio-warning mb-2">
+                                                            <input class="form-check-input" type="radio"  id="radio3" name="formradio">
+                                                            <label class="form-check-label font-type fs-13">
+                                                                Months 4 and 5
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-radio-warning">
+                                                            <input class="form-check-input" type="radio"  id="radio4" name="formradio">
+                                                            <label class="form-check-label font-type fs-13">
+                                                                None of the above
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" topbar-up  card-header border-bottom-dashed align-items-center bg-warning-subtle h1-50">
+                                                <div class="col-lg-12">
+                                                    <div class="hstack gap-2 justify-content-end">
+                                                        <a href="#MsgModal" data-bs-toggle="modal">
+                                                        <button type="submit" class="btn btn-orange font-type font-type text-white">Submit</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  -->
+                                <div class="row ma-10">
+                                    <div class="col-md-12 col-lg-12">
+                                      <div class="card-body p-0 topbar-up">
+                                        <div class="p-3">
+                                          <div class="row mb-0">
+                                            <div class="col-lg-12 col-md-12 pt-2">
+                                                <input type="hidden" id="assessid" name="assessid" value="{{this.listquestions[0].ASSESSMENT_ID}}">
+                                              <h6 class="fs-13 font-type fw-semibold">{{ currentQuestion?.QUESTION }}</h6>
+                                            </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="alert alert-dismissible">
+                                              <div class="form-check form-radio-warning mb-2">
+                                                <input class="form-check-input" type="radio" id="radio1" name="formradio" (change)="selectOption(currentQuestion?.OPT_A, currentQuestion?.QUEST_ID)" [checked]="selectedOptions[currentQuestionIndex] === currentQuestion?.OPT_A">
+                                                <label class="form-check-label font-type fs-13" for="radio1">
+                                                    {{ currentQuestion?.OPT_A }}
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-radio-warning mb-2">
+                                                <input class="form-check-input" type="radio" id="radio2" name="formradio" (change)="selectOption(currentQuestion?.OPT_B, currentQuestion?.QUEST_ID)" [checked]="selectedOptions[currentQuestionIndex] === currentQuestion?.OPT_B">
+                                                <label class="form-check-label font-type fs-13" for="radio2">
+                                                    {{ currentQuestion?.OPT_B }}
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-radio-warning mb-2">
+                                                <input class="form-check-input" type="radio" id="radio3" name="formradio" (change)="selectOption(currentQuestion?.OPT_C, currentQuestion?.QUEST_ID)" [checked]="selectedOptions[currentQuestionIndex] === currentQuestion?.OPT_C">
+                                                <label class="form-check-label font-type fs-13" for="radio3">
+                                                    {{ currentQuestion?.OPT_C }}
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-radio-warning mb-2">
+                                                <input class="form-check-input" type="radio" id="radio4" name="formradio" (change)="selectOption(currentQuestion?.OPT_D, currentQuestion?.QUEST_ID)" [checked]="selectedOptions[currentQuestionIndex] === currentQuestion?.OPT_D">
+                                                <label class="form-check-label font-type fs-13" for="radio4">
+                                                    {{ currentQuestion?.OPT_D }}
+                                                </label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="topbar-up card-header border-bottom-dashed align-items-center bg-warning-subtle h1-50">
+                                          <div class="col-lg-12">
+                                            <div class="hstack gap-2 justify-content-end">
+                                              <button (click)="previousQuestion()" class="btn btn-orange font-type font-type text-white">Previous</button>
+                                              <button (click)="nextQuestion()" class="btn btn-orange font-type font-type text-white">Next</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                  
+                            
+                            </div>
+                        </div>
+                    </div>
+
+                  
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+     
+            <app-footer></app-footer>
+                                
+                <!--Send to VP Message-->
+                <div class="modal fade zoomIn" id="MsgModal" tabindex="-1" aria-labelledby="MsgModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="text-center">
+                                    <h4 class="fs-14 font-type mb-3 fw-medium">Are you sure want to submit ?</h4>
+                                    <div class="hstack gap-2 justify-content-center remove">   
+                                        <button class="btn btn-success font-type">No, Go back!</button>
+                                        <button class="btn btn-danger font-type">Yes, Continue</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                <!--End Send to VP Message-->
+
+                <button id="openModalButtonForalertsuccess"  [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuRecordModals">Open Modal</button>
+  
+                <div class="modal fade zoomIn" id="SuRecordModals" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body text-center padding-down-5"  *ngIf="showModals==1">
+                                
+                                <div class="text-center">
+                                    <h5 class="fs-13 font-type">{{successs}}</h5>
+                                </div>
+                            </div>
+                            <div class="modal-body text-center padding-down-5"  *ngIf="showModals==2">
+                                
+                               <div class="text-center">
+                                   <h5 class="fs-13 font-type">{{faileds}}</h5> 
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->

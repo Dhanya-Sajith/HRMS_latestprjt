@@ -1,0 +1,427 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content" style="overflow-x: hidden;">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mt-n4 mx-n4 mb-n5">
+                            <div class="bg-info-subtle">
+                                <div class="card-body pb-4 mb-5">
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="row align-items-center">
+                                                <div class="d-flex align-items-center ma-5">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="avatar-sm">
+                                                            <span class="avatar-title bg-info-subtle">
+                                                                <img src="assets\styles\img\icons8-offboarding-48.png" alt="" width="100%">
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2 ma-5">
+                                                        <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Resignation</h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end row-->
+                                        </div>
+                                    </div>
+                                    <!--end row-->
+                                </div><!-- end card body -->
+                            </div>
+                        </div><!-- end card -->
+                    </div><!-- end col -->
+                </div>
+                <!-- end start page title -->
+
+                <!-- header -->
+                <div class="card topbar-up shadow-lg">
+                    <div class="card-body">
+                    <div class="border border-dashed rounded p-3 pa-0 mb-2">
+                        <form action="" [formGroup]="AddReqForm">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12"[class.has-error]="AddReqForm.get('reason')?.invalid && AddReqForm.get('reason')?.touched">
+                                <div class="d-flex align-items-center gap-4">
+                                <span class="font-type fs-13 fw-semibold">Reason: </span>
+                                <textarea class="form-control textbox-15 font-type mb-2" required rows="3"formControlName="reason"></textarea> 
+                                
+                            </div>
+                            <div style="margin-left: 80px;"*ngIf="AddReqForm.get('reason')?.invalid && AddReqForm.get('reason')?.touched" class="text-danger">
+                                *Please enter reason!
+                            </div> 
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-12 pt-1 mb-0">
+                        <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white"(click)="AddRequest()"><i class="ri-check-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                        <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type text-white"(click)="Cancel()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- end header -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-lg">
+                            <div class="card-header border-0 border-dashed border-end-0 border-start-0">
+                                <div class="row align-items-center gy-3">
+                                    <div class="col-sm">
+                                        <h5 class="card-title mb-0 fs-15 font-type fw-semibold">Resignation Request</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0 border border-dashed border-end-0 border-start-0">
+                                    <ul class="nav nav-tabs nav-tabs-custom nav-info mb-3 font-type" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active All py-3" data-bs-toggle="tab" id="All" href="#requests" role="tab" aria-selected="true">
+                                                <i class="ri-server-fill me-1 align-bottom fs-16"></i>Requests
+                                            </a>
+                                        </li>
+                                        <li class="nav-item"*ngIf="this.showtab">
+                                            <a class="nav-link py-3 Delivered" data-bs-toggle="tab" id="Delivered" href="#IT" role="tab" aria-selected="false" (click)="onTabSelected(1);">
+                                                <i class="ri-macbook-line me-1 align-bottom fs-16"></i> IT
+                                            </a>
+                                        </li>
+                                        <li class="nav-item"*ngIf="this.showtab">
+                                            <a class="nav-link py-3 Pickups" data-bs-toggle="tab" id="Pickups" href="#admin" role="tab" aria-selected="false"(click)="onTabSelected(2);">
+                                                <i class="ri-admin-fill me-1 align-bottom fs-16"></i> Admin
+                                            </a>
+                                        </li>
+                                        <li class="nav-item"*ngIf="this.showtab">
+                                            <a class="nav-link py-3 Returns" data-bs-toggle="tab" id="Returns" href="#accounts" role="tab" aria-selected="false"(click)="onTabSelected(3);">
+                                                <i class="ri-money-dollar-circle-line me-1 align-bottom fs-16"></i> Accounts
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    
+                                    <div class="tab-content">
+                                     
+                                    <!--request tab-->
+                                    <div class="table-responsive table-card mb-0 tab-pane active" id="requests" role="tab">
+                                        <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                            <thead class="table-light font-type text-white">
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Reason for Resignation</th>
+                                                    <th>Requested Date</th>
+                                                    <th>Notice Period</th>
+                                                    <th>Status</th>
+                                                    <th width="5%">Last Working Day</th>
+                                                    <th width="5%">Action</th>
+                                                </tr>
+                                            </thead>                                            
+                                            <tbody class="list form-check-all font-type">
+                                                <tr *ngFor="let item of tabledata">
+                                                    <td class="fw-semibold">{{item.REQUEST_ID}}</td>
+                                                    <td style="white-space: pre-wrap;">{{item.REASON}}</td>
+                                                    <td>{{item.REQUEST_DATE | date:"dd-MM-yyyy"}}</td>
+                                                    <td>{{item.NOTICE_PERIOD}}</td>
+                                                    <td class="status"*ngIf="item.APPROVED_STATUS==0"><a href="#statusModal" class="text-white d-inline-block w-100"  data-bs-toggle="modal"><span class="badge bg-info-subtle text-info  width-budge fs-11 fw-semibold text-uppercase" (click)="Approvelist(item.REQUEST_ID)">{{item.STATUS_VAL}}</span></a></td>
+                                                    <td class="status"*ngIf="item.APPROVED_STATUS==1"><a href="#statusModal" class="text-white d-inline-block w-100"  data-bs-toggle="modal"><span class="badge bg-success-subtle text-success width-budge fs-11 fw-semibold text-uppercase" (click)="Approvelist(item.REQUEST_ID)">{{item.STATUS_VAL}}</span></a></td>
+                                                    <td class="status"*ngIf="item.APPROVED_STATUS==6"><a href="#statusModal" class="text-white d-inline-block w-100"  data-bs-toggle="modal"><span class="badge bg-danger-subtle text-danger width-budge fs-11 fw-semibold text-uppercase" (click)="Approvelist(item.REQUEST_ID)">{{item.STATUS_VAL}}</span></a></td>
+                                                    <td class="status"*ngIf="item.APPROVED_STATUS==7"><a href="#statusModal" class="text-white d-inline-block w-100"  data-bs-toggle="modal"><span class="badge bg-danger-subtle text-danger width-budge fs-11 fw-semibold text-uppercase" (click)="Approvelist(item.REQUEST_ID)">{{item.STATUS_VAL}}</span></a></td>
+                                                    <td>{{item.LAST_WORK_DATE | date:"dd-MM-yyyy"}}</td>
+                                                    <td >
+                                                        <ul class="list-inline hstack gap-2 mb-0">
+                                                        <li *ngIf="item.APPROVED_STATUS==1">
+                                                                <div class="dropdown" style="overflow:visible;position: static;">
+                                                                <a href="javascript:void(0);" class="btn btn-soft-info btn-sm " data-bs-toggle="dropdown" aria-expanded="true">
+                                                                    <i class="ri-more-fill"></i>
+                                                                </a>
+                                                                <ul class="dropdown-menu dropdown-menu-end text-blue" >
+                                                                    <li><a class="dropdown-item text-dark"*ngIf="item.APPROVED_STATUS==1" [routerLink]="['/resignation_acceptance_letter']" [queryParams]="{ code:item.EMP_CODE}"><i class="ri-file-paper-line  me-2 align-bottom text-blue fs-18"></i><span class="text-blue">Resignation Acceptance Letter</span> </a></li>
+                                                                    <li>
+                                                                        <a class="dropdown-item text-blue"*ngIf="checkDate(item) && item.EXITINTERVIEW_STATUS==1" [routerLink]="item.EXITINTERVIEW_DATE ? null : '/exitinterviewform'"><i class="ri-draft-line me-2 align-bottom text-blue fs-18"></i><span class="text-blue">Exit Interview Form</span>
+                                                                            <button type="button" class="btn position-relative">
+                                                                            <span class="position-absolute top-0 translate-middle badge border border-light bg-danger p-1 ms-3 font-type" *ngIf="!item.EXITINTERVIEW_DATE">Pending<span class="visually-hidden"></span></span>
+                                                                            <span class="position-absolute top-0 translate-middle badge border border-light bg-success p-1 ms-3 font-type"*ngIf="item.EXITINTERVIEW_DATE">Submitted<span class="visually-hidden"></span></span>
+                                                                            </button>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li><a class="dropdown-item" *ngIf="(item.EXITINTERVIEW_STATUS==1 && item.EXITINTERVIEW_DATE) || (item.EXITINTERVIEW_STATUS==0 && item.EOS_PROCESS_STATUS==1)" routerLink="/ExperienceLetter"><i class="ri-article-line me-2 align-bottom text-blue fs-18"></i><span class="text-blue">Experience Letter</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel" *ngIf="item.REQ_STATUS==0" style="margin-left: 10px;">
+                                                            <a class="remove-item-btn" data-bs-toggle="modal" (click)="cancelResignarion(item.REQUEST_ID)">
+                                                               <i class="ri-close-circle-fill fs-22 text-danger text-center"></i>
+                                                            </a>
+                                                        </li>                                                        
+                                                        </ul>
+                                                    </td>
+                                                </tr>                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--end request tab-->
+
+                                    <!--IT tab-->
+                                    <div class="table-responsive table-card mb-0 tab-pane" id="IT" role="tab">
+                                        <div class="card-body">
+                                            <div class="p-3 pa-0 border-top-0 border-start-0 border-end-0">
+                                                <div class="row mb-2 topbar-up">
+                                                    <div class="col-lg-3 pt-1">
+                                                            <h6 class="font-type fw-semibold text-orange">Status :</h6>
+                                                    </div>
+                                                    <div class="col-lg-9">
+                                                        <h6 class="font-type fw-medium text-success text-uppercase" *ngIf="clearance_flag==1" ><i class="ri-checkbox-circle-fill text-success fs-18"></i> Clearance From IT</h6> 
+                                                     
+                                                        <h6 class="font-type fw-medium text-warning text-uppercase"*ngIf="clearance_flag==0" ><i class="ri-time-line text-warning fs-18"></i> Pending Clearance</h6>
+                                                        <!--<i class="ri-close-circle-fill fs-16 text-danger"></i> <span class="d-inline-block fs-12 align-middle text-black font-type ms-1">No Clearence from IT</span>-->
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-3 ">
+                                                        <h6 class="font-type fw-semibold text-orange">Remarks :</h6>
+                                                    </div>
+                                                    <div class="col-lg-9">
+                                                        <span class="d-inline-block fs-12 align-middle text-black font-type">{{remarks}}</span>
+                                                     </div>
+                                                </div>
+                                                </div>
+                                        </div>
+                                        <table class="table table-nowrap align-middle table-bordered border-orange table-hover topbar-up">
+                                            <thead class="table-light font-type text-white">
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Asset Name</th>
+                                                    <th>Date of Issue</th>
+                                                    <th width="5%">Status</th>
+                                                    <th>Date of Return</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="list form-check-all font-type">
+                                                <tr class="h-30" *ngFor="let item of assetdata">
+                                                    <td class="fw-semibold">{{item.ASSET_ID}}</td>
+                                                    <td>{{item.ASSET_NAME}}</td>
+                                                    <td>{{item.DATE_OF_ISSUE | date:"dd-MM-yyyy"}}</td>
+                                                    <td class="status" *ngIf="item.ASSET_STATUS==2"><span class="badge bg-success-subtle text-success fs-11 w-100 text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td class="status" *ngIf="item.ASSET_STATUS==3"><span class="badge bg-danger-subtle text-danger fs-11 w-100 text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td class="status" *ngIf="item.ASSET_STATUS==4"><span class="badge bg-danger-subtle text-danger fs-11 w-100 text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td class="status" *ngIf="item.ASSET_STATUS==1"><span class="badge bg-info-subtle text-info  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td>{{item.DATE_OF_RETURN | date:"dd-MM-yyyy"}}</td>                                              
+                                                </tr>                                              
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--end IT tab-->
+
+                                     <!--admin tab-->
+                                    <div class="table-responsive table-card mb-0 tab-pane" id="admin" role="tab">
+                                        <div class="card-body">
+                                            <div class=" p-3 pa-0 border-top-0 border-start-0 border-end-0">
+                                                <div class="row mb-2 topbar-up">
+                                                    <div class="col-lg-3 pt-1">
+                                                            <h6 class="font-type fw-semibold text-orange">Status :</h6>
+                                                    </div>
+                                                    <div class="col-lg-9">
+                                                        <h6 class="font-type fw-medium text-success text-uppercase" *ngIf="clearance_flag==1" ><i class="ri-checkbox-circle-fill text-success fs-18"></i> Clearance From Admin</h6>
+                                                       
+                                                        <h6 class="font-type fw-medium text-warning text-uppercase" *ngIf="clearance_flag==0" ><i class="ri-time-line text-warning fs-18"></i> Pending Clearance</h6>
+                                                        <!--<i class="ri-close-circle-fill fs-16 text-danger"></i> <span class="d-inline-block fs-12 align-middle text-black font-type ms-1">No Clearence from IT</span>-->
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <h6 class="font-type fw-semibold text-orange">Remarks :</h6>
+                                                    </div>
+                                                    <div class="col-lg-9">
+                                                        <span class="d-inline-block fs-12 align-middle text-black font-type">{{remarks}}</span>
+                                                     </div>
+                                                </div>
+                                                </div>
+                                        </div>
+                                        <table class="table table-nowrap align-middle table-bordered border-orange table-hover topbar-up">
+                                            <thead class="table-light font-type text-white">
+                                                <tr>
+                                                    <th>Asset ID</th>
+                                                    <th>Asset Name</th>
+                                                    <th>Date of Issue</th>
+                                                    <th width="5%">Status</th>
+                                                    <th>Date of Return</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="list form-check-all font-type">
+                                                <tr class="h-30" *ngFor="let item of assetdata">
+                                                    <td class="fw-semibold">{{item.ASSET_ID}}</td>
+                                                    <td>{{item.ASSET_NAME}}</td>
+                                                    <td>{{item.DATE_OF_ISSUE | date:"dd-MM-yyyy"}}</td>
+                                                    <td class="status" *ngIf="item.ASSET_STATUS==2"><span class="badge bg-success-subtle text-success fs-11 w-100 text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td class="status" *ngIf="item.ASSET_STATUS==3"><span class="badge bg-danger-subtle text-danger fs-11 w-100 text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td class="status" *ngIf="item.ASSET_STATUS==4"><span class="badge bg-danger-subtle text-danger fs-11 w-100 text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td class="status" *ngIf="item.ASSET_STATUS==1"><span class="badge bg-info-subtle text-info  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td>{{item.DATE_OF_RETURN | date:"dd-MM-yyyy"}}</td>                                              
+                                                </tr> 
+                                              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--end admin tab-->
+
+                                    <!--accounts tab-->
+                                    <div class="table-responsive table-card mb-0 tab-pane" id="accounts" role="tab">
+                                        <div class="card-body">
+                                            <div class=" p-3 pa-0 border-top-0 border-start-0 border-end-0">
+                                                <div class="row mb-2 topbar-up">
+                                                    <div class="col-lg-3 pt-1">
+                                                            <h6 class="font-type fw-semibold text-orange">Status :</h6>
+                                                    </div>
+                                                    <div class="col-lg-9">
+                                                        <h6 class="font-type fw-medium text-success text-uppercase" *ngIf="accountsClearStatus==1" ><i class="ri-checkbox-circle-fill text-success fs-18"></i> Clearance From Accounts</h6>
+                                                       <h6 class="font-type fw-medium text-warning text-uppercase" *ngIf="accountsClearStatus==0" ><i class="ri-time-line text-warning fs-18"></i> Pending Clearance</h6>
+                                                        <!--<i class="ri-close-circle-fill fs-16 text-danger"></i> <span class="d-inline-block fs-12 align-middle text-black font-type ms-1">No Clearence from IT</span>-->
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <h6 class="font-type fw-semibold text-orange">Remarks :</h6>
+                                                    </div>
+                                                    <div class="col-lg-9">
+                                                        <span class="d-inline-block fs-12 align-middle text-black font-type">{{accountsRemarks}}</span>
+                                                     </div>
+                                                </div>
+                                                </div>
+                                        </div>
+                                        <table class="table table-nowrap align-middle table-bordered border-orange table-hover topbar-up">
+                                            <thead class="table-light font-type text-white">
+                                                <tr>
+                                                    <th>A/C No</th>
+                                                    <th>EOS Payment</th>
+                                                    <th>Payment Date</th>
+                                                    <th>Payment Mode</th>
+                                                    <th width="5%">Status</th>
+                                                    <th width="5%">Document</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="list form-check-all font-type" *ngFor="let data of accountsdata">
+                                                <tr class="h-30">
+                                                    <td class="fw-semibold">{{data.ACCOUNT_NO}}</td>
+                                                    <td>{{data.EOS_PAYMENT}}</td>
+                                                    <td>{{data.PAYMENT_DATE | date:"dd-MM-yyyy"}}</td>
+                                                    <td>{{data.PAYMENT_MODE}}</td>  
+                                                    <td class="status" *ngIf="data.PAYMENT_STATUS==1"><span class="badge bg-success-subtle text-success fs-11 w-100 text-uppercase">{{data.STATUS_VALUE}}</span></td> 
+                                                    <td class="status" *ngIf="data.PAYMENT_STATUS==0"><span class="badge bg-danger-subtle text-danger fs-11 w-100 text-uppercase">{{data.STATUS_VALUE}}</span></td>   
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar-xs">
+                                                                <div class="avatar-title bg-info-subtle text-primary rounded fs-20 material-shadow">
+                                                                    <i class="ri-file-pdf-fill fs-20 text-blue"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ms-2 flex-grow-1">
+                                                                <h6 class="fs-12 mb-0 font-type"><a href="javascript:void(0)"  [routerLink]="['/EOSDocument']" [queryParams]="{ reqid: data.REQUEST_ID}"style="text-decoration: underline;">Download Document</a>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>                                      
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--end account tab-->
+                                    </div>
+                                    <!--end tab content-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+                    
+            </div>
+            <!-- container-fluid -->   
+            </div>
+            <!-- End Page-content -->
+
+
+            <!--MODAL BOX-->
+            
+            <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+  <!--Modal For Success Message Start-->
+  <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <div class="modal-body" *ngIf="showModal==1"> 
+                <div class="container">
+                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+            
+                </div>
+            </div>
+            <div class="modal-body" *ngIf="showModal==2">
+            <div class="container">
+                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<!--Modal For Success Message End-->
+             <!-- Status Model-->
+                   <div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-bottom" style="float:right">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body text-center ma-5">
+                                <div class="mb-1">
+                                    <div class="table-responsive table-card">
+                                        <table class="table table-nowrap mb-0 table-bordered border-dark">
+                                            <thead class="font-type">
+                                                <tr>
+                                                    <th scope="col">Levels</th>
+                                                    <th scope="col">Approver</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Remarks/Reason</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="fs-12 font-type"*ngFor="let item of approvelist">
+                                                    <td>{{item.LEVEL_ID}}</td>
+                                                    <td>{{item.APPROVER}}</td>
+                                                    <td>{{item.VERIFIED_DATE | date:"dd-MM-yyyy"}}</td>
+                                                    <td class="status" *ngIf="item.STATUS=='Approved'"><span class="badge bg-success-subtle text-success fs-11 w-100 text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td class="status" *ngIf="item.STATUS=='Cancelled'"><span class="badge bg-danger-subtle text-danger fs-11 w-100 text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td class="status" *ngIf="item.STATUS=='Rejected'"><span class="badge bg-danger-subtle text-danger fs-11 w-100 text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td class="status" *ngIf="item.STATUS=='Pending for Approval'"><span class="badge bg-info-subtle text-info  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS}}</span></td>
+                                                    <td style="white-space: pre-wrap;">{{item.VERIFIED_REMARKS}}</td>
+                                                </tr>                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   </div>
+            <!-- End Status Model-->
+
+            <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

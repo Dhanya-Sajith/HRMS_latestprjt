@@ -1,0 +1,227 @@
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <app-header></app-header>
+                <!-- ========== App Menu ========== -->   
+                <app-sidemenu></app-sidemenu>            
+                <!-- Vertical Overlay-->
+                <div class="vertical-overlay"></div>
+                <!-- ============================================================== -->
+                <!-- Start right Content here -->
+                <!-- ============================================================== -->
+                <div class="main-content">
+                    <div class="page-content">
+                        <div class="container-fluid">
+        
+                            <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        <h4 class="mb-sm-0">Cash Salary Report</h4>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end page title -->
+                            
+                      
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card" id="searchInput">
+                                     
+                                        <div class="card-body border-bottom-dashed border-bottom">
+                                            <form>
+                                                <div class="row g-3">
+
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <div>
+                                                            <h3 class="font-type fs-12"><span>Year</span></h3>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="year" id="year" [(ngModel)] = "selctedYear" (change)="listmonth()" #year>
+                                                                <option value="-1">Select</option>
+                                                                <option  *ngFor="let YearList of listYear" value="{{YearList.DISPLAY_FIELD}}">
+                                                                    {{YearList.DISPLAY_FIELD}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <h3 class="font-type fs-12"><span>Month</span></h3>
+                                                        <select class="form-select font-type fs-11" aria-label="Default select example"  name="month" id="month" [(ngModel)] = "selctedMonth" >
+                                                            <option value="-1">Select</option>
+                                                            <option  *ngFor="let MonthList of listMonth" [ngValue]="MonthList">
+                                                                {{MonthList.DISPLAY_FIELD}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                  
+                                                    <!--end col-->
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <h3 class="font-type fs-12"><span>Company</span></h3>
+                                               
+                                                        <div>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="comcode" id="comcode" [(ngModel)] = "selctedCompany">
+                                                                <option value="-1">Select</option>
+                                                                <option  *ngFor="let CompanyList of listCompany" [ngValue]="CompanyList">
+                                                                    {{CompanyList.DATA_VALUE}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-sm-6" >
+                                                        <label></label>
+                                                        <div>
+                                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="viewReport(year.value)"> <i class="ri-file-text-line"></i>
+                                                                View Report
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                  
+                                                    <!--end col-->
+                                                </div>
+        
+                                              
+                                                <!--end row-->
+                                            </form>
+                                        </div>
+                                      
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card" id="orderList">
+                                        <div class="card-header border-bottom" style="padding-bottom: 10px;padding-top: 10px;">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <!-- <h6 class="card-title">Subcontractor Timesheet</h6> -->
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                 
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div class="search-box">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type"id="searchInput" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                    </div>
+        
+                                                
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="d-flex flex-wrap">
+        
+                                                        <button type="button" class="btn btn-soft-success" (click)="exportexcel()"><i class="ri-file-excel-2-line" ></i>Download</button>
+        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="card-body border-bottom">
+                                            <!--end col-->
+                                    
+                                                <div class="col-xxl-12">
+                                                    <div class="card card-height-100">
+                                                    
+                                                        <div class="card-body">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-bordered table-nowrap align-middle mb-0"  style="padding-top:0px" id="excel-table" >
+                                                                    <thead >
+                                                                        <tr>
+                                                                            <th colspan="4" style="text-align: center;font-size: 20px;" [hidden]="!showColumn" >{{companyDisplay}} </th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th colspan="4" style="text-align: center;font-size: 20px;" [hidden]="!showColumn" >CASH SALARY {{monthDisplay}} {{YearDisplay}} </th>
+                                                                        </tr>
+                                                                        <tr class="table-light text-white font-type">
+                                                                            <th>Emp Code</th>
+                                                                            <th>Employee Name</th>
+                                                                            <th>Net Amount</th>
+                                                                            <th>Mode</th>
+                                                                        </tr>
+                                                                    </thead>
+                        
+                                                                    <tbody class="list form-check-all font-type fs-11" *ngFor="let employee of reportdata  | search : searchInput  | pagination: currentPage: itemsPerPage ;index as i">
+                                                                        <tr class="trstyle fs-11">
+                                                                            <td>{{employee.EMP_CODE}}</td>
+                                                                            <td>{{employee.EMP_NAME}}</td>
+                                                                            <td>{{employee.AMOUNT}}</td>
+                                                                            <td>{{employee.DESCRIPTION}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                    <!--<tbody>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td colspan="1" class="fw-semibold fs-13">Total</td>
+                                                                            <td class="fw-semibold fs-13">23164</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                    </tbody>-->
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td colspan="1" class="fw-semibold fs-13">Rounding</td>
+                                                                            <td class="fw-semibold fs-13">{{roundingDiff}}</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td colspan="1" class="fw-semibold fs-13">Total</td>
+                                                                            <td class="fw-semibold fs-13">{{rondedGrosssalary}}</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            
+                                                            
+                                                            </div><!-- end table responsive -->
+                                                            <!--<div *ngIf="reportdata">
+                            
+                                                            <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="reportdata.length > 0" style="padding-left: 15px;padding-right: 15px;">
+                                                                <div class="col-sm">
+                                                                <div class="font-type fs-11 text-muted">
+                                                                    Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                                    - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                                    of <span class="fw-semibold">{{ reportdata.length }}</span> Results
+                                                                </div>
+                                                                </div>
+                                                                <div class="col-sm-auto  mt-3 mt-sm-0" >
+                                                                    <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                                        <li class="page-item " >                                                          
+                                                                            <button class="page-link"  (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>                                                       
+                                                                        </li>
+                                                                        <li class="page-item active">
+                                                                            <span class="page-link" [class.active]="currentPage">{{ currentPage }}</span> 
+                                                                        </li>
+                                                                        <li class="page-item">
+                                                                        <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= reportdata.length">→</button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
+                                                        </div><!-- end card body -->
+                                                    </div><!-- end card -->
+                                                </div> 
+                                              
+                                           
+                                          
+                                 
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+        
+                        </div>
+                        <!-- container-fluid -->
+                    </div>
+                    <!-- End Page-content -->
+                    <app-footer></app-footer>
+                </div>
+                <!-- end main content-->
+            </div>
+            <!-- END layout-wrapper -->

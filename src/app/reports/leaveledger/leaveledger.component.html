@@ -1,0 +1,215 @@
+    
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <app-header></app-header>
+                <!-- ========== App Menu ========== -->
+                <app-sidemenu></app-sidemenu>
+                <!-- Left Sidebar End -->
+                <!-- Vertical Overlay-->
+                <div class="vertical-overlay"></div>
+                <!-- ============================================================== -->
+                <!-- Start right Content here -->
+                <!-- ============================================================== -->
+                <div class="main-content">
+                    <div class="page-content">
+                        <div class="container-fluid">
+        
+                            <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        <h4 class="mb-sm-0">Leave Report</h4>
+                                    </div>
+                                    <div *ngIf="empexistance == 'Please Select Fields'">
+                                        <span class="existance_cls">{{empexistance}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end page title -->
+                            
+                      
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card" id="searchInput">
+                                     
+                                        <div class="card-body border-bottom-dashed border-bottom">
+                                            <form>
+                                                <div class="row g-3">
+
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <div>
+                                                            <h3 class="font-type fs-12"><span>Employee</span></h3>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="employee" id="employee"  [(ngModel)]="employee">
+                                                                <option value="-1">Select</option>
+                                                                <option  *ngFor="let EmployeeList of listEmployees" [ngValue]="EmployeeList">
+                                                                    {{EmployeeList.EMP_NAME}}
+                                                                </option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <h3 class="font-type fs-12"><span>Leave Type</span></h3>
+                                                        <select class="form-select font-type fs-11" aria-label="Default select example"  name="leavetype" id="leavetype"  [(ngModel)]="leavetype">
+                                                            <option value="-1">Select</option>
+                                                            <option *ngFor="let lvetypeList of listlvetype"  [ngValue]="lvetypeList">
+                                                                {{lvetypeList.DATA_VALUE}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <h3 class="font-type fs-12"><span>Year</span></h3>
+                                                        <select class="form-select font-type fs-11" aria-label="Default select example"  name="year" id="year"  [(ngModel)]="year">
+                                                            <option value="-1">Select</option>
+                                                            <option *ngFor="let YearList of listYear" [ngValue]="YearList">
+                                                                {{YearList.DISPLAY_FIELD}}</option>
+                                                        </select>
+                                                    </div>
+                                                  
+                                                    <!--end col-->
+                                                  
+                                                    <div class="col-lg-2 col-sm-6">
+                                                        <label></label>
+                                                        <div>
+                                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="LeaveReportData()"><i class="ri-file-text-line"></i>
+                                                                View Report
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                  
+                                                </div>
+        
+                                              
+                                                <!--end row-->
+                                            </form>
+                                        </div>
+                                      
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card" id="orderList">
+                                        <div class="card-header border-bottom" style="padding-bottom: 10px;padding-top: 10px;">
+                                           <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <!-- <h6 class="card-title">Leave Report</h6> -->
+                                                </div>
+                                                <!-- <div class="col-sm-auto">
+                                                        <div class="search-box">
+                                                            <input type="text" class="form-control search" placeholder="Search" id="searchInput" [(ngModel)]="searchInput" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                </div> -->
+                                                <div class="col-sm-auto">
+                                                    <div class="d-flex flex-wrap">
+                                                        <a  class="btn btn-danger btn-sm font-type" (click)=convertToPDF()><i class="ri-download-2-fill align-middle me-1"></i> Download </a>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <div class="row">
+                                            <div class="card-body border-bottom">
+                                              
+                                       
+                                            <!--end col-->
+                                    
+                                        <div class="col-xxl-12">
+                                            <div class="card card-height-100">
+                                            <div id="htmlElementId" >
+                                             <div class="row">
+                                                <div class="col-lg-12">
+                                                    <h4 class="text-center text-blue">{{companyName}}</h4>
+                                                    <div class="card-body mb-0">
+                                                        <div class="d-lg-flex text-center mb-4">
+                                                            <h4 class="card-title flex-grow-1 mb-0 font-type fw-semibold fs-20">Leave Ledger Report</h4>
+                                                        </div>
+                                                  
+                                                        <div class="d-lg-flex align-items-center  mb-2">
+                                                            <div class="flex-grow-1">
+                                                                <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">Employee : <span class="fs-13 fw-semibold text-blue">{{employeename}}</span></h6>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">Leave Type : <span class="fs-13 fw-semibold text-blue">{{leave}}</span></h6>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">Year: <span class="fs-13 fw-semibold text-blue">{{yearvalue}}</span></h6>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                          
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-nowrap align-middle mb-0"  style="padding-top:0px" id="excel-table">
+                                                        <thead  class="table-light text-white font-type">
+                                                            <tr> 
+                                                                <!-- <th scope="col" >Emp Code</th>
+                                                                <th scope="col" >Company</th> -->
+                                                                <th colspan="col" style="width: 10%;text-align: left;"> No</th> 
+                                                                <th colspan="col" style="width: 20%;text-align: left;"> Date</th> 
+                                                                <th colspan="col" style="width: 35%;text-align: left;">Remarks</th> 
+                                                                <th colspan="col" style="width: 20%;text-align: left;">Leave Addition(+)</th> 
+                                                                <th colspan="col" style="width: 20%;text-align: left;">Leave Deduction(-)</th>
+                                                            </tr>
+                                                            
+                                                        </thead>
+            
+                                                        <tbody class="list form-check-all font-type fs-11">
+                                                            <tr>
+                                                                <td colspan="4" style="text-align: right;font-weight: bold;">Opening Balance</td> 
+                                                                <td colspan="1">{{OpeningLeavebalance}}</td>
+                                                                
+                                                            </tr>
+                                                            <tr *ngFor="let ReportList of mapper| search : searchInput ;let i = index">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{ReportList.UPDATED_DATE|date: 'dd-MM-yyyy'}}</td>
+                                                                <td>{{ReportList.REMARKS}}</td>
+                                                                <td>{{ReportList.LEAVE_ADDITION}}</td>
+                                                                <td>{{ReportList.LEAVE_DEDUCTION}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td colspan="3" style="text-align: right;">Total</td>
+                                                            <td colspan="1">{{LeaveAddition}}</td>
+                                                            <td colspan="1">{{LeaveDeduction}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td colspan="4" style="text-align: right;font-weight: bold;">Closing Balance</td>
+                                                            <td colspan="1">{{Closingbalance}}</td>
+                                                            
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    
+                                                    
+                                                </div><!-- end table responsive -->
+                                                    
+                                            </div><!-- end card body -->
+
+                                         </div>  
+                                           
+                                        </div>
+                                      </div>
+                                    </div>
+        
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+        
+                        </div>
+                        <!-- container-fluid -->
+                    </div>
+                    <!-- End Page-content -->
+                    <app-footer></app-footer>
+                </div>
+                <!-- end main content-->
+            </div>
+            <!-- END layout-wrapper -->
+        
+
+
+
+

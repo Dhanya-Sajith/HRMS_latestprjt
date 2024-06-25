@@ -1,0 +1,339 @@
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header>
+
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu> 
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Employee Directory</h4>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card"  style="overflow: scroll;">
+                                <div class="card-body">
+                                    <div class="row mb-2 col-lg-12">
+                                        <div class="col-lg-8">
+                                            <div class="search-box me-2 mb-2 d-inline-block">
+                                                <div class="position-relative">
+                                                    <input type="text" class="form-control searchInput"  id="searchInput" style="border-radius: 20px;width: 245px;" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search by employee name / code" aria-label="search" aria-describedby="search_icon">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2" *ngIf="this.grpname.includes('HR')">
+                                                <div class="text-sm-end">
+                                                    <select class="form-select h-30 font-type textbox-15" name="completests" id="completests" #completests (change)="changecosts(completests.value)" >
+                                                        <option value="0" >All</option>
+                                                        <option value="1" >Complete</option>
+                                                        <option value="2" >Incomplete</option>
+                                                    </select>
+                                                </div>
+                                        </div>
+                                        <div class="col-lg-2" *ngIf="this.grpname.includes('HR')">
+                                            <div class="text-sm-end">
+                                                <button type="button" onclick="location.href='employee_profile'"  class="btn btn-blue btn-rounded waves-effect waves-light mb-2 me-2 h-30 font-type"><i class="ri-user-add-line p-1"></i>Add Employee</button>
+                                            </div>
+                                        </div><!-- end col-->
+                                    </div>
+                                    <div class="table-responsive table-responsives">
+                                        <table class="table align-middle table-nowrap table-hover font-type">
+                                            <thead class="table-light text-white"> 
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Name</th>
+                                                    <th>Company</th>
+                                                    <th>Department</th>
+                                                    <th>Work Location</th>
+                                                   
+                                                    <th>
+                                                        <ng-container [ngSwitch]="true">
+                                                            <div *ngSwitchCase="!this.grpname.includes('HR')">
+                                                                
+                                                            </div>
+                                                            <div *ngSwitchCase="this.grpname.includes('HR')"> 
+                                                                Status
+                                                            </div>
+                                                        </ng-container>
+                                                        
+                                                    </th>
+                                                    <th>Action</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="background-color: #fffbfb;">
+                                                <tr class="font-type" *ngFor="let empdirectoyList of fetchempdirectoy | search : searchInput | pagination: currentPage: itemsPerPage
+
+
+                                                ;index as i">
+                                                    
+                                                    <ng-container [ngSwitch]="true">
+                                                        <div *ngSwitchCase="empdirectoyList.PHOTO_PATH == ''">
+                                                            <div class="avatar-xs">
+                                                                <span class="avatar-title rounded-circle font-type">
+                                                                    {{empdirectoyList.EMP_NAME.substring(0, 1)}}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngSwitchCase="empdirectoyList.PHOTO_PATH != ''">
+                                                            <div>
+                                                                <img class="rounded-circle avatar-xs" src={{hostname}}{{empdirectoyList.PROFILE_PIC}} alt="">
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                    <td>
+                                                        <h5 class="mb-1 font-type fw-semibold fs-14"><a href="javascript: void(0);" class="text-dark">{{empdirectoyList.EMP_NAME}}</a></h5>
+                                                        <p class="mb-0 font-type fs-12">{{empdirectoyList.DESIGNATION}} ({{empdirectoyList.EMP_CODE}}) </p>
+                                                    </td>
+                                                    <td> <p class="mb-0 font-type fs-13">{{empdirectoyList.COMPANY_NAME}}</p></td>
+                                                    <td> <p class="mb-0 font-type fs-13">{{empdirectoyList.DEPT_NAME}}</p></td>
+                                                    <td>
+                                                        <p class="mb-0 font-type fs-13">{{empdirectoyList.LOCATION}}</p>
+                                                    </td>
+                                                    <td>
+                                                        
+
+                                                        <ng-container [ngSwitch]="true">
+                                                            <div *ngSwitchCase="!this.grpname.includes('HR')">
+                                                                
+                                                            </div>
+                                                            <div *ngSwitchCase="this.grpname.includes('HR')"> 
+                                                                <p class="mb-0 font-type fs-13">{{empdirectoyList.completestatus}}</p>
+                                                            </div>
+                                                        </ng-container>
+
+                                                    </td>
+                                                    <td>
+                                                        <ng-container [ngSwitch]="true">
+                                                            <div *ngSwitchCase="!this.grpname.includes('HR') && !this.grpname.includes('Admin')">
+                                                                <a href="employee_profile_directory_view">
+                                                                    <button type="button"  class="btn btn-orange btn-sm btn-rounded round-button text-white" (click)="Idpassing(empdirectoyList.EMP_CODE)">
+                                                                        View Profile
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+
+                                                            <div *ngSwitchCase="this.grpname.includes('HR')">
+                                                                <ng-container *ngIf="this.accescompany.includes(empdirectoyList.COMPANY_CODE); then detailsTemplate else otherTemplate"></ng-container>
+                                                            </div>
+                                                            
+                                                            <ng-template #detailsTemplate>
+                                                                <!-- Code when condition1 is true (code = 1) -->
+                                                                <a href="emp_profile_view_from_directory">
+                                                                    <button type="button" class="btn btn-success btn-sm btn-rounded round-button text-white" (click)="Idpassing(empdirectoyList.EMP_CODE)">
+                                                                        View Profile
+                                                                    </button>
+                                                                </a>
+                                                            </ng-template>
+                                                            
+                                                            <ng-template #otherTemplate>
+                                                                <a href="employee_profile_directory_view">
+                                                                    <button type="button"  class="btn btn-orange btn-sm btn-rounded round-button text-white" (click)="Idpassing(empdirectoyList.EMP_CODE)">
+                                                                        View Profile
+                                                                    </button>
+                                                                </a>
+                                                            </ng-template>
+
+
+                                                            <!-- <div *ngSwitchCase="this.grpname.includes('HR')"> 
+                                                                <a href="emp_profile_view_from_directory">
+                                                                    <button type="button" class="btn btn-success btn-sm btn-rounded round-button text-white" (click)="Idpassing(empdirectoyList.EMP_CODE)">
+                                                                        View Profile
+                                                                    </button>
+                                                                </a>
+                                                            </div> -->
+                                                            <div *ngSwitchCase="this.grpname.includes('Admin')"> 
+                                                                <a href="profile_limited_view">
+                                                                    <button type="button" class="btn btn-info btn-sm btn-rounded round-button text-white" (click)="Idpassing(empdirectoyList.EMP_CODE)">
+                                                                        View Profile
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+                                                        </ng-container>
+
+                                                    </td>
+
+                                                    <td>
+                                                        <ng-container [ngSwitch]="true">
+                                                            <div *ngSwitchCase="this.grpname.includes('HR')">
+                                                                <ng-container *ngIf="this.accescompany.includes(empdirectoyList.COMPANY_CODE); then detailsTemplatereset else otherTemplatereset"></ng-container>
+                                                            </div>
+                                                            <ng-template #detailsTemplatereset>
+                                                                <div class="dropdown" style="overflow:visible;">
+                                                                    <a href="javascript:void(0);" class="btn btn-soft-success btn-sm " data-bs-toggle="dropdown" aria-expanded="true">
+                                                                        <i class="ri-more-fill"></i>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu dropdown-menu-end text-blue">
+                                                                        <li data-bs-toggle="modal" href="#CancelModal"><a class="dropdown-item" (click)="cancelRegReq(empdirectoyList.EMP_CODE)" ><i class="ri-close-fill me-2 align-bottom text-danger"></i><span class="text-danger">Deactivate</span></a></li>
+                                                                        <li data-bs-toggle="modal" *ngIf="designame == 54" href="#restloginModal" ><a class="dropdown-item" (click)="cancelRegReq(empdirectoyList.EMP_CODE)" ><i class="ri-loop-left-line me-2 align-bottom text-blue fs-14"></i><span class="text-blue">Reset Login</span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </ng-template>
+                                                            <ng-template #otherTemplatereset>
+                                                                
+                                                            </ng-template>
+                                                        </ng-container>
+    
+                                                    </td>
+
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div>
+                      
+                                        <div *ngIf="fetchempdirectoy">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                    </div>
+                                </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end row -->
+                </div> <!-- container-fluid -->
+            </div>
+        
+                    
+                <!-- container-fluid -->
+           
+            <!-- End Page-content -->
+
+            <app-footer></app-footer>
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+
+
+    <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-info-subtle" style="background-color: #e9823d!important;">
+                    <h5 class="modal-title">&nbsp;</h5>
+                    <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" style="margin-top:-30px;"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="text-center">
+                        <h5 class="fs-14">You are about to deactivate this employee.</h5>
+                        <p class="text-muted fs-12 mb-4 pt-1">Do you want to continue ?</p>
+                        <div class="hstack gap-2 justify-content-center remove">                          
+                            <button class="btn btn-danger" id="deleteRecord-close" type="button" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="deactivateandreset(1,emp_Id)" >Yes</button>
+                            <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade zoomIn" id="restloginModal" tabindex="-1" aria-labelledby="restloginModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-info-subtle" style="background-color: #e9823d!important;">
+                    <h5 class="modal-title">&nbsp;</h5>
+                    <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" style="margin-top:-30px;"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="text-center">
+                        <h5 class="fs-14">You are about to reset login.</h5>
+                        <p class="text-muted fs-12 mb-4 pt-1">Do you want to continue ?</p>
+                        <div class="hstack gap-2 justify-content-center remove">                          
+                            <button class="btn btn-danger" id="deleteRecord-close" type="button" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="deactivateandreset(2,emp_Id)" >Yes</button>
+                            <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="openModalButtonForalert"  [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuRecordModal">Open Modal</button>
+  
+    <div class="modal fade zoomIn" id="SuRecordModal" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-orange padding-up-5">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                </div>
+                <div class="modal-body text-center padding-down-5"  *ngIf="showModal==1">
+                    
+                    <div class="text-center">
+                        <h5 class="fs-13 font-type">{{success}}</h5>
+                    </div>
+
+                </div>
+                <div class="modal-body" *ngIf="showModal==2">
+                    <div class="container">
+                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    

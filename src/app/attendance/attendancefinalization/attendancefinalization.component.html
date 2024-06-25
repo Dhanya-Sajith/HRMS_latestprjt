@@ -1,0 +1,183 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+            <!-- ========== App Menu ========== -->
+            <app-sidemenu></app-sidemenu>
+            <!-- Left Sidebar End -->
+            <!-- Vertical Overlay-->
+            <div class="vertical-overlay"></div>
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+                <div class="page-content">
+                    <div class="container-fluid">
+    
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0">ATTENDANCE FINALIZATION</h4>
+    
+                                    <!-- <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item">
+                                                <a href="index.html"><span class="spanstyle">Home</span></a><i class="ri-arrow-right-s-line"></i> </li>
+    
+                                                <li style="color:#212529">
+                                                    <a href="timetrackinghome.html" ><span class="spanstyle" >Time Tracking</span></a><i class="ri-arrow-right-s-line"></i></li>
+                                            <li>
+                                                <a href="#" class="spancolor">Attendance Finalization</a>
+                                            </li>  
+                                        </ol>
+                                    </div> -->
+    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+    
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card" id="orderList">                                
+                                    <div class="card-body border border-dashed border-end-0 border-start-0" >
+                                        <form>
+                                            <div class="row ">
+                                                <div class="col-lg-2 pt-2">
+                                                        <h6 class="fs-12 font-type"><span>Company</span></h6>
+                                                        <select class="form-select font-type fs-11" aria-label="Default select example" style="font-size: 12px;  font-family:'Poppins', sans-serif;" name="Compname" id="Compname" (change)="ListDepByComId()"  required >
+                                                            <option value="-1">All</option>
+                                                            <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
+                                                            {{CompanyList.DATA_VALUE}}
+()                                                          </option>
+                                                        </select>   
+                                                </div>
+                                                <div class="col-lg-2 pt-2">
+                                                        <h6 class="font-type fs-12"><span>Department </span></h6>
+                                                        <select class="form-select font-type fs-11" aria-label="Default select example" style="font-size: 12px;  font-family:'Poppins', sans-serif;" required name="dept" id="dept" (change)="ListEmpByComIdandDep()" >
+                                                            <option value="-1">All</option>
+                                                            <option  *ngFor="let DepartmentList of listDepartment" value="{{DepartmentList.KEY_ID}}">
+                                                            {{DepartmentList.DATA_VALUE}}
+                                                            </option>
+                                                        </select>
+                                                 
+                                                </div>
+                                                <div class="col-lg-2 pt-2">  
+                                                        <h6 class="font-type fs-12"><span>Employee Name </span></h6>
+                                                        <select class="form-select" aria-label="Default select example" style="font-size: 12px;  font-family:'Poppins', sans-serif;" required name="empname" id="empname" >
+                                                            <option value="-1">All</option>
+                                                            <option  *ngFor="let EmployeeList of listEmployee" value="{{EmployeeList.EMP_CODE}}">
+                                                            {{EmployeeList.EMP_NAME}}
+                                                            </option>
+                                                        </select>                      
+                                                </div>
+                                                
+                                                <div class="col-lg-2 pt-2">
+                                                        <h6 class="font-type fs-12"><span>Start Date </span></h6>
+                                                        <input type="date" class="form-control font-type fs-11 mb-0" id="fromdate" name="fromdate" [formControl]="fromdate" (change)="ListAttendanceFinalization()">  
+                                                           
+                                                </div>
+                                                <div class="col-lg-2 pt-2">
+                                                        <h6 class="font-type fs-12"><span>End Date </span></h6>
+                                                        <input type="date" class="form-control font-type fs-11 mb-0" id="todate" name="todate" [formControl]="todate" (change)="ListAttendanceFinalization()">
+                                                  
+                                                </div>
+                                    </div>
+                                        </form>
+                                    </div>
+                                    <!--end row-->
+                                      
+                                    <div class="card-body pt-0">
+                                        <div>
+                                            <ul class="nav nav-tabs nav-tabs-custom nav-success mb-3" role="tablist">   
+                                            </ul>
+    
+                                            <div class="table-responsive table-card mb-1">
+                                                <table class="table table-nowrap align-middle" id="orderTable">
+                                                    <thead class="table-light text-white font-type">
+                                                        <tr>
+                                                            <th  data-sort="empid" hidden>Employee Id</th>
+                                                            <th  data-sort="empcode">Employee Code</th>
+                                                            <th  data-sort="empname">Employee Name</th>
+                                                            <th  data-sort="indate">In Date</th>
+                                                            <th  data-sort="outdate">Out Date</th>
+                                                            <th  data-sort="intime">In Time</th>
+                                                            <th  data-sort="outtime">Out Time</th>
+                                                            <th  data-sort="remarks">Remarks</th>
+                                                            <th  data-sort="action">Action</th>
+                                                         
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list form-check-all font-type fs-11">
+                                                        <tr class="trstyle fs-11" *ngFor="let AttendanceFnlList of listAttendanceFnl">
+                                                            <td class="empid" id="empid" hidden>{{AttendanceFnlList.EMP_ID}}</td>
+                                                            <td class="empcode" id="empcode">{{AttendanceFnlList.EMP_CODE}}</td>
+                                                            <td class="empname"id="empname">{{AttendanceFnlList.EMP_NAME}}</td>
+                                                            <td class="indate" id="indate">{{AttendanceFnlList.IN_DATE| date: 'dd-MM-yyyy'}}</td> 
+                                                            <td class="outdate" id="outdate">{{AttendanceFnlList.OUT_DATE| date: 'dd-MM-yyyy'}}</td>
+                                                            <td class="intime" id="intime">{{AttendanceFnlList.FROM_TIME}}</td>
+                                                            <td class="outtime" id="outtime">{{AttendanceFnlList.TO_TIME}}</td>
+                                                            <td class="remarks" id="remarks">{{AttendanceFnlList.REMARKS}}</td>
+                                                            <td>
+                                                                <div class="col-sm-auto">
+                                                                    <div class="d-flex gap-1 flex-wrap">
+                                                                        <button type="button" class="btn btn-primary add-btn" (click)="AssignLOP(AttendanceFnlList.EMP_ID,AttendanceFnlList.EMP_CODE,AttendanceFnlList.IN_DATE  )"> ASSIGN LOP</button>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                              
+                                            </div>
+                                            <div class="align-items-center  pt-2 justify-content-between row text-center text-sm-start">
+                                                <div class="col-sm">
+                                                    <div class="text-muted" style="font-size:12px;">
+                                                        Showing <span class="fw-semibold">8</span> of <span class="fw-semibold">8</span> Results
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto  mt-3 mt-sm-0">
+                                                    <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                        <li class="page-item disabled">
+                                                            <a href="#" class="page-link">←</a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a href="#" class="page-link">1</a>
+                                                        </li>
+                                                        <li class="page-item active">
+                                                            <a href="#" class="page-link">2</a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a href="#" class="page-link">3</a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a href="#" class="page-link">→</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                           
+                                          
+                                        </div>
+                                      
+                                     
+    
+                                 
+                                
+                                    </div>
+                                </div>
+    
+                            </div>
+                            <!--end col-->
+                        </div>
+                        <!--end row-->
+    
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+                <app-footer></app-footer>
+            </div>
+            <!-- end main content-->
+        </div>
+        <!-- END layout-wrapper -->

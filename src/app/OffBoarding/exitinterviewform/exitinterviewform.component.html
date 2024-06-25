@@ -1,0 +1,1082 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+   
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+            <!--Download PDF Button-->
+            <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+                <div class="flex-grow-1"></div>
+                <div class="flex-shrink-0">
+                    <div class="hstack text-nowrap gap-2"  [hidden]="view != 1">
+                        <button class="btn btn-success font-type" (click)=convertToPDF()><i class="ri-file-pdf-line me-1 align-bottom"></i> Download PDF</button>
+                    </div>
+                </div>
+            </div>
+            <!--End Download PDF Button-->
+
+            <!--Form Style-->
+            
+            <div class="div-middle shadow-lg mb-3" id="htmlElementId">
+                    <div class="card-body p-3">
+
+                        <!--Header-->
+                        <div class="row gy-3 ma-5">
+                            <div class="col-sm-auto">
+                                <div class="avatar-title-lg p-1">
+                                    <!-- <img src="{{hostname}}{{this.companyData[0].DATA_VALUE}}" alt=""  class="img-size"> -->
+                                    <div class="avatar-title-lg p-1" *ngIf="this.companyData[0].COMPANY_ID=='Worldwide Oilfield Machine Middle East' || this.companyData[0].COMPANY_ID=='Worldwide Oilfield Machine Sales and Marketing Ltd' ">
+                                        <img src="assets\styles\img\WOM Logo - 2024.png" alt="" class="img-size">
+                                    </div>
+                                    <div class="avatar-title-lg p-1" *ngIf="this.companyData[0].COMPANY_ID=='WOM Valves & Controls International FZE' ">
+                                        <img src="assets\styles\img\WVC-LOGO-2024.png" alt="" class="img-size">
+                                    </div>
+                                    <div class="avatar-title-lg p-1" *ngIf="this.companyData[0].COMPANY_ID=='Magnum Technology Center FZE' ">
+                                        <img src="assets\styles\img\MTC logo.png" alt="" class="img-size">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm text-center">
+                                <h2 class="text-blue font-type" style="font-weight: bold;">{{this.companyData[0].COMPANY_ID}}</h2>
+                                <h5 class="text-blue font-type" >{{this.companyData[0].DESCRIPTION}}</h5>
+                                <h5 class="text-blue font-type" >(UAE); {{this.companyData[0].PHONE_NO}}; {{this.companyData[0].EMAI_ID}}</h5> 
+                            </div>
+                        </div>
+                        <hr>
+                        <!--end Header-->
+
+                        <div class="mt-3 text-center mb-3">
+                            <h5 class="font-type text-uppercase fw-semibold fs-18" style="text-decoration: underline;">Exit Interview Questionnaire</h5> 
+                        </div>
+
+                        <!--Details-->   
+                        <div class="border p-4 font-type mb-2" *ngFor="let empdata of empdtl">
+                            <form action="">
+                                <!--Employee Details-->
+                                <div class="row mb-3">
+                                    <div class="col-lg-5">
+                                        <label class="form-label fw-semibold fs-12">NAME:</label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <input type="text" class="form-control bg-light border-0" placeholder="Name" value="{{empdata.EMP_NAME}}" readonly/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-5">
+                                        <label class="form-label fw-semibold fs-12">JOB TITLE: </label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <input type="text" class="form-control bg-light border-0" placeholder="Job Title"  value="{{empdata.DESIGNATION}}" readonly/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-5">
+                                        <label class="form-label fw-semibold fs-12">DEPARTMENT: </label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <input type="text" class="form-control bg-light border-0" placeholder="Department"  value="{{empdata.DEPARTMENT}}" readonly/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-5">
+                                        <label class="form-label fw-semibold fs-12">DATE OF INTERVIEW:</label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <input type="text" class="form-control bg-light border-0" placeholder="Interview Date"  value="{{empdata.REQUEST_DATE | date : 'dd-MM-yyyy'}}" readonly/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-5">
+                                        <label class="form-label fw-semibold fs-12">START DATE WITH ORGANIZATION:</label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <input type="text" class="form-control bg-light border-0" placeholder="Start Date With Organization"  value="{{empdata.DATE_OF_JOINING | date : 'dd-MM-yyyy'}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-5">
+                                        <label class="form-label fw-semibold fs-12">START DATE IN POSITION:</label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <input type="text" class="form-control bg-light border-0" placeholder="Start Date In Position" readonly/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-5">
+                                        <label class="form-label fw-semibold fs-12">SEPARATION DATE: </label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <input type="text" class="form-control bg-light border-0" placeholder="Separation Date"  value="{{empdata.LAST_WORKING_DATE | date : 'dd-MM-yyyy'}}" readonly/>
+                                    </div>
+                                </div>
+                                <div class="row mb-0">
+                                    <div class="col-lg-5">
+                                        <label class="form-label fw-semibold fs-12">OTHER POSITIONS HELD WITH ORGANIZATION: </label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <textarea class="form-control bg-light border-0" rows="2" placeholder="Other Positions Held With Organization"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--End Employee Details-->
+
+
+                    <form autocomplete="off" [formGroup]="requestForm" (ngSubmit)="validateForm()" [ngClass]="{'disabled': isDisabled}">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="p-2">
+                                    <label class="form-label fw-semibold fs-15 font-type">What are the reasons for leaving?<span class="fw-medium ms-1 fs-13">(Select One or More)</span></label>
+                                    <!-- <div *ngIf="requestForm.get('qus1')!.hasError('required') && requestForm.get('qus1')!.touched" class="text-danger">Please, Fill the field.</div> -->
+                                </div>
+                                <div class="p-2 font-type margin-up-7">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3" *ngFor="let data of reasons">
+                                            <!-- <div class="form-check form-check-info mb-3">
+                                                <input class="form-check-input" type="checkbox" id="formCheck{{data.id}}" formControlName="qus1" [value]="data.value" [checked]="selectedReasons.includes(data.value)"  (change)="updateSelectedReasons(data.value, $event)">
+                                                <label class="form-check-label">
+                                                    {{data.value}}
+                                                </label>
+                                            </div> -->
+                                            <div class="form-check form-check-info mb-3">
+                                                <input class="form-check-input" type="checkbox" id="formCheck{{data.id}}" [value]="data.value" [checked]="selectedReasons.includes(data.value)" (change)="updateSelectedReasons(data.value, $event)">
+                                                <label class="form-check-label" for="formCheck{{data.id}}">
+                                                {{data.value}}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-2 margin-up-7">
+                                    <textarea class="form-control textbox-15 bg-light border-0 font-type mb-2" required rows="2" placeholder="Enter the Comments" formControlName="qus2" name="qus2"></textarea>  
+                                    <div *ngIf="requestForm.get('qus2')!.hasError('required') && requestForm.get('qus2')!.touched" class="text-danger">Please, Fill the field.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="margin-up-5">
+                        
+                        <!--JOB-->
+                        <div class="row margin-up-7">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="p-2">
+                                  <label class="form-label fs-15 font-type text-muted">Please rank the following:</label>
+                                </div>
+                                <div class="p-3">
+                                <div class="table-responsive table-card mb-0">
+                                    <table class="table table-nowrap align-middle table-hover table-bordered border-blue p-3">
+                                        <thead class="font-type bg-light-blue">
+                                        <tr class="border-blue">
+                                            <th rowspan="2" class="fs-14">The Job itself</th>
+                                            <th class="text-center">Strongly<br>Disagree</th>
+                                            <th class="text-center">Disagree</th>
+                                            <th class="text-center">Agree</th>
+                                            <th class="text-center">strongly <br/> Agree</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list form-check-all font-type fs-11">
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">Job was challenging
+                                            <div *ngIf="requestForm.get('qus3')!.hasError('required') && requestForm.get('qus3')!.touched" class="text-danger">Please select the ratings</div>
+                                        </td>
+
+                                        <td class="text-center ma-5"> 
+                                            <input type="radio" name="qus3" class="ma-5" formControlName="qus3" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus3" class="ma-5" formControlName="qus3" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus3" class="ma-5" formControlName="qus3" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus3" class="ma-5" formControlName="qus3" value="4"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">There were sufficient opportunities for advancement
+                                            <div *ngIf="requestForm.get('qus4')!.hasError('required') && requestForm.get('qus4')!.touched" class="text-danger">Please select the ratings</div></td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus4" class="ma-5" formControlName="qus4" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus4" class="ma-5" formControlName="qus4" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus4" class="ma-5" formControlName="qus4" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus4" class="ma-5" formControlName="qus4" value="4"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">Workload was manageable
+                                            <div *ngIf="requestForm.get('qus5')!.hasError('required') && requestForm.get('qus5')!.touched" class="text-danger">Please select the ratings</div></td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus5" class="ma-5" formControlName="qus5" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus5" class="ma-5" formControlName="qus5" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus5" class="ma-5" formControlName="qus5" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus5" class="ma-5" formControlName="qus5" value="4"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Sufficient resources and staff were available
+                                                <div *ngIf="requestForm.get('qus6')!.hasError('required') && requestForm.get('qus6')!.touched" class="text-danger">Please select the ratings</div></td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus6" class="ma-5" formControlName="qus6" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus6" class="ma-5" formControlName="qus6" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus6" class="ma-5" formControlName="qus6" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus6" class="ma-5" formControlName="qus6" value="4"/>
+                                            </td>
+                                        </tr>
+                                    <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Your colleagues listened and appreciated your suggestions
+                                                <div *ngIf="requestForm.get('qus7')!.hasError('required') && requestForm.get('qus7')!.touched" class="text-danger">Please select the ratings</div></td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus7" class="ma-5" formControlName="qus7" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus7" class="ma-5" formControlName="qus7" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus7" class="ma-5" formControlName="qus7" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus7" class="ma-5" formControlName="qus7" value="4"/>
+                                            </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Your skills were effectively used
+                                                <div *ngIf="requestForm.get('qus8')!.hasError('required') && requestForm.get('qus8')!.touched" class="text-danger">Please select the ratings</div></td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus8" class="ma-5"  formControlName="qus8" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus8" class="ma-5"  formControlName="qus8" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus8" class="ma-5" formControlName="qus8" value="3" />
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus8" class="ma-5"  formControlName="qus8" value="4"/>
+                                            </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">You had access to adequate training and development programs
+                                                <div *ngIf="requestForm.get('qus9')!.hasError('required') && requestForm.get('qus9')!.touched" class="text-danger">Please select the ratings</div></td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus9" class="ma-5"  formControlName="qus9" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus9" class="ma-5"  formControlName="qus9" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus9" class="ma-5"  formControlName="qus9" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus9" class="ma-5"  formControlName="qus9" value="4"/>
+                                            </td>
+                                    </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="p-2 topbar-up">
+                                    <h6 class="fs-13 font-type fw-semibold"> <i class="ri-stop-fill align-middle fs-15 text-blue"></i> <span class="ms-1">What do you think can be improved about the job?</span></h6>
+                                    <textarea class="form-control textbox-15 bg-light border-0 font-type mb-2" required rows="2" placeholder="Enter the Comments" formControlName="qus10"></textarea>  
+                                    <div *ngIf="requestForm.get('qus10')!.hasError('required') && requestForm.get('qus10')!.touched" class="text-danger">Please, Fill the field.</div>
+                                </div>
+                           </div>
+                        </div>
+                        <!--END JOB-->
+
+                        <hr class="margin-up-5">
+
+                        <!--Remuneration & Benefits-->
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="p-3">
+                                <div class="table-responsive table-card mb-0">
+                                    <table class="table table-nowrap align-middle table-hover table-bordered border-blue">
+                                        <thead class="font-type bg-light-blue">
+                                        <tr class="border-blue">
+                                            <th rowspan="2" class="fs-14">Remuneration & Benefits</th>
+                                            <th class="text-center">Strongly<br>Disagree</th>
+                                            <th class="text-center">Disagree</th>
+                                            <th class="text-center">Agree</th>
+                                            <th class="text-center">strongly <br/> Agree</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list form-check-all font-type fs-11">
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">The salary was adequate in relation to responsibilities
+                                            <div *ngIf="requestForm.get('qus11')!.hasError('required') && requestForm.get('qus11')!.touched" class="text-danger">Please select the ratings</div></td>
+                                        <td class="text-center ma-5"> 
+                                            <input type="radio" name="qus11" class="ma-5" formControlName="qus11" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus11" class="ma-5" formControlName="qus11" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus11" class="ma-5" formControlName="qus11" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus11" class="ma-5" formControlName="qus11" value="4"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">Wages were paid on time
+                                            <div *ngIf="requestForm.get('qus12')!.hasError('required') && requestForm.get('qus12')!.touched" class="text-danger">Please select the ratings</div></td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus12" class="ma-5" formControlName="qus12" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus12" class="ma-5" formControlName="qus12" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus12" class="ma-5" formControlName="qus12" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus12" class="ma-5" formControlName="qus12" value="4"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">Other benefits were good 
+                                            <div *ngIf="requestForm.get('qus13')!.hasError('required') && requestForm.get('qus13')!.touched" class="text-danger">Please select the ratings</div></td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus13" class="ma-5" formControlName="qus13" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus13" class="ma-5" formControlName="qus13" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus13" class="ma-5" formControlName="qus13" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus13" class="ma-5" formControlName="qus13" value="4"/>
+                                        </td>
+                                    </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Work-life balance was promoted and practiced
+                                                <div *ngIf="requestForm.get('qus14')!.hasError('required') && requestForm.get('qus14')!.touched" class="text-danger">Please select the ratings</div></td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus14" class="ma-5" formControlName="qus14" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus14" class="ma-5" formControlName="qus14" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus14" class="ma-5" formControlName="qus14" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus14" class="ma-5" formControlName="qus14" value="4"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="p-2 topbar-up">
+                                     <h6 class="fs-13 font-type fw-semibold"> <i class="ri-stop-fill align-middle fs-15 text-blue"></i> <span class="ms-1">What improvements, other benefits could the company offer?</span></h6>
+                                    <textarea class="form-control textbox-15 bg-light border-0 font-type mb-2" required rows="2" placeholder="Enter the Comments" formControlName="qus15"></textarea>  
+                                    <div *ngIf="requestForm.get('qus15')!.hasError('required') && requestForm.get('qus15')!.touched" class="text-danger">Please, Fill the field.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Remuneration & Benefits-->
+                        <hr class="margin-up-5">
+
+                        <!--The Company-->
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="p-3">
+                                    <div class="table-responsive table-card mb-0">
+                                        <table class="table table-nowrap align-middle table-hover table-bordered border-blue">
+                                            <thead class="font-type bg-light-blue">
+                                            <tr class="border-blue">
+                                                <th rowspan="2" class="fs-14">The Company</th>
+                                                <th class="text-center">Strongly<br>Disagree</th>
+                                                <th class="text-center">Disagree</th>
+                                                <th class="text-center">Agree</th>
+                                                <th class="text-center">strongly <br/> Agree</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11">
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">When you started, did the induction help and was it accurate
+                                                <div *ngIf="requestForm.get('qus16')!.hasError('required') && requestForm.get('qus16')!.touched" class="text-danger">Please select the ratings</div>
+                                            </td>
+                                            <td class="text-center ma-5"> 
+                                                <input type="radio" name="qus16" class="ma-5" formControlName="qus16" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus16" class="ma-5" formControlName="qus16" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus16" class="ma-5" formControlName="qus16" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus16" class="ma-5" formControlName="qus16" value="4"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Was a good and positive environment to work in
+                                                <div *ngIf="requestForm.get('qus17')!.hasError('required') && requestForm.get('qus17')!.touched" class="text-danger">Please select the ratings</div>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus17" class="ma-5" formControlName="qus17" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus17" class="ma-5" formControlName="qus17" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus17" class="ma-5" formControlName="qus17" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus17" class="ma-5" formControlName="qus17" value="4"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Had adequate equipment to do the work
+                                                <div *ngIf="requestForm.get('qus18')!.hasError('required') && requestForm.get('qus18')!.touched" class="text-danger">Please select the ratings</div>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus18" class="ma-5" formControlName="qus18" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus18" class="ma-5" formControlName="qus18" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus18" class="ma-5" formControlName="qus18" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus18" class="ma-5" formControlName="qus18" value="4">
+                                            </td>
+                                        </tr>
+                                            <tr class="font-type h-30">
+                                                <td style="white-space: pre-wrap;" class="fs-13">Got on well with other staff within the company
+                                                    <div *ngIf="requestForm.get('qus19')!.hasError('required') && requestForm.get('qus19')!.touched" class="text-danger">Please select the ratings</div>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus19" class="ma-5" formControlName="qus19" value="1"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus19" class="ma-5" formControlName="qus19" value="2"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus19" class="ma-5" formControlName="qus19" value="3"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus19" class="ma-5" formControlName="qus19" value="4"/>
+                                                </td>
+                                            </tr>
+                                            <tr class="font-type h-30">
+                                                <td style="white-space: pre-wrap;" class="fs-13">There were sufficient staff to cover the work
+                                                    <div *ngIf="requestForm.get('qus20')!.hasError('required') && requestForm.get('qus20')!.touched" class="text-danger">Please select the ratings</div>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus20" class="ma-5" formControlName="qus20" value="1"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus20" class="ma-5" formControlName="qus20" value="2"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus20" class="ma-5" formControlName="qus20" value="3"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus20" class="ma-5" formControlName="qus20" value="4"/>
+                                                </td>
+                                            </tr>
+                                            <tr class="font-type h-30">
+                                                <td style="white-space: pre-wrap;" class="fs-13">The company was efficient in it’s dealings
+                                                    <div *ngIf="requestForm.get('qus21')!.hasError('required') && requestForm.get('qus21')!.touched" class="text-danger">Please select the ratings</div>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus21" class="ma-5" formControlName="qus21" value="1"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus21" class="ma-5" formControlName="qus21" value="2"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus21" class="ma-5" formControlName="qus21" value="3"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus21" class="ma-5" formControlName="qus21" value="4"/>
+                                                </td>
+                                            </tr>
+                                            <tr class="font-type h-30">
+                                                <td style="white-space: pre-wrap;" class="fs-13">Internal communication worked well
+                                                    <div *ngIf="requestForm.get('qus22')!.hasError('required') && requestForm.get('qus22')!.touched" class="text-danger">Please select the ratings</div>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus22" class="ma-5" formControlName="qus22" value="1"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus22" class="ma-5" formControlName="qus22" value="2"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus22" class="ma-5" formControlName="qus22" value="3"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus22" class="ma-5" formControlName="qus22" value="4"/>
+                                                </td>
+                                            </tr>
+                                            <tr class="font-type h-30">
+                                                <td style="white-space: pre-wrap;" class="fs-13">There was no bullying or harassment 
+                                                    <div *ngIf="requestForm.get('qus23')!.hasError('required') && requestForm.get('qus23')!.touched" class="text-danger">Please select the ratings</div>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus23" class="ma-5" formControlName="qus23" value="1"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus23" class="ma-5" formControlName="qus23" value="2"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus23" class="ma-5" formControlName="qus23" value="3"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus23" class="ma-5" formControlName="qus23" value="4"/>
+                                                </td>
+                                            </tr>
+                                            <tr class="font-type h-30">
+                                                <td style="white-space: pre-wrap;" class="fs-13">There was no bullying or harassment
+                                                    <div *ngIf="requestForm.get('qus24')!.hasError('required') && requestForm.get('qus24')!.touched" class="text-danger">Please select the ratings</div> 
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus24" class="ma-5" formControlName="qus24" value="1"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus24" class="ma-5" formControlName="qus24" value="2"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus24" class="ma-5" formControlName="qus24" value="3"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus24" class="ma-5" formControlName="qus24" value="4"/>
+                                                </td>
+                                            </tr>
+                                            <tr class="font-type h-30">
+                                                <td style="white-space: pre-wrap;" class="fs-13">There are adequate parking facilities
+                                                    <div *ngIf="requestForm.get('qus25')!.hasError('required') && requestForm.get('qus25')!.touched" class="text-danger">Please select the ratings</div>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus25" class="ma-5" formControlName="qus25" value="1"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus25" class="ma-5" formControlName="qus25" value="2"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus25" class="ma-5" formControlName="qus25" value="3"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus25" class="ma-5" formControlName="qus25" value="4"/>
+                                                </td>
+                                            </tr>
+                                            <tr class="font-type h-30">
+                                                <td style="white-space: pre-wrap;" class="fs-13">The business did not discriminate against any employee
+                                                    <div *ngIf="requestForm.get('qus26')!.hasError('required') && requestForm.get('qus26')!.touched" class="text-danger">Please select the ratings</div>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus26" class="ma-5" formControlName="qus26" value="1"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus26" class="ma-5" formControlName="qus26" value="2"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus26" class="ma-5" formControlName="qus26" value="3"/>
+                                                </td>
+                                                <td class="text-center"> 
+                                                    <input type="radio" name="qus26" class="ma-5" formControlName="qus26" value="4"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="p-2 topbar-up">
+                                     <h6 class="fs-13 font-type fw-semibold"> <i class="ri-stop-fill align-middle fs-15 text-blue"></i> <span class="ms-1">What do you think can be improved about the Department and Company?</span></h6>
+                                    <textarea class="form-control textbox-15 bg-light border-0 font-type mb-2" required rows="2" placeholder="Enter the Comments" formControlName="qus27" value="1"></textarea>  
+                                    <div *ngIf="requestForm.get('qus27')!.hasError('required') && requestForm.get('qus27')!.touched" class="text-danger">Please, Fill the field.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End The Company-->
+
+                        <hr class="margin-up-5">
+                       
+                        <!--Supervisor / Line Manager-->
+                        <div class="row" >
+                            <div class="col-lg-12 col-md-12">
+                                <div class="p-3">
+                                <div class="table-responsive table-card mb-0">
+                                    <table class="table table-nowrap align-middle table-hover table-bordered border-blue">
+                                        <thead class="font-type bg-light-blue">
+                                        <tr class="border-blue">
+                                            <th rowspan="2" class="fs-14">Supervisor / Line Manager</th>
+                                            <th class="text-center">Strongly<br>Disagree</th>
+                                            <th class="text-center">Disagree</th>
+                                            <th class="text-center">Agree</th>
+                                            <th class="text-center">strongly <br/> Agree</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list form-check-all font-type fs-11">
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">Had sufficient knowledge of the job
+                                            <div *ngIf="requestForm.get('qus28')!.hasError('required') && requestForm.get('qus28')!.touched" class="text-danger">Please select the ratings</div>
+                                        </td>
+                                        <td class="text-center ma-5"> 
+                                            <input type="radio" name="qus28" class="ma-5" formControlName="qus28" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus28" class="ma-5" formControlName="qus28" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus28" class="ma-5" formControlName="qus28" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus28" class="ma-5" formControlName="qus28" value="4"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">Is experienced in supervision
+                                            <div *ngIf="requestForm.get('qus29')!.hasError('required') && requestForm.get('qus29')!.touched" class="text-danger">Please select the ratings</div>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus29" class="ma-5" formControlName="qus29" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus29" class="ma-5" formControlName="qus29" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus29" class="ma-5" formControlName="qus29" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus29" class="ma-5" formControlName="qus29" value="4"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">Was open to suggestions
+                                            <div *ngIf="requestForm.get('qus30')!.hasError('required') && requestForm.get('qus30')!.touched" class="text-danger">Please select the ratings</div>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus30" class="ma-5" formControlName="qus30" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus30" class="ma-5" formControlName="qus30" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus30" class="ma-5" formControlName="qus30" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus30" class="ma-5" formControlName="qus30" value="4"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Recognised and acknowledged achievements
+                                                <div *ngIf="requestForm.get('qus31')!.hasError('required') && requestForm.get('qus31')!.touched" class="text-danger">Please select the ratings</div>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus31" class="ma-5" formControlName="qus31" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus31" class="ma-5" formControlName="qus31" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus31" class="ma-5" formControlName="qus31" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus31" class="ma-5" formControlName="qus31" value="4"/>
+                                            </td>
+                                    </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Acknowledged employees contributions
+                                                <div *ngIf="requestForm.get('qus32')!.hasError('required') && requestForm.get('qus32')!.touched" class="text-danger">Please select the ratings</div>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus32" class="ma-5" formControlName="qus32" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus32" class="ma-5" formControlName="qus32" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus32" class="ma-5" formControlName="qus32" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus32" class="ma-5" formControlName="qus32" value="4"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Offered and promoted ways to develop
+                                                <div *ngIf="requestForm.get('qus33')!.hasError('required') && requestForm.get('qus33')!.touched" class="text-danger">Please select the ratings</div>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus33" class="ma-5" formControlName="qus33" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus33" class="ma-5" formControlName="qus33" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus33" class="ma-5" formControlName="qus33" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus33" class="ma-5" formControlName="qus33" value="4"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Provided constructive feedback
+                                                <div *ngIf="requestForm.get('qus34')!.hasError('required') && requestForm.get('qus34')!.touched" class="text-danger">Please select the ratings</div>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus34" class="ma-5" formControlName="qus34" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus34" class="ma-5" formControlName="qus34" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus34" class="ma-5" formControlName="qus34" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus34" class="ma-5" formControlName="qus34" value="4"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Clearly communicated management decisions and how they would effect your work
+                                                <div *ngIf="requestForm.get('qus35')!.hasError('required') && requestForm.get('qus35')!.touched" class="text-danger">Please select the ratings</div>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus35" class="ma-5" formControlName="qus35" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus35" class="ma-5" formControlName="qus35" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus35" class="ma-5" formControlName="qus35" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus35" class="ma-5" formControlName="qus35" value="4"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Maintained a professional relationship with you
+                                                <div *ngIf="requestForm.get('qus36')!.hasError('required') && requestForm.get('qus36')!.touched" class="text-danger">Please select the ratings</div>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus36" class="ma-5" formControlName="qus36" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus36" class="ma-5" formControlName="qus36" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus36" class="ma-5" formControlName="qus36" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus36" class="ma-5" formControlName="qus36" value="4"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="p-2 topbar-up">
+                                     <h6 class="fs-13 font-type fw-semibold"> <i class="ri-stop-fill align-middle fs-15 text-blue"></i> <span class="ms-1">What are your suggestions or improvements to your Supervisor?</span></h6>
+                                    <textarea class="form-control textbox-15 bg-light border-0 font-type mb-2" required rows="2" placeholder="Enter the Comments" formControlName="qus37"></textarea>  
+                                     <div *ngIf="requestForm.get('qus37')!.hasError('required') && requestForm.get('qus37')!.touched" class="text-danger">Please, Fill the field.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Supervisor / Line Manager-->
+
+                        <hr class="margin-up-5">
+
+                        <!--Management-->
+                        <!-- <form class="row"> -->
+                            <div class="col-lg-12 col-md-12">
+                                <div class="p-3">
+                                <div class="table-responsive table-card mb-0">
+                                    <table class="table table-nowrap align-middle table-hover table-bordered border-blue">
+                                        <thead class="font-type bg-light-blue">
+                                        <tr class="border-blue">
+                                            <th rowspan="2" class="fs-14">Management</th>
+                                            <th class="text-center">Strongly<br>Disagree</th>
+                                            <th class="text-center">Disagree</th>
+                                            <th class="text-center">Agree</th>
+                                            <th class="text-center">strongly <br/> Agree</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list form-check-all font-type fs-11">
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">Gave fair and equal treatment
+                                            <div *ngIf="requestForm.get('qus38')!.hasError('required') && requestForm.get('qus38')!.touched" class="text-danger">Please select the ratings</div></td>
+                                        <td class="text-center ma-5"> 
+                                            <input type="radio" name="qus38" class="ma-5" formControlName="qus38" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus38" class="ma-5" formControlName="qus38" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus38" class="ma-5" formControlName="qus38" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus38" class="ma-5" formControlName="qus38" value="4"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">Was available to discuss job related issues
+                                            <div *ngIf="requestForm.get('qus39')!.hasError('required') && requestForm.get('qus39')!.touched" class="text-danger">Please select the ratings</div></td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus39" class="ma-5" formControlName="qus39" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus39" class="ma-5" formControlName="qus39" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus39" class="ma-5" formControlName="qus39" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus39" class="ma-5" formControlName="qus39" value="4"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                        <td style="white-space: pre-wrap;" class="fs-13">Encouraged feedback and suggestions
+                                            <div *ngIf="requestForm.get('qus40')!.hasError('required') && requestForm.get('qus40')!.touched" class="text-danger">Please select the ratings</div></td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus40" class="ma-5" formControlName="qus40" value="1"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus40" class="ma-5" formControlName="qus40" value="2"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus40" class="ma-5" formControlName="qus40" value="3"/>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="radio" name="qus40" class="ma-5" formControlName="qus40" value="4"/>
+                                        </td>
+                                    </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Recognised and acknowledged achievements
+                                                <div *ngIf="requestForm.get('qus41')!.hasError('required') && requestForm.get('qus41')!.touched" class="text-danger">Please select the ratings</div></td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus41" class="ma-5" formControlName="qus41" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus41" class="ma-5" formControlName="qus41" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus41" class="ma-5" formControlName="qus41" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus41" class="ma-5" formControlName="qus41" value="4"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Maintained consistent policies and practices
+                                                <div *ngIf="requestForm.get('qus42')!.hasError('required') && requestForm.get('qus42')!.touched" class="text-danger">Please select the ratings</div></td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus42" class="ma-5" formControlName="qus42" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus42" class="ma-5" formControlName="qus42" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus42" class="ma-5" formControlName="qus42" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus42" class="ma-5" formControlName="qus42" value="4"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Provided recognition for achievements
+                                                <div *ngIf="requestForm.get('qus43')!.hasError('required') && requestForm.get('qus43')!.touched" class="text-danger">Please select the ratings</div></td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus43" class="ma-5" formControlName="qus43" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus43" class="ma-5" formControlName="qus43" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus43" class="ma-5" formControlName="qus43" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus43" class="ma-5" formControlName="qus43" value="4"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Gave opportunities to develop
+                                                <div *ngIf="requestForm.get('qus44')!.hasError('required') && requestForm.get('qus44')!.touched" class="text-danger">Please select the ratings</div> </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus44" class="ma-5" formControlName="qus44" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus44" class="ma-5" formControlName="qus44" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus44" class="ma-5" formControlName="qus44" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus44" class="ma-5" formControlName="qus44" value="4"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Provided constructive feedback
+                                                <div *ngIf="requestForm.get('qus45')!.hasError('required') && requestForm.get('qus45')!.touched" class="text-danger">Please select the ratings</div></td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus45" class="ma-5" formControlName="qus45" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus45" class="ma-5" formControlName="qus45" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus45" class="ma-5" formControlName="qus45" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus45" class="ma-5" formControlName="qus45" value="4"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="font-type h-30">
+                                            <td style="white-space: pre-wrap;" class="fs-13">Clearly communicated decisions and how they would effect your work
+                                                <div *ngIf="requestForm.get('qus46')!.hasError('required') && requestForm.get('qus46')!.touched" class="text-danger">Please select the ratings</div></td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus46" class="ma-5"  formControlName="qus46" value="1"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus46" class="ma-5" formControlName="qus46" value="2"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus46" class="ma-5" formControlName="qus46" value="3"/>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <input type="radio" name="qus46" class="ma-5" formControlName="qus46" value="4"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="p-2 topbar-up">
+                                     <h6 class="fs-13 font-type fw-semibold"> <i class="ri-stop-fill align-middle fs-15 text-blue"></i> <span class="ms-1">What are your suggestions or improvements to Management?</span></h6>
+                                    <textarea class="form-control textbox-15 bg-light border-0 font-type mb-2" required rows="2" placeholder="Enter the Comments" formControlName="qus47"></textarea>  
+                                    <div *ngIf="requestForm.get('qus47')!.hasError('required') && requestForm.get('qus47')!.touched" class="text-danger">Please, Fill the field.</div>
+                                </div>
+                                <hr class="margin-up-5">
+                                <h6 class="fs-12 font-type fw-medium text-center mb-2">Thank you for completing this information.Your responses will be treated with total confidence.</h6>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="p-2">
+                                            <h6 class="fs-12 font-type fw-semibold">Employee Signature :</h6>
+                                            <h6 class="fs-12 font-type fw-semibold">Date :</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 mb-3" [hidden]="view == 1">
+                                <div class="d-flex align-items-center flex-wrap gap-2">
+                                    <div class="flex-grow-1 text-center">
+                                        <div  *ngIf="!requestForm.valid">
+                                            <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" [disabled]="requestForm.valid" id="validate-btn"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                            <button type="button" class="btn btn-blue btn-label right nexttab nexttab font-type" (click)="Clear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                        </div>
+                                        <div *ngIf="requestForm.valid">
+                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" id="add-btn" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="Submit()"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                            <button type="button" class="btn btn-blue btn-label right nexttab nexttab font-type" (click)="Clear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div class="hstack text-nowrap gap-2" *ngIf="view != 1">
+                                            <a href="resignationReq"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                        </div>
+                                        <div class="hstack text-nowrap gap-2" *ngIf="view == 1">
+                                            <a href="ResignationApprovalHR"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </form>
+                    
+                </div>
+                <!--End Management-->
+                
+                <!--Modal For Success Message Start-->
+                <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==1"> 
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                            
+                                </div>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==2">
+                            <div class="container">
+                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- </div>
+                </div> -->
+                        <!--End Details-->   
+
+            </div>
+            <!-- End Form Style -->
+            <div class="col-lg-12 mb-3"  *ngIf="view == 1">
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    <div class="flex-shrink-0">
+                        <div class="hstack text-nowrap gap-2">
+                            <a href="ResignationApprovalHR"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+         </div>
+           <!-- container-fluid --> 
+        </div>
+          <!-- End Page-content -->
+
+          <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

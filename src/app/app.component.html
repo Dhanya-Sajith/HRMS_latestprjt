@@ -1,0 +1,7 @@
+<ng-container *ngIf="!isLoginPage()">
+    <app-sidemenu></app-sidemenu>  
+      <router-outlet></router-outlet> 
+  </ng-container>
+  <ng-container *ngIf="isLoginPage()">
+    <router-outlet></router-outlet>
+  </ng-container>

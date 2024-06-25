@@ -1,0 +1,26 @@
+.text-danger{
+  font-size: xx-small;
+}
+.general{
+font-size: medium;
+font-weight: bold;
+color:rgb(57, 158, 235); 
+} 
+
+.background {
+background-color:bisque
+}
+
+.table-app{
+width: 190%;
+overflow-x: scroll!important
+}
+th{
+ background-color: rgb(128, 199, 243)
+
+}
+//Disable pagination button
+.disabled-button {
+color: #999; 
+pointer-events: none; 
+}

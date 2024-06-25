@@ -1,0 +1,384 @@
+   <!-- Begin page -->
+   <div id="layout-wrapper">
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu> 
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content" style="overflow-x: hidden;">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mt-n4 mx-n4 mb-n5">
+                            <div class="bg-info-subtle">
+                                <div class="card-body pb-4 mb-5">
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="row align-items-center gy-2">
+                                                <div class="col-sm">
+                                                <div class="d-flex align-items-center ma-5">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="avatar-sm">
+                                                            <span class="avatar-title bg-info-subtle">
+                                                                <img src="assets\styles\img\icons8-ability-64.png" alt="" width="100%">
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2 ma-5">
+                                                        <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Competency Master</h2>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="flex-grow-1 ms-1 ">
+                                                        <div class="page-title-right padding-up-5">
+                                                            <div class="form-check form-check-inline form-check-info">
+                                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="WithoutinlineRadio1" value="individual" [(ngModel)]="radioselected" (change)="onradioselected()" >
+                                                                <label class="form-check-label font-type fw-semibold text-blue fs-14" for="inlineRadio1">Individual</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline form-check-info">
+                                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="WithoutinlineRadio2" value="bulk" [(ngModel)]="radioselected" (change)="onradioselected()">
+                                                                <label class="form-check-label font-type fw-semibold text-blue fs-14" for="inlineRadio2">Bulk Upload</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <!--end row-->
+                                        </div>
+                                    </div>
+                                    <!--end row-->
+                                </div><!-- end card body -->
+                        </div>
+                    </div><!-- end card -->
+                </div>
+                 <!-- end start page title -->
+
+                <!-- header -->
+                <div class="card topbar-up">
+                    <div class="card-body">
+                    <div class="border border-dashed rounded p-2 pa-0 mb-1">
+                         <!-- individual -->
+                        <div class="row mb-2"  id="div_individual" *ngIf="radioselected=='individual'">
+                            <div class="col-md-4 col-lg-4 pt-1">
+                                        <h6 class="fs-12 font-type fw-semibold">Company</h6>
+                                        <select class="form-select font-type h-30 textbox-15 " [(ngModel)]="selectedCompanyid" (change)="onCompanySelected(selectedCompanyid)">
+                                            <option value="-1" selected disabled >Select</option>
+                                            <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                        </select>  
+                            </div>
+                            <div class="col-md-4 col-lg-4 pt-1">
+                                        <h6 class="fs-12 font-type fw-semibold">Department</h6>
+                                        <select class="form-select font-type h-30 textbox-15 " [(ngModel)]="selectedDeptid" (change)="onDeptSelected(selectedDeptid)">
+                                            <option value="-1" selected disabled >Select</option>
+                                            <option *ngFor="let combo of deptdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                        </select> 
+                            </div>
+                            <div class="col-md-4 col-lg-4 pt-1">
+                                    <h6 class="fs-12 font-type fw-semibold"> Designation</h6>
+                                    <select class="form-select font-type h-30 textbox-15 " [(ngModel)]="selectedDesig" (change)="onDesigSelected(selectedDesig)">
+                                        <option value="-1" selected disabled >Select</option>
+                                        <option *ngFor="let combo of desigdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                    </select> 
+                            </div>
+                        </div>
+                         <!-- end individual -->
+
+                        <!-- bulk upload -->
+                        <div class="row gy-3 p-2" id="div_Bulk" style="justify-content: center;"*ngIf="radioselected=='bulk'">
+                            <!-- <div class="alert alert-success alert-dismissible" style="width:450px;" *ngIf="success">                                
+                                <strong><i class="fa fa-check-circle text-success" style="font-size: 25px;"></i></strong> 
+                            </div>
+                            <div class="alert alert-danger alert-dismissible" style="width:450px;" *ngIf="failed">                                
+                                <strong><i class="fa fa-times-circle text-danger" style="font-size: 25px;"></i>  {{failed}}</strong> 
+                            </div> -->
+                            <form [formGroup]="fileuploadForm" (ngSubmit)="upload()">
+                                <div class="col-sm-auto">
+                                    <div class="d-flex gap-3 flex-wrap">
+                                        <div>
+                                            <h6 class="font-type fs-12 fw-semibold" style="visibility: hidden;">Download Your Excel Document</h6>
+                                            <button type="button" class="btn btn-success w-100 text-white font-type" style="margin-top: 2px;" (click)="download_to_excel()"> <i class="ri-download-2-line me-2 align-bottom"></i>Download Excel Template </button>
+                                        </div>
+                                        <div>
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Upload Your Excel Template </span></h6>
+                                            <input class="form-control font-type fs-12 textbox-15" id="myFile" (ngModelChange)="onImageChangeFromFile($event)" type="file" formControlName="myFile" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.myFile.errors }" >
+                                            <div *ngIf="submitted && f.myFile.errors" class="invalid-feedback">
+                                                <div *ngIf="f.myFile.errors.required">Please select a file!</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 ma-10">
+                                    <div class="hstack gap-2 justify-content-end">
+                                        <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="upload()"><i class="ri-upload-2-line label-icon align-middle fs-16 ms-2"></i>Upload Excel Template</button>
+                                        <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type text-white"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- end bulk upload -->
+                    </div>
+                    </div>
+                </div>
+                  <!-- end header -->
+                    
+                <!-- list-->
+                <div class="row" id="Competency_List" *ngIf="skillcategory">
+                    <div class="col-lg-3">
+                        <div class="card shadow-lg" >
+                            <div class="card-body">
+                                <div class="d-flex mb-1 topbar-up">
+                                    <div class="flex-grow-1">
+                                        <h5 class="fs-16 font-type fw-semibold pa-15">Skill Category</h5>
+                                    </div>
+                                </div>
+                                <div class="vstack gap-0">                                
+
+                                    <div class="p-1" *ngFor="let item of skillcategory; let i = index">
+                                        <div class="d-flex align-items-center">
+                                            <button class="btn btn-sm btn-info h-30 w-100 focus-ring focus-ring-info toggle-button" 
+                                                    id="buttonskill{{item.KEY_ID}}" 
+                                                    type="button"
+                                                    (click)="onskillcategorySelected(item)">                                                    
+                                                <span class="text-uppercase fs-11 fw-medium font-type text-white">{{item.DATA_VALUE}}</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                            <div class="filter-choices-input">
+                                    <div class="avatar-title bg-transparent">
+                                        <img src="assets\styles\img\bgg1.png" alt="" class="img-size"/>
+                                    </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                    </div>
+                    
+                    <div class="col-lg-9">
+                            <div class="card shadow-lg">
+                                <div class="card-header border-0 bg-light-blue" style="padding:10px">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <div class="align-items-center d-flex">
+                                                <h5 class="mb-0 text-uppercase font-type fw-semibold fs-16 text-blue"><span>{{selectedSkillCategory?.DATA_VALUE}}</span></h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                    <a href="#addCompetency" class="d-inline-block"  data-bs-toggle="modal" href="#addCompetency">
+                                                    <button type="button" class="btn btn-blue w-100 h-30 text-white font-type"> <i class="ri-file-add-line me-2 align-bottom"></i>Add Competency</button>
+                                                    </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end card header -->
+
+                                <div class="card-body ">
+                                    <div class="table-responsive  table-card mb-0">
+                                               <!--Qualification Table-->
+                                               <table class="table table-bordered border-info align-middle table-nowrap pl-10 table-hover" id="table_Education"*ngIf="this.selectedSkillCategoryId==1&&tabledata.length>0">
+                                                <thead>
+                                                    <tr class="font-type">
+                                                        <th class="fs-14" rowspan="2">Skill Set</th>
+                                                        <th class="fs-14">
+                                                            Required <br/>
+                                                        </th>
+                                                        <th class="fs-14">
+                                                            Action <br/>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody >
+                                                    <tr class="h1-50 font-type"*ngFor="let data of tabledata">
+                                                        <td>{{data.COMPETENCY_NAME}}</td>                                    
+                                                        <td> <input type="text" class="form-control search h-30 textbox-15 font-type w-100 bg-light" placeholder="Enter..."[(ngModel)]="data.LEVELS"></td>                                                
+                                                        <td class="align-items-center">
+                                                            <ul class="list-inline hstack gap-2 mb-0 ">
+                                                                <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
+                                                                    <a class="text-danger d-inline-block remove-item-btn text-center" data-bs-toggle="modal" href="#CancelModal"(click)="selectedcompid(data)">
+                                                                        <i class="ri-delete-bin-5-fill fs-16"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>                                                    
+                                                </tbody>
+                                            </table>
+                                            <!--End Qualification Table-->
+                                  <!-- Tables Border Colors -->
+                                        <table class="table table-bordered border-info align-middle table-nowrap pl-10 table-hover"*ngIf="this.selectedSkillCategoryId!=1&&tabledata.length>0">
+                                                <thead>
+                                                    <tr class="font-type">
+                                                        <th class="fs-14">Skill Set</th>
+                                                        <th class="text-center">
+                                                            1 <br> Level
+                                                        </th>
+                                                        <th class="text-center">
+                                                            2 <br> Level
+                                                        </th>
+                                                        <th class="text-center">
+                                                            3 <br> Level
+                                                        </th>
+                                                        <th  class="text-center">
+                                                            4 <br> Level
+                                                        </th>
+                                                        <th width="5%">
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody >
+                                                    <tr class="h-30 font-type" *ngFor="let data of tabledata">
+                                                        <td>{{data.COMPETENCY_NAME}}</td>
+                                                        <td class="text-center"> 
+                                                            <input type="radio" name="Radio{{data.COMPETENCY_ID}}-{{data.COMPETENCY_NAME}}" value="1" [checked]="data.LEVELS === '1'" />
+                                                        </td>
+                                                        <td class="text-center"> 
+                                                            <input type="radio" name="Radio{{data.COMPETENCY_ID}}-{{data.COMPETENCY_NAME}}" value="2"[checked]="data.LEVELS === '2'"  />
+                                                        </td>
+                                                        <td class="text-center"> 
+                                                            <input type="radio" name="Radio{{data.COMPETENCY_ID}}-{{data.COMPETENCY_NAME}}" value="3" [checked]="data.LEVELS === '3'" />
+                                                        </td>
+                                                        <td class="text-center"> 
+                                                            <input type="radio" name="Radio{{data.COMPETENCY_ID}}-{{data.COMPETENCY_NAME}}" value="4" [checked]="data.LEVELS === '4'" />
+                                                        </td>
+                                                        <td class="align-items-center">
+                                                            <ul class="list-inline hstack gap-2 mb-0 ">
+                                                                <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
+                                                                    <a class="text-danger d-inline-block remove-item-btn text-center" data-bs-toggle="modal" href="#CancelModal"(click)="selectedcompid(data)">
+                                                                        <i class="ri-delete-bin-5-fill fs-16"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                
+                                                </tbody>
+                                        </table> 
+                                    </div>
+                                    <!--IF NO DATA-->
+                                      <div class="text-center py-3" *ngIf="tabledata.length==0">
+                                                <div class="mb-2">
+                                                    <img src="assets\styles\img\icons8-search-64.png" alt="">
+                                                </div>
+                                                <h5 class="font-type fw-medium">No data to display for the selected category!</h5>
+                                      </div>
+                                </div>
+                                 <!-- end card -->
+                            </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type"(click)="submit(tabledata)" ><i class="ri-check-double-fill label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                        <button type="button" class="btn btn-blue btn-label right nexttab nexttab font-type"(click)="onskillcategorySelected(selectedSkillCategory)"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                        </div>
+                    </div>
+
+                </div>
+                <!--end list -->
+
+            </div>
+            <!-- container-fluid -->   
+            </div>
+            <!-- End Page-content -->
+
+                            <!--Add Competency Modal-->
+                            <div class="modal fade zoomIn " id="addCompetency" tabindex="-1" aria-labelledby="addCompetency" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                            <div class="modal-header bg-orange padding-up-5">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modalcomp"(click)="ClearAddCompetencyForm()"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="" [formGroup]="AddCompetencyForm">
+                                                    <div class="row mb-2">
+                                                        <div class="col-lg-12 col-md-12"[class.has-error]="AddCompetencyForm.get('competency')?.invalid && AddCompetencyForm.get('competency')?.touched">
+                                                            <label class="form-label font-type fw-semibold">Competency</label>
+                                                            <input type="text" class="form-control font-type textbox-15" placeholder="Enter the Competency" required formControlName="competency">
+                                                            <div *ngIf="AddCompetencyForm.get('competency')?.invalid && AddCompetencyForm.get('competency')?.touched" class="text-danger">
+                                                                Please enter reason!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </form>
+                                                <div class="col-lg-12 pt-2 mb-0">
+                                                    <div class="hstack gap-2 justify-content-end">
+                                                    <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type "(click)="AddCompetency()" ><i class="ri-add-line label-icon align-middle fs-16 ms-2"></i>Add</button>
+                                                    <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type"(click)="ClearAddCompetencyForm()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--end row-->   
+                                    </div>
+                             </div>
+                             <!--End Competency Modal-->
+
+                            <!--Delete Entry Modal-->
+                            <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-closeDelete"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <div class="text-center">
+                                                <h5 class="fs-13 font-type">You are about to delete an entry ?</h5>
+                                                <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                                                <div class="hstack gap-2 justify-content-center remove">   
+                                                    <button class="btn btn-success font-type" data-bs-dismiss="modal">No, Go back!</button>
+                                                    <button class="btn btn-danger font-type"(click)="Delete(selectedcompetencyid)">Yes, Continue</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End Delete Entry Modal-->
+                <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                                <!--Modal For Success Message Start-->
+                <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==1"> 
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                            
+                                </div>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==2">
+                            <div class="container">
+                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            <!--Modal For Success Message End-->
+
+                            <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

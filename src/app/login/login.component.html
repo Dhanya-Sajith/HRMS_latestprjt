@@ -1,0 +1,202 @@
+
+<div class="auth-page-wrapper pt-5" style="background-image: url('assets/images/banner.png'); width: 100%;max-width: 100%;  background-position: center; background-repeat: no-repeat; background-size: cover;"> 
+    <!-- auth page bg -->
+    
+        <div class="bg-overlay"></div>
+
+    <!-- auth page content -->
+    <div class="auth-page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center mt-sm-5 text-white-50">
+                        <div>
+                            <a href="index.html" class="d-inline-block auth-logo">
+                                <img src="assets\styles\img\logo_latest-removebg-preview.png" alt="" Height="100px" Width="250px">
+                            </a>
+                        </div>
+        
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-5">
+                    <div class="card mt-4"[hidden]="showreset">
+
+                        <div class="card-body p-4">
+                            <div class="text-center mt-2">
+                                <h5 class="text-primary">LOG IN</h5>                               
+                            </div>
+                           
+                            <div class="alert alert-success alert-dismissible" *ngIf="!showreset&&showAlert==1">                                
+                                <strong><i class="fa fa-check-circle text-success" style="font-size: 25px;"></i> {{message}}</strong> 
+                                
+                            </div>
+                            <div class="alert alert-danger alert-dismissible" *ngIf="!showreset&&showAlert==2">                                
+                                <strong><i class="fa fa-times-circle text-danger" style="font-size: 25px;"></i> {{message}}</strong> 
+                                <!-- <a href="/" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
+                            </div>
+                              
+                            <div class="p-2 mt-4">
+                                <form >
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" class="form-control" id="username"  placeholder="Username" name="username" [(ngModel)]="Username" required tabindex="1" #username >
+                                    </div>
+                                
+                                    <div class="mb-3">
+                                        <div class="float-end">
+                                            <a href="#" class="text-muted" (click)="forgotPassword()">Forgot password?</a>
+                                        </div>
+                                        <label class="form-label" for="password-input">Password</label>
+                                        <div class="position-relative auth-pass-inputgroup mb-3">
+                                            <input type="password" class="form-control pe-5 password-input" [(ngModel)]="Password"  placeholder="Password" id="password" name="password"required tabindex="2" (focusin)="checkPasswordNull2()">
+                                        </div>
+                                             
+                                            <label class="form-check-label" (click)="CheckPasswordNull()">Change Password</label> 
+                                            <!-- <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"></button> -->
+                                        </div>
+                                    
+
+                                    <!-- <div class="form-check"> -->
+                                        <!-- <input class="form-check-input" type="checkbox" value="" id="auth-remember-check" > -->
+                                        <!-- <label class="form-check-label" for="auth-remember-check" >Remember me</label> -->
+                                        
+                                    <!-- </div> -->
+
+                                    <div class="mt-4">
+                                        <button class="btn btn-primary w-100" type="submit" tabindex="3"(click)="onSubmit()" [disabled]="disablesubmit">Sign In</button>
+                                    </div>
+
+                                  
+                                </form>
+                                
+                            </div>
+                        </div>
+                     
+                    </div>
+                    <!-- end card -->
+
+                    <!-- Reset password -->
+
+                    <div class="card mt-4" *ngIf="showreset">
+
+                        <div class="card-body p-4">
+                            <div class="text-center mt-2">
+                                <h5 class="text-primary">CHANGE PASSWORD</h5>                               
+                            </div>
+                           
+                            <div class="alert alert-success alert-dismissible" *ngIf="showreset&&showAlert==1">                                
+                                <strong><i class="fa fa-check-circle text-success" style="font-size: 25px;"></i> {{message}}</strong> 
+                                
+                            </div>
+                            <div class="alert alert-danger alert-dismissible" *ngIf="showreset&&showAlert==2">                                
+                                <strong><i class="fa fa-times-circle text-danger" style="font-size: 25px;"></i> {{message}}</strong> 
+                                <!-- <a href="/" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
+                            </div>
+                              
+                            <div class="p-2 mt-4"*ngIf="showOldPasword==1">
+                                <form [formGroup]="resetForm" (ngSubmit)="resetPassword()" >
+
+                                    <div class="mb-3">
+                                        <label for="oldpassword" class="form-label">Old Password</label>
+                                        <input type="password" class="form-control" id="oldpassword"  placeholder="Old Password" formControlName="oldpassword" required tabindex="1" #oldpassword (focusout)="ValidateOldPassword()">
+                                        <div *ngIf="resetForm.get('oldpassword')!.hasError('required') && resetForm.get('oldpassword')!.touched" class="text-danger">Please enter old password!</div>
+
+                                        </div>
+                                
+                                    <div class="mb-3">                                       
+                                        <label class="form-label" for="password-input"> New Password</label>
+                                        <div class="position-relative auth-pass-inputgroup mb-3">
+                                            <input type="password" class="form-control pe-5 password-input" formControlName="newpassword"  placeholder="New Password" id="newpassword" required tabindex="2">
+                                            <div *ngIf="resetForm.get('newpassword')!.hasError('required') && resetForm.get('newpassword')!.touched" class="text-danger">Please enter new password!</div>
+                                            </div>                                        
+                                          
+                                        </div>
+                                    
+
+                                        <div class="mb-3">                                       
+                                            <label class="form-label" for="password-input"> Confirm Password</label>
+                                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                                <input type="password" class="form-control pe-5 password-input" formControlName="confirmpassword"  placeholder="Confirm Password" id="confirmpassword" required tabindex="2">
+                                                <div *ngIf="resetForm.get('confirmpassword')!.hasError('required') && resetForm.get('confirmpassword')!.touched" class="text-danger">Please re-enter the password!</div>
+                                                </div>                                                                             
+                                              
+                                            </div>
+
+                                    <div class="mt-4">
+                                        <button class="btn btn-primary" style="margin-left:110px;width:80px" type="submit" tabindex="3" >Save</button>
+                                        <button class="btn btn-danger" style="margin-left:10px;width:80px" type="button" tabindex="4" (click)="cancel()" >Cancel</button>
+                                    </div>
+
+                                  
+                                </form>
+                                
+                            </div>
+                            <div class="p-2 mt-4" *ngIf="showOldPasword==0">
+                                <form [formGroup]="resetForm2" (ngSubmit)="resetPassword2()" >                                   
+                                
+                                    <div class="mb-3">                                       
+                                        <label class="form-label" for="password-input"> New Password</label>
+                                        <div class="position-relative auth-pass-inputgroup mb-3">
+                                            <input type="password" class="form-control pe-5 password-input" formControlName="newpassword2"  placeholder="New Password" id="newpassword2" required tabindex="2">
+                                            <div *ngIf="resetForm2.get('newpassword2')!.hasError('required') && resetForm2.get('newpassword2')!.touched" class="text-danger">Please enter new password!</div>
+                                            </div>                                        
+                                          
+                                        </div>
+                                    
+
+                                        <div class="mb-3">                                       
+                                            <label class="form-label" for="password-input"> Confirm Password</label>
+                                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                                <input type="password" class="form-control pe-5 password-input" formControlName="confirmpassword2"  placeholder="Confirm Password" id="confirmpassword2" required tabindex="2">
+                                                <div *ngIf="resetForm2.get('confirmpassword2')!.hasError('required') && resetForm2.get('confirmpassword2')!.touched" class="text-danger">Please re-enter the password!</div>
+                                                </div>                                                                                     
+                                              
+                                            </div>
+
+                                    <div class="mt-4">
+                                        <button class="btn btn-primary" style="margin-left:110px;width:80px" type="submit" tabindex="3" >Save</button>
+                                        <button class="btn btn-danger" style="margin-left:10px;width:80px" type="button" tabindex="4" (click)="cancel()" >Cancel</button>
+                                    </div>
+
+                                  
+                                </form>
+                                
+                            </div>
+                        </div>
+                     
+                    </div>
+                     <!-- End Reset password -->
+
+                    
+                    
+                </div>
+                <footer class="footer">
+                    <div class="container" style="margin-top:-30px;">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <p class="mb-0 text-muted">&copy;
+                                        <script>document.write(new Date().getFullYear())</script> Emisoft.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+              
+            </div>
+            <!-- end row -->
+        </div>
+       
+        <!-- end container -->
+    </div>
+    <!-- end auth page content -->
+
+    <!-- footer -->
+
+    <!-- end Footer -->
+</div>
+<!-- end auth-page-wrapper -->

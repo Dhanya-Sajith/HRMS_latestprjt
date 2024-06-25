@@ -1,0 +1,391 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+   
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Airticket Booking</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter -->
+                <div class="topbar-up row">
+                    <div class="col-lg-12">
+                       <div class="card pa-0" id="divIndividual">                  
+                        <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5 pa-0">
+                            <div class="row mb-3">
+                                <div class="col-lg-3 pt-2">
+                                    <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
+                                    <select class="form-select font-type fs-11" aria-label="Default select example" name="company" #company (change)="DepartmentListFn(company.value)">
+                                        <option  value="-1" [defaultSelected]>All</option>
+                                        <option *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">{{CompanyList.DATA_VALUE}}</option>
+                                    </select>        
+                                </div>
+                                <div class="col-lg-2 pt-2">
+                                    <h6 class="font-type fs-12 fw-semibold"><span>Department </span></h6>
+                                    <select class="form-select font-type fs-11" aria-label="Default select example" name="department" #department required (change)="EmployeeListFn(department.value,company.value)">
+                                        <option  value="-1" [defaultSelected]>All</option>
+                                        <option  *ngFor="let DepartmentList of listDepartment" value="{{DepartmentList.KEY_ID}}">{{DepartmentList.DATA_VALUE}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 pt-2">  
+                                    <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
+                                    <select class="form-select font-type fs-11" aria-label="Default select example" name="emp_code" #emp_code required (change)="OnChangeEmployee(emp_code.value)">
+                                        <option value="-1">All</option>
+                                        <option  *ngFor="let EmployeeList of listEmployee" value="{{EmployeeList.EMP_CODE}}">{{EmployeeList.EMP_NAME}}</option>
+                                    </select>                       
+                                </div>
+                                <div class="col-lg-2 pt-2">
+                                    <h6 class="font-type fs-12 fw-semibold"><span>Status</span></h6>
+                                    <select class="form-select font-type fs-11" aria-label="Default select example" name="status" #status required (change)="OnChangeStatus(status.value)">
+                                        <option value="-1">All</option>
+                                        <option value="1">Pending</option>
+                                        <option value="2">Booked</option>
+                                    </select>         
+                                </div>
+                                <div class="col-lg-2 pt-4">
+                                    <h6 class="font-type fs-12 fw-semibold"><span></span></h6>
+                                    <button class="btn btn-blue font-type" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasleave" aria-controls="offcanvasleave" (click)="FetchLeaveDetails()">Leave Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Leave Details -->
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasleave" aria-labelledby="offcanvasRightLabel" style="width: 600px;">
+                            <div class="offcanvas-header border-bottom">
+                                <h5 class="offcanvas-title font-type" id="offcanvasRightLabel">Leave Details </h5>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" ></button>
+                            </div>
+                            <div class="offcanvas-body p-0 overflow-hidden">
+                                <div data-simplebar style="height: calc(100vh - 112px);">
+                                    <div class="table-responsive">
+                                      
+                                        <div class="row col-md-12" style="margin-top: 10px;margin-left: 0px;">   
+                                            <div class="col-md-4">  
+                                                <h6 class="font-type fs-12"><span>Employee Name </span></h6>
+                                                <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="leave_emp" name="leave_emp" required (change)="FetchLeaveDetails()">
+                                                    <option [value]="-1">All</option>
+                                                    <option  *ngFor="let EmployeeList of listEmployee" value="{{EmployeeList.EMP_CODE}}">
+                                                        {{EmployeeList.EMP_NAME}}
+                                                    </option>
+                                                </select>     
+                                            </div> 
+                                            <div class="col-md-4">
+                                                <h6 class="font-type fs-12"><span>Leave From Date </span></h6>
+                                                <input type="date" class="form-control font-type fs-11 mb-0" name="sdate" id="sdate" [formControl]="sdate" (change)="FetchLeaveDetails()">      
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h6 class="font-type fs-12"><span>Leave To Date </span></h6>
+                                                <input type="date" class="form-control font-type fs-11 mb-0" name="edate" id="edate" [formControl]="edate" (change)="FetchLeaveDetails()">
+                                            </div>
+                                        </div> 
+                                       
+
+                                        <table class="table table-bordered table-nowrap align-middle mb-0" style="margin-top: 10px;">
+                                            <thead>
+                                                <tr class="font-type">
+                                                    <th scope="col" style="width: 10%;">Emp Code</th>
+                                                    <th scope="col" style="width: 20%;">Emp Name</th>
+                                                    <th scope="col" style="width: 20%;">Leave Type</th>
+                                                    <th scope="col" style="width: 20%;">Leave From Date</th>
+                                                    <th scope="col" style="width: 20%;">Leave To Date</th>
+                                                    <!-- <th scope="col" style="width: 10%;">Status</th> -->
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="font-type">
+                                                <tr *ngFor="let leave of leavesummary;">
+                                                    <td>{{leave.EMP_CODE}}</td>
+                                                    <td>{{leave.EMP_NAME}}</td>
+                                                    <td>{{leave.LEAVE_TYPE}}</td>
+                                                    <td>{{leave.LEAVE_START_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                    <td>{{leave.LEAVE_END_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                    <!-- <td>{{leave.STATUS}}</td> -->
+                                                </tr>
+                                            </tbody><!-- end tbody -->
+                                        </table><!-- end table -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive table-card mb-0">
+                                <table class="table align-middle table-bordered border-orange">
+                                    <thead class="table-light text-white font-type">
+                                    <tr class="border-orange">
+                                        <th>Emp Code</th>
+                                        <th>Name</th>
+                                        <th>Company</th>
+                                        <th>Department</th>
+                                        <th width=5%>Departure</th>
+                                        <th width=5%>Destination</th>
+                                        <th>Departing</th>
+                                        <th>Returning</th>
+                                        <th>Passengers</th>
+                                        <th>Cost (AED)</th>
+                                        <th>Ticket</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list form-check-all font-type fs-11">
+                                    <tr class="font-type" *ngFor="let AirticketList of listairtickets | search : searchInput | pagination: currentPage: itemsPerPage;index as i" >
+                                        <th>{{AirticketList.EMP_CODE}}</th>
+                                        <td>{{AirticketList.EMP_NAME}}</td>
+                                        <td>{{AirticketList.COMPANY}}</td>
+                                        <td>{{AirticketList.DEPT}}</td>
+                                        <td>{{AirticketList.TYPE}}</td>
+                                        <td>{{AirticketList.STATUS_VAL}}</td>
+                                        <td>{{AirticketList.START_DATE | date:"dd-MM-yyyy"}}</td>
+                                        <td>{{AirticketList.END_DATE | date:"dd-MM-yyyy"}}</td>
+                                        <td>
+                                            <ng-container *ngIf="AirticketList.REASON =='L'">
+                                                Self
+                                            </ng-container>
+                                            <ng-container *ngIf="AirticketList.REASON == 'F'">
+                                                <a href="#DetailsModal" data-bs-toggle="modal" class="bar-text d-inline-block edit-item-btn"  style="text-decoration: underline;" (click)="passengerdetails(AirticketList.REQ_ID,AirticketList.EMP_CODE,1)"> Family</a>
+                                            </ng-container>
+                                        </td>
+                                        <td>{{AirticketList.COST}}</td>
+                                        <td id="td-ViewDocModal">
+                                            <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View" [hidden]="AirticketList.DOCUMENT ==''">
+                                                <a href="#ViewDocModal" data-bs-toggle="modal" class="bar-text d-inline-block edit-item-btn" (click)="ActivereqID(AirticketList.REQ_ID,AirticketList.REASON)">
+                                                <i class="ri-eye-line"></i>
+                                                </a>
+                                            </li>
+                                        </td>
+                                        <td>
+                                            <ul class="list-inline hstack gap-2 mb-0">
+                                                <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Upload">
+                                                   <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonApprove" href="#UploadModal"  (click)="Editempcode(AirticketList.EMP_CODE,AirticketList.REQ_ID,AirticketList.DOCUMENT,AirticketList.COST,AirticketList.REASON)"><i class="fa fas fa-upload fs-16"></i></button>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div *ngIf="listairtickets">
+                            <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                <div class="col-sm">
+                                  <div class="font-type fs-12 text-muted">
+                                    Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                    - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                    of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                  </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="font-type fs-12 text-muted">
+                                        Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                    <div class="d-flex gap-1 flex-wrap">
+                                        <div>
+                                            <div class="input-group">
+                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                    
+                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                              </div>
+                            </div>
+                                 
+                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                    <li class="page-item">
+                                      <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                    </li>
+                                    <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                      <li class="page-item">
+                                        <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                      </li>
+                                    </ng-container>
+                                    <li class="page-item">
+                                      <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                    </div>
+                </div>
+                        </div> 
+                    </div>
+            </div><!--end col-->
+
+            <!--start Upload Model-->     
+            <div class="modal fade" id="UploadModal" tabindex="-1" aria-labelledby="UploadModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="clearEdit()"></button>
+                        </div>
+                        <form class="tablelist-form" autocomplete="off" [formGroup]="EditForm" (ngSubmit)="validateEditForm()" >
+                            <div class="modal-body">
+                                <input type="hidden" id="id-field" />
+                                
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-2">
+                                        <h3 class="font-type fs-12 fw-semibold"><span>Cost (AED)</span></h3>
+                                        <input class="form-control font-type fs-12" type="number" id="cost" formControlName="cost">          
+                                        <div *ngIf="EditForm.get('cost')!.hasError('required') && EditForm.get('cost')!.touched" class="text-danger">
+                                            Please, Fill the field.
+                                        </div>  
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-2">
+                                        <h3 class="font-type fs-12 fw-semibold"><span>Upload Ticket</span></h3>
+                                        <input class="form-control font-type fs-12" type="file" id="AirticketDocControl" formControlName="AirticketDocControl">          
+                                        <div *ngIf="EditForm.get('AirticketDocControl')!.hasError('required') && EditForm.get('AirticketDocControl')!.touched" class="text-danger">
+                                            Please, upload the airticket..
+                                        </div>  
+                                        </div>
+                                    </div>
+                                </div>                                       
+                                
+                            <div class="modal-footer" style="padding-bottom: 0px;">
+                                <div class="hstack gap-2" *ngIf="!EditForm.valid">
+                                    <button type="submit" class="btn btn-soft-success" [disabled]="EditForm.valid" id="validate-btn" (click)="validateEditForm()">Upload</button>
+                                </div>
+                            
+                                <div class="hstack gap-2" *ngIf="EditForm.valid">
+                                    <button type="button" class="btn btn-soft-success" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="uploaddocument()">Upload</button>
+                                </div>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div> 
+            </div>   
+            <!--End Upload Model--> 
+
+             <!--Edit Model-->
+             <div class="modal fade" id="ViewDocModal" tabindex="-1" aria-labelledby="ViewDocModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                        </div>
+                        <form class="tablelist-form" autocomplete="off">
+                            <div class="modal-body">
+                                <input type="hidden" id="id-field" />
+                                    <h6 class="mb-3 fw-semibold text-uppercase font-type">Ticket</h6>
+                                    <div class="row g-3">
+                                        <div class="col-xxl-4 col-lg-12">
+                                            <div class="border rounded border-dashed p-2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <div class="avatar-sm">
+                                                            <div class="avatar-title bg-light text-secondary rounded fs-24">
+                                                                <i class="fa fa-ticket"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-shrink-0 ms-2">
+                                                        <div class="d-flex gap-1">
+                                                            <button type="button" class="btn btn-icon text-muted btn-sm fs-18" (click)="download_documents()"><i class="ri-download-2-line"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- end row -->
+                            </div>  
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--End Edit Model-->
+
+             <!--Passenger Details Model Team-->
+             <div class="modal fade zoomIn" id="DetailsModal" tabindex="-1" aria-labelledby="DetailsModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-white padding-up-5">
+                            <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                        </div>
+                        <form class="tablelist-form" autocomplete="off">
+                            <div class="modal-body ">
+                                <input type="hidden" id="id-field" />
+                                <div class="mb-1">
+                                    <div class="card-body">
+                                        <div class="table-responsive table-card">
+                                            <table class="table table-nowrap align-middle table-bordered border-orange">
+                                                <thead class="table-light text-white font-type">
+                                                <tr>
+                                                    <th>Passengers</th>
+                                                    <th>Age</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="list form-check-all font-type fs-11">
+                                            <tr class="font-type" *ngFor="let passengerdata of passengerslist">
+                                                <th>{{passengerdata.MEMBER_NAME}}</th>
+                                                <td>{{passengerdata.MEMBER_DOB | date:'dd-MM-yyyy'}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--Passenger Details Model Team-->
+            
+            <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+            <!--Modal For Success Message Start-->
+            <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                        </div>
+                        <div class="modal-body" *ngIf="showModal==1"> 
+                            <div class="container">
+                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                        
+                            </div>
+                        </div>
+                        <div class="modal-body" *ngIf="showModal==2">
+                        <div class="container">
+                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                            
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!--Modal For Success Message End-->
+        </div>
+       <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

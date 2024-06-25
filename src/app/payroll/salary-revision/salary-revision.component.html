@@ -1,0 +1,317 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+   
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Salary Revision</h4>
+                        </div>
+                    </div>
+                </div>
+                <!--Radiobutton-->
+                <div class="topbar-up row">
+                    <div class="col-lg-12">
+                        <div class="card  bg-light-blue" >
+                           <div class="card-body pa-6-8">
+                            <div class="col-lg-12" style="text-align: center;">
+                                <div class="mt-3 mt-lg-0" >
+                                    <div class="form-check form-check-inline form-check-info">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="WithoutinlineRadio1" checked  value="individual" [(ngModel)]="user" (change)="radioselection(user)">
+                                        <label class="form-check-label font-type fw-semibold text-blue fs-14" for="inlineRadio1">Individual</label>
+                                    </div>
+                                
+                                    <div class="form-check form-check-inline form-check-info">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="WithoutinlineRadio2" value="bulk" [(ngModel)]="user" (change)="radioselection(user)">
+                                        <label class="form-check-label font-type fw-semibold text-blue fs-14" for="inlineRadio2">Bulk Upload</label>
+                                    </div>
+                                
+                                </div>
+                            </div>
+                            </div><!-- end card-body -->
+                        </div><!-- end card -->
+                    </div>
+                    <!-- end col -->
+                </div>
+
+                <!-- Individual -->
+                <div *ngIf="user==='individual'">
+                <div class="topbar-up row">
+                <div class="col-lg-12">
+                   <div class="card pa-0" id="divIndividual">                  
+                    <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5 pa-0">
+                            <div class="row mb-3">
+                                        <div class="col-lg-4 pt-2">
+                                                <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
+                                                <select class="form-select font-type fs-11" aria-label="Default select example" id="company" name="company" #company (change)="DepartmentListFn(company.value)">
+                                                    <option  value="-1" [defaultSelected]>Select</option>
+                                                    <option *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">{{CompanyList.DATA_VALUE}}</option>
+                                                </select>        
+                                        </div>
+                                        <div class="col-lg-4 pt-2">
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Department </span></h6>
+                                                <select class="form-select font-type fs-11" aria-label="Default select example" id="department" name="department" #department required (change)="EmployeeListFn(department.value,company.value)">
+                                                    <option  value="-1" [defaultSelected]>Select</option>
+                                                    <option  *ngFor="let DepartmentList of listDepartment" value="{{DepartmentList.KEY_ID}}">{{DepartmentList.DATA_VALUE}}</option>
+                                                </select>
+                                         
+                                        </div>
+                                        <div class="col-lg-4 pt-2">  
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
+                                                <select class="form-select font-type fs-11" aria-label="Default select example" id="emp_code" name="emp_code" #emp_code required (change)="FetchAllowanceDtl(emp_code.value)">
+                                                    <option value="-1">Select</option>
+                                                    <option  *ngFor="let EmployeeList of listEmployee" value="{{EmployeeList.EMP_CODE}}">{{EmployeeList.EMP_NAME}}</option>
+                                                </select>                      
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>     
+                            </div>
+                        </div>
+                        <!--Table Deails-->
+                        <div class="row padding-down-10">
+                            <div class="col-xl-12">
+
+                                <div class="card shadow-lg" id="divIndividualTable" >
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card-header pa-6-8 bg-light-blue">
+                                                <div class="card-body pa-6-8 bg-light-blue">
+                                                    <div class="d-lg-flex align-items-center">
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type">Emp Code : <span class="fs-13 fw-semibold text-blue">{{EMP_CODE}}</span></h6>
+                                                         </div>
+                                                         <div class="flex-grow-1">
+                                                            <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type">Emp Name : <span class="fs-13 fw-semibold text-blue">{{EMP_NAME}}</span></h6>
+                                                         </div>
+                                                         <div class="flex-grow-1">
+                                                            <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type">Designation: <span class="fs-13 fw-semibold text-blue">{{DESIGNATION}}</span></h6>
+                                                         </div>
+                                                        <div class="flex-shrink-0 mt-lg-0 ">
+                                                            <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type">Years of Service : <span class="fs-13 fw-semibold text-blue">{{yearofservice}}</span></h6>
+                                                        </div>
+                                                    </div>
+                                                 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-- end card header -->
+    
+                                  
+                                    <div class="card-body shadow-lg">
+                                        <div class="live-preview">
+                                            <div class="table-responsive">
+                                                <table class="table align-middle table-nowrap mb-0 table-hover table-bordered border-blue">
+                                                    <thead class="text-black font-type bg-blue text-white">
+                                                        <tr class="font-type fs-12 fw-medium border-blue">
+                                                            <th class="fs-12">Components</th>
+                                                            <th class="fs-12">Current Salary</th>
+                                                            <th  Width="15%" class="fs-12">Revised Salary</th>
+                                                            <th  class="fs-12">Increment Amount</th>
+                                                            <th  class="fs-12">% Increased</th>
+                                                        </tr>
+                                                        <tr class="font-type fs-12 fw-medium border-blue">
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="font-type">
+                                                        <tr *ngFor="let item of Allowance;let i=index">
+                                                            <td>{{item.ALLOWANCE_NAME}} </td>
+                                                            <td>{{item.AMOUNT }}</td>
+                                                            <td><input type="number" id="newsalary{{i+1}}" class="form-control font-type textbox-15" placeholder="0.00" name="newsalary" [(ngModel)]="item.newsalary" (change)="percentagecalc(item,i+1)"></td>
+                                                            <td><input type="text" id="diffsalary{{i+1}}" style="border: none;pointer-events: none;" readonly></td>
+                                                            <td><input type="text" id="percent{{i+1}}" style="border: none;pointer-events: none;" readonly></td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot class="table-blue font-type">
+                                                        <tr>
+                                                            <td colspan="1" class="fw-semibold fs-13">Total</td>
+                                                            <td class="fw-semibold fs-13">{{grosssalary}}</td>
+                                                            <td class="fw-semibold fs-13">{{newgross}}</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                                <!-- end table -->
+                                            </div>
+                                            <!-- end table responsive -->
+                                        </div>
+                                 
+                                        <div class="row ma-20" style="justify-content: center;">
+                                            <div class="col-lg-2">
+                                                <button type="button" class="btn btn-orange font-type fs-12 add-button text-white" data-bs-toggle="modal" id="create-btn" data-bs-target="#AddModal"><span>Add New Component</span></button>
+                                            </div>
+                                            <div class="col-lg-6"></div>
+                                            <div class="col-lg-2">
+                                                <label for="nameInput" class="form-label font-type fw-semibold">Effective Date :</label>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <input type="date" class="form-control font-type h-30 textbox-15" min="{{mindate}}" [(ngModel)]="effectivedt">
+                                            </div>
+                                           
+                                           
+                                        </div>
+                                    </div>
+                                    <!-- end card-body -->
+                                  
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+                        </div>
+
+                        <!--End Table Deails-->
+                        <div class="col-lg-12 margin-up-7" id="divsubmit" >
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="submit" class="btn btn-orange font-type" (click) = "SaveSalaryRevision()" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Submit</button>
+                                <button type="button" class="btn btn-blue font-type" (click)="cancel()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End  Individual -->
+
+                    <!-- Bulk Order -->
+                    <div *ngIf="user==='bulk'">
+                        <div class="alert alert-success alert-dismissible" style="width:450px;" *ngIf="success">                                
+                            <strong><i class="fa fa-check-circle text-success" style="font-size: 25px;"></i> {{success}}</strong> 
+                        </div>
+                        <div class="alert alert-danger alert-dismissible" style="width:450px;" *ngIf="failed">                                
+                            <strong><i class="fa fa-times-circle text-danger" style="font-size: 25px;"></i>  {{failed}}</strong> 
+                        </div>
+                        <form [formGroup]="fileuploadForm" (ngSubmit)="upload()">
+                        <div class="row ma-5">
+                            <div class="col-lg-12">
+                                <div class="card"  id="divbulkUpload" >                  
+                                    <div class="card-body border border-top-0 border-end-0 border-start-0"  >
+                                        <div class="col-lg-12 margin-up-10  pt-2" id="divsubmit" >
+                                            <div class="hstack gap-2 justify-content-end">
+                                                <button type="button" class="btn btn-orange font-type text-white" (click)="download_to_excel()" ><span>Download Template</span></button>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="justify-content: center;">
+                                        <div class="col-lg-5 pt-2">
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Upload Your Excel Document </span></h6>
+                                            <input class="form-control font-type fs-12 textbox-15" id="myFile" (ngModelChange)="onImageChangeFromFile($event)" type="file" formControlName="myFile" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.myFile.errors }" >
+                                            <div *ngIf="submitted && f.myFile.errors" class="invalid-feedback">
+                                                <div *ngIf="f.myFile.errors.required">Please select a file!</div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>      
+                        <div class="col-lg-12 margin-up-7" id="divsubmit" >
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="submit" class="btn btn-orange font-type">Submit</button>
+                                <button type="button" class="btn btn-blue font-type">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--End  Bulk Order -->
+                  </div>
+                  
+          <!--Edit Model-->
+          <div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="AddModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-orange padding-up-5">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="clearEdit()"></button>
+                    </div>
+                    <form class="tablelist-form" autocomplete="off" [formGroup]="EditForm" (ngSubmit)="validateEditForm()" >
+                        <div class="modal-body">
+                            <input type="hidden" id="id-field" />
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-2">
+                                        <h3 class="fw-semibold fs-13 font-type"><span>New Component</span></h3>
+                                        <select class="form-select h-30 font-type textbox-15" name="salcomponent"  id="salcomponent" formControlName="salcomponent" >
+                                            <!-- <option value="-1">Select</option> -->
+                                            <option  *ngFor="let salarycompList of listsalarycomp"   value="{{salarycompList.KEY_ID}}">
+                                                {{salarycompList.DATA_VALUE}}
+                                            </option>
+                                        </select>
+                                       <div *ngIf="EditForm.get('salcomponent')!.hasError('required') && EditForm.get('salcomponent')!.touched" class="text-danger">
+                                        Please select a Component
+                                      </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-lg-6">
+                                    <div class="mb-2">
+                                        <h3 class="fw-semibold fs-13 font-type"><span>Amount</span></h3>
+                                        <input type="text" class="form-control font-type textbox-15" name="salaryamnt" id="salaryamnt" formControlName="salaryamnt"  placeholder="Enter the Value">
+                                       <div *ngIf="EditForm.get('salaryamnt')!.hasError('required') && EditForm.get('salaryamnt')!.touched" class="text-danger">
+                                        Please, Add a amount.
+                                      </div>
+                                    </div>
+                                </div> -->
+                            </div>                                       
+                               
+                        <div class="modal-footer" style="padding-bottom: 0px;">
+                            <div class="hstack gap-2" *ngIf="!EditForm.valid">
+                                <button type="submit" class="btn btn-orange font-type text-white" [disabled]="EditForm.valid" id="validate-btn" (click)="validateEditForm()">Submit</button>
+                            </div>
+                        
+                            <div class="hstack gap-2" *ngIf="EditForm.valid">
+                                <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="addsalarydtl()">Submit</button>
+                            </div>
+                        </div>
+                        </div>
+                    </form>
+            </div>
+        </div> 
+        </div>               
+         <!--End Edit Model-->     
+          <!--Modal For Success Message Start-->
+          <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-orange padding-up-5">
+                        <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                    </div>
+                    <div class="modal-body" *ngIf="showModal==1"> 
+                        <div class="container">
+                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                    
+                        </div>
+                    </div>
+                    <div class="modal-body" *ngIf="showModal==2">
+                    <div class="container">
+                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                        
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!--Modal For Success Message End-->
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+ 
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

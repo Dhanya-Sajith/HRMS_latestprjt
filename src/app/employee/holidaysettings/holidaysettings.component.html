@@ -1,0 +1,283 @@
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <app-header></app-header>
+                <!-- ========== App Menu ========== -->
+                <app-sidemenu></app-sidemenu>
+                <!-- Left Sidebar End -->
+                <!-- Vertical Overlay-->
+                <div class="vertical-overlay"></div>
+                <!-- ============================================================== -->
+                <!-- Start right Content here -->
+                <!-- ============================================================== -->
+                <div class="main-content">
+                    <div class="page-content">
+                        <div class="container-fluid">
+        
+                            <!-- start page title -->
+                            <div class="row" *ngIf="this.grpname.includes('HR')">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        <h4 class="mb-sm-1" style="margin-top: 10px;">Holiday Settings</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end page title -->
+                                             
+                            <div class="topbar-up row" [hidden]="!this.grpname.includes('HR')">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="live-preview">
+                                                <div class="row g-3"> 
+                                                    
+                                                   <div class="col-lg-12">
+                                                    <form  [formGroup]="requestForm" > 
+                                                        <div class="card ribbon-box border shadow-none mb-lg-3">
+                                                            <div class="card-body">
+                                                                <div class="ribbon ribbon-info round-shape mb-4 font-type">Add Holiday </div>
+                                                                <div class="ribbon-content mt-4 text-muted">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-4 pt-2">
+                                                                                <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
+                                                                                <select class="form-select font-type fs-11 mb-0 textbox-15" formControlName="company"  aria-label="Default select example" required>
+                                                                                    <option value="-1" selected>All</option>
+                                                                                    <option *ngFor="let combo of listCompany" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                                                </select>                                                                                
+                                                                        </div>
+                                                                        <div class="col-lg-4 pt-2">
+                                                                                <h6 class="font-type fs-12 fw-semibold"><span>Holiday</span></h6>
+                                                                                <input type="text" class="form-control font-type fs-13 mb-0 textbox-15" id="holiday" name="holiday" formControlName="holiday" placeholder="Enter the holiday">
+                                                                        
+                                                                        </div>
+                                                                        <div class="col-lg-4 pt-2">  
+                                                                                <h6 class="font-type fs-12 fw-semibold"><span> Effective Dates</span></h6>    
+                                                                                <input type="text" class="form-control date font-type fs-13 mb-0 textbox-15 " id="dates" name="dates"  formControlName="dates"  placeholder="Select dates" id="holidaydate" autocomplete="off">  
+                                                                            
+                                                                        </div>                                                                        
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="hstack gap-2 justify-content-end">
+                                                                <div class="modal-footer">
+                                                             
+                                                                <div class="hstack gap-2 justify-content-center" >
+                                                                    <button type="button" class="btn btn-blue font-type text-white" id="add-btn"   (click)="AddHoliday()">Submit</button>
+                                                                </div>
+                                                                </div>                                                             
+                                                                
+                                                                <button type="button" class="btn btn-blue font-type" (click)="Clear()">Clear</button> 
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    </div> 
+                                                
+                                                    </div>
+                                                    
+                                                    
+                                                <!-- </div> -->
+                                                <!-- end row -->
+                                            </div>
+                                        </div><!-- end card-body -->
+                                    </div><!-- end card -->
+                                </div>
+                                <!-- end col -->
+                            </div>
+                            
+                            
+                               
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header" style="padding:10px">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <div class="align-items-center d-flex ">
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Holiday List</h4>
+                                            </div>
+                                        </div>
+                                         <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div class="year" >
+                                                    <h6 class="fs-12 font-type fw-semibold"><span>Year</span></h6>
+                                                    <select class="form-select font-type fs-11 mb-0 textbox-15" [(ngModel)]="year"  aria-label="Default select example" required (change)="Fetchholidays();">                                                        
+                                                        <option *ngFor="let combo of listYear" [value]="combo.YEAR">{{ combo.YEAR }}</option>
+                                                    </select>    
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <!-- <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div class="search-box">
+                                                    <input type="text" class="form-control search h-30 textbox-15 font-type" id="searchInput" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+              
+                                <div class="card-body">
+                                    <div class="table-responsive table-card mb-0">
+                                        <table class="table table-nowrap align-middle" id="orderTable">
+                                            <thead class="table-light text-white font-type">                                    
+                                            <tr>                                                
+                                                <th>No</th>                                                
+                                                <th>Holiday</th>
+                                                <th>Date</th> 
+                                                <th>Day</th>
+                                                <th>Company</th>
+                                                <th [hidden]="!this.grpname.includes('HR')">Action</th>                                            
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11">
+                                          <tr class="font-type" *ngFor="let item of holidaylist | search : searchInput ;index as i">
+                                            <td>{{i+1}}</td>                                            
+                                            <td>
+                                                <ng-container *ngIf="item.isEditing">
+                                                     <input type="text" class="holiday"  [(ngModel)]="item.holiday"/>                                                   
+                                                    
+                                                  </ng-container>
+                                                  <ng-container *ngIf="!item.isEditing">
+                                                    {{item.HOLIDAY_NAME}}
+                                                  </ng-container>
+                                            </td>
+                                            <td>
+                                                <ng-container *ngIf="item.isEditing">
+                                                     <input type="date" class="holidaydate"  [(ngModel)]="item.holidayDate"/>                                                  
+                                                    
+                                                  </ng-container>
+                                                  <ng-container *ngIf="!item.isEditing">
+                                                    {{item.EFFECTIVE_DATE | date: 'dd-MM-yyyy'}}
+                                                  </ng-container>
+                                            </td>
+                                            <td>{{item.DAY}}</td>
+                                            <td>{{item.COMPANY_ID}}</td>
+                                            
+                                            <td>
+                                                <ul class="list-inline hstack gap-2 mb-0">
+                                                   
+                                                   <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit" *ngIf="this.grpname.includes('HR')">
+                                                    
+                                                    <button type="button" class="btn btn-outline-warning btn-sm br_radius mr-2" data-bs-toggle="modal" id="buttonEdit" (click)="Edit(item)" [hidden]="item.isEditing"><i class="fa fa-pencil-square-o ic_color" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                    
+                                                    </li>
+                                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Delete" *ngIf="this.grpname.includes('HR')">
+                                                    
+                                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#CancelModal" id="buttonDelete" (click)="selecteditem(item)" [hidden]="item.isEditing"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                        
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                    
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Save"  >
+                                                    
+                                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonSave" (click)="saveChanges(item)"  [hidden]="!item.isEditing" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                            
+                                                            </li>
+                                                        
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel" >
+                                                    
+                                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" id="buttonCancel" (click)="Cancel(item)" [hidden]="!item.isEditing"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                            
+                                                            </li>
+                                                   
+                                                   
+                                                        </ul>
+                                            </td>                          
+                                          </tr>                                   
+                                                                           
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="listLoanRequestPersonal.length > 0" style="padding-left: 15px;padding-right: 15px;">
+                                    <div class="col-sm">
+                                      <div class="font-type fs-11 text-muted">
+                                         Showing <span class="fw-semibold">{{ getEntriesStartPersonal() }}</span>
+                                        - <span class="fw-semibold">{{ getEntriesEndPersonal() }}</span>
+                                        of <span class="fw-semibold">{{ listLoanRequestPersonal.length }}</span> Results
+                                    </div>
+                                    </div>
+                                    <div class="col-sm-auto  mt-3 mt-sm-0" >
+                                        <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item " >                                                          
+                                                 <button class="page-link"  (click)="changePagePersonal(currentPagePersonal - 1)" [class.disabled-button]="currentPagePersonal === 1">←</button>                                                       
+                                            </li>
+                                            <li class="page-item active">
+                                                <span class="page-link" [class.active]="currentPagePersonal">{{ currentPagePersonal }}</span> 
+                                            </li>
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePagePersonal(currentPagePersonal + 1)" [class.disabled-button]="currentPagePersonal * itemsPerPage >= listLoanRequestPersonal.length">→</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div> -->
+                                </div>                    
+                              
+                            </div>
+                        </div><!--end col-->
+                    </div>
+                    <!--End Loan Request Summary-->
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+          <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                        <!--Modal For Success Message Start-->
+                        <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                    </div>
+                                    <div class="modal-body" *ngIf="showModal==1"> 
+                                        <div class="container">
+                                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                    
+                                        </div>
+                                    </div>
+                                    <div class="modal-body" *ngIf="showModal==2">
+                                    <div class="container">
+                                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                        
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!--Modal For Success Message End-->  
+                    <!--Delete Model-->
+                <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="text-center">
+                                    <h5 class="fs-15 font-type">Are you sure you want to delete ?</h5>                                    
+                                    <div class="hstack gap-2 justify-content-center remove"> 
+                                        
+                                        <button class="btn btn-danger " id="delete-record" data-bs-dismiss="modal" (click)="Delete(item)">Yes</button>
+                                        <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!--End cancel Request Model-->
+
+                    
+            <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+    
+
+

@@ -1,0 +1,1846 @@
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <app-header></app-header>
+            <!-- ========== App Menu ========== -->
+            <app-sidemenu></app-sidemenu>
+            <!-- Left Sidebar End -->
+            <!-- Vertical Overlay-->
+            <div class="vertical-overlay"></div>    
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content" style="overflow-x: hidden;">
+                <div class="page-content">
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card mt-n4 mx-n4 mb-n5">
+                                    <div class="bg-info-subtle">
+                                        <div class="card-body pb-4 mb-5">
+                                            <div class="row">
+                                                <div class="col-md">
+                                                    <div class="row align-items-center">
+                                                        <div class="d-flex align-items-center ma-5">
+                                                            <div class="flex-shrink-0">
+                                                                <div class="avatar-sm">
+                                                                    <span class="avatar-title bg-info-subtle">
+                                                                        <img src="assets\styles\img\icons8-business-trip-64.png" alt="" width="100%">
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-2 ma-5">
+                                                                <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Business Trip Request</h2>
+                                                            </div>
+                                                            <div class="flex-shrink-0 ms-1 pr-20" [hidden]="authorityflg == 0">
+                                                                <div class="page-title-right padding-up-5">
+                                                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                                                        
+                                                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2"  value="personal"  name="user" [(ngModel)]="user" (change)="teamselection(user)">
+                                                                        <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio2">Personal</label>
+
+                                                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1"  value="team" name="user" [(ngModel)]="user" (change)="teamselection(user)">
+                                                                        <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio1">Team</label>
+
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--end row-->
+                                                </div>
+                                            </div>
+                                            <!--end row-->
+                                        </div><!-- end card body -->
+                                    </div>
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+                        </div>
+                                    <!-- PERSONAL -->
+                                   <!-- Business Trip Request List Personal -->
+                                   <!-- <div class="row topbar-up" id="PersonalTrip"> -->
+                                    <div class="row" *ngIf="user === 'personal'">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header pa-6-8">
+                                                <div class="row align-items-center gy-3">
+                                                    <div class="col-sm">
+                                                        <div class="d-flex gap-1 flex-wrap">
+                                                            <div class="search-box" style="margin-top: 24px;">
+                                                                <input type="text" class="form-control search h-30 textbox-15 font-type"  id="searchInput"  [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                                <i class="ri-search-line search-icon"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h6 class="font-type fs-12"><span>Status</span></h6>
+                                                                <select class="form-select font-type fs-11" id="reqstatus" name="reqstatus" (change)="BusinessTripDataPersonalFilter()">                                                                   
+                                                                    <option value="-1">All</option>
+                                                                    <option  *ngFor="let Status of liststatus" value="{{Status.KEY_ID}}" [selected]="Status.DATA_VALUE == 'Pending for Approval'">
+                                                                    {{Status.DATA_VALUE}}
+                                                                    </option>
+                                                                </select>  
+                                                            </div>
+                                                            <div>
+                                                                <h6 class="font-type fs-12"><span>Start Date</span></h6>
+                                                                <input type="date" class="form-control font-type fs-11 mb-0" id="fromdate" name="fromdate" [formControl]="fromdate" (change)="BusinessTripDataPersonalFilter()" > 
+                                                            </div>
+                                                             <div>
+                                                                <h6 class="font-type fs-12"><span>End Date</span></h6>
+                                                                <input type="date" class="form-control font-type fs-11 mb-0" id="todate" name="todate" [formControl]="todate" (change)="BusinessTripDataPersonalFilter()" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-auto" style="margin-top: 40px;">
+                                                        <a href="#" class="btn btn-orange btn-sm font-type fs-13 font-type text-white" data-bs-toggle="modal" id="AddRequestModalPersonal-btn" data-bs-target="#AddRequestModalPersonal"  (click)="clearreq_datas()"><i class="ri-file-add-line align-middle me-1"></i>New Request</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive table-card mb-0">
+                                                    <table class="table table-nowrap align-middle table-bordered border-orange">
+                                                        <thead class="table-light text-white font-type">
+                                                        <tr class="border-orange">
+                                                            <th>SL No</th>
+                                                            <th>Start Date</th>
+                                                            <th>End Date</th>
+                                                            <th>Destination</th>
+                                                            <th>Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list form-check-all font-type fs-11">
+                                                    
+                                                        <tr class="font-type" *ngFor="let bussPersonal of listBussinesstrip_personal| search : searchInput | pagination: currentPage: itemsPerPage;let i = index ">
+                                                            <td>{{ i + 1 }}</td>
+                                                            <td>{{bussPersonal.START_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                            <td>{{bussPersonal.END_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                            <td>{{bussPersonal.DURATION}}</td>
+                                                            <td class="status">
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="bussPersonal.APPROVED_STATUS == '0'">
+                                                                        <span class="badge bg-blue text-white width-budge fs-11 fw-medium" data-target="#statusModal" data-bs-toggle="modal" href="#statusModal" (click)="Approvelist(bussPersonal.REQ_ID)">{{bussPersonal.STATUS_VAL}}</span>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="bussPersonal.APPROVED_STATUS == '1'">
+                                                                        <span class="badge bg-success text-white  width-budge fs-11 fw-medium" data-target="#statusModal" data-bs-toggle="modal" href="#statusModal" (click)="Approvelist(bussPersonal.REQ_ID)">{{bussPersonal.STATUS_VAL}}</span>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="bussPersonal.APPROVED_STATUS == '7'">
+                                                                        <span class="badge bg-danger text-white width-budge fs-11" data-target="#statusModal" data-bs-toggle="modal" href="#statusModal" (click)="Approvelist(bussPersonal.REQ_ID)">{{bussPersonal.STATUS_VAL}}</span>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="bussPersonal.APPROVED_STATUS == '6'">
+                                                                        <span class="badge bg-danger text-white width-budge fs-11" data-target="#statusModal" data-bs-toggle="modal" href="#statusModal" (click)="Approvelist(bussPersonal.REQ_ID)">{{bussPersonal.STATUS_VAL}}</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </td>
+                                                            <td>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="bussPersonal.APPROVED_STATUS == '0'">
+                                                                        <ul class="list-inline hstack gap-2 mb-0">
+                                                                            <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Request Details">
+                                                                                <a href="#ViewRequestModal" class="text-blue d-inline-block"  data-bs-toggle="modal" href="#ViewRequestModal" (click)="viewpersonal(bussPersonal.EMP_CODE,bussPersonal.REQ_ID )">
+                                                                                    <i class="ri-eye-fill fs-16"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
+                                                                                <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#CancelModal" (click)="setSelectedvalues(bussPersonal.REQ_ID,bussPersonal.EMP_CODE)">
+                                                                                    <i class="ri-delete-bin-5-fill fs-16"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="bussPersonal.APPROVED_STATUS == '1'">
+                                                                        <ul class="list-inline hstack gap-2 mb-0">
+                                                                            <li *ngIf="bussPersonal.ADMIN_COMPLETE_STATUS == '2'" class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Download">
+                                                                                <a href="#DownloadRequestModal" class="text-success d-inline-block" data-bs-toggle="modal" href="#DownloadRequestModal" (click)="fetchdataForAdmin(bussPersonal.EMP_CODE,bussPersonal.REQ_ID,3)">
+                                                                                    <i class="ri-download-2-fill fs-16"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                            <div *ngSwitchCase="bussPersonal.ADMIN_COMPLETE_STATUS == '2'">
+                                                                            <span *ngIf="bussPersonal.ADMIN_COMPLETE_STATUS == '2'" class="badge bg-success text-white  width-budge fs-12 fw-medium p-2 status-check">Completed</span>
+                                                                            </div>
+                                                                            <div *ngSwitchCase="bussPersonal.ADMIN_COMPLETE_STATUS == '1'">
+                                                                                <span  class="badge bg-info text-white  width-budge fs-12 fw-medium p-2 status-check">Pending Admin Verification</span>  
+                                                                            </div>
+
+                                                                            
+                                                                          
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="bussPersonal.APPROVED_STATUS == '7'">
+                                                                        <ul class="list-inline hstack gap-2 mb-0">
+                                                                            <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reason">
+                                                                                <a href="#ReasonModal"  class="text-danger d-inline-block" data-target="#ReasonModal" data-bs-toggle="modal" (click)="selectreason(bussPersonal.REASON)" >
+                                                                                    <i class="ri-question-mark fs-16"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="bussPersonal.APPROVED_STATUS == '6'">
+                                                                        <ul class="list-inline hstack gap-2 mb-0">
+                                                                            <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancelled">
+                                                                                <!-- <a href="#ReasonModal"  class="text-danger d-inline-block" data-target="#ReasonModal" data-bs-toggle="modal"> -->
+                                                                                    <i class="ri-close-circle-line fs-16 text-danger"></i>
+                                                                                <!-- </a> -->
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                </div>
+                                            <!-- <div class="row font-type">
+                                                <div class="col-sm">
+                                                   <div class="dataTables_info fs-12 text-muted" id="scroll-horizontal_info" role="status" aria-live="polite">Showing 1 to 3 of 3 entries</div>
+                                                </div>
+                                                
+                                                <div class="col-sm-auto  mt-3 mt-sm-0">
+                                                   <div class="dataTables_paginate paging_simple_numbers" id="scroll-horizontal_paginate">
+                                                      <ul class="pagination">
+                                                         <li class="paginate_button page-item previous disabled" id="scroll-horizontal_previous"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="0" tabindex="0" class="page-link fs-12">Previous</a></li>
+                                                         <li class="paginate_button page-item active"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="1" tabindex="0" class="page-link fs-12">1</a></li>
+                                                         <li class="paginate_button page-item "><a href="#" aria-controls="scroll-horizontal" data-dt-idx="2" tabindex="0" class="page-link fs-12">2</a></li>
+                                                         <li class="paginate_button page-item next" id="scroll-horizontal_next"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="3" tabindex="0" class="page-link fs-12">Next</a></li>
+                                                      </ul>
+                                                   </div>
+                                                </div>
+                                             </div> -->
+
+                                             <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                   </div>
+                                    <!-- End Business Trip Request Personal -->
+                                    <!-- PERSONAL -->
+    
+                                    <!-- TEAM -->
+                                    <!-- Business Trip Request List Team -->
+                                     <!-- <div class="row topbar-up" id="TeamTrip" style="display:none"> -->
+                                    <div class="row"  *ngIf="user === 'team'" [hidden]="authorityflg == 0" >
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header pa-6-8">
+                                                    <div class="row align-items-center gy-3">
+                                                        <div class="row col-md-12" style="margin-top: 25px;">
+                                                            <div class="col-md-3 search-box">
+                                                                <input type="text" class="form-control search h-30 textbox-15 font-type"  id="searchInput"  [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                                <i class="ri-search-line search-icon" style="left: 20px!important;"></i>
+                                                            </div>
+                                                            <div class="col-md-6"></div>
+                                                            <div class="col-md-3" style="text-align: right;">
+                                                                <a href="#" class="btn btn-orange btn-sm font-type fs-13 font-type text-white" data-bs-toggle="modal" id="AddRequestModalTeam-btn" data-bs-target="#AddRequestModalTeam"><i class="ri-file-add-line align-middle me-1"></i>New Request</a>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="row col-md-12" style="margin-top: 25px;">
+                                                            <!-- <div class="d-flex gap-1 flex-wrap"> -->
+                                                                <!-- <div class="col-md-1 search-box">
+                                                                    <input type="text" class="form-control search h-30 textbox-15 font-type"  id="searchInput"  [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                                    <i class="ri-search-line search-icon"></i>
+                                                                </div> -->
+                                                                <div class="col-md-2">
+                                                                    <h6 class="font-type fs-12"><span>Company</span></h6>
+                                                                    <select class="form-select font-type fs-11" name="Compname" id="Compname" style="width: 150px;" (change)="BusinessTripFilterTeam()">
+                                                                        <option value="-1">All</option>
+                                                                        <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
+                                                                            {{CompanyList.DATA_VALUE}} 
+                                                                        </option>
+                                                                    </select> 
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <h6 class="font-type fs-12"><span>Department</span></h6>
+                                                                    <select class="form-select font-type fs-11" name="dept" id="dept" (change)="BusinessTripFilterTeam()">
+                                                                        <option value="-1">All</option>
+                                                                        <option  *ngFor="let DepartmentList of listDepartment" value="{{DepartmentList.KEY_ID}}">
+                                                                            {{DepartmentList.DATA_VALUE}}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <h6 class="font-type fs-12"><span>Employee Name</span></h6>
+                                                                    <select class="form-select font-type fs-11" id="empname" name="empname"  style="width: 150px;" (change)="BusinessTripFilterTeam()" >
+                                                                        <option value="-1">All</option>
+                                                                        <option  *ngFor="let EmployeeList of listEmployeerep" value="{{EmployeeList.EMP_CODE}}" >
+                                                                         {{EmployeeList.EMP_NAME}}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <h6 class="font-type fs-12"><span>Status</span></h6>
+                                                                    <select class="form-select font-type fs-11" name="reqstatus" id="reqstatus" (change)="BusinessTripFilterTeam()">
+                                                                        <option value="-1">All</option>
+                                                                        <option  *ngFor="let Status of liststatus" value="{{Status.KEY_ID}}" [selected]="Status.DATA_VALUE == 'Pending for Approval'">
+                                                                            {{Status.DATA_VALUE}}
+                                                                        </option>
+                                                                    </select>  
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <h6 class="font-type fs-12"><span>Start Date</span></h6>
+                                                                    <input type="date" class="form-control font-type fs-11 mb-0" id="fromdate" name="fromdate" [formControl]="fromdate" (change)="BusinessTripFilterTeam()" > 
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <h6 class="font-type fs-12"><span>End Date</span></h6>
+                                                                    <input type="date" class="form-control font-type fs-11 mb-0" id="todate" name="todate" [formControl]="todate" (change)="BusinessTripFilterTeam()" >
+                                                                </div>
+                                                            <!-- </div> -->
+                                                        </div>
+                                                        <!-- <div class="col-sm-auto">
+                                                            <a href="#" class="btn btn-orange btn-sm font-type fs-13 font-type text-white" data-bs-toggle="modal" id="AddRequestModalTeam-btn" data-bs-target="#AddRequestModalTeam"><i class="ri-file-add-line align-middle me-1"></i>New Request</a>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-responsive table-card mb-0">
+                                                        <table class="table table-nowrap align-middle table-bordered border-orange">
+                                                            <thead class="table-light text-white font-type">
+                                                            <tr class="border-orange">
+                                                                <th>SL No</th>
+                                                                <th>Emp Code</th>
+                                                                <th>Employee Name</th>
+                                                                <th>Start Date</th>
+                                                                <th>End Date</th>
+                                                                <th>Destination</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="list form-check-all font-type fs-11">
+                                                        <!-- <tr class="font-type">
+                                                            <td>BT01</td>
+                                                            <td>MTC0192862</td>
+                                                            <td>Rajesh Kumar Sardar</td>
+                                                            <td>01 Jan 2024</td>
+                                                            <td>06 Jan, 2024</td>
+                                                            <td>Vienna</td>
+                                                            <td class="status"><span class="badge bg-danger text-white width-budge fs-11">Rejected</span></td>
+                                                                <td>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                                        <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reason">
+                                                                            <a href="#ReasonModal"  class="text-danger d-inline-block" data-target="#ReasonModal" data-bs-toggle="modal">
+                                                                                <i class="ri-question-mark fs-16"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </td>
+                                                        </tr>  -->
+                                                         <!-- <tr class="font-type">
+                                                            <td>BT02</td>
+                                                            <td>MTC1209649</td>
+                                                            <td>James Bangs</td>
+                                                            <td>20 Jan 2024</td>
+                                                            <td>30 Jan, 2024</td>
+                                                            <td>Berlin</td>
+                                                            <td class="status"><span class="badge bg-success text-white  width-budge fs-11 fw-medium">Approved</span>
+                                                                <td>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                                        <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Request Details">
+                                                                            <a href="#ViewRequestModal" class="text-blue d-inline-block"  data-bs-toggle="modal" href="#ViewRequestModal">
+                                                                                <i class="ri-eye-fill fs-16"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                    
+                                                                    <span class="badge bg-success text-white  width-budge fs-12 fw-medium p-2 status-check">Completed</span>
+                                                                
+                                                                    </ul>
+                                                                </td>
+                                                        </tr>  -->
+                                                        <tr class="font-type" *ngFor="let bussteam of listBussinesstrip_team  | search : searchInput | pagination: currentPagePersonal: itemsPerPage  ; let i = index">
+                                                            <td>{{ i + 1 }}</td>
+                                                            <td>{{bussteam.EMP_CODE}}</td>
+                                                            <td>{{bussteam.EMP_NAME}}</td>
+                                                            <td>{{bussteam.START_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                            <td>{{bussteam.END_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                            <td>{{bussteam.DURATION}}</td>
+                                                            <td class="status">
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="bussteam.APPROVED_STATUS=='0'">
+                                                                        <span class="badge bg-blue text-white width-budge fs-11 fw-medium">{{bussteam.STATUS_VAL}}</span>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="bussteam.APPROVED_STATUS == '1'">
+                                                                        <span class="badge bg-success text-white  width-budge fs-11 fw-medium">{{bussteam.STATUS_VAL}}</span>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="bussteam.APPROVED_STATUS == '7'">
+                                                                        <span class="badge bg-danger text-white width-budge fs-11">{{bussteam.STATUS_VAL}}</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </td>
+                                                                <td>
+                                                                    <ng-container [ngSwitch]="true">
+                                                                        <div *ngSwitchCase="bussteam.APPROVED_STATUS=='0'"  [hidden]="bussteam.STATUS_VAL=='Approved'" >
+                                                                            <ul class="list-inline hstack gap-1 mb-0">
+                                                                                <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve Request">
+                                                                                    <a href="#EditRequestModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn">
+                                                                                    <button type="button" class="btn btn-orange btn-sm" (click)="viewpersonal(bussteam.EMP_CODE,bussteam.REQ_ID )"><i class="ri-pencil-fill fs-16"></i></button>
+                                                                                    </a>
+                                                                                 </li>
+                                                                           
+                                                                                <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve Request">
+                                                                                    <a class="text-primary d-inline-block">
+                                                                                    <button type="button" class="btn btn-success btn-sm" (click)="approve(bussteam.REQ_ID,bussteam.EMP_CODE)" ><i class="ri-checkbox-circle-line fs-16"></i></button>
+                                                                                    </a>
+                                                                                 </li>
+                                                                                
+                                                                                 <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reject Request">
+                                                                                     <a class="remove-item-btn" data-bs-toggle="modal" href="#RejectModal">
+                                                                                     <button type="button" class="btn btn-danger btn-sm" (click)="setSelectedvalues(bussteam.REQ_ID,bussteam.EMP_CODE)"><i class="ri-close-circle-line fs-16"></i></button>
+                                                                                     </a>
+                                                                                 </li>
+                                                                             </ul>
+                                                                        </div>
+                                                                    
+
+                                                                    <div *ngSwitchCase="bussteam.APPROVED_STATUS == '1' && bussteam.STATUS_VAL=='Approved'">
+                                                                        <ul class="list-inline hstack gap-2 mb-0">
+                                                                            <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Request Details">
+                                                                                <a href="#ViewRequestModal" class="text-blue d-inline-block"  data-bs-toggle="modal" href="#ViewRequestModal" (click)="viewpersonal(bussteam.EMP_CODE,bussteam.REQ_ID )">
+                                                                                    <i class="ri-eye-fill fs-16"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                        
+                                                                        <span class="badge bg-success text-white  width-budge fs-12 fw-medium p-2 status-check">Completed</span>
+                                                                    
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="bussteam.APPROVED_STATUS == '7'">
+                                                                        <ul class="list-inline hstack gap-2 mb-0">
+                                                                            <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reason">
+                                                                                <a href="#ReasonModal"  class="text-danger d-inline-block" data-target="#ReasonModal" data-bs-toggle="modal" (click)="selectreason(bussteam.REASON)">
+                                                                                    <i class="ri-question-mark fs-16"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </ng-container>
+                                                                    
+                                                                </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- <div class="row font-type">
+                                                    <div class="col-sm">
+                                                       <div class="dataTables_info fs-12 text-muted" id="scroll-horizontal_info" role="status" aria-live="polite">Showing 1 to 3 of 3 entries</div>
+                                                    </div>
+                                                    
+                                                    <div class="col-sm-auto  mt-3 mt-sm-0">
+                                                       <div class="dataTables_paginate paging_simple_numbers" id="scroll-horizontal_paginate">
+                                                          <ul class="pagination">
+                                                             <li class="paginate_button page-item previous disabled" id="scroll-horizontal_previous"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="0" tabindex="0" class="page-link fs-12">Previous</a></li>
+                                                             <li class="paginate_button page-item active"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="1" tabindex="0" class="page-link fs-12">1</a></li>
+                                                             <li class="paginate_button page-item "><a href="#" aria-controls="scroll-horizontal" data-dt-idx="2" tabindex="0" class="page-link fs-12">2</a></li>
+                                                             <li class="paginate_button page-item next" id="scroll-horizontal_next"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="3" tabindex="0" class="page-link fs-12">Next</a></li>
+                                                          </ul>
+                                                       </div>
+                                                    </div>
+                                                 </div> -->
+                                                 <div *ngIf="listBussinesstrip_team">
+                                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsPersonal>0">
+                                                        <div class="col-sm">
+                                                          <div class="font-type fs-12 text-muted">
+                                                            Showing <span class="fw-semibold">{{ getEntriesStartPersonal() }}</span>
+                                                            - <span class="fw-semibold">{{ getEntriesEndPersonal() }}</span>
+                                                            of <span class="fw-semibold">{{ totalSearchResultsPersonal }}</span> Results
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <div class="font-type fs-12 text-muted">
+                                                                Total Pages : <span class="fw-semibold"> {{ getTotalPagesPersonal() }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                <div>
+                                                                    <div class="input-group">
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPagePersonal" tabindex="1">                                                                    
+                                                            
+                                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPagePersonal()" tabindex="2">Go</button>
+                                                      </div>
+                                                    </div>
+                                                         
+                                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePagePersonal(currentPagePersonal - 1)" [class.disabled-button]="currentPagePersonal === 1">←</button>
+                                                            </li>
+                                                            <ng-container *ngFor="let pageNumberPersonal of getPageNumbersPersonal(currentPagePersonal)">
+                                                              <li class="page-item">
+                                                                <button class="page-link" (click)="changePagePersonal(pageNumberPersonal)" [class.active]="currentPagePersonal === pageNumberPersonal">{{ pageNumberPersonal }}</button>
+                                                              </li>
+                                                            </ng-container>
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePagePersonal(currentPagePersonal + 1)" [class.disabled-button]="currentPagePersonal * itemsPerPage >= totalSearchResultsPersonal">→</button>
+                                                            </li>
+                                                          </ul>
+                                                        </div>
+                                                      </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--end col-->
+                                     </div>
+                                    <!-- End Business Trip Request List Team -->
+                                     <!-- END TEAM -->
+                                </div>
+                          
+                    </div>
+                    <!-- container-fluid -->
+       
+                    <!-- End Page-content -->
+    
+                    <!--PERSONAL MODEL BOXES-->
+    
+                     <!--Add Business Request Model-->
+                     <div class="modal fade zoomIn " id="AddRequestModalPersonal" tabindex="-1" aria-labelledby="AddRequestModalPersonal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <form [formGroup]="BussTripSelfForm" class="tablelist-form" autocomplete="off">
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="row topbar-up">
+                                            <div class="col-md-12 col-lg-12">
+                                                    <div class="p-2 pa-0">
+                                                        <div class="row mb-3">
+                                                            <div class="col-lg-2 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Trip Start Date </span></h6>
+                                                                <input type="date" id="start_date" name="start_date" class="form-control font-type fs-12 mb-0 textbox-15"  formControlName="start_date"  (change)="daycalculation()">   
+                                                                <div class="err font-type" *ngIf="submitted && a['start_date'].errors">
+                                                                    <div *ngIf="a['start_date'].errors['required']"><i>Trip start date is required</i></div>
+                                                                </div>      
+                                                            </div>
+                                                            <div class="col-lg-2 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Trip End Date </span></h6>
+                                                                <input type="date" id="end_date" name="end_date"  class="form-control font-type fs-12 mb-0 textbox-15" formControlName="end_date" (change)="daycalculation()"> 
+                                                                <div class="err font-type" *ngIf="submitted && a['end_date'].errors">
+                                                                    <div *ngIf="a['end_date'].errors['required']"><i>Trip end date is required</i></div>
+                                                                </div>       
+                                                            </div>
+                                                            <div class="col-lg-4 pt-2">  
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Destination</span></h6>
+                                                                <input type="text" id="destination" name="destination" placeholder="Enter Destination Details" class="form-control font-type fs-12 mb-0 textbox-15" formControlName="destination" >  
+                                                                <div class="err font-type" *ngIf="submitted && a['destination'].errors">
+                                                                    <div *ngIf="a['destination'].errors['required']"><i>Destination is required</i></div>
+                                                                </div> 
+                                                           </div>
+                                                            <div class="col-lg-2 pt-2">  
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Total Days</span></h6>
+                                                                <input type="text" id="no_of_days" name="no_of_days" class="form-control font-type textbox-15 bg-light fs-12" placeholder="0" formControlName="no_of_days" />            
+                                                                <div class="err font-type" *ngIf="submitted && a['no_of_days'].errors">
+                                                                    <div *ngIf="a['no_of_days'].errors['required']"><i>Total days is required</i></div>
+                                                                </div> 
+                                                            </div>
+        
+                                                            <!---Airticket Radio Buttons-->
+                                                            <div class="col-lg-2 pt-2">  
+                                                            <h6 class="font-type fs-12 fw-semibold text-info"><span>Airticket</span></h6>
+                                                                <div class="input-group">
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="airticket_status" id="airTicketRadio1" value="1"  (change)="airticketCheckYesNo('1')" formControlName="airticket_status" >
+                                                                        <label class="form-check-label font-type fs-12 fw-semibold">Yes</label>
+                                                                        
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="airticket_status" id="airTicketRadio2" value="0"  (change)="airticketCheckYesNo('0')" formControlName="airticket_status" >
+                                                                        <label class="form-check-label font-type fs-12 fw-semibold">No</label>
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="err font-type" *ngIf="submitted && a['airticket_status'].errors">
+                                                                    <div *ngIf="a['airticket_status'].errors['required']"><i>Airticket status is required</i></div>
+                                                                </div>
+                                                            </div>
+                                                            <!---End Airticket Radio Buttons-->
+                                                        </div>
+            
+                                                        <!---Onward/Return Radio Buttons-->
+                                                        <!-- <div class="row mb-3 p-3 pa-0 bg-info-subtle" style="justify-content: center;display: none;" id="airticketRadio" > -->
+                                                            <div class="row mb-3 p-3 pa-0 bg-info-subtle"  [hidden]="airticketstatus == '0'"> 
+                                                                <div class="col-md-6" >
+                                                                    <div class="d-flex align-items-center gap-4">
+                                                                        <span class="font-type fs-13 fw-semibold">Onward: </span>
+                                                                        <div class="input-group">
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="onward_ticket_type" id="OnwardRadio1"  value="1"  formControlName="onward_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Normal Ticket </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="onward_ticket_type" id="OnwardRadio2"  value="2" formControlName="onward_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Open Ticket </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="onward_ticket_type" id="OnwardRadio3" value="3" formControlName="onward_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Dummy Ticket </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="err font-type" *ngIf="submitted && a['onward_ticket_type'].errors">
+                                                                        <div *ngIf="a['onward_ticket_type'].errors['required']"><i>Onward airticket is required</i></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="d-flex align-items-center gap-4">
+                                                                    <span class="font-type fs-13 fw-semibold">Return: </span>
+                                                                        <div class="input-group">
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="return_ticket_type" id="ReturnRadio1" value="1" formControlName="return_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Normal Ticket </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="return_ticket_type" id="ReturnRadio2" value="2" formControlName="return_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Open Ticket </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="return_ticket_type" id="ReturnRadio3" value="3" formControlName="return_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Dummy Ticket </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                <div class="err font-type" *ngIf="submitted && a['return_ticket_type'].errors">
+                                                                    <div *ngIf="a['return_ticket_type'].errors['required']"><i>Return airticket is required</i></div>
+                                                                </div>
+                                                                </div>
+                                                        </div>
+                                                        <!---Onward/Return Radio Buttons-->
+                                                    
+                                                         <!---Accommodation Radio Buttons-->
+                                                         <div class="row">
+                                                            <div class="col-lg-2 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"> Accommodation </h6>
+                                                                <div class="input-group">
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="accommodation_status" id="AccRadio1" value="1"  (change)="accommodationCheck('1')" formControlName="accommodation_status"  >
+                                                                        <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline form-check-info">                                                                      
+                                                                        <input class="form-check-input" type="radio" name="accommodation_status" id="AccRadio2" value="0"  (change)="accommodationCheck('0')" formControlName="accommodation_status" >
+                                                                        <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="err font-type" *ngIf="submitted && a['accommodation_status'].errors">
+                                                                    <div *ngIf="a['accommodation_status'].errors['required']"><i>Accomodation status is required</i></div>
+                                                                </div>
+                                                            </div>
+                                                            <!---End Accommodation Radio Buttons-->
+    
+                                                            <div class="col-lg-10 bg-info-subtle p-3 pa-0 mb-2"  [hidden]="accomenable == '0'">
+                                                                <textarea class="form-control font-type textbox-15" required placeholder="Enter the Hotel Address" id="hotel_address" name="hotel_address" formControlName="hotel_address" ></textarea> 
+                                                                <div class="err font-type" *ngIf="submitted && a['hotel_address'].errors">
+                                                                    <div *ngIf="a['hotel_address'].errors['required']"><i>Hotel address is required</i></div>
+                                                                </div> 
+                                                            </div>           
+    
+                                                        <!---Airport Transportion Radio Buttons-->
+                                                        <div class="col-lg-2 pt-2">
+                                                            <h6 class="font-type fs-12 fw-semibold text-info"> Airport Transportation </h6>
+                                                            <div class="input-group">
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="airport_transportation" id="TraRadio1" value="1"  formControlName="airport_transportation" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="airport_transportation" id="TraRadio2" value="0"  formControlName="airport_transportation" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="err font-type" *ngIf="submitted && a['airport_transportation'].errors">
+                                                                <div *ngIf="a['airport_transportation'].errors['required']"><i>Airport transportation status is required</i></div>
+                                                            </div>
+                                                        </div>
+                                                         <!---End Airport Transportion Radio Buttons-->         
+        
+                                                        <!---SIM Card Radio Buttons-->
+                                                        <div class="col-lg-2 pt-2">
+                                                            <h6 class="font-type fs-12 fw-semibold text-info"> SIM Card </h6>
+                                                            <div class="input-group">
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="simcard_status" id="SimRadio1" value="1" formControlName="simcard_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="simcard_status" id="SimRadio2" value="0" formControlName="simcard_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="err font-type" *ngIf="submitted && a['simcard_status'].errors">
+                                                                <div *ngIf="a['simcard_status'].errors['required']"><i>SIM card status is required</i></div>
+                                                            </div>
+                                                        </div>
+                                                         <!---End SIM Card Radio Buttons--> 
+                   
+                                                        <!---Certifications Radio Buttons-->
+                                                        <div class="col-lg-2 pt-2 mb-2">
+                                                            <h6 class="font-type fs-12 fw-semibold text-info">Certifications </h6>
+                                                            <div class="input-group">
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="certification_status" id="CerRadio1" value="1" (change)="certificateCheck('1')" formControlName="certification_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="certification_status" id="CerRadio2" value="0" (change)="certificateCheck('0')" formControlName="certification_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="err font-type" *ngIf="submitted && a['certification_status'].errors">
+                                                                <div *ngIf="a['certification_status'].errors['required']"><i>Certifications status is required</i></div>
+                                                            </div>
+                                                        </div>
+                                                         <!---End Certifications Radio Buttons-->
+                                                        
+                                                        <div class="col-lg-12 bg-info-subtle p-3 pa-0 mb-2" [hidden]="certenable == '0'">
+                                                            <textarea class="form-control font-type textbox-15" required placeholder="Mention the Certifications" id="certifications" name="certifications" formControlName="certifications" ></textarea>
+                                                            <div class="err font-type" *ngIf="submitted && a['certifications'].errors">
+                                                                <div *ngIf="a['certifications'].errors['required']"><i>Certifications is required</i></div>
+                                                            </div>  
+                                                        </div>  
+        
+                                                        <!---Cash Advance Radio Buttons-->
+                                                        <div class="col-lg-2 pt-2 mb-2">
+                                                            <h6 class="font-type fs-12 fw-semibold text-info">Cash Advance</h6>
+                                                            <div class="input-group">
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="cash_advance_status" id="CashRadio1" value="1"  (change)="cashCheck('1')" formControlName="cash_advance_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="cash_advance_status" id="CashRadio2" value="0"  (change)="cashCheck('0')" formControlName="cash_advance_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="err font-type" *ngIf="submitted && a['cash_advance_status'].errors">
+                                                                <div *ngIf="a['cash_advance_status'].errors['required']"><i>Cash advance status is required</i></div>
+                                                            </div>
+                                                        </div>
+                                                         <!---End Cash Advance Radio Buttons-->
+    
+                                                        <div class="col-md-12 col-lg-12" [hidden]="cashenable == '0'" >
+                                                          <div class="row bg-info-subtle p-3 ma-5" > 
+                                                            <div class="col-lg-2">
+                                                                <input type="text" class="form-control font-type fs-11 textbox-15" placeholder="Enter the Amount" id="advance_amount" name="advance_amount" formControlName="advance_amount" > 
+                                                                <div class="err font-type" *ngIf="submitted && a['advance_amount'].errors">
+                                                                    <div *ngIf="a['advance_amount'].errors['required']"><i>Amount is required</i></div>
+                                                                </div>
+                                                            </div>
+                                                          <div class="col-lg-3">
+                                                          
+                                                          <select class="form-select font-type fs-11 textbox-15 mb-1" id="currency" name="currency" formControlName="currency" >
+                                                            <option value="">Select</option>
+                                                            <option  *ngFor="let CurrencyList of listcurrency" value="{{CurrencyList.TYPE_ID}}">
+                                                            {{CurrencyList.DATA_VALUE}}
+                                                            </option>
+                                                          </select> 
+                                                          <div class="err font-type" *ngIf="submitted && a['currency'].errors">
+                                                            <div *ngIf="a['currency'].errors['required']"><i>Currency is required</i></div>
+                                                          </div>               
+                                                       
+                                                          </div>
+                                                          </div>
+                                                        </div>
+    
+                                                        </div>
+                                                    </div>
+                                                <div class="col-lg-12">
+                                                    <div class="hstack gap-2 justify-content-end ma-10">
+                                                    <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" (click)="SelfBussTripSubmit()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Save</button>
+                                                    <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " (click)="clearfn()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                    </div>
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                                <!--end col-->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div> 
+                     <!--End Business Request Model-->
+        
+        
+                           <!-- Reason Model-->
+                           <div class="modal fade zoomIn" id="ReasonModal" tabindex="-1" aria-labelledby="ReasonModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <div>
+                                            <h6 class="fs-13 l2-h2 font-type" >{{reason}}</h6>         
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           </div>
+                        <!-- End Reason Model-->
+        
+                    <!-- View Request Details Model Personal-->
+                     <div class="modal fade zoomIn " id="ViewRequestModal" tabindex="-1" aria-labelledby="ViewRequestModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off">
+                                    <div class="modal-body pa-6-8">
+                                        <input type="hidden" id="id-field" />
+                                            <div class="col-md-12 col-lg-12"  *ngFor="let busiReqPer of businessReqPer" >
+                                                        <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Trip Start Date :</span></h6>     
+                                                            </div>
+                                                            <div class="col-lg-3 pt-2">
+                                                                <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{busiReqPer.START_DATE | date: 'dd-MM-yyyy'}}</p>         
+                                                            </div>
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Trip End Date :</span></h6>
+                                                            </div>
+                                                            <div class="col-lg-3 pt-2">
+                                                                <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{busiReqPer.END_DATE | date: 'dd-MM-yyyy'}}</p>         
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Destination : </span></h6>
+                                                            </div>
+                                                            <div class="col-lg-3 pt-2">
+                                                                <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{busiReqPer.DESTINATION}}</p>         
+                                                            </div> 
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Total Days :  </span></h6>
+                                                            </div>
+                                                            <div class="col-lg-3 pt-2">
+                                                                <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{busiReqPer.NOOFDAYS}}</p>         
+                                                            </div>
+                                                        </div>   
+    
+                                                        <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Airticket :  </span></h6>
+                                                            </div>
+                                                            <div class="col-lg-9 pt-1">
+                                                                <div class="row">  
+                                                                <div class="col-md-4 col-lg-4">
+                                                                    <ng-container [ngSwitch]="true">
+                                                                        <div *ngSwitchCase="busiReqPer.ONWARD_TICKET_TYPE == '1'">
+                                                                            <p class="fs-12 mb-2 pt-1 font-type  fw-semibold">Onward : <span class="fs-12 mb-2 pt-1 font-type fw-medium">Normal Ticket</span></p>   
+                                                                        </div>
+                                                                        <div *ngSwitchCase="busiReqPer.ONWARD_TICKET_TYPE == '2'">
+                                                                            <p class="fs-12 mb-2 pt-1 font-type  fw-semibold">Onward : <span class="fs-12 mb-2 pt-1 font-type fw-medium">Open Ticket</span></p>   
+                                                                        </div>
+                                                                        <div *ngSwitchCase="busiReqPer.ONWARD_TICKET_TYPE == '3'">
+                                                                            <p class="fs-12 mb-2 pt-1 font-type  fw-semibold">Onward : <span class="fs-12 mb-2 pt-1 font-type fw-medium">Dummy Ticket</span></p>   
+                                                                        </div>
+                                                                        <div *ngSwitchCase="busiReqPer.ONWARD_TICKET_TYPE == '4'">
+                                                                            <p class="fs-12 mb-2 pt-1 font-type  fw-semibold">Onward : <span class="fs-12 mb-2 pt-1 font-type fw-medium">Not Applicable</span></p>   
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </div>   
+                                                                <div class="col-md-4 col-lg-4">
+                                                                    <ng-container [ngSwitch]="true">
+                                                                        <div *ngSwitchCase="busiReqPer.RETURN_TICKET_TYPE == '1'">
+                                                                            <p class="fs-12 mb-2 pt-1 font-type  fw-semibold">Return : <span class="fs-12 mb-2 pt-1 font-type fw-medium">Normal Ticket</span></p>   
+                                                                        </div>
+                                                                        <div *ngSwitchCase="busiReqPer.RETURN_TICKET_TYPE == '2'">
+                                                                            <p class="fs-12 mb-2 pt-1 font-type  fw-semibold">Return : <span class="fs-12 mb-2 pt-1 font-type fw-medium">Open Ticket</span></p>   
+                                                                        </div>
+                                                                        <div *ngSwitchCase="busiReqPer.RETURN_TICKET_TYPE == '3'">
+                                                                            <p class="fs-12 mb-2 pt-1 font-type  fw-semibold">Return : <span class="fs-12 mb-2 pt-1 font-type fw-medium">Dummy Ticket</span></p>   
+                                                                        </div>
+                                                                        <div *ngSwitchCase="busiReqPer.RETURN_TICKET_TYPE == '4'">
+                                                                            <p class="fs-12 mb-2 pt-1 font-type  fw-semibold">Return : <span class="fs-12 mb-2 pt-1 font-type fw-medium">Not Applicable</span></p>   
+                                                                        </div>
+                                                                    </ng-container>  
+                                                                </div> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Accommodation :  </span></h6>
+                                                            </div>
+                                                            <div class="col-lg-9 pt-1">
+                                                                <p class="fs-12 mb-2 pt-1 font-type fw-medium">{{busiReqPer.HOTEL_ADDRESS}}</p>      
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Airport Transportation : </span></h6>     
+                                                            </div>
+                                                            <div class="col-lg-3 pt-2">
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="busiReqPer.AIRPORT_TRANSPORTATION == '1'">
+                                                                        <p class="fs-12 mb-2 pt-1 font-type margin-up-7">YES</p> 
+                                                                    </div>
+                                                                    <div *ngSwitchCase="busiReqPer.AIRPORT_TRANSPORTATION == '0'">
+                                                                        <p class="fs-12 mb-2 pt-1 font-type margin-up-7">NO</p> 
+                                                                    </div>
+                                                                </ng-container>    
+                                                            </div>
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>SIM Card : </span></h6>     
+                                                            </div>
+                                                            <div class="col-lg-3 pt-2">
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="busiReqPer.SIMCARD_STATUS == '1'">
+                                                                        <p class="fs-12 mb-2 pt-1 font-type margin-up-7">YES</p>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="busiReqPer.SIMCARD_STATUS == '0'">
+                                                                        <p class="fs-12 mb-2 pt-1 font-type margin-up-7">NO</p>
+                                                                    </div>
+                                                                </ng-container>  
+                                                                         
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Certifications  </span></h6>
+                                                            </div>
+                                                            <div class="col-lg-9 pt-1">
+                                                                <p class="fs-12 mb-2 pt-1 font-type fw-medium">{{busiReqPer.CERTIFICATIONS}}</p>      
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="row pa-0 border-no p-2 card-animate" style="border-color:lightgray;">
+                                                            <div class="col-lg-3 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Cash Advance  </span></h6>
+                                                            </div>
+                                                            <div class="col-lg-9 pt-2">
+                                                                <div class="row">  
+                                                                <div class="col-md-4 col-lg-4">
+                                                                    <p class="fs-12 mb-0 pt-1 font-type  fw-semibold">Amount : <span class="fs-12 mb-0 pt-1 font-type fw-medium">{{busiReqPer.ADVANCE_AMOUNT}}</span></p>   
+                                                                </div>   
+                                                                <div class="col-md-4 col-lg-4">
+                                                                    <p class="fs-12 mb-2 pt-1 font-type fw-semibold">Currency : <span class="fs-12 mb-2 pt-1 font-type fw-medium">{{busiReqPer.DEPT}}</span></p>   
+                                                                </div> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                </div>
+                                                <!--end row-->
+                                    </div>
+                                                <!--end col-->
+                                </form>
+                            </div>
+                        </div>
+                    </div> 
+                     <!-- End View Request Details Model Personal-->
+    
+    
+    
+                             <!-- Download Request Details Model Personal-->
+                             <div class="modal fade zoomIn " id="DownloadRequestModal" tabindex="-1" aria-labelledby="DownloadRequestModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                        </div>
+                                        <form class="tablelist-form" autocomplete="off">
+                                            <div class="modal-body pa-6-8">
+                                                <input type="hidden" id="id-field" />
+                                                    <div class="col-md-12 col-lg-12" *ngFor="let admidtview of listdataForAdmin">
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;" *ngIf="admidtview.ONWARD_DOCUMENT!=''">
+                                                                <div class="col-lg-4 pt-2">
+                                                                            <h6 class="font-type mb-3 fs-12 fw-semibold text-info"><span>Airticket Onward Document : </span></h6>  
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="flex-shrink-0 me-3">
+                                                                                    <div class="avatar-sm">
+                                                                                        <div class="avatar-title bg-light text-info rounded fs-24">
+                                                                                            <i class="ri-folder-zip-line"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex-grow-1 overflow-hidden">
+                                                                                    <h5 class="fs-13 mb-1"><a href="#" class="text-body text-truncate d-block font-type">{{admidtview.ONWARD_DOCUMENT}}</a></h5>
+                                                                                    <!-- <div>2.2MB</div> -->
+                                                                                </div>
+                                                                                <div class="flex-shrink-0 ms-2">
+                                                                                    <div class="d-flex gap-1">
+                                                                                        <a href="#" (click)="ViewFiles(admidtview.ONWARD_DOCUMENT,admidtview.REQ_ID,1)" ><i class="ri-download-2-line"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;" *ngIf="admidtview.RETURN_DOCUMENT!=''">
+                                                                <div class="col-lg-4 pt-2">
+                                                                    <h6 class="font-type mb-3 fs-12 fw-semibold text-info"><span>Airticket Return Document : </span></h6>  
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="flex-shrink-0 me-3">
+                                                                                    <div class="avatar-sm">
+                                                                                        <div class="avatar-title bg-light text-info rounded fs-24">
+                                                                                            <i class="ri-folder-zip-line"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex-grow-1 overflow-hidden">
+                                                                                    <h5 class="fs-13 mb-1"><a href="#" class="text-body text-truncate d-block font-type">{{admidtview.RETURN_DOCUMENT}}</a></h5>
+                                                                                    <!-- <div>2.2MB</div> -->
+                                                                                </div>
+                                                                                <div class="flex-shrink-0 ms-2">
+                                                                                    <div class="d-flex gap-1">
+                                                                                        <a href="#" (click)="ViewFiles(admidtview.RETURN_DOCUMENT,admidtview.REQ_ID,2)" ><i class="ri-download-2-line"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;" *ngIf="admidtview.HOTEL_ACCOM_DOCUMENT!=''">
+                                                                    <div class="col-lg-4 pt-2">
+                                                                            <h6 class="font-type mb-3 fs-12 fw-semibold text-info"><span>Hotel Accommodation : </span></h6>  
+                                                                    </div>
+                                                                    <div class="col-lg-8">
+                                                                        <div>
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="flex-shrink-0 me-3">
+                                                                                    <div class="avatar-sm">
+                                                                                        <div class="avatar-title bg-light text-blue rounded fs-24">
+                                                                                            <i class="ri-folder-zip-line"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex-grow-1 overflow-hidden">
+                                                                                    <h5 class="fs-13 mb-1"><a href="#" class="text-body text-truncate d-block font-type">{{admidtview.HOTEL_ACCOM_DOCUMENT}}</a></h5>
+                                                                                    <!-- <div>2.2MB</div> -->
+                                                                                </div>
+                                                                                <div class="flex-shrink-0 ms-2">
+                                                                                    <div class="d-flex gap-1">
+                                                                                        <a href="#" (click)="ViewFiles(admidtview.HOTEL_ACCOM_DOCUMENT,admidtview.REQ_ID,3)" ><i class="ri-download-2-line"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                                    <div class="col-lg-4 pt-2">
+                                                                            <h6 class="font-type mb-2 fs-12 fw-semibold text-info"><span>Transport To & From Airport :</span></h6>   
+                                                                     </div>
+                                                                    <div class="col-lg-8 pt-2">
+                                                                       <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{admidtview.TRANSPORT_FROM_TO}}</p>  
+                                                                    </div>
+                                                            </div>
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                                    <div class="col-lg-4 pt-2">
+                                                                        <h6 class="font-type mb-2 fs-12 fw-semibold text-info"><span>SIM Card : </span></h6> 
+                                                                     </div>
+                                                                    <div class="col-lg-8 pt-2">
+                                                                       <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{admidtview.SIM_CARD_DTL}}</p>  
+                                                                    </div>
+                                                            </div>
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                                    <div class="col-lg-4 pt-2">
+                                                                        <h6 class="font-type mb-2 fs-12 fw-semibold text-info"><span>Certifications : </span></h6> 
+                                                                     </div>
+                                                                    <div class="col-lg-8 pt-2">
+                                                                        <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{admidtview.CERTIFICATION_ADMIN}}</p>  
+                                                                    </div>
+                                                            </div>
+      
+                                                                       
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                                    <div class="col-lg-4 pt-2">
+                                                                            <h6 class="font-type mb-2 fs-12 fw-semibold text-info"><span>Cash Advance : </span></h6>        
+                                                                    </div>
+                                                                    <div class="col-lg-8">
+                                                                        <div class="row">  
+                                                                        <div class="col-md-4 col-lg-4">
+                                                                            <p class="fs-12 mb-0 pt-1 font-type  fw-semibold">Amount : <span class="fs-12 mb-0 pt-1 font-type fw-medium">{{admidtview.ADVANCE_AMOUNT_ADMIN}}</span></p>   
+                                                                        </div>   
+                                                                        <div class="col-md-4 col-lg-4">
+                                                                            <p class="fs-12 mb-2 pt-1 font-type fw-semibold">Currency : <span class="fs-12 mb-2 pt-1 font-type fw-medium">{{admidtview.CURRENCY_ADMIN}}</span></p>   
+                                                                        </div> 
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+    
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                                    <div class="col-lg-4 pt-2">
+                                                                            <h6 class="font-type mb-2 fs-12 fw-semibold text-info"><span>Passport Validity :</span></h6>        
+                                                                    </div>
+                                                                    <div class="col-lg-8 pt-2">
+                                                                        <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{admidtview.PASSPORT_VALIDITY | date: 'dd-MM-yyyy'  }}</p>  
+                                                                    </div>
+                                                            </div>
+    
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                                    <div class="col-lg-4 pt-2">
+                                                                            <h6 class="font-type mb-2 fs-12 fw-semibold text-info"><span>Residence Permit Validity :</span></h6>        
+                                                                    </div>
+                                                                    <div class="col-lg-8 pt-2">
+                                                                        <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{admidtview.RESIDENCE_VALIDITY | date: 'dd-MM-yyyy' }}</p>  
+                                                                    </div>
+                                                            </div>
+    
+    
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                                    <div class="col-lg-4 pt-2">
+                                                                            <h6 class="font-type mb-2 fs-12 fw-semibold text-info"><span>Notification to Insurance :</span></h6>        
+                                                                    </div>
+                                                                    <div class="col-lg-8 pt-2">
+                                                                        <ng-container [ngSwitch]="true">  
+                                                                            <div *ngSwitchCase="admidtview.INSURANCE_NOTIFICATION == '1'">
+                                                                                <p class="fs-12 mb-2 pt-1 font-type margin-up-7">Yes</p>
+                                                                            </div>
+                                                                            <div *ngSwitchCase="admidtview.INSURANCE_NOTIFICATION == '0'">
+                                                                                <p class="fs-12 mb-2 pt-1 font-type margin-up-7">No</p>
+                                                                            </div>
+                                                                        </ng-container>
+                                                                    </div>
+                                                            </div>
+    
+                                                                
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                                    <div class="col-lg-4 pt-2">
+                                                                            <h6 class="font-type mb-2 fs-12 fw-semibold text-info"><span>Emergency Response Team :</span></h6>        
+                                                                    </div>
+                                                                    <div class="col-lg-8 pt-2">
+                                                                        <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{admidtview.EMERGENCY_RESPONSE_TEAM }}</p>  
+                                                                    </div>
+                                                            </div>
+    
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-2 card-animate" style="border-color:lightgray;">
+                                                                    <div class="col-lg-4 pt-2">
+                                                                            <h6 class="font-type mb-2 fs-12 fw-semibold text-info"><span>Emergency Contact in UAE :</span></h6>        
+                                                                    </div>
+                                                                    <div class="col-lg-8 pt-2">
+                                                                        <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{admidtview.EMERGENCY_CONTACT_UAE }} </p>  
+                                                                    </div>
+                                                            </div>
+    
+                                                            <div class="row pa-0 card-animate border-no p-2">
+                                                                    <div class="col-lg-4 pt-2">
+                                                                            <h6 class="font-type mb-2 fs-12 fw-semibold text-info"><span>Contact in Home Country :</span></h6>        
+                                                                    </div>
+                                                                    <div class="col-lg-8 pt-2">
+                                                                        <p class="fs-12 mb-2 pt-1 font-type margin-up-7">{{admidtview.CONTACT_HOME_COUNTRY }}</p>  
+                                                                    </div>
+                                                            </div>
+                                                        <!--end row-->
+                                                    </div>
+                                                        <!--end col-->
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                             </div> 
+                             <!-- End Download Request Details Model Personal-->
+    
+    
+                     <!--Cancel Request Model-->
+                     <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <div class="text-center">
+                                        <h5 class="fs-13 font-type">You are about to delete an entry ?</h5>
+                                        <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                                        <div class="hstack gap-2 justify-content-center remove">   
+                                            <button class="btn btn-success font-type"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No, Go back!</button>
+                                            <button class="btn btn-danger font-type" (click)="CancelRequest(selectedEmpcode,selectedRequestID)" >Yes, Continue</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Cancel Request Model-->
+    
+                    <!--END PERSONAL MODEL BOXES-->
+          
+         
+                    <app-footer></app-footer>
+    
+                    <!--TEAM MODEL BOXES-->
+    
+                     <!--Add Business Request Model Team-->
+                     <div class="modal fade zoomIn " id="AddRequestModalTeam" tabindex="-1" aria-labelledby="AddRequestModalTeam" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <form [formGroup]="BussTripSelfForm" class="tablelist-form" autocomplete="off">
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="row topbar-up">
+                                            <div class="col-md-12 col-lg-12">
+                                                    <div class="p-2 pa-0">
+                                                        <div class="row mb-3">
+                                                            <div class="col-lg-2 pt-2">  
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Employee</span></h6>
+                                                                <select class="form-select font-type fs-12 textbox-15 mb-1" id="emp_code" name="emp_code"  formControlName="emp_code">
+                                                                    <option value="-1">Select</option>
+                                                                    <option  *ngFor="let EmployeeListrep of listEmployeerep" value="{{EmployeeListrep.EMP_CODE}}" >
+                                                                    {{EmployeeListrep.EMP_NAME}}
+                                                                    </option>
+                                                                </select>                
+                                                            </div>
+                                                            <div class="col-lg-2 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Trip Start Date </span></h6>
+                                                                <input type="date" id="start_dates" name="start_date" class="form-control font-type fs-12 mb-0 textbox-15"  formControlName="start_date"  (change)="daycalculationteam()">   
+                                                                <div class="err font-type" *ngIf="submitted && a['start_date'].errors">
+                                                                    <div *ngIf="a['start_date'].errors['required']"><i>Trip start date is required</i></div>
+                                                                </div>      
+                                                            </div>
+                                                            <div class="col-lg-2 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Trip End Date </span></h6>
+                                                                <input type="date" id="end_dates" name="end_date"  class="form-control font-type fs-12 mb-0 textbox-15" formControlName="end_date" (change)="daycalculationteam()"> 
+                                                                <div class="err font-type" *ngIf="submitted && a['end_date'].errors">
+                                                                    <div *ngIf="a['end_date'].errors['required']"><i>Trip end date is required</i></div>
+                                                                </div>       
+                                                            </div>
+                                                            <div class="col-lg-2 pt-2">  
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Destination</span></h6>
+                                                                <input type="text" id="destination" name="destination" placeholder="Enter Destination Details" class="form-control font-type fs-12 mb-0 textbox-15" formControlName="destination" >  
+                                                                <div class="err font-type" *ngIf="submitted && a['destination'].errors">
+                                                                    <div *ngIf="a['destination'].errors['required']"><i>Destination is required</i></div>
+                                                                </div> 
+                                                           </div>
+                                                            <div class="col-lg-2 pt-2">  
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Total Days</span></h6>
+                                                                <input type="text" id="no_of_days" name="no_of_days" class="form-control font-type textbox-15 bg-light fs-12" placeholder="0" formControlName="no_of_days" />            
+                                                                <div class="err font-type" *ngIf="submitted && a['no_of_days'].errors">
+                                                                    <div *ngIf="a['no_of_days'].errors['required']"><i>Total days is required</i></div>
+                                                                </div> 
+                                                            </div>
+        
+                                                            <!---Airticket Radio Buttons-->
+                                                            <div class="col-lg-2 pt-2">  
+                                                            <h6 class="font-type fs-12 fw-semibold text-info"><span>Airticket</span></h6>
+                                                                <div class="input-group">
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="airticket_status" id="airTicketRadio1" value="1"  (change)="airticketCheckYesNo('1')" formControlName="airticket_status" >
+                                                                        <label class="form-check-label font-type fs-12 fw-semibold">Yes</label>
+                                                                        
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="airticket_status" id="airTicketRadio2" value="0"  (change)="airticketCheckYesNo('0')" formControlName="airticket_status" >
+                                                                        <label class="form-check-label font-type fs-12 fw-semibold">No</label>
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="err font-type" *ngIf="submitted && a['airticket_status'].errors">
+                                                                    <div *ngIf="a['airticket_status'].errors['required']"><i>Airticket status is required</i></div>
+                                                                </div>
+                                                            </div>
+                                                            <!---End Airticket Radio Buttons-->
+                                                        </div>
+            
+                                                        <!---Onward/Return Radio Buttons-->
+                                                        <!-- <div class="row mb-3 p-3 pa-0 bg-info-subtle" style="justify-content: center;display: none;" id="airticketRadio" > -->
+                                                            <div class="row mb-3 p-3 pa-0 bg-info-subtle"  [hidden]="airticketstatus == '0'"> 
+                                                                <div class="col-md-6" >
+                                                                    <div class="d-flex align-items-center gap-4">
+                                                                        <span class="font-type fs-13 fw-semibold">Onward: </span>
+                                                                        <div class="input-group">
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="onward_ticket_type" id="OnwardRadio1"  value="1"  formControlName="onward_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Normal Ticket </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="onward_ticket_type" id="OnwardRadio2"  value="2" formControlName="onward_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Open Ticket </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="onward_ticket_type" id="OnwardRadio3" value="3" formControlName="onward_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Dummy Ticket </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="err font-type" *ngIf="submitted && a['onward_ticket_type'].errors">
+                                                                        <div *ngIf="a['onward_ticket_type'].errors['required']"><i>Onward airticket is required</i></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="d-flex align-items-center gap-4">
+                                                                    <span class="font-type fs-13 fw-semibold">Return: </span>
+                                                                        <div class="input-group">
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="return_ticket_type" id="ReturnRadio1" value="1" formControlName="return_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Normal Ticket </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="return_ticket_type" id="ReturnRadio2" value="2" formControlName="return_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Open Ticket </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="return_ticket_type" id="ReturnRadio3" value="3" formControlName="return_ticket_type" >
+                                                                                <label class="form-check-label font-type fs-12 fw-medium">Dummy Ticket </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                <div class="err font-type" *ngIf="submitted && a['return_ticket_type'].errors">
+                                                                    <div *ngIf="a['return_ticket_type'].errors['required']"><i>Return airticket is required</i></div>
+                                                                </div>
+                                                                </div>
+                                                        </div>
+                                                        <!---Onward/Return Radio Buttons-->
+                                                    
+                                                         <!---Accommodation Radio Buttons-->
+                                                         <div class="row">
+                                                            <div class="col-lg-2 pt-2">
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"> Accommodation </h6>
+                                                                <div class="input-group">
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="accommodation_status" id="AccRadio1" value="1"  (change)="accommodationCheck('1')" formControlName="accommodation_status"  >
+                                                                        <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline form-check-info">                                                                      
+                                                                        <input class="form-check-input" type="radio" name="accommodation_status" id="AccRadio2" value="0"  (change)="accommodationCheck('0')" formControlName="accommodation_status" >
+                                                                        <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="err font-type" *ngIf="submitted && a['accommodation_status'].errors">
+                                                                    <div *ngIf="a['accommodation_status'].errors['required']"><i>Accomodation status is required</i></div>
+                                                                </div>
+                                                            </div>
+                                                            <!---End Accommodation Radio Buttons-->
+    
+                                                            <div class="col-lg-10 bg-info-subtle p-3 pa-0 mb-2"  [hidden]="accomenable == '0'">
+                                                                <textarea class="form-control font-type textbox-15" required placeholder="Enter the Hotel Address" id="hotel_address" name="hotel_address" formControlName="hotel_address" ></textarea> 
+                                                                <div class="err font-type" *ngIf="submitted && a['hotel_address'].errors">
+                                                                    <div *ngIf="a['hotel_address'].errors['required']"><i>Hotel address is required</i></div>
+                                                                </div> 
+                                                            </div>           
+    
+                                                        <!---Airport Transportion Radio Buttons-->
+                                                        <div class="col-lg-2 pt-2">
+                                                            <h6 class="font-type fs-12 fw-semibold text-info"> Airport Transportation </h6>
+                                                            <div class="input-group">
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="airport_transportation" id="TraRadio1" value="1"  formControlName="airport_transportation" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="airport_transportation" id="TraRadio2" value="0"  formControlName="airport_transportation" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="err font-type" *ngIf="submitted && a['airport_transportation'].errors">
+                                                                <div *ngIf="a['airport_transportation'].errors['required']"><i>Airport transportation status is required</i></div>
+                                                            </div>
+                                                        </div>
+                                                         <!---End Airport Transportion Radio Buttons-->         
+        
+                                                        <!---SIM Card Radio Buttons-->
+                                                        <div class="col-lg-2 pt-2">
+                                                            <h6 class="font-type fs-12 fw-semibold text-info"> SIM Card </h6>
+                                                            <div class="input-group">
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="simcard_status" id="SimRadio1" value="1" formControlName="simcard_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="simcard_status" id="SimRadio2" value="0" formControlName="simcard_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="err font-type" *ngIf="submitted && a['simcard_status'].errors">
+                                                                <div *ngIf="a['simcard_status'].errors['required']"><i>SIM card status is required</i></div>
+                                                            </div>
+                                                        </div>
+                                                         <!---End SIM Card Radio Buttons--> 
+                   
+                                                        <!---Certifications Radio Buttons-->
+                                                        <div class="col-lg-2 pt-2 mb-2">
+                                                            <h6 class="font-type fs-12 fw-semibold text-info">Certifications </h6>
+                                                            <div class="input-group">
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="certification_status" id="CerRadio1" value="1" (change)="certificateCheck('1')" formControlName="certification_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="certification_status" id="CerRadio2" value="0" (change)="certificateCheck('0')" formControlName="certification_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="err font-type" *ngIf="submitted && a['certification_status'].errors">
+                                                                <div *ngIf="a['certification_status'].errors['required']"><i>Certifications status is required</i></div>
+                                                            </div>
+                                                        </div>
+                                                         <!---End Certifications Radio Buttons-->
+                                                        
+                                                        <div class="col-lg-12 bg-info-subtle p-3 pa-0 mb-2" [hidden]="certenable == '0'">
+                                                            <textarea class="form-control font-type textbox-15" required placeholder="Mention the Certifications" id="certifications" name="certifications" formControlName="certifications" ></textarea>
+                                                            <div class="err font-type" *ngIf="submitted && a['certifications'].errors">
+                                                                <div *ngIf="a['certifications'].errors['required']"><i>Certifications is required</i></div>
+                                                            </div>  
+                                                        </div>  
+        
+                                                        <!---Cash Advance Radio Buttons-->
+                                                        <div class="col-lg-2 pt-2 mb-2">
+                                                            <h6 class="font-type fs-12 fw-semibold text-info">Cash Advance</h6>
+                                                            <div class="input-group">
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="cash_advance_status" id="CashRadio1" value="1"  (change)="cashCheck('1')" formControlName="cash_advance_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="cash_advance_status" id="CashRadio2" value="0"  (change)="cashCheck('0')" formControlName="cash_advance_status" >
+                                                                    <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="err font-type" *ngIf="submitted && a['cash_advance_status'].errors">
+                                                                <div *ngIf="a['cash_advance_status'].errors['required']"><i>Cash advance status is required</i></div>
+                                                            </div>
+                                                        </div>
+                                                         <!---End Cash Advance Radio Buttons-->
+    
+                                                        <div class="col-md-12 col-lg-12" [hidden]="cashenable == '0'" >
+                                                          <div class="row bg-info-subtle p-3 ma-5" > 
+                                                            <div class="col-lg-2">
+                                                                <input type="text" class="form-control font-type fs-11 textbox-15" placeholder="Enter the Amount" id="advance_amount" name="advance_amount" formControlName="advance_amount" > 
+                                                                <div class="err font-type" *ngIf="submitted && a['advance_amount'].errors">
+                                                                    <div *ngIf="a['advance_amount'].errors['required']"><i>Amount is required</i></div>
+                                                                </div>
+                                                            </div>
+                                                          <div class="col-lg-3">
+                                                          
+                                                          <select class="form-select font-type fs-11 textbox-15 mb-1" id="currency" name="currency" formControlName="currency" >
+                                                            <option value="">Select</option>
+                                                            <option  *ngFor="let CurrencyList of listcurrency" value="{{CurrencyList.TYPE_ID}}">
+                                                            {{CurrencyList.DATA_VALUE}}
+                                                            </option>
+                                                          </select> 
+                                                          <div class="err font-type" *ngIf="submitted && a['currency'].errors">
+                                                            <div *ngIf="a['currency'].errors['required']"><i>Currency is required</i></div>
+                                                          </div>               
+                                                       
+                                                          </div>
+                                                          </div>
+                                                        </div>
+    
+                                                        </div>
+                                                    </div>
+                                                <div class="col-lg-12">
+                                                    <div class="hstack gap-2 justify-content-end ma-10">
+                                                    <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" (click)="SelfBussTripSubmit()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Save</button>
+                                                    <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " (click)="clearfn()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                    </div>
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                                <!--end col-->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div> 
+                     <!--End Business Request Model Team-->
+    
+                          <!-- Approve Model-->
+                          <div class="modal fade zoomIn" id="ApproveRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                    </div>
+                                    <div class="modal-body text-center padding-down-5">
+                                        <div class="text-center">
+                                            <h5 class="bar-text fs-12 font-type">Request Approved!</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           </div>
+                          <!-- End Approve Model-->        
+                          
+                          
+                             <!-- Reject Model-->
+                        <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                    </div>
+                                    <form class="tablelist-form" autocomplete="off">
+                                        <div class="modal-body">
+                                            <input type="hidden" id="id-field" />
+                                            <div class="mb-3">
+                                                <label class="form-label font-type">Reason</label>
+                                                <textarea class="form-control" required  #rejectreason [formControl]="reasonControl"></textarea>  
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer margin-up-15">
+                                            <div class="hstack gap-2">
+                                                <button class="btn btn-danger font-type" id="delete-record" (click)="Reject(selectedRequestID,selectedEmpcode,rejectreason.value)">Reject</button>
+                                                <button type="button" class="btn btn-blue font-type" data-bs-dismiss="modal" aria-label="Close" id="btn-close">Cancel</button> 
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>                 
+                                                               
+                    <!-- End Reject Model-->
+                          
+    
+                        <!-- Edit Request Details Model Personal-->
+                        <div class="modal fade zoomIn " id="EditRequestModal" tabindex="-1" aria-labelledby="EditRequestModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                    </div>
+                                    <form  class="tablelist-form" autocomplete="off">
+                                        <div class="modal-body">
+                                            <input type="hidden" id="id-field" />
+                                            <div class="row topbar-up">
+                                                <div class="col-md-12 col-lg-12" *ngFor="let editteambussi of businessReqPer">
+                                                            <div class="pa-0">
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-3 card-animate" style="border-color:lightgray;">
+                                                                <div class="col-lg-3 pt-1">  
+                                                                    <h6 class="font-type fs-12 fw-semibold text-info "><span>Employee</span></h6>
+                                                                    <select class="form-select font-type fs-12 textbox-15 mb-1" id="emp_code_e" name="emp_code_e" >
+                                                                        <option value="-1">Select</option>
+                                                                         <option  *ngFor="let EmployeeList of listEmployee" value="{{EmployeeList.EMP_CODE}}" [selected]="EmployeeList.EMP_CODE==editteambussi.EMP_CODE">
+                                                                         {{EmployeeList.EMP_NAME}}
+                                                                         </option>
+                                                                     </select>               
+                                                               </div>
+                                                                <div class="col-lg-2 pt-1">
+                                                                        <h6 class="font-type fs-12 fw-semibold text-info"><span>Trip Start Date </span></h6>
+                                                                        <input class="form-control font-type fs-12 textbox-15" type="date" id="start_date_e" name="start_date_e"   value="{{ editteambussi.START_DATE | date: 'yyyy-MM-dd' }}" (change)="daycalculationforedit()">       
+                                                                </div>
+                                                                <div class="col-lg-2 pt-1">
+                                                                    <h6 class="font-type fs-12 fw-semibold text-info"><span>Trip End Date </span></h6>
+                                                                    <input class="form-control font-type fs-12 textbox-15" type="date" id="end_date_e" name="end_date_e"  value="{{ editteambussi.END_DATE | date: 'yyyy-MM-dd' }}" (change)="daycalculationforedit()" >    
+                                                                </div>
+                                                                <div class="col-lg-3 pt-1">  
+                                                                    <h6 class="font-type fs-12 fw-semibold text-info"><span>Destination</span></h6>
+                                                                    <input class="form-control font-type fs-12 textbox-15" type="text" value="{{ editteambussi.DESTINATION}}" id="destination_e" name="destination_e" > 
+                                                               </div>
+                                                            <div class="col-lg-2 pt-1">  
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Total Days</span></h6>
+                                                                <input type="text" class="form-control font-type textbox-15 bg-light mb-1" value="{{ editteambussi.NOOFDAYS}}"  id="no_of_days_e" name="no_of_days_e"   readonly />
+
+                                                                <input type="hidden" class="form-control font-type textbox-15 bg-light mb-1"  id="requestid" name="requestid" [formControl]="requestid"  readonly />           
+                                                            </div>
+                                                            </div>
+    
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-3 card-animate" style="border-color:lightgray;">
+                                                            <!---Airticket Radio Buttons-->
+                                                            <div class="col-lg-2">  
+                                                                <h6 class="font-type fs-12 fw-semibold text-info"><span>Airticket</span></h6>
+                                                                <div class="input-group">
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="teamAirTicketRadioEdit" id="teamEditAirTicket_R1"   value="1" [checked]="editteambussi.AIRTICKET_STATUS === 1" (change)="airticketCheck('1')">
+                                                                        <label class="form-check-label font-type fs-12 fw-semibold">Yes</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="teamAirTicketRadioEdit" id="teamEditAirTicket_R2" value="2" [checked]="editteambussi.AIRTICKET_STATUS !== 1" (change)="airticketCheck('0')">
+                                                                        <label class="form-check-label font-type fs-12 fw-semibold">No</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                           <!---End Airticket Radio Buttons-->
+                                                           
+                                                            <!---Onward/Return Radio Buttons-->
+                                                           <div class="col-md-5">
+                                                            <h6 class="font-type fs-12 fw-semibold"><span>Onward:</span></h6>
+                                                            <div class="input-group">
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="teamOnwardRadioEdit" id="teamOnwardEdit_R1" value="1" [checked]="editteambussi.ONWARD_TICKET_TYPE === 1">
+                                                                    <label class="form-check-label font-type fs-12 fw-medium">Normal Ticket </label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="teamOnwardRadioEdit" id="teamOnwardEdit_R2" value="2" [checked]="editteambussi.ONWARD_TICKET_TYPE === 2">
+                                                                    <label class="form-check-label font-type fs-12 fw-medium">Open Ticket </label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="teamOnwardRadioEdit" id="teamOnwardEdit_R3" value="3" [checked]="editteambussi.ONWARD_TICKET_TYPE === 3">
+                                                                    <label class="form-check-label font-type fs-12 fw-medium">Dummy Ticket </label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline form-check-info">
+                                                                    <input class="form-check-input" type="radio" name="teamOnwardRadioEdit" id="teamOnwardEdit_R4" value="4" [checked]="editteambussi.ONWARD_TICKET_TYPE === 4">
+                                                                    <label class="form-check-label font-type fs-12 fw-medium">NA </label>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+    
+                                                            <div class="col-md-5">
+                                                                <h6 class="font-type fs-12 fw-semibold"><span>Return:</span></h6>
+                                                                <div class="input-group">
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="teamReturnRadioEdit" id="teamReturnEdit_R1" value="1" [checked]="editteambussi.RETURN_TICKET_TYPE === 1">
+                                                                        <label class="form-check-label font-type fs-12 fw-medium">Normal Ticket </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="teamReturnRadioEdit" id="teamReturnEdit_R2" value="2" [checked]="editteambussi.RETURN_TICKET_TYPE === 2">
+                                                                        <label class="form-check-label font-type fs-12 fw-medium">Open Ticket </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="teamReturnRadioEdit" id="teamReturnEdit_R3" value="3" [checked]="editteambussi.RETURN_TICKET_TYPE === 3">
+                                                                        <label class="form-check-label font-type fs-12 fw-medium">Dummy Ticket </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline form-check-info">
+                                                                        <input class="form-check-input" type="radio" name="teamReturnRadioEdit" id="teamReturnEdit_R4" value="4" [checked]="editteambussi.RETURN_TICKET_TYPE === 4">
+                                                                        <label class="form-check-label font-type fs-12 fw-medium">NA </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!---Onward/Return Radio Buttons-->
+    
+                                                            </div>
+                                                       
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-3 card-animate" style="border-color:lightgray;">
+                                                                <!---Airport Transportion Radio Buttons-->
+                                                                <div class="col-lg-2">
+                                                                    <h6 class="font-type fs-12 fw-semibold text-info"> Airport Transportation </h6>
+                                                                    <div class="input-group">
+                                                                        <div class="form-check form-check-inline form-check-info">
+                                                                            <input class="form-check-input" type="radio" name="teamTraRadioOptionsEdit" id="teamTraEdit_R1" value="1" [checked]="editteambussi.AIRPORT_TRANSPORTATION === 1" >
+                                                                            <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline form-check-info">
+                                                                            <input class="form-check-input" type="radio" name="teamTraRadioOptionsEdit" id="teamTraEdit_R2" value="0" [checked]="editteambussi.AIRPORT_TRANSPORTATION !== 1" >
+                                                                            <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!---End Airport Transportion Radio Buttons-->
+            
+                                                                    <!---SIM Card Radio Buttons-->
+                                                                    <div class="col-lg-2">
+                                                                        <h6 class="font-type fs-12 fw-semibold text-info"> SIM Card </h6>
+                                                                        <div class="input-group">
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="teamSimRadioEdit" id="teamSimEdit_R1" value="1" [checked]="editteambussi.SIMCARD_STATUS === 1">
+                                                                                <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="teamSimRadioEdit" id="teamSimEdit_R2" value="0" [checked]="editteambussi.SIMCARD_STATUS !== 1">
+                                                                                <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                     <!---End SIM Card Radio Buttons-->
+        
+                                                                    <!---Accommodation Radio Buttons-->
+                                                                    <div class="col-lg-2">  
+                                                                        <h6 class="font-type fs-12 fw-semibold text-info"><span>Accommodation</span></h6>
+                                                                        <div class="input-group">
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="teamAccRadioEdit" id="teamAccEdit_R1" value="1" [checked]="editteambussi.ACCOMMODATION_STATUS === 1" (change)="accoCheck('1')">
+                                                                                <label class="form-check-label font-type fs-12 fw-semibold">Yes</label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="teamAccRadioEdit" id="teamAccEdit_R2" value="0" [checked]="editteambussi.ACCOMMODATION_STATUS !== 1" (change)="accoCheck('0')">
+                                                                                <label class="form-check-label font-type fs-12 fw-semibold">No</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!---End Accommodation Radio Buttons-->
+                                                  
+                                                                    <div class="col-lg-6 pa-0">
+                                                                        <h6 class="font-type fs-12 fw-semibold"><span>Hotel Address</span></h6>
+                                                                        <textarea  class="form-control font-type textbox-15" id="hoteladdress_e" name="hoteladdress_e" required placeholder="Enter the Address">{{editteambussi.HOTEL_ADDRESS}}</textarea>  
+                                                                    </div>    
+                                                            </div>
+                                                            
+                                                     
+                                                            <div class="row pa-0 card-header border-bottom-dashed p-3 card-animate" style="border-color:lightgray;">
+                                                                    <!---Certifications Radio Buttons-->
+                                                                    <div class="col-lg-2">
+                                                                        <h6 class="font-type fs-12 fw-semibold text-info">Certifications </h6>
+                                                                        <div class="input-group">
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="teamCerRadioEdit" id="teamCerEdit_R1" value="1" [checked]="editteambussi.CERTIFICATION_STATUS === 1" (change)="certifiCheck('1')">
+                                                                                <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="teamCerRadioEdit" id="teamCerEdit_R2" value="0" [checked]="editteambussi.CERTIFICATION_STATUS !== 1" (change)="certifiCheck('0')">
+                                                                                <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!---End Certifications Radio Buttons-->
+                                                                    <div class="col-lg-10">
+                                                                        <textarea class="form-control font-type textbox-15" placeholder="Mention the Certifications" id="certification_e" name="certification_e" >{{editteambussi.CERTIFICATIONS}}</textarea>  
+                                                                    </div>  
+                                                            </div>
+                                 
+                                                            <div class="row pa-0 p-3 card-animate" style="border-color:lightgray;">
+                                                                    <!---Cash Advance Radio Buttons-->
+                                                                    <div class="col-lg-2">
+                                                                        <h6 class="font-type fs-12 fw-semibold text-info">Cash Advance</h6>
+                                                                        <div class="input-group">
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="teamCashRadioEdit" id="teamCashEdit_R1" value="1" [checked]="editteambussi.CASH_ADVANCE_STATUS === 1" (change)="amountCheck('1')">
+                                                                                <label class="form-check-label font-type fs-12 fw-semibold">Yes </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline form-check-info">
+                                                                                <input class="form-check-input" type="radio" name="teamCashRadioEdit" id="teamCashEdit_R2" value="0" [checked]="editteambussi.CASH_ADVANCE_STATUS !== 1" (change)="amountCheck('0')">
+                                                                                <label class="form-check-label font-type fs-12 fw-semibold">No </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!---End Cash Advance Radio Buttons-->
+                                                                    
+                                                                    <div class="col-md-2 col-lg-2">
+                                                                        <h6 class="font-type fs-12 fw-semibold">Amount</h6>
+                                                                        <input type="text" class="form-control font-type fs-11 textbox-15" placeholder="Enter the Amount" name="amount_e" id="amount_e" value="{{editteambussi.ADVANCE_AMOUNT}}"> 
+                                                                    </div>
+                                                                    <div class="col-lg-3 col-md-3">
+                                                                        <h6 class="font-type fs-12 fw-semibold">Currency</h6>
+                                                                        <select class="form-select font-type fs-11 textbox-15 mb-1" id="currency_e" name="currency_e"  >
+                                                                            <option value="null">Select</option>
+                                                                            <option  *ngFor="let CurrencyList of listcurrency" value="{{CurrencyList.TYPE_ID}}"  [selected]="CurrencyList.TYPE_ID==editteambussi.CURRENCY">
+                                                                            {{CurrencyList.DATA_VALUE}}
+                                                                            </option>
+                                                                          </select> 
+                                                                    </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="hstack gap-2 justify-content-end">
+                                                                <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" (click)="SelfBussTripEdit()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Save</button>
+                                                                <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " (click)="clearfn()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                                </div>
+                                                            </div>    
+                                                </div>
+                                            </div>
+                                        </div>  
+                                     </form>         
+                                </div>
+                            </div>
+                        </div>
+    
+                         <!-- End Edit Request Details Model Personal-->
+    
+                    <!--END TEAM MODEL BOXES-->
+                        
+    
+            </div>
+            <!-- end main content-->
+    
+    </div>
+        <!-- END layout-wrapper -->
+
+
+        <!-- success message modal -->
+
+
+ <button id="openModalButtonForalert"  [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuRecordModal">Open Modal</button>
+  
+ <div class="modal fade zoomIn" id="SuRecordModal" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header bg-orange padding-up-5">
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModal==1">
+                 
+                 <div class="text-center">
+                     <h5 class="fs-13 font-type">{{success}}</h5>
+                 </div>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModal==2">
+                 
+                <div class="text-center">
+                    <h5 class="fs-13 font-type">{{failed}}</h5>
+                </div>
+            </div>
+         </div>
+     </div>
+ </div>
+
+
+ <!-- Status Model-->
+<div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true" style="float: right;">
+    <div class="modal-dialog modal-dialog-centered" style="float: right;">
+        <div class="modal-content" style="float: right;">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+            </div>
+            <div class="table-responsive">
+    
+                <table class="table table-bordered table-nowrap align-middle mb-0">
+                    <thead>
+                        <tr class="font-type">
+                            <th scope="col" style="width: 30%;">LEVEL_ID</th>
+                            <th scope="col" style="width: 30%;">APPROVER </th>
+                            <th scope="col" style="width: 20%;">STATUS </th>
+                            <th scope="col" style="width: 20%;">DATE</th>
+                            <th scope="col" style="width: 20%;">REMARKS</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="font-type">
+                        <tr  *ngFor="let approvedtl of approvelist">
+                            <td>{{approvedtl.LEVEL_ID}}</td>
+                            <td>{{approvedtl.APPROVER}}</td>
+                            <td>{{approvedtl.STATUS}}</td>
+                            <td>{{approvedtl.VERIFIED_DATE}}</td>
+                            <td>{{approvedtl.VERIFIED_REMARKS}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Status Model-->
+
+
+    
+    

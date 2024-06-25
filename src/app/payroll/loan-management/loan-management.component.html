@@ -1,0 +1,446 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Loan Management</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="topbar-up row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                            <!-- Team selection -->
+                            <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5" id="teaminput">
+                                <form>
+                                    <div class="row ">
+                                        
+                                        <div class="col-lg-2 pt-2">
+                                                <h6 class="fs-12 font-type"><span>Company</span></h6>
+                                                <select class="form-select font-type fs-11" #selectedCompany (change)="onCompanySelected(selectedCompany.value)" aria-label="Default select example" required>
+                                                    <option value="-1" selected>All</option>
+                                                    <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                </select>  
+                                        </div>
+                                        <div class="col-lg-2 pt-2">
+                                                <h6 class="font-type fs-12"><span>Department </span></h6>
+                                                <select class="form-select font-type fs-11" #selectedDept (change)="onDeptSelected(selectedDept.value)" aria-label="Default select example" required>
+                                                    <option value="-1" selected>All</option>
+                                                    <option *ngFor="let combo of deptdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                </select>
+                                            
+                                        </div>
+                                        <div class="col-lg-2 pt-2">  
+                                                <h6 class="font-type fs-12"><span>Employee Name </span></h6>
+                                                <select class="form-select font-type fs-11" #selectedEmp (change)="onEmpSelected(selectedEmp.value)" aria-label="Default select example" required>
+                                                    <option value="-1" selected>All</option>
+                                                    <option *ngFor="let combo of empdata" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
+                                                </select>                          
+                                        </div>
+                                        <div class="col-lg-2 pt-2">  
+                                                <h6 class=" font-type fs-12"><span>Loan Status </span></h6>
+                                                <select class="form-select font-type fs-11" #selectedstat (change)="onStatSelected(selectedstat.value)" aria-label="Default select example" required>
+                                                    <option value="-1">All</option>
+                                                    <option *ngFor="let combo of statusdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                </select> 
+                                        </div>
+                                        <div class="col-lg-2 pt-2">
+                                                <h6 class="font-type fs-12"><span>Start Date </span></h6>
+                                                <input type="date" class="form-control font-type fs-11 mb-0" id="start-datepicker" name="fromdate" [(ngModel)]="fromdate" (ngModelChange)="filter();">      
+                                        </div>
+                                        <div class="col-lg-2 pt-2">
+                                                <h6 class="font-type fs-12"><span>End Date </span></h6>
+                                                <input type="date" class="form-control font-type fs-11 mb-0" id="end-datepicker" name="todate" [(ngModel)]="todate" (ngModelChange)="filter();">
+                                            
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header" style="padding:10px">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <div class="align-items-center d-flex ">
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold"></h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card-body">
+                                            <div class="table-responsive table-card mb-0">
+                                                <table class="table table-nowrap align-middle" id="orderTable">
+                                                    <thead class="table-light text-white font-type">
+                                            
+                                                    <tr>
+                                                        
+                                                        <th>No</th>
+                                                        <th>Co.</th>
+                                                        <th>Dept.</th>
+                                                        <th>EmpName</th>
+                                                        <th>Amount</th>
+                                                        <th>No of Installment</th>
+                                                        <th>Installment Amount</th>
+                                                        <th>DSB Month & Year</th>
+                                                        <th>DED Start Month & Year</th>
+                                                        <th>Remarks</th>
+                                                        <!-- <th>Submitted Date</th> -->
+                                                        <th>Loan Status</th>
+                                                        <th>Action</th>
+                                                    
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all font-type fs-11">
+                                                <tr class="font-type" *ngFor="let item of listLoanRequest | pagination: currentPage: itemsPerPage;;index as i">
+                                                
+                                                    <th>{{i+1}}</th>
+                                                    <td>{{item.COMPANY_CODE}}</td>
+                                                    <td>{{item.DEPT_NAME}}</td>
+                                                    <td>{{item.EMP_NAME}}</td>
+                                                    <td>AED {{item.AMOUNT}}</td>
+                                                    <td>{{item.noOfInstal}}</td>
+                                                    <td>AED {{item.Instal_Amnt}}</td>
+                                                    <td>{{item.dSBMonth}} {{item.dSBYear}}</td>
+                                                    <td>{{item.dSMonth}} {{item.dSYear}}</td>
+                                                    <td>
+                                                        <div *ngIf="item.LOAN_STATUS == '3'">
+                                                            <a data-target="#ReasonModal" data-bs-toggle="modal"
+                                                            href="#ReasonModal" class="textblack"  (click)="reasonview(item.REMARKS)">{{item.REMARKS.substring(0,4)}}...
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-select font-type fs-11" #holdstatus aria-label="Default select example" style="width: 100px;" #loansts required >
+                                                            <!-- <option value="-1">Select</option> -->
+                                                            <!-- <option value="2" [selected]="item.LOAN_STATUS == 2">Hold</option>
+                                                            <option value="1" [selected]="item.LOAN_STATUS == 1">Release</option> -->
+                                                            <!-- <option value="-1">All</option> -->
+                                                            <option *ngFor="let combo of statusdata" [value]="combo.KEY_ID" [selected]="combo.KEY_ID==item.LOAN_STATUS ">{{ combo.DATA_VALUE }}</option>
+                                                        </select> 
+                                                    </td>
+                                                    <td>
+                                                        <ul class="list-inline hstack gap-2 mb-0"> 
+                                                            
+                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Save">
+                                                                <button type="button" class="btn btn-success btn-sm" id="buttonApprove" (click)="holdstatusSelected(item.EMP_CODE,item.REQ_ID,holdstatus.value)" *ngIf="item.LOAN_STATUS!=3"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                <button type="button" class="btn btn-success btn-sm" style="background-color: #d9d3cd;border-color: #d9d3cd;" id="buttonApprove" *ngIf="item.LOAN_STATUS==3" disabled><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                            </li>
+                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit Details">
+                                                                <a href="#EditRequestModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn">
+                                                                <button type="button" class="btn btn-orange btn-sm" (click)="forloanamtEdit(item.EMP_CODE,item.REQ_ID,holdstatus.value,item.noOfInstal,item.Instal_Amnt,item.BALANCE_AMOUNT,item.PAYROLL_DATE)"><i class="ri-pencil-fill fs-16"></i></button>
+                                                                </a>
+                                                             </li>
+                                                            <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Details">
+                                                                <a href="#" class="text-info d-inline-block"data-bs-toggle="modal" data-bs-target="#AddRequestModal" (click)="Fetchloanpayments(item.EMP_CODE,item.REQ_ID)">  
+                                                                  <i class="ri-eye-fill fs-16"></i>  
+                                                                </a> 
+                                                            </li> 
+                                                        </ul>
+                                                    </td>
+                                                    </tr>                                           
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div *ngIf="listLoanRequest">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                    </div>
+                                </div>
+                                        </div> 
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                            </div>
+                            <!-- end -->
+                            <!-- View details modal -->
+                            <div class="modal fade" id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" ></button>
+                                        </div>
+                                        <div class="modal-body ">
+                                            <div class="">
+                                        <div class="row align-items-center mb-4 padding-up-5">
+                                            <div class="col-sm">
+                                                <div class="align-items-center d-flex ">
+                                                    <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold" style="text-decoration:underline;float: left;">Loan Repayment Details</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-auto">
+                                                <div class="d-flex gap-1 flex-wrap">
+                                                    <h5 class="font-type fw-semibold fs-13 padding-up-5">Disbursement Date : <span class="text-orange">{{DISBURSEMENT_DATE | date: 'dd-MM-yyyy'}}</span></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive table-card mb-1">
+                                            <table class="table table-nowrap align-middle" id="orderTable">
+                                                <thead class="font-type text-white" style="background-color:#fa9d5e">
+                                            <tr>
+                                                <th>Payment Date</th>
+                                                <th>Payment Amount</th>
+                                                <th>Balance</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let payments of paymentdetails">
+                                                    <td>{{payments.Payment_Date | date:"dd"}} {{payments.Payment_Date | date:"MMM"}}, {{payments.Payment_Date | date:"YYYY"}}</td>
+                                                    <td>{{payments.Payment_Amnt}}</td>
+                                                    <td>{{payments.Balance_Amnt}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div> 
+                                    </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            </div>
+                            <!--End View details modal -->
+                            <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                            <!--Modal For Success Message Start-->
+                            <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                        </div>
+                                        <div class="modal-body" *ngIf="showModal==1"> 
+                                            <div class="container">
+                                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                        
+                                            </div>
+                                        </div>
+                                        <div class="modal-body" *ngIf="showModal==2">
+                                        <div class="container">
+                                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                            
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!--Modal For Success Message End-->  
+                            <!--End Loan Request-->
+                            </div>
+                            <!-- container-fluid -->
+                        </div>
+                        <!-- End Page-content -->
+                    </div>
+                </div>
+            </div>
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
+    
+  <!-- Reject Model-->
+  <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#RejectModal">Open Modal</button>
+  <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+
+        
+        <!-- <div class="modal-content">
+            <div class="modal-header bg-info-subtle" style="background-color: #e9823d!important;">
+                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" style="margin-top:-30px;"></button>
+            </div>
+            <form class="tablelist-form" autocomplete="off">
+                <div class="modal-body">
+                    <input type="hidden" id="id-field" />
+                    <div class="mb-3">
+                        <label class="form-label">Reason</label>
+                        <textarea class="form-control" id="rejreason" name="rejreason" required></textarea>  
+                    </div>
+                </div>
+                <div class="modal-footer"> 
+                    <div class="hstack gap-2">
+    
+                        <button class="btn btn-danger" type="button" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal"  id="delete-record">Reject</button>
+                    
+                    </div>
+                </div>
+            </form>
+        </div> -->
+    </div>
+</div>
+<!-- End Reject Model-->
+
+
+<button id="openModalButtonForalert"  [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuRecordModal">Open Modal</button>
+  
+ <div class="modal fade zoomIn" id="SuRecordModal" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info-subtle" style="background-color: #e9823d!important;">
+                <h5 class="modal-title">&nbsp;</h5>
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" style="margin-top:-30px;"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-center">
+                    <h5 class="fs-14">Do you want to close this loan ?</h5>
+                    <div class="mb-3">
+                        <label class="form-label" style="float: left;;">Reason</label>
+                        <textarea class="form-control" id="closereason" name="closereason" #closereason required></textarea>  
+                    </div>
+                    <p class="text-muted fs-12 mb-4 pt-1">Do you want to continue?</p>
+                    <div class="hstack gap-2 justify-content-center remove"> 
+                        <button class="btn btn-danger" id="deleteRecord-close" type="button"  (click)="closestatusChange(selectedecode,selectedreqtid,holdsts,closereason.value)" >Yes</button>
+                        <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+ </div>
+
+
+ <div class="modal fade zoomIn " id="EditRequestModal" tabindex="-1" aria-labelledby="EditRequestModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info-subtle" style="background-color: #e9823d!important;">
+                <h5 class="modal-title">&nbsp;</h5>
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" style="margin-top:-30px;"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-center">
+                    <div class="row col-md-12">
+                        <div class="col-md-6">
+                            <h6 class="font-type fs-12 fw-semibold" style="text-align:left ;">Effective Date</h6>
+                            <input type="text" class="form-control font-type fs-11 textbox-15 bg-light"  name="effectivedt" id="effectivedt"  readonly>
+                            <input type="hidden" name="effmnth" id="effmnth">
+                            <input type="hidden" name="effyear" id="effyear">
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="font-type fs-12 fw-semibold" style="text-align:left ;">Balance Amount</h6>
+                            <input type="text" class="form-control font-type fs-11 textbox-15 bg-light"  name="balanceamnt" id="balanceamnt"  readonly> 
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="font-type fs-12 fw-semibold" style="text-align:left ;">Number of Installment</h6>
+                            <input type="text" class="form-control font-type fs-11 textbox-15 bg-light"  name="oldinstallment" id="oldinstallment"  readonly> 
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="font-type fs-12 fw-semibold" style="text-align:left ;">Installment Amount</h6>
+                            <input type="text" class="form-control font-type fs-11 textbox-15 bg-light"  name="oldAmount" id="oldAmount"  readonly> 
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px;">
+                            <h6 class="font-type fs-12 fw-semibold" style="text-align:left ;">New Installment Number</h6>
+                            <input type="text" class="form-control font-type fs-11 textbox-15" placeholder="Enter the no .of installments" #newinstallment name="newinstallment" id="newinstallment" > 
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px;">
+                            <h6 class="font-type fs-12 fw-semibold" style="text-align:left ;">New Installment Amount</h6>
+                            <input type="text" class="form-control font-type fs-11 textbox-15" placeholder="Enter installment amount" #newAmount name="newAmount" id="newAmount" > 
+                        </div>
+                    </div>
+                    <div class="hstack gap-2 justify-content-center remove" style="margin-top: 10px;">                          
+                        <button class="btn btn-orange" type="button" (click)="editloanAmount(selectedecode,selectedreqtid,holdsts,newinstallment.value,newAmount.value)" >Update</button>
+                        <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" id="btn-close">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+
+<button id="openModalButtonForalertsuccess"  [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuRecordModals">Open Modal</button>
+  
+ <div class="modal fade zoomIn" id="SuRecordModals" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header bg-orange padding-up-5">
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModals==1">
+                 
+                 <div class="text-center">
+                     <h5 class="fs-13 font-type">{{successs}}</h5>
+                 </div>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModals==2">
+                 
+                <div class="text-center">
+                    <h5 class="fs-13 font-type">{{faileds}}</h5>
+                </div>
+            </div>
+         </div>
+     </div>
+ </div>
+
+ <!-- Reason Model-->
+    
+ <div class="modal fade zoomIn" id="ReasonModal" tabindex="-1" aria-labelledby="ReasonModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info-subtle" style="background-color: #e9823d!important;">
+                <h5 class="modal-title">&nbsp;</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" style="margin-top:-30px;"></button>
+            </div>
+            <div class="modal-body text-center">
+                
+                <div>
+                    <textarea  name="reasondisp" id="reasondisp"  [formControl]="reasondisp" cols="55" style="border: none;text-align: center;"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

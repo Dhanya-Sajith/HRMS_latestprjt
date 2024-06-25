@@ -1,0 +1,238 @@
+
+.table1 {
+    --vz-table-color-type: initial;
+    --vz-table-bg-type: initial;
+    --vz-table-color-state: initial;
+    --vz-table-bg-state: initial;
+    --vz-table-color: var(--vz-body-color);
+    --vz-table-bg: transparent;
+    --vz-table-border-color: var(--vz-border-color);
+    --vz-table-accent-bg: transparent;
+    --vz-table-striped-color: var(--vz-body-color);
+    --vz-table-striped-bg: rgba(var(--vz-body-color-rgb), 0.02);
+    --vz-table-active-color: var(--vz-body-color);
+    --vz-table-active-bg: rgba(var(--vz-body-color-rgb), 0.04);
+    --vz-table-hover-color: var(--vz-body-color);
+    --vz-table-hover-bg: rgba(var(--vz-body-color-rgb), 0.04);
+    width: 100%;
+    margin-bottom: 1rem;
+    vertical-align: top;
+    border-color: var(--vz-table-border-color)
+}
+
+.table1>:not(caption)>*>* {
+    padding: .25rem .6rem;
+    color: white;
+    background-color: var(--vz-table-bg);
+    border-bottom-width: var(--vz-border-width);
+    -webkit-box-shadow: inset 0 0 0 9999px var(--vz-table-bg-state,var(--vz-table-bg-type,var(--vz-table-accent-bg)));
+    box-shadow: inset 0 0 0 9999px var(--vz-table-bg-state,var(--vz-table-bg-type,var(--vz-table-accent-bg)))
+}
+
+.table1>tbody {
+    vertical-align: inherit
+}
+
+.table1>thead {
+    vertical-align: bottom
+}
+
+.table1-group-divider {
+    border-top: calc(var(--vz-border-width) * 2) solid currentcolor
+}
+
+.caption-top {
+    caption-side: top
+}
+
+.table1-sm>:not(caption)>*>* {
+    padding: .3rem .25rem
+}
+
+.table1-bordered>:not(caption)>* {
+    border-width: var(--vz-border-width) 0
+}
+
+.table1-bordered>:not(caption)>*>* {
+    border-width: 0 var(--vz-border-width)
+}
+
+.table1-borderless>:not(caption)>*>* {
+    border-bottom-width: 0
+}
+
+.table1-borderless>:not(:first-child) {
+    border-top-width: 0
+}
+
+.table1-striped>tbody>tr:nth-of-type(odd)>* {
+    --vz-table-color-type: var(--vz-table-striped-color);
+    --vz-table-bg-type: var(--vz-table-striped-bg)
+}
+
+.table1-striped-columns>:not(caption)>tr>:nth-child(even) {
+    --vz-table-color-type: var(--vz-table-striped-color);
+    --vz-table-bg-type: var(--vz-table-striped-bg)
+}
+
+.table1-active {
+    --vz-table-color-state: var(--vz-table-active-color);
+    --vz-table-bg-state: var(--vz-table-active-bg)
+}
+
+.table1-hover>tbody>tr:hover>* {
+    --vz-table-color-state: var(--vz-table-hover-color);
+    --vz-table-bg-state: var(--vz-table-hover-bg)
+}
+
+.table1-primary {
+    --vz-table-color: #000;
+    --vz-table-bg: #d9dce7;
+    --vz-table-border-color: #c3c6d0;
+    --vz-table-striped-bg: #d5d8e2;
+    --vz-table-striped-color: #000;
+    --vz-table-active-bg: #d0d3de;
+    --vz-table-active-color: #000;
+    --vz-table-hover-bg: #d0d3de;
+    --vz-table-hover-color: #000;
+    color: var(--vz-table-color);
+    border-color: var(--vz-table-border-color)
+}
+
+.table1-secondary {
+    --vz-table-color: #000;
+    --vz-table-bg: #d7e4fc;
+    --vz-table-border-color: #c2cde3;
+    --vz-table-striped-bg: #d3dff7;
+    --vz-table-striped-color: #000;
+    --vz-table-active-bg: #cedbf2;
+    --vz-table-active-color: #000;
+    --vz-table-hover-bg: #cedbf2;
+    --vz-table-hover-color: #000;
+    color: var(--vz-table-color);
+    border-color: var(--vz-table-border-color)
+}
+
+.table1-success {
+    --vz-table-color: #000;
+    --vz-table-bg: #cef0eb;
+    --vz-table-border-color: #b9d8d4;
+    --vz-table-striped-bg: #caebe6;
+    --vz-table-striped-color: #000;
+    --vz-table-active-bg: #c6e6e2;
+    --vz-table-active-color: #000;
+    --vz-table-hover-bg: #c6e6e2;
+    --vz-table-hover-color: #000;
+    color: var(--vz-table-color);
+    border-color: var(--vz-table-border-color)
+}
+
+.table1-info {
+    --vz-table-color: #000;
+    --vz-table-bg: #d4ebf8;
+    --vz-table-border-color: #bfd4df;
+    --vz-table-striped-bg: #d0e6f3;
+    --vz-table-striped-color: #000;
+    --vz-table-active-bg: #cce2ee;
+    --vz-table-active-color: #000;
+    --vz-table-hover-bg: #cce2ee;
+    --vz-table-hover-color: #000;
+    color: var(--vz-table-color);
+    border-color: var(--vz-table-border-color)
+}
+
+.table1-warning {
+    --vz-table-color: #000;
+    --vz-table-bg: #fdf1db;
+    --vz-table-border-color: #e4d9c5;
+    --vz-table-striped-bg: #f8ecd7;
+    --vz-table-striped-color: #000;
+    --vz-table-active-bg: #f3e7d2;
+    --vz-table-active-color: #000;
+    --vz-table-hover-bg: #f3e7d2;
+    --vz-table-hover-color: #000;
+    color: var(--vz-table-color);
+    border-color: var(--vz-table-border-color)
+}
+
+.table1-danger {
+    --vz-table-color: #000;
+    --vz-table-bg: #fce0da;
+    --vz-table-border-color: #e3cac4;
+    --vz-table-striped-bg: #f7dcd6;
+    --vz-table-striped-color: #000;
+    --vz-table-active-bg: #f2d7d1;
+    --vz-table-active-color: #000;
+    --vz-table-hover-bg: #f2d7d1;
+    --vz-table-hover-color: #000;
+    color: var(--vz-table-color);
+    border-color: var(--vz-table-border-color)
+}
+
+.table1-light {
+    --vz-table-color: #000;
+    --vz-table-bg: #f3f6f9;
+    --vz-table-border-color: #dbdde0;
+    --vz-table-striped-bg: #eef1f4;
+    --vz-table-striped-color: #000;
+    --vz-table-active-bg: #e9ecef;
+    --vz-table-active-color: #000;
+    --vz-table-hover-bg: #e9ecef;
+    --vz-table-hover-color: #000;
+    color: var(--vz-table-color);
+    border-color: var(--vz-table-border-color)
+}
+
+.table1-dark {
+    --vz-table-color: #fff;
+    --vz-table-bg: #212529;
+    --vz-table-border-color: #373b3e;
+    --vz-table-striped-bg: #25292d;
+    --vz-table-striped-color: #fff;
+    --vz-table-active-bg: #2a2e32;
+    --vz-table-active-color: #fff;
+    --vz-table-hover-bg: #2a2e32;
+    --vz-table-hover-color: #fff;
+    color: var(--vz-table-color);
+    border-color: var(--vz-table-border-color)
+}
+
+.table1-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch
+}
+
+@media (max-width: 575.98px) {
+    .table1-responsive-sm {
+        overflow-x:auto;
+        -webkit-overflow-scrolling: touch
+    }
+}
+
+@media (max-width: 767.98px) {
+    .table1-responsive-md {
+        overflow-x:auto;
+        -webkit-overflow-scrolling: touch
+    }
+}
+
+@media (max-width: 991.98px) {
+    .table1-responsive-lg {
+        overflow-x:auto;
+        -webkit-overflow-scrolling: touch
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .table1-responsive-xl {
+        overflow-x:auto;
+        -webkit-overflow-scrolling: touch
+    }
+}
+
+@media (max-width: 1399.98px) {
+    .table1-responsive-xxl {
+        overflow-x:auto;
+        -webkit-overflow-scrolling: touch
+    }
+}

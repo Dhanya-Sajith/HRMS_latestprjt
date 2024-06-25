@@ -1,0 +1,675 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        
+        <div class="vertical-overlay"></div>
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+        
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Loan Requests</h4>
+                                <div class="page-title-right padding-up-5" [hidden]="authorityflg == 0">
+                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                        
+                                        <input type="radio" class="btn-check"  id="btnradio2"  name="user" [(ngModel)]="user" value="personal" (change)="SelectTeamorpersonal(user)">
+                                        <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio2">Personal</label>
+
+                                        <input type="radio" class="btn-check active"  id="btnradio1"  name="user" [(ngModel)]="user" value="team" (change)="SelectTeamorpersonal(user)">
+                                        <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio1">Team</label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="topbar-up row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                            <!-- Team selection -->
+                            <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5" id="teaminput" *ngIf="user === 'team'">
+                                <form>
+                                    <div class="row ">
+                                        <div class="col-lg-2 pt-2">
+                                                <h6 class="fs-12 font-type"><span>Company</span></h6>
+                                                <select class="form-select font-type fs-11" #selectedCompany (change)="onCompanySelected(selectedCompany.value)" aria-label="Default select example" required>
+                                                    <option value="-1" selected>All</option>
+                                                    <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                </select>  
+                                        </div>
+                                        <div class="col-lg-2 pt-2">
+                                                <h6 class="font-type fs-12"><span>Department </span></h6>
+                                                <select class="form-select font-type fs-11" #selectedDept (change)="onDeptSelected(selectedDept.value)" aria-label="Default select example" required>
+                                                    <option value="-1" selected>All</option>
+                                                    <option *ngFor="let combo of deptdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                </select>
+                                            
+                                        </div>
+                                        <div class="col-lg-2 pt-2">  
+                                                <h6 class="font-type fs-12"><span>Employee Name </span></h6>
+                                                <select class="form-select font-type fs-11" #selectedEmp (change)="onEmpSelected(selectedEmp.value)" aria-label="Default select example" required>
+                                                    <option value="-1" selected>All</option>
+                                                    <option *ngFor="let combo of empdata" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
+                                                </select>                          
+                                        </div>
+                                        <div class="col-lg-2 pt-2">  
+                                                <h6 class=" font-type fs-12"><span>Status </span></h6>
+                                                <select class="form-select font-type fs-11" #selectedstat (change)="onStatSelected(selectedstat.value)" aria-label="Default select example" required>
+                                                    <option value="-1">All</option>
+                                                    <option *ngFor="let combo of statusdata"  [hidden]="combo.DATA_VALUE == 'Cancelled'" [value]="combo.KEY_ID" [selected]="combo.DATA_VALUE == 'Pending for Approval'">{{ combo.DATA_VALUE }}</option>
+                                                   </select> 
+    
+                                        </div>
+                                        <div class="col-lg-2 pt-2">
+                                                <h6 class="font-type fs-12"><span>Start Date </span></h6>
+                                                <input type="date" class="form-control font-type fs-11 mb-0" id="start-datepicker" name="fromdate" [(ngModel)]="fromdate" (ngModelChange)="filter();">      
+                                        </div>
+                                        <div class="col-lg-2 pt-2">
+                                                <h6 class="font-type fs-12"><span>End Date </span></h6>
+                                                <input type="date" class="form-control font-type fs-11 mb-0" id="end-datepicker" name="todate" [(ngModel)]="todate" (ngModelChange)="filter();">
+                                            
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="row" *ngIf="user === 'team'">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header" style="padding:10px">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <div class="align-items-center d-flex ">
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold"></h4>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-sm-auto">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div class="search-box">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type"id="searchInput" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card-body">
+                                            <div class="table-responsive table-card mb-0">
+                                                <table class="table table-nowrap align-middle" id="orderTable">
+                                                    <thead class="table-light text-white font-type">
+                                            
+                                                    <tr>
+                                                        
+                                                        <th>No</th>
+                                                        <th>Co.</th>
+                                                        <th>Dept.</th>
+                                                        <th>EmpName</th>
+                                                        <th>Amount</th>
+                                                        <th>No of INSTL</th>
+                                                        <th>INSTL Amount</th>
+                                                        <th>DSB Month & Year</th>
+                                                        <th>DED Start Month & Year</th>
+                                                        <th>Submitted Date</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all font-type fs-11">
+                                                <tr class="font-type" *ngFor="let item of listLoanRequest | search : searchInput | pagination: currentPage: itemsPerPage;index as i">
+                                                
+                                                    <th>{{i+1}}</th>
+                                                    <td>{{item.COMPANY_CODE}}</td>
+                                                    <td>{{item.DEPT_NAME}}</td>
+                                                    <td>{{item.EMP_NAME}}</td>
+                                                    <td>AED {{item.AMOUNT}}</td>
+                                                    <td>{{item.noOfInstal}}</td>
+                                                    <td>AED {{item.Instal_Amnt}}</td>
+                                                    <td>{{item.dSBMonth}} {{item.dSBYear}}</td>
+                                                    <td>{{item.dSMonth}} {{item.dSYear}}</td>
+                                                    <td>{{item.REQUEST_DATE | date: 'dd-MM-yyyy'}}</td>
+                                                    <td class="status"><span class="badge bg-info-subtle text-info  width-budge fs-11">{{item.APPROVED_STATUS}}</span>
+                                                        <td>
+                                                            <ul class="list-inline hstack gap-2 mb-0"> 
+                                                                                                                             
+                                                                
+                                                                <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve" *ngIf="!this.grpname.includes('HR')">
+                                                                    <button type="button" class="btn btn-success btn-sm" id="buttonApprove" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" [disabled]="item.APPROVED_STATUS!='Pending for Approval'" (click)="approve(item.REQ_ID,item.EMP_CODE)"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                </li>
+                                                                <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve" *ngIf="this.grpname.includes('HR')">
+                                                                    <button type="button" class="btn btn-success btn-sm" id="buttonApprove" data-bs-toggle="modal" data-bs-target="#EditModal" [disabled]="item.APPROVED_STATUS!='Pending for Approval'" (click)="setSelectedRequestID(item.REQ_ID,item.EMP_CODE,item)"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                </li>
+                                                                
+                                                                <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reject">
+                                                                    <button type="button" class="btn btn-danger btn-sm" id="buttonReject" data-bs-toggle="modal" data-bs-target="#RejectModal" [disabled]="item.APPROVED_STATUS!='Pending for Approval'" (click)="setSelectedRequestID(item.REQ_ID,item.EMP_CODE,item)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i>
+                                                                    </button>      
+                                                                    
+                                                                </li>
+                                                                
+                                                                <!-- <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit" *ngIf="roleid == 2">
+                                                                    <button type="button" class="btn btn-outline-warning btn-sm br_radius mr-2" data-bs-toggle="modal" data-bs-target="#EditModal" id="buttonEdit" (click)="setSelectedRequestID(item.REQ_ID,item.EMP_CODE,item)"><i class="fa fa-pencil-square-o ic_color" aria-hidden="true" style="font-size: 18px;"></i>
+                                                                    </button>      
+                                                                    
+                                                                </li> -->
+                                                                <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Details" [hidden]="item.APPROVED_STATUS!='Approved'">
+                                                                    <a href="#" class="text-info d-inline-block"data-bs-toggle="modal" data-bs-target="#AddRequestModal" (click)="Fetchloanpayments_team(item.EMP_CODE,item.REQ_ID)">  
+                                                                
+                                                                          <i class="ri-eye-fill fs-16"></i>
+                                                                     
+                                                                    </a> 
+                                                                </li> 
+                                                            </ul>
+                                                    </td>
+                                                    
+                                                </tr>                                           
+                                              
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div *ngIf="listLoanRequest">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                    </div>
+                                </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                            </div>
+                            <!-- end -->
+                        </div>
+                    </div>
+                </div>
+    
+                    <!--Loan Request-->
+                    <div class="topbar-up row" *ngIf="user === 'personal'">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="live-preview">
+                                        <div class="row g-3"> 
+                                            
+                                           <div class="col-lg-12">
+                                            <form autocomplete="off"  [formGroup]="requestForm" (ngSubmit)="validateForm()"> 
+                                                <div class="card ribbon-box border shadow-none mb-lg-3">
+                                                    <div class="card-body">
+                                                        <div class="ribbon ribbon-info round-shape mb-4 font-type">Gratuity Amount :{{GratuityAmount}}</div>
+                                                        <div class="ribbon-content mt-4 text-muted">
+                                                            <div class="row">
+                                                                <div class="col-lg-3 pt-2">
+                                                                        <h6 class="fs-12 font-type fw-semibold"><span>Amount</span></h6>
+                                                                        <input type="text" id="amount" name="amount"  class="form-control" formControlName="amount" placeholder="Enter Amount" (change)="ClearInstallmentDetails()">
+                                                                        <div *ngIf="requestForm.get('amount')!.hasError('required') && requestForm.get('amount')!.touched" class="text-danger">Enter Amount</div>       
+                                                                </div>
+                                                                <div class="col-lg-3 pt-2">
+                                                                        <h6 class="font-type fs-12 fw-semibold"><span>No of Installment</span></h6>
+                                                                        <input type="text" class="form-control font-type fs-11 mb-0 textbox-15" id="installmentno" name="installmentno" formControlName="installmentno" placeholder="Enter the No of Installments" (change)="GetInstallmentAmount()"  > 
+                                                                        <div *ngIf="requestForm.get('installmentno')!.hasError('required') && requestForm.get('installmentno')!.touched " class="text-danger">Enter the No of Installments</div>                  
+                                                                    
+                                                                </div>
+                                                                <div class="col-lg-3 pt-2">  
+                                                                        <h6 class="font-type fs-12 fw-semibold"><span> Installment Amount</span></h6>    
+                                                                        <input type="text" class="form-control font-type fs-11 mb-0 textbox-15" id="installmentamount" name="installmentamount"  formControlName="installmentamount" placeholder="Enter the Installment Amount" (change)="GetInstallmentNo()" value="{{InstallmentAmount}}">   
+                                                                        <div *ngIf="requestForm.get('installmentamount')!.hasError('required') && requestForm.get('installmentamount')!.touched"  class="text-danger">Enter the Installment Amount</div>                                
+                                                                </div>
+                                                                <div class="col-lg-3 pt-2">
+                                                                        <h6 class="font-type fs-12 fw-semibold"><span> Deduction Start Month & Year</span></h6>
+                                                                        <input type="month" min="{{currentmonthno}}" class="form-control font-type fs-11 mb-0 textbox-15 h-28" id="deductmnthyr" name="deductmnthyr" formControlName="deductmnthyr"> 
+                                                                        <div *ngIf="requestForm.get('deductmnthyr')!.hasError('required') && requestForm.get('deductmnthyr')!.touched" class="text-danger">select Month & Year </div>            
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <div class="col-lg-12">
+                                                    <div class="hstack gap-2 justify-content-end">
+                                                        <div class="modal-footer">
+                                                        <div class="hstack gap-2" *ngIf="!requestForm.valid">
+                                                            <button type="submit" class="btn btn-blue font-type text-white" [disabled]="requestForm.valid" id="validate-btn" >Submit</button>
+                                                        </div>
+                                                        <div class="hstack gap-2 justify-content-center" *ngIf="requestForm.valid">
+                                                            <button type="button" class="btn btn-blue font-type text-white" id="add-btn" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="AddLoanRequests()">Submit</button>
+                                                        </div>
+                                                        </div>
+                                                        <!-- <button type="submit" class="btn btn-orange font-type" (click)="AddLoanRequests()">Submit</button> -->
+                                                        <button type="button" class="btn btn-blue font-type" (click)="Clear()">Clear</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            </div> 
+                                        
+                                            </div>
+                                            
+                                            
+                                        <!-- </div> -->
+                                        <!-- end row -->
+                                    </div>
+                                </div><!-- end card-body -->
+                            </div><!-- end card -->
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!--End Loan Request-->
+
+                    <!--Loan Request Summary-->
+
+                    <div class="row" *ngIf="user === 'personal'">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header" style="padding:10px">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <div class="align-items-center d-flex ">
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Loan Request Summary</h4>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div class="search-box">
+                                                    <input type="text" class="form-control search h-30 textbox-15 font-type" id="searchInput" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+
+                                <div class="card-body" *ngIf="user === 'personal'">
+                                    <form>
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-3 pt-2"></div>
+                                            <div class="col-lg-2 pt-2">
+                                                <div>
+                                                    <h6 class="font-type fs-12"><span>Start Date </span></h6>
+                                                    <input type="date" class="form-control  font-type fs-11" id="pfromdate" name="pfromdate" [(ngModel)]="pfromdate" (ngModelChange)="personalfilter();">
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 pt-2">
+                                                <div>
+                                                    <h6 class="font-type fs-12"><span>End Date </span></h6>
+                                                    <input type="date" class="form-control  font-type fs-11" id="ptodate" name="ptodate" [(ngModel)]="ptodate" (ngModelChange)="personalfilter();">
+                                                </div>
+                                            </div>
+                                      
+                                            <div class="col-lg-2 pt-2">
+                                                <div>
+                                                    <h6 class="font-type fs-12"><span>Status </span></h6>
+                                                    <select class="form-select font-type fs-11" aria-label="Default select example" (change)="Selectedpstatus(pstatus.value)" id="pstatus" name="pstatus" #pstatus required>
+                                                        <option value="-1">All</option>
+                                                        <option *ngFor="let combo of statusdata"  [hidden]="combo.DATA_VALUE == 'Cancelled'" [value]="combo.KEY_ID" [selected]="combo.DATA_VALUE == 'Pending for Approval'">{{ combo.DATA_VALUE }}</option>
+                                                    </select>     
+                                                </div>
+                                            </div>
+                                            </div>
+                                    </form>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="table-responsive table-card mb-0">
+                                        <table class="table table-nowrap align-middle" id="orderTable">
+                                            <thead class="table-light text-white font-type">
+                                    
+                                            <tr>
+                                                
+                                                <th>No</th>
+                                                <th>Amount</th>
+                                                <th>No of Installment</th>
+                                                <th>Installment Amount</th>
+                                                <th>Deduction Start Month & Year</th>
+                                                <th>Submitted Date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11">
+                                         <tr class="font-type" *ngFor="let item of listLoanRequestPersonal | search : searchInput | pagination: currentPagePersonal: itemsPerPage;index as i">
+                                        
+                                            <th>{{i+1}}</th>
+                                            <td>AED {{item.AMOUNT}}</td>
+                                            <td>{{item.noOfInstal}}</td>
+                                            <td>AED {{item.Instal_Amnt}}</td>
+                                            <td>{{item.dSMonth}} {{item.dSYear}}</td>
+                                            <td>{{item.REQUEST_DATE | date: 'dd-MM-yyyy'}}</td>
+                                            <td class="status"><a  data-target="#statusModal" data-bs-toggle="modal" href="#statusModal" (click)="Approvelist(item.REQ_ID)"><span class="badge bg-info-subtle text-info  width-budge fs-11">{{item.APPROVED_STATUS}}</span></a>
+                                                <td>
+                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                        
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel" data-id="{{item.REQ_ID}}">
+                                                            <button type="button" class="btn btn-danger btn-sm" id="buttoncancel" data-bs-toggle="modal" data-bs-target="#CancelModal"  (click) = "selectreqId(item.REQ_ID)" [disabled]="item.APPROVED_STATUS!='Pending for Approval'"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i>
+                                                            </button>
+                                                        </li>
+                                                        <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Details" [hidden]="item.APPROVED_STATUS!='Approved'">
+                                                            <a href="#" class="text-info d-inline-block"data-bs-toggle="modal" data-bs-target="#AddRequestModal" (click) = "Fetchloanpayments(item.REQ_ID)">  
+                                                         
+                                                                  <i class="ri-eye-fill fs-16"></i>
+                                                             
+                                                            </a> 
+                                                        </li>
+                                                    </ul>
+                                            </td>
+                                            
+                                        </tr>                                       
+                                                                          
+                                                                               
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div *ngIf="listLoanRequestPersonal">
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsPersonal>0">
+                                        <div class="col-sm">
+                                          <div class="font-type fs-12 text-muted">
+                                            Showing <span class="fw-semibold">{{ getEntriesStartPersonal() }}</span>
+                                            - <span class="fw-semibold">{{ getEntriesEndPersonal() }}</span>
+                                            of <span class="fw-semibold">{{ totalSearchResultsPersonal }}</span> Results
+                                          </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="font-type fs-12 text-muted">
+                                                Total Pages : <span class="fw-semibold"> {{ getTotalPagesPersonal() }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div>
+                                                    <div class="input-group">
+                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPagePersonal" tabindex="1">                                                                    
+                                            
+                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPagePersonal()" tabindex="2">Go</button>
+                                      </div>
+                                    </div>
+                                         
+                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePagePersonal(currentPagePersonal - 1)" [class.disabled-button]="currentPagePersonal === 1">←</button>
+                                            </li>
+                                            <ng-container *ngFor="let pageNumberPersonal of getPageNumbersPersonal(currentPagePersonal)">
+                                              <li class="page-item">
+                                                <button class="page-link" (click)="changePagePersonal(pageNumberPersonal)" [class.active]="currentPagePersonal === pageNumberPersonal">{{ pageNumberPersonal }}</button>
+                                              </li>
+                                            </ng-container>
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePagePersonal(currentPagePersonal + 1)" [class.disabled-button]="currentPagePersonal * itemsPerPage >= totalSearchResultsPersonal">→</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                            </div>
+                        </div>
+                                </div>
+                                </div>                    
+                              
+                            </div>
+                        </div><!--end col-->
+                    </div>
+                    <!--End Loan Request Summary-->
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <!-- View details modal -->
+            <div class="modal fade" id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" ></button>
+                        </div>
+                        <div class="modal-body ">
+                            <div class="">
+                        <div class="row align-items-center mb-4 padding-up-5">
+                            <div class="col-sm">
+                                <div class="align-items-center d-flex ">
+                                    <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold" style="text-decoration:underline;float: left;">Loan Repayment Details</h4>
+                                </div>
+                            </div>
+                            <div class="col-sm-auto">
+                                <div class="d-flex gap-1 flex-wrap">
+                                    <h5 class="font-type fw-semibold fs-13 padding-up-5">Disbursement Date : <span class="text-orange">{{DISBURSEMENT_DATE | date: 'dd-MM-yyyy'}}
+                                    </span></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive table-card mb-1">
+                            <table class="table table-nowrap align-middle" id="orderTable">
+                                <thead class="font-type text-white" style="background-color:#fa9d5e">
+                            <tr>
+                                <th>Payment Date</th>
+                                <th>Payment Amount</th>
+                                <th>Balance</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let payments of paymentdetails">
+                                    <td>{{payments.Payment_Date | date:"dd"}} {{payments.Payment_Date | date:"MMM"}}, {{payments.Payment_Date | date:"YYYY"}}</td>
+                                    <td>{{payments.Payment_Amnt}}</td>
+                                    <td>{{payments.Balance_Amnt}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
+                    </div>
+                    </div>
+                </div>
+            </div> 
+            </div>
+            <!--End View details modal -->
+
+            <!-- Status Model-->
+            <div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true" style="float: right;">
+                <div class="modal-dialog modal-dialog-centered" style="float: right;">
+                    <div class="modal-content" style="float: right;">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                        </div>
+                        <div class="table-responsive">
+                
+                            <table class="table table-bordered table-nowrap align-middle mb-0">
+                                <thead>
+                                    <tr class="font-type">
+                                        <th scope="col" style="width: 30%;">LEVEL_ID</th>
+                                        <th scope="col" style="width: 30%;">APPROVER </th>
+                                        <th scope="col" style="width: 20%;">STATUS </th>
+                                        <th scope="col" style="width: 20%;">DATE</th>
+                                        <th scope="col" style="width: 20%;">REMARKS</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="font-type">
+                                    <tr  *ngFor="let approvedtl of approvelist">
+                                        <td>{{approvedtl.LEVEL_ID}}</td>
+                                        <td>{{approvedtl.APPROVER}}</td>
+                                        <td>{{approvedtl.STATUS}}</td>
+                                        <td>{{approvedtl.VERIFIED_DATE | date: 'dd-MM-yyyy'}}</td>
+                                        <td>{{approvedtl.VERIFIED_REMARKS}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Status Model-->
+
+            <!--Cancel Request Model-->
+            <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <div class="text-center">
+                                <h5 class="fs-13 font-type">You are about to cancel your request ?</h5>
+                                <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                                <div class="hstack gap-2 justify-content-center remove">   
+                                    <button class="btn btn-danger" id="delete-record" (click)="cancelRequest(selectedRequestID)" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Yes</button>
+                                            <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Cancel Request Model--> 
+             <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                        <!--Modal For Success Message Start-->
+                        <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                    </div>
+                                    <div class="modal-body" *ngIf="showModal==1"> 
+                                        <div class="container">
+                                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                    
+                                        </div>
+                                    </div>
+                                    <div class="modal-body" *ngIf="showModal==2">
+                                    <div class="container">
+                                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                        
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!--Modal For Success Message End-->  
+                    <!-- Reject Model-->
+                    <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" (click)="clearReject()"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off">
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="mb-3">
+                                            <label class="form-label font-type">Reason</label>
+                                            <textarea class="form-control" required #reason [formControl]="reasonControl"></textarea>  
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer margin-up-15">
+                                        <div class="hstack gap-2">
+                        
+                                            <button class="btn btn-danger font-type" id="delete-record" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="reject(selectedRequestID,reason.value)">Reject</button>
+                                            <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Reject Model-->   
+                     <!--Edit Model-->
+                     <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="EditModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="clearEdit()"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off" [formGroup]="EditForm" (ngSubmit)="validateEditForm()" >
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                        
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-2">
+                                                    <h3 class="fw-semibold fs-13 font-type"><span>Disbursement Month & Year</span></h3>
+                                                    <input type="month" min="{{currentmonthno}}" id="DSB" class="form-control fs-12 font-type height-check" required  formControlName="DSBdate"/>
+                                                   <div *ngIf="EditForm.get('DSBdate')!.hasError('required') && EditForm.get('DSBdate')!.touched" class="text-danger">
+                                                    Please select a month and year!
+                                                  </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-2">
+                                                    <h3 class="fw-semibold fs-13 font-type"><span>Deduction Start Month & Year</span></h3>
+                                                   <input type="month" min="{{currentmonthno}}" id="DED" class="form-control fs-12 font-type height-check" required  formControlName="DEDdate" (change)="datevalidation()"/>
+                                                   <div *ngIf="EditForm.get('DEDdate')!.hasError('required') && EditForm.get('DEDdate')!.touched" class="text-danger">
+                                                    Please select a month and year!
+                                                  </div>
+                                                  <div *ngIf="validdate" class="text-danger">{{validdate}}</div>
+                                                </div>
+                                            </div>
+                                        </div>                                       
+                                           
+                                    <div class="modal-footer" style="padding-bottom: 0px;">
+                                        <div class="hstack gap-2" *ngIf="!EditForm.valid">
+                                            <button type="submit" class="btn btn-orange font-type text-white" [disabled]="EditForm.valid" id="validate-btn" (click)="validateEditForm()">Submit</button>
+                                        </div>
+                                    
+                                        <div class="hstack gap-2" *ngIf="EditForm.valid">
+                                            <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Edit(selectedRequestID,item)">Submit</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </form>
+                        </div>
+                    </div> 
+                    </div>               
+                     <!--End Edit Model-->          
+            <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+    
+
+

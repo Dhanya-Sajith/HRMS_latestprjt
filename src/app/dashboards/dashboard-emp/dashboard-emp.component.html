@@ -1,0 +1,589 @@
+<div id="layout-wrapper">
+    <app-header></app-header>
+ 
+    <app-sidemenu></app-sidemenu>
+    
+    <div class="vertical-overlay"></div>
+    
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+        <div class="page-content">
+            <div id="loading-bar-spinner" class="spinner" *ngIf="loading"><div class="spinner-icon"></div></div>
+            <div class="container-fluid" [ngClass]="{'disabledAll': isDisabledAll}">
+                <!--Welcome Header--->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card name-header" >
+                            <div class="card-header name-header">
+                                <div class="d-lg-flex align-items-center name-header">
+                                    <div class="flex-grow-1">
+                                        <h4 class="fs-16 mb-3 font-type fw-semibold">Welcome {{ename}}</h4>
+                                        <p class="mb-0 margin-up-15 text-muted font-type">Home / Dashboard</p>
+                                     </div>
+                                     <ng-container *ngIf = ANNIVERSARY != "">
+                                        <div class="flex-grow-1">
+                                           <div>
+                                               <h2 class="title top-12 fs-15">
+                                               <img src="assets\styles\img\balloons.png" alt="user-img" title="Mat Helme" class="avatar-xxs">
+                                               <span class="title-word title-word-1">{{ANNIVERSARY}}</span>
+                                               <!-- <span class="title-word title-word-2">You A </span>
+                                               <span class="title-word title-word-3">Fantastic </span>
+                                               <span class="title-word title-word-4">Work Anniversary!</span> -->
+                                               <img src="assets\styles\img\balloons.png" alt="user-img" title="Mat Helme" class="avatar-xxs">
+                                               </h2>
+                                           </div>
+                                        </div>
+                                       </ng-container>
+                                       <ng-container *ngIf = BIRTHDAY != "">
+                                        <div class="flex-grow-1">
+                                           <div>
+                                               <h2 class="title top-12 fs-15">
+                                               <img src="assets\styles\img\balloons.png" alt="user-img" title="Mat Helme" class="avatar-xxs">
+                                               <span class="title-word title-word-1">{{BIRTHDAY}}</span>
+                                               <!-- <span class="title-word title-word-2">Birthday</span> -->
+                                               <img src="assets\styles\img\balloons.png" alt="user-img" title="Mat Helme" class="avatar-xxs">
+                                               </h2>
+                                           </div>
+                                        </div>
+                                       </ng-container>
+                                    <div class="flex-shrink-0 mt-4 mt-lg-0 ">
+                                        <ul class="nav nav-pills filter-btns list-grid-nav hstack gap-1" role="tablist">
+                                            <li class="nav-item" role="presentation" [ngClass]="{'disabled': isDisabled}">
+                                                <div class="input-group-text bg-blue  text-white card-animate" title="Payslip">
+                                                    <img src="assets\styles\img\icons8-receipt-64.png" class="avatar-xxs" alt="user-pic">
+                                                </div>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <a href="documentRequest">
+                                                <div class="input-group-text bg-blue  text-white card-animate" title="Service Request">
+                                                    <img src="assets\styles\img\icons8-request-service-56.png" class="avatar-xxs" alt="user-pic" >
+                                                </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item" role="presentation" >
+                                                <a href="HRPolicies">
+                                                <div class="input-group-text bg-blue  text-white card-animate" title="HR policies">
+                                                    <img src="assets\styles\img\icons8-documents-50.png" class="avatar-xxs" alt="user-pic">
+                                                </div>
+                                            </a>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <a href="medical_insurance">
+                                                <div class="input-group-text bg-blue  text-white card-animate" title="Insurance">
+                                                    <img src="assets\styles\img\icons8-insurance-50.png" class="avatar-xxs" alt="user-pic">
+                                                </div>   
+                                                </a> 
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Welcome Header--->
+
+                <!-- Attendance & Regularization -->
+                <div class="row">
+                    <div class="col-xl-4">
+                        <div class="card card-animate shadow-lg r-10">
+                            <div class="card-body pa-0">
+                                <div>
+                                    <div class="mb-0 me-1">
+                                        <h5 class="card-title font-type fw-semibold">Attendance</h5>
+                                    </div>
+                                    <div class="margin-up-10">
+                                        <div class="mt-2">
+                                            <div class="row align-items-center g-2">
+                                                <div class="card ribbon-box shadow-none mb-lg-0">
+                                                    <div class="card-body">
+                                                        <div class="ribbon ribbon-info round-shape"><h6 class="mb-0 font-type text-white fs-12">Today</h6></div>
+                                                        <div class="ribbon-content mt-4 text-muted">
+                                                            <div class="row align-items-center g-2">
+                                                            <div class="col-auto">
+                                                                <div class="p-1">
+                                                                    <h6 class="mb-0 fs-10 font-type">{{INTIME_TODAY}}</h6>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="p-1">
+                                                                    <div class="progress progress-bar-striped progress-bar-animated progress-sm h-10 ">
+                                                                        <div class="progress-bar bg-blue progress-bar-striped progress-bar-animated" role="progressbar"  [ngStyle]="{ 'width': Attendance_today }" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="p-1">
+                                                                    <h6 class="mb-0 fs-10 font-type">{{OUTTIME_TODAY}}</h6>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        </div>
+
+                                        <div class="mt-0 margin-up-5">
+                                            <div class="row align-items-center g-2">
+                                                <div class="card ribbon-box shadow-none mb-lg-0">
+                                                    <div class="card-body margin-up-5">
+                                                        <div class="ribbon bg-orange round-shape"><h6 class="mb-0 font-type text-white fs-12">Yesterday</h6></div>
+                                                        <div class="ribbon-content mt-4 text-muted">
+                                                            <div class="row align-items-center g-2">
+                                                            <div class="col-auto">
+                                                                <div class="p-1">
+                                                                    <h6 class="mb-0 fs-10 font-type">{{INTIME_PREV}}</h6>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="p-1">
+                                                                    <div class="progress animated-progress progress-sm h-10 progress-bar-striped progress-bar-animated">
+                                                                        <div class="progress-bar bg-orange progress-bar-striped progress-bar-animated" role="progressbar"  [ngStyle]="{ 'width': Attendance_prev }" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="p-1">
+                                                                    <h6 class="mb-0 fs-10 font-type">{{OUTTIME_PREV}}</h6>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        </div>
+
+                                        <div class="row" >
+                                        <div class="col-lg-12">
+                                            <div class="card shadow-lg rounded bg-light-blue">
+                                                <div class="card-body text-center pa-0">
+                                                    
+                                                    <h6 class="fs-12 mb-3 font-type fw-semibold">From : {{REG_DATE | date:"dd-MM-yyyy"}}</h6>
+                                                    <div class="hstack gap-2 justify-content-center">
+                                                        <div class="col-lg-6 col-sm-6" >
+                                                            <div class="mb-3">
+                                                                <h5 class="card-title font-type">Absence</h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-sm-6">
+                                                            <div class="mb-3">
+                                                                <div class="input-group has-validation mb-3 font-type text-black">
+                                                                    <select class="form-control text-black input-group-text fs-12 rounded g1-text border-0" style="text-align: left;">
+                                                                        <option>Dates</option>
+                                                                        <option *ngFor="let abdate of data.ABSENTDATES">{{abdate.ABSENT_DATE | date:"dd-MM-yyyy"}}</option>
+                                                                    </select>
+                                                                    <span class="input-group-text bg-blue text-white">{{ABSENCE}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="hstack gap-2 justify-content-center">
+                                                        <div class="col-lg-6 col-sm-6" >
+                                                            <div class="mb-3">
+                                                                <h5 class="card-title font-type">Regularization</h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-sm-6">
+                                                            <div class="mb-3">
+                                                                <div class="input-group has-validation mb-3 font-type text-black">
+                                                                    <label class="form-control text-black input-group-text fs-12 g1-text border-0">MIS Punch</label>
+                                                                    <span class="input-group-text bg-blue text-white">{{MISSED_PUNCHES}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           </div>
+
+                    <!-- End Attendance & Regularization -->
+                       
+                    <!-- Anniversaries -->
+
+                    <div class="card shadow-lg r-10">
+                        <h5 class="card-title mb-2 font-type fw-semibold pa-15">Anniversaries</h5>
+                        <div class="card-body margin-up-10">
+                            <div class="mx-n2">
+                                <div data-simplebar data-simplebar-auto-hide="true" data-simplebar-track="white" style="max-height: 270px;">
+                                   
+                                    <ng-container *ngFor="let ab of data.ANNIVERSARIES">
+                                        <div class="d-flex align-items-center py-2 mb-2 card-animate r-10 bg-light-blue">
+                                            <div class="avatar-xs flex-shrink-0 me-3 ms-3">
+                                                <img src="assets\styles\img\Admin 2.png" alt="" class="img-fluid rounded-circle" *ngIf="!ab.PROFILE_PIC">
+                                                <img src="{{hostname}}{{ab.PHOTO_PATH}}"  alt="" class="img-fluid rounded-circle" *ngIf="ab.PROFILE_PIC">
+                                                
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div>
+                                                    <h5 class="fs-13 mb-1 font-type fw-semibold">{{ab.EMP_NAME}}</h5>
+                                                    <ng-container *ngIf="ab.EVENT == 'B'">
+                                                        <p class="fs-12 mb-0 font-type">Birthday Wishes!</p>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="ab.EVENT == 'A'">
+                                                        <p class="fs-12 font-type mb-0">{{ab.YEARS}} years with us!</p>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-0 ms-2">
+                                                <ng-container *ngIf="ab.EVENT == 'B'">
+                                                    <img src="assets\styles\img\icons8-birthday-50 (1).png" alt="" class="img-fluid rounded-circle">
+                                                </ng-container>
+                                                <ng-container *ngIf="ab.EVENT == 'A'">
+                                                    <img src="assets\styles\img\icons8-prize-94.png" alt="" class="avatar-xs rounded-circle">
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    
+
+                                       <!---IF NO Anniversaries-->
+                                       <div class="text-center py-5" *ngIf="data.ANNIVERSARIES.length == 0">
+
+                                        <div class="mb-4">
+                                            <img src="assets\styles\img\_celebration.gif" alt="" Width="20%">
+                                        </div>
+                                    </div>
+                                      <!---IF NO Anniversaries-->
+                                </div>
+                            </div>
+                        </div><!-- end card-body -->
+                    </div>
+                           <!-- End Anniversaries -->
+                    </div>
+                    
+
+                     <!-- End Row -->
+
+                  
+          
+                    <div class="col-xl-8">
+                        <div class="row">   
+                              <!-- Your Leaves -->
+                            <div class="col-md-6">
+                                <div class="card card-animate shadow-lg r-10">
+                                        <div class="d-flex pa-8">
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex">
+                                                    <div class="flex-grow-1">
+                                                        <div class="text-muted">
+                                                            <h5 class="card-title mb-2 me-2 fw-semibold font-type pa-15">Your Leaves</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row text-center g-3" *ngIf="COMP_OFFTOOK > 0">
+                                                   <div class="col-lg-4">
+                                                     <a href="compensation">
+                                                        <div class="mb-0 pb-0">
+                                                            <circle-progress
+                                                            [percent]="compoff_value"
+                                                            [radius]="35"
+                                                            [outerStrokeColor]= "compoffcolor"
+                                                            [outerStrokeGradientStopColor]= "compoffcolor1"
+                                                            [title]="compoff_part"
+                                                            [showSubtitle]="false"
+                                                            [animation]="true"
+                                                            [animationDuration]="300"
+                                                            ></circle-progress>
+                                                            <h5 class="mb-2 fs-12 font-type">Comp off</h5>
+                                                        </div>
+                                                      </a>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <a href="LeaveManagement">
+                                                        <div class="mb-0 pb-0">
+                                                            <circle-progress
+                                                            [percent]="annual_value"
+                                                            [radius]="35"
+                                                            [outerStrokeColor]= "annualcolor"
+                                                            [outerStrokeGradientStopColor]= "annualcolor1"
+                                                            [title]="annual_part"
+                                                            [showSubtitle]="false"
+                                                            [animation]="true"
+                                                            [animationDuration]="300"
+                                                            ></circle-progress>  
+                                                            <h5 class="mb-2 fs-12 font-type">Annual</h5>
+                                                        </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <a href="LeaveManagement">
+                                                        <div class="mb-0 pb-0">
+                                                            <circle-progress
+                                                            [percent]="medical_value"
+                                                            [radius]="35"
+                                                            [outerStrokeColor]= "medicalcolor"
+                                                            [outerStrokeGradientStopColor]= "medicalcolor1"
+                                                            [title]="medical_part"
+                                                            [showSubtitle]="false"
+                                                            [animation]="true"
+                                                            [animationDuration]="300"
+                                                            ></circle-progress>  
+                                                            <h5 class="mb-2 fs-12 font-type">Medical</h5>
+                                                        </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row text-center g-3"  *ngIf="COMP_OFFTOOK == 0">
+                                                     <div class="col-lg-6">
+                                                        <a href="LeaveManagement">
+                                                         <div class="mb-0 pb-0">
+                                                             <circle-progress
+                                                             [percent]="annual_value"
+                                                             [radius]="35"
+                                                             [outerStrokeColor]= "annualcolor"
+                                                             [outerStrokeGradientStopColor]= "annualcolor1"
+                                                             [title]="annual_part"
+                                                             [showSubtitle]="false"
+                                                             [animation]="true"
+                                                             [animationDuration]="300"
+                                                             ></circle-progress>  
+                                                             <h5 class="mb-2 fs-12 font-type">Annual</h5>
+                                                         </div>
+                                                         </a>
+                                                     </div>
+                                                     <div class="col-lg-6">
+                                                        <a href="LeaveManagement">
+                                                         <div class="mb-0 pb-0">
+                                                             <circle-progress
+                                                             [percent]="medical_value"
+                                                             [radius]="35"
+                                                             [outerStrokeColor]= "medicalcolor"
+                                                             [outerStrokeGradientStopColor]= "medicalcolor1"
+                                                             [title]="medical_part"
+                                                             [showSubtitle]="false"
+                                                             [animation]="true"
+                                                             [animationDuration]="300"
+                                                             ></circle-progress>  
+                                                             <h5 class="mb-2 fs-12 font-type">Medical</h5>
+                                                         </div>
+                                                         </a>
+                                                     </div>
+                                                 </div>
+
+                                            </div>   
+                                        </div>
+                                </div>
+                            </div>
+                              <!-- End Your Leaves -->
+
+                            <!-- Your Training -->
+                       
+                            <div class="col-md-6" [ngClass]="{'disabled': isDisabled}">
+                                <div class="card card-animate r-10 shadow-lg">
+                                    <div class="card-body pa-0">
+                                        <h4 class="card-title mb-2 font-type fw-semibold">Training Hours</h4>
+                                        <div class="text-center margin-up-15">
+                                            <div>
+                                               <div class="apex-charts" id="radial-chart" style="min-height: 66px;"><div id="apexchartszis7lnkb" class="apexcharts-canvas apexchartszis7lnkb apexcharts-theme-light font-type" style="width: 190px; height: 66px;"><svg id="SvgjsSvg1133" width="190" height="66" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG1135" class="apexcharts-inner apexcharts-graphical" transform="translate(20, -10)"><defs id="SvgjsDefs1134"><clipPath id="gridRectMaskzis7lnkb"><rect id="SvgjsRect1137" width="156" height="162" x="-3" y="-1" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath><clipPath id="gridRectMarkerMaskzis7lnkb"><rect id="SvgjsRect1138" width="154" height="164" x="-2" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath></defs><g id="SvgjsG1139" class="apexcharts-radialbar"><g id="SvgjsG1140"><g id="SvgjsG1141" class="apexcharts-tracks"><g id="SvgjsG1142" class="apexcharts-radialbar-track apexcharts-track" rel="1"><path id="apexcharts-radialbarTrack-0" d="M 21.280487804878042 75 A 53.71951219512196 53.71951219512196 0 0 1 128.71951219512195 75" fill="none" fill-opacity="1" stroke="rgba(231,231,231,0.85)" stroke-opacity="1" stroke-linecap="butt" stroke-width="9.345121951219513" stroke-dasharray="0" class="apexcharts-radialbar-area" data:pathOrig="M 21.280487804878042 75 A 53.71951219512196 53.71951219512196 0 0 1 128.71951219512195 75"></path></g></g><g id="SvgjsG1144"><g id="SvgjsG1148" class="apexcharts-series apexcharts-radial-series" seriesName="Storage" rel="1" data:realIndex="0"><path id="SvgjsPath1149" d="M 21.280487804878042 75 A 53.71951219512196 53.71951219512196 0 0 1 114.28796409307861 38.36338077956944" fill="none" fill-opacity="0.85" stroke="#3399cc" stroke-opacity="1" stroke-linecap="butt" stroke-width="9.634146341463415" stroke-dasharray="3" class="apexcharts-radialbar-area apexcharts-radialbar-slice-0" data:angle="137" data:value="76" index="0" j="0" data:pathOrig="M 21.280487804878042 75 A 53.71951219512196 53.71951219512196 0 0 1 114.28796409307861 38.36338077956944"></path></g><circle id="SvgjsCircle1145" r="44.0469512195122" cx="75" cy="75" class="apexcharts-radialbar-hollow" fill="transparent"></circle><g id="SvgjsG1146" class="apexcharts-datalabels-group" transform="translate(0, 0) scale(1)" style="opacity: 1;"><text id="SvgjsText1147" font-family=" hkgrotesk,sans-serif;" x="75" y="73" text-anchor="middle" dominant-baseline="auto" font-size="16px" font-weight="400" stroke="#3399cc" class="apexcharts-text apexcharts-datalabel-value" style="font-family:hkgrotesk,sans-serif;">32 Hrs</text></g></g></g></g><line id="SvgjsLine1150" x1="0" y1="0" x2="150" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1151" x1="0" y1="0" x2="150" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line></g><g id="SvgjsG1136" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend"></div></div></div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1 text-center pa-0">                    
+                                            <div class="col-lg-6 ">                        
+                                                <h6 class="font-type ma-5"><span class="badge fs-12 bg-light-orange text-orange"><span class="font-type fs-14 fw-semibold text-orange">40</span> hrs</span></h6>                        
+                                                <p class="font-type fs-12 margin-up-5">Assigned</p>                    
+                                            </div>                    
+                                            <div class="col-lg-6">                        
+                                                <h6 class="font-type ma-5"><span class="badge bg-info-subtle text-blue fs-12"><span class="font-type fs-14 fw-semibold text-blue" >8</span> hrs</span></h6>                                             
+                                                <p class="font-type fs-12 margin-up-5">Pending</p>                        
+                                            </div> </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <!-- End Your Training -->
+                        </div>
+                        <!-- end row -->
+
+                       <!-- Announcements -->
+                       <div class="col-xl-12">
+                        <div class="card card-animate r-10 shadow-lg">
+                        <div class="card ribbon-box border shadow-none mb-lg-0 r-10">
+                            <div class="card-body r-10 pa-10">
+                                <div class="ribbon bg-orange round-shape font-type fw-semibold mb-4">Announcements</div>
+                                <div class="ribbon-content  text-muted">
+                                <div class="live-preview ma-30">
+                                    
+                                        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                                            <ng-container *ngFor="let announ of data.ANNOUNCEMENTS">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active" data-bs-interval="5000">
+                                                    <div class="flex-grow-1 ms-2">
+                                                        <h6 class="mb-1 lh-base font-type fs-12"><a href="#" class="text-reset">{{announ.DISPLAY_FIELD}}</a></h6>
+                                                    </div>
+                                                </div>
+
+                                                <!--If no requests are pending-->
+                                                <!-- <div class="card-body text-center py-5">
+                                                    <div class="mb-4"></div>
+                                                    <div class="mb-4">
+                                                        <img src="assets\styles\img\-mail.gif" alt="" Width="20%">
+                                                    </div>
+                                                    <h5 class="fs-14 mb-4 font-type fw-semibold margin-up-15">You have no progress request!</h5>
+                                                </div> -->
+                                                <!--If no requests are pending-->
+
+                                            </div>       
+                                             </ng-container>
+                                        </div>
+                                     
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- End Announcements -->
+
+                        <div class="row">
+
+                        <!-- To do list -->
+                        <div class="col-xl-6">
+                            <div class="card card-animate shadow-lg r-10">
+                                <div class="card-body">
+                                   
+                                    <div class="align-items-center d-flex mb-1">
+                                        <h4 class="card-title mb-0 flex-grow-1 font-type fw-semibold">To do list</h4>
+                                        <div class="flex-shrink-0">
+                                            <div>
+                                                <!-- <div class="badge bg-danger bg-gradient mb-2 font-type"><h6 class="mb-0 text-white font-type fs-12 fw-semibold">Over Due (1)</h6></div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mx-n3">
+                                        <div data-simplebar data-simplebar-auto-hide="true" data-simplebar-track="white" style="max-height: 330px;min-height:330px">
+                                            <ul class="list-group list-group-flush" *ngFor="let todo of data.TODOLIST">
+                                                <li class="list-group-item  ms-2 me-2 mb-2 r-10 bg-light-blue border-0" style="border-radius: 10px;" (click)="navigateToNewPage(todo)">
+                                                    <!-- <a href="{{todo.url}}"> -->
+                                                    <a [routerLink]="['/' + todo.url]" [queryParams]="{ user: todo.scope}">
+                                                    <div>
+                                                        <div class="d-flex align-items-start">
+                                                            <ng-container *ngIf="todo.duedate <= today">
+                                                                <div class="flex-grow-1" >
+                                                                    <div class="badge bg-danger bg-gradient mb-2 font-type fs-11">Over Due</div>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="todo.duedate > today">
+                                                                <div class="flex-grow-1">
+                                                                    <div class="badge bg-info bg-gradient mb-2 fs-11 font-type">Due Soon</div>
+                                                                </div>
+                                                            </ng-container>
+                                                            <div class="flex-shrink-0">
+                                                                <p class="text-muted fs-12 font-type">{{todo.duedate | date:"dd MMM, yyyy"}}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <p class="mb-4 font-type fs-12 margin-up-10">{{todo.req_descr}}</p>
+                                                        <div class="d-flex align-items-start margin-up-15">
+                                                            <div class="flex-grow-1">
+                                                                <h5 class="fs-13 mb-1 font-type fw-semibold">{{todo.category}}</h5>
+                                                            </div>
+                                                            <div class="flex-shrink-0">
+                                                                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Take Action">
+                                                                        <a href="{{todo.url}}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12 11V8L16 12L12 16V13H8V11H12ZM12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2ZM12 20C16.42 20 20 16.42 20 12C20 7.58 16.42 4 12 4C7.58 4 4 7.58 4 12C4 16.42 7.58 20 12 20Z"></path></svg></a>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </a>
+                                                </li>
+                                                
+                                            </ul>
+                                             <!--If no data-- show this-->
+                                                <div class="card-body text-center py-5" *ngIf="data.TODOLIST.length == 0">
+                                                    <div class="mb-2">
+                                                        <img src="assets\styles\img\delivery-time.gif" alt="" class="avatar-sm ma-20">
+                                                    </div>
+                                                    <h4 class="fs-20 mb-1 font-type fw-semibold text-orange">Good Work!</h4>
+                                                    <h5 class="fs-14 mb-4 font-type fw-semibold text-blue">You are on track.</h5>
+                                                    
+                                                </div>
+                                                 <!--If no data-- show this-->
+                                        </div>
+                                    </div>
+                                </div><!-- end card-body -->
+                            </div><!-- end card -->
+                        </div>
+                        <!-- End To do list -->
+
+                        <!-- Request list -->
+
+                        <div class="col-xl-6">
+                            <div class="card card-animate shadow-lg r-10">
+                                <h5 class="card-title font-type fw-semibold pa-15">Request Status </h5>
+
+                                <div class="card-body margin-up-10">
+                                    <div class="mx-n3">
+                                        <div data-simplebar data-simplebar-auto-hide="true" data-simplebar-track="white" style="max-height: 335px;min-height:335px">
+                                            <ul class="list-group list-group-flush " *ngFor="let request of data.REQUESTS">
+                                                <li class="list-group-item  ms-2 me-2 mb-2"  style="border-radius: 10px;border-bottom-style: none;background-color: #e2f5ff" (click)="navigateToNewPage(request)">
+                                                   <!-- <a href="{{request.url}}"> -->
+                                                    <a [routerLink]="['/' + request.url]" [queryParams]="{ user: request.scope}">
+                                                    <div>
+                                                        <div class="d-flex align-items-start mb-0">
+                                                            <div class="flex-grow-1">
+                                                                <p class="mb-0 fw-semibold font-type">{{request.req_descr}}</p>
+                                                            </div>
+                                                            <div class="flex-shrink-0">
+                                                                <p class="text-muted fs-12 font-type">{{request.count}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <h6 class="mb-2 font-type fs-12 margin-up-5">{{request.req_descr}} Requests</h6>
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="flex-grow-1">
+                                                                <div class="badge bg-info bg-gradient mb-2">In-Progress</div>
+                                                               
+                                                            </div>
+
+                                                            <div class="flex-shrink-0">
+                                                                <div class="hstack gap-3">
+                                                                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="View">
+                                                                        <a href="{{request.url}}"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path></svg></a>
+                                                                    </div>
+                                                                    
+                           
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                           <!--If no requests are pending-->
+                                           <div class="card-body text-center py-5" *ngIf="data.REQUESTS.length == 0">
+                                            <div class="mb-4"></div>
+                                            <div class="mb-4">
+                                                <img src="assets\styles\img\_mail.gif" alt="" Width="20%">
+                                            </div>
+                                            <h5 class="fs-14 mb-4 font-type fw-semibold margin-up-15">You have no pending request!</h5>
+                                        </div>
+                                        <!--If no requests are pending-->
+                                        </div>
+                                    </div>
+                                </div><!-- end card-body -->
+                            </div><!-- end card -->
+                        </div>
+                       
+
+                    </div>
+                </div>
+                </div>
+               
+                
+             
+                </div> 
+                <router-outlet></router-outlet>
+    <app-footer></app-footer>
+    </div>
+</div>
+  
+  

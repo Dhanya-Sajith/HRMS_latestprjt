@@ -1,0 +1,559 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Document Requests</h4>
+                            <div class="page-title-right padding-up-5">
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group" *ngIf="this.grpname.includes('HR')">                                   
+
+                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="personal" (change)="teamselection(user)" name="user" [(ngModel)]="user">
+                                        <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio2">Personal</label>
+                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1"  value="team" name="user" [(ngModel)]="user" (change)="teamselection(user)" >
+                                        <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio1">Team</label>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Team View -->             
+                <div class="card-body padding-up-5 topbar-up" id="teaminput"*ngIf="user == 'team'">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header" style="padding:10px">
+                                        <div class="row g-3 margin-up-5" style="justify-content: center;">
+                                            <div class="col-lg-4 col-md-4">                                                
+                                                <div class="search-box">
+                                                    <input type="text" class="form-control search h-50 textbox-15 font-type" style="margin-top: 25px;"name="searchInput" placeholder="Search" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <h6 class="fs-12 font-type"><span>Company</span></h6>
+                                                <select class="form-select h-30 font-type textbox-15" [(ngModel)]="selectedCompany"(change)="filter()">
+                                                    <option value="-1" selected>All</option>
+                                                    <option *ngFor="let combo of companylist" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>
+                                                   
+                                                  </select>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="">
+                                                    <h6 class="fs-12 font-type"><span>Status</span></h6>
+                                                    <select class="form-select font-type fs-11 textbox-15"[(ngModel)]="selectedStatus" (change)="filter()">
+                                                        <option value="-1"selected>All</option>
+                                                        <option *ngFor="let combo of status" value="{{combo.KEY_ID}}" [hidden]="combo.DATA_VALUE=='Cancelled'" [selected]="combo.DATA_VALUE=='Pending for Approval'">{{combo.DATA_VALUE}}</option>
+                                                      </select>  
+                                                </div>
+                                            </div>
+
+                                            <!--end col-->
+                                        </div>
+                                </div>
+                             
+
+                                <div class="card-body ma-10">
+                                    <div class="table-responsive table-card mb-0">
+                                        <table class="table table-nowrap align-middle table-bordered border-orange">
+                                            <thead class="table-light text-white font-type">
+                                            <tr class="border-orange" >
+                                                <th>EmpCode</th>
+                                                <th>Name</th>
+                                                <th>Company</th>
+                                                <th>Document Type</th>
+                                                <th>Request Date</th>
+                                                <th>Remarks</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11">
+                                        <tr class="font-type h-30" *ngFor="let item of docreqTeam | search : searchInput | pagination: currentPage: itemsPerPage ">
+                                            <th>{{item.EMP_CODE}}</th>
+                                            <td>{{item.EMP_NAME}}</td>
+                                            <td>{{item.COMPANY_CODE}}</td>
+                                            <td>{{item.DOCUMENT_TYPE}}</td>
+                                            <td>{{item.REQUEST_DATE | date: 'dd-MM-yyyy'}}</td>
+                                            <td>{{item.REMARKS.substring(0,4)}}...<a href="#RemarksModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-11" style="text-decoration: underline;"(click)="selecteditem(item)">View More</a></td>
+                                            <td >
+                                                <span [ngStyle]="getStatusStyles(item.STATUS_VAL)" style="width:100%" class="badge fs-11 fw-medium">{{ item.STATUS_VAL }}</span>
+                                            </td>                                            
+                                            <td >
+                                                <ul class="list-inline hstack gap-1 mb-0">
+                                                       <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve"*ngIf="item.STATUS_VAL === 'Pending for Approval' && ![1, 3, 4].includes(item.DOC_TYPE_ID)">
+                                                        <a href="#ApproveRecordModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn">
+                                                        <button type="button" class="btn btn-soft-success btn-sm" id="buttonApprove" (click)="selecteditem(item)"><i class="ri-checkbox-circle-line fs-18"></i></button>
+                                                        </a>
+                                                        </li>
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve"*ngIf="item.STATUS_VAL === 'Pending for Approval' && [1, 3, 4].includes(item.DOC_TYPE_ID)">
+                                                            <!-- <a href="#ApproveRecordModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn"> -->
+                                                            <button type="button" class="btn btn-soft-success btn-sm" id="buttonApprove" (click)="ApproveSpecialCat(item)"><i class="ri-checkbox-circle-line fs-18"></i></button>
+                                                            <!-- </a> -->
+                                                            </li>
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reject"*ngIf="item.STATUS_VAL=='Pending for Approval'">
+                                                            <a class="remove-item-btn" data-bs-toggle="modal" href="#RejectModal">
+                                                            <button type="button" class="btn btn-soft-danger btn-sm" id="buttonReject" (click)="selecteditem(item)"><i class="ri-close-line fs-18"></i></button>
+                                                            </a>
+                                                        </li>
+                                                        <button type="button"*ngIf="item.STATUS_VAL=='Approved & Processed'&& ![1, 3, 4].includes(item.DOC_TYPE_ID)" class="btn btn-sm btn-soft-success font-type fs-12" title="View Document" data-bs-toggle="modal" data-bs-target="#ViewDocModal" (click)="selecteditem(item)"><i class="ri-eye-line align-middle fs-18"></i></button>
+                                                        <button type="button"*ngIf="item.STATUS_VAL=='Approved & Processed'&& [1, 3, 4].includes(item.DOC_TYPE_ID)" class="btn btn-sm btn-soft-success font-type fs-12" title="View Document" (click)="viewDocSpecialCat(item)"><i class="ri-eye-line align-middle fs-18"></i></button>
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Reason"*ngIf="item.STATUS_VAL=='Rejected'">
+                                                            <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#RejectReasonModal">
+                                                                <button type="button" class="btn btn-sm btn-soft-danger font-type fs-12" (click)="selecteditem(item)"><i class="ri-question-mark fs-18"></i></button>
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Addressed To"*ngIf="item.DOC_TYPE_ID==1">
+                                                            <a class="text-blue d-inline-block remove-item-btn" data-bs-toggle="modal" href="#RemarksModal" (click)="Address(item)">
+                                                                <i class="fa fa-address-card fs-16"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </td>                                           
+                                           
+                                        </tr>                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div *ngIf="docreqTeam">                                            
+                                
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                        <div class="col-sm">
+                                          <div class="font-type fs-12 text-muted">
+                                            Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                            - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                            of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                          </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="font-type fs-12 text-muted">
+                                                Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div>
+                                                    <div class="input-group">
+                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                            
+                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                      </div>
+                                    </div>
+                                         
+                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                            </li>
+                                            <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                              <li class="page-item">
+                                                <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                              </li>
+                                            </ng-container>
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                    </div>
+                </div>
+                <!-- End Team View -->   
+                           
+                 <!-- Personal View -->    
+                <div id="divPersonal" *ngIf="user == 'personal'">
+                    <div class="card pa-6-8 topbar-up">
+                       <div class="card-body">
+                        <div class="border border-dashed rounded p-2 pa-6-8">
+                        <div class="row" style="justify-content: center;">
+                            <div class="col-lg-auto">
+                                <span class="avatar-sm">
+                                    <img src="assets/styles/img/docreqimage.png" alt="">
+                                </span>
+                            </div>
+                            <div class="col-lg-4 pt-3">
+                                    <h6 class="font-type fs-12 fw-semibold"><span>Document Type</span></h6>
+                                    <select class="form-select font-type fs-12 textbox-15" id="doctype" name="doctype" [(ngModel)]="doc_type" (change)="validateDoctype()">
+                                        <option value="-1" selected disabled>Select</option>
+                                        <option *ngFor="let combo of doctype" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>                                        
+                                      </select>
+                                    <div *ngIf="validationDoctype" class="text-danger">{{validationDoctype}}</div>
+                            </div>
+                            <div class="col-lg-5 pt-3">
+                                    <h6 class="font-type fs-12 fw-semibold"><span>Remarks</span></h6>
+                                    <textarea class="form-control font-type textbox-15" placeholder="Enter remarks" rows="2" id="remarks" name="remarks" [(ngModel)]="remarks"(input)="validateRemarks()"></textarea>
+                                    <div *ngIf="validationremarks" class="text-danger">{{validationremarks}}</div>
+                            </div>
+                            <div class="col-lg-5 pt-3" *ngIf="showSalarycert">
+                                <h6 class="font-type fs-12 fw-semibold"><span>Addressed To</span></h6>
+                                <textarea class="form-control font-type textbox-15" placeholder="Enter Address" rows="3" id="address" name="address" [(ngModel)]="address"(input)="validateRemarksAdd()"></textarea>
+                                <div *ngIf="validationremarksAdd" class="text-danger">{{validationremarksAdd}}</div>
+                        </div>
+                        </div>
+                        <!-- end row -->
+                        </div>  
+                    
+                        <div class="col-lg-12">
+                            <div class="hstack gap-2 justify-content-end ma-10">
+                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " (click)="addRequest()"><i class="ri-add-circle-line label-icon align-middle fs-16 ms-2"></i>Add Request</button>
+                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type" (click)="clear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Clear</button>
+                            </div>
+                        </div> 
+                    </div><!-- end card-body -->
+                    </div><!-- end card -->                       
+                   
+                    
+                      <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header" style="padding:10px">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <div class="align-items-center d-flex ">
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Document Requests Summary</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div class="">
+                                                    <h6 class="fs-12 font-type"><span>Document Type</span></h6>
+                                                    <select class="form-select font-type fs-12 textbox-15" [(ngModel)]="selectedDoctype" (change)="filterPersonal()">
+                                                        <option value="-1"selected>All</option>                                                        
+                                                        <option *ngFor="let combo of doctype" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <h6 class="fs-12 font-type"><span>Status</span></h6>
+                                                    <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedStatusPersonal" (change)="filterPersonal()">
+                                                        <option value="-1">All</option>
+                                                        <option *ngFor="let combo of status" [selected]="combo.DATA_VALUE=='Pending for Approval'"value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>
+                                                      </select>  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive table-card mb-0">
+                                        <table class="table table-nowrap align-middle table-bordered border-orange">
+                                            <thead class="table-light text-white font-type">
+                                            <tr class="border-orange">
+                                                <th>Document Type</th>
+                                                <th>Request Date</th>
+                                                <th>Remarks</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11">
+                                        <tr class="font-type" *ngFor="let data of docreqPersonal | pagination: currentPagePersonal: itemsPerPage">
+                                            <td>{{data.DOCUMENT_TYPE}}</td>
+                                            <td>{{data.REQUEST_DATE | date: 'dd-MM-yyyy'}}</td>
+                                            <td>{{data.REMARKS.substring(0,4)}}...<a href="#RemarksModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-11" style="text-decoration: underline;" (click)="selecteditem(data)">View More</a></td>
+                                            <td >
+                                                <span [ngStyle]="getStatusStyles(data.STATUS_VAL)" style="width:100%" class="badge fs-11 fw-medium">{{ data.STATUS_VAL }}</span>
+                                            </td> 
+                                                <td>
+                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel"*ngIf="data.STATUS_VAL=='Pending for Approval'">
+                                                            <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#CancelModal" (click)="selecteditem(data)">
+                                                                <i class="ri-delete-bin-5-fill fs-16"></i>
+                                                            </a>
+                                                        </li>                                                        
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Document"data-bs-toggle="modal" data-bs-target="#ViewDocModal" (click)="selecteditem(data)"*ngIf="data.STATUS_VAL=='Approved & Processed'&& ![1, 3, 4].includes(data.DOC_TYPE_ID)">
+                                                            <a class="text-success d-inline-block">
+                                                                <i class="ri-eye-fill fs-16"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Document"  (click)="viewDocSpecialCat(data)"*ngIf="data.STATUS_VAL=='Approved & Processed'&& [1, 3, 4].includes(data.DOC_TYPE_ID)">
+                                                            <a class="text-success d-inline-block">
+                                                                <i class="ri-eye-fill fs-16"></i>
+                                                            </a>
+                                                        </li>
+                                                        
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reason"*ngIf="data.STATUS_VAL=='Rejected'">
+                                                            <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#RejectReasonModal" (click)="selecteditem(data)">
+                                                                <i class="ri-question-mark fs-16"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Addressed To"*ngIf="data.DOC_TYPE_ID==1">
+                                                            <a class="text-blue d-inline-block remove-item-btn" data-bs-toggle="modal" href="#RemarksModal" (click)="Address(data)">
+                                                                <i class="fa fa-address-card fs-16"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </td>
+                                            
+                                        </tr>                                      
+                                     </tbody>
+                                    </table>
+                                </div>
+                                <div *ngIf="docreqPersonal">
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsPersonal>0">
+                                        <div class="col-sm">
+                                          <div class="font-type fs-12 text-muted">
+                                            Showing <span class="fw-semibold">{{ getEntriesStartPersonal() }}</span>
+                                            - <span class="fw-semibold">{{ getEntriesEndPersonal() }}</span>
+                                            of <span class="fw-semibold">{{ totalSearchResultsPersonal }}</span> Results
+                                          </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="font-type fs-12 text-muted">
+                                                Total Pages : <span class="fw-semibold"> {{ getTotalPagesPersonal() }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div>
+                                                    <div class="input-group">
+                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPagePersonal" tabindex="1">                                                                    
+                                            
+                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPagePersonal()" tabindex="2">Go</button>
+                                      </div>
+                                    </div>
+                                         
+                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePagePersonal(currentPagePersonal - 1)" [class.disabled-button]="currentPagePersonal === 1">←</button>
+                                            </li>
+                                            <ng-container *ngFor="let pageNumberPersonal of getPageNumbersPersonal(currentPagePersonal)">
+                                              <li class="page-item">
+                                                <button class="page-link" (click)="changePagePersonal(pageNumberPersonal)" [class.active]="currentPagePersonal === pageNumberPersonal">{{ pageNumberPersonal }}</button>
+                                              </li>
+                                            </ng-container>
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePagePersonal(currentPagePersonal + 1)" [class.disabled-button]="currentPagePersonal * itemsPerPage >= totalSearchResultsPersonal">→</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                            </div>
+                        </div>
+                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                    </div>
+                </div>                        
+                  
+            <!-- Model Box-->
+
+                 <!-- Approve Model-->
+                <div class="modal fade zoomIn" id="ApproveRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="clearApproveModal()"></button>
+                            </div>
+                            <div class="modal-body text-center padding-down-5">
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label font-type">Upload Document</label>
+                                        <input class="form-control font-type fs-12 textbox-15"type="file" id="formFile" [(ngModel)]="doc" accept="application/pdf">
+
+                                    </div>
+                                </div>
+                                <div class="text-center pa-6-8">
+                                    <button type="submit" class="btn btn-orange font-type"(click)="Approve(item)">Submit</button>
+                                    <button type="button" class="btn btn-blue font-type" style="margin-left:10px"(click)="clearApproveModal()">Cancel</button>
+                                     
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Approve Model-->
+
+                <!-- Remarks Model-->
+
+                <div class="modal fade zoomIn" id="RemarksModal" tabindex="-1" aria-labelledby="RemarksModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div>
+                                    <h6 class="fs-12 font-type" style=" line-height: 20px">{{Remarks}}</h6>         
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+             <!-- End Remarks Model-->
+
+
+            <!-- Reject Reason Model-->
+
+                   <div class="modal fade zoomIn" id="RejectReasonModal" tabindex="-1" aria-labelledby="RejectReasonModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div>
+                                    <h6 class="fs-12 font-type" style=" line-height: 20px">{{reject_reason}}</h6>         
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+             <!-- End Reject Reason Model-->
+             <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button>
+                             <!--Modal For Success Message Start-->
+                             <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                 <div class="modal-dialog modal-dialog-centered">
+                                     <div class="modal-content">
+                                         <div class="modal-header bg-orange padding-up-5">
+                                             <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                         </div>
+                                         <div class="modal-body" *ngIf="showModal==1"> 
+                                             <div class="container">
+                                                 <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                         
+                                             </div>
+                                         </div>
+                                         <div class="modal-body" *ngIf="showModal==2">
+                                         <div class="container">
+                                             <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{Failed}}</h2>
+                                             
+                                         </div>
+                                     </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         <!--Modal For Success Message End-->
+
+
+            <!-- Reject Model For HR-->
+                <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" (click)="clearRejectmodal()"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                    <div class="mb-3">
+                                        <label class="form-label font-type">Reason</label>
+                                        <textarea class="form-control" required id="reason" name="reason" [(ngModel)]="reason"></textarea>  
+                                    </div>
+                                </div>
+                                <div class="modal-footer margin-up-15">
+                                    <div class="hstack gap-2">
+                    
+                                        <button class="btn btn-danger font-type" id="delete-record" (click)="Reject(item)">Reject</button>
+                                        <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Reject Model-->
+
+                    <!--Cancel Request Model-->
+                    <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <div class="text-center">
+                                        <h5 class="fs-13 font-type">You are about to cancel your action ?</h5>
+                                        <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                                        <div class="hstack gap-2 justify-content-center remove">   
+                                            <button class="btn btn-success font-type" data-bs-dismiss="modal">No, Go back!</button>
+                                            <button class="btn btn-danger font-type" (click)="cancel(item)">Yes, Continue</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Cancel Request Model-->
+                    <!-- View document modal  -->
+                    <div class="modal fade" id="ViewDocModal" tabindex="-1" aria-labelledby="ViewDocModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off">
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                            <h6 class="mb-3 fw-semibold text-uppercase font-type">Documents</h6>
+                                            <div class="row g-3">
+                                                <div class="col-xxl-4 col-lg-12">
+                                                    <div class="border rounded border-dashed p-2">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-3">
+                                                                <div class="avatar-sm">
+                                                                    <div class="avatar-title bg-light text-secondary rounded fs-24">
+                                                                        <i class="ri-folder-zip-line"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-shrink-0 ms-2">
+                                                                <div class="d-flex gap-1">
+                                                                    <!-- <a href="https://localhost:44381/api/File/GetLeavDocs/{{activereqid}}" download target="_blank"><button type="button" class="btn btn-icon text-muted btn-sm fs-18"><i class="ri-download-2-line"></i></button></a> -->
+                                                                   
+                                                                        <a href="#ViewDocModal">
+                                                                        <button class="btn btn-icon text-muted btn-sm fs-18 dropdown" type="button" (click)="download_to_excel()" data-bs-toggle="modal" data-bs-target="#ViewDocModal">
+                                                                            <i class="ri-eye-line"></i>
+                                                                        </button>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end row -->
+                                    </div>  
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End View document modal  -->
+
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

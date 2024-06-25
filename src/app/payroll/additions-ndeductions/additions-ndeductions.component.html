@@ -1,0 +1,1067 @@
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>  
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                     <!-- start page title -->
+                     <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Additions & Deductions</h4>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- End start page title -->
+
+
+                     <div class="topbar-up">
+                        <div class="col-lg-12">
+                       
+                                    <form action="#" class="form-steps" autocomplete="off">
+                                        <!--Tabs-->
+                                        <div class="step-arrow-nav mb-3 margin-up-7">
+                                            <ul class="nav nav-pills custom-nav nav-justified" role="tablist">
+                                                <li class="nav-item fs-13 fw-semibold" role="presentation">
+                                                    <button class="nav-link active font-type" id="Addition-info-tab" data-bs-toggle="pill" data-bs-target="#Addition-gen-info" type="button" role="tab" aria-controls="Addition-gen-info" aria-selected="true"> <img src="assets/styles/img/increase.png" class="avatar-xxs" alt="user-pic"><span class="ms-2">Additions</span></button>
+                                                </li>
+                                                <li class="nav-item fs-13 fw-semibold" role="presentation">
+                                                    <button class="nav-link font-type" id="Deduction-description-info-tab" data-bs-toggle="pill" data-bs-target="#Deduction-description-info" type="button" role="tab" aria-controls="Deduction-description-info"  aria-selected="true"><img src="assets/styles/img/down.png" class="avatar-xxs" alt="user-pic"><span class="ms-2">Deductions</span></button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!--Close Tabs-->
+
+                                        <!--Radio Button-->
+
+                                    </form>
+                           
+                        </div>
+                     </div>
+                     <!--TAB ADDITION-->
+                     <div class="tab-content pa-0">
+                     <div class="tab-pane fade show active pa-0" id="Addition-gen-info" role="tabpanel" aria-labelledby="Addition-gen-info-tab">
+                        <div class="card topbar-up">
+                        <div class="card-body"> 
+                          
+                            <div class="row gy-3 mb-2" style="justify-content: center;">
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="form-check card-radio">
+                                        <input id="addition01" name="addition" type="radio" class="form-check-input" checked value="addOnetime" [(ngModel)]="addtimes" (change)="showAdditions(addtimes)">
+                                        <label class="form-check-label" for="addition01">
+                                            <span class="mb-2 fw-semibold d-block text-blue text-uppercase ms-3 ma-5" >One Time</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="form-check card-radio">
+                                        <input id="addition02" name="addition" type="radio" class="form-check-input" value="addRepeated" [(ngModel)]="addtimes" (change)="showAdditions(addtimes)">
+                                        <label class="form-check-label" for="addition02">
+                                            <span class="mb-2 fw-semibold d-block text-blue text-uppercase ms-3 ma-5">Repeated</span>
+                                        </label>
+                                    </div> 
+                                </div>
+                            </div>
+                              <!--Close Radio Button-->
+                        <div class="border border-dashed rounded p-3 pa-0">
+                             <!--ONE TIME DIV ADDITION-->
+                            <div id="addition-one-time" *ngIf="addtimes=='addOnetime'">
+                           
+                           
+                                <div class="row mb-1 margin-up-10">
+                                    <div class="col-lg-4 pt-2">
+                                        <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
+                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedCompanyidAddOnetime" (change)="onCompanySelectedAddOnetime()" aria-label="Default select example" required>
+                                            <option value="-1" selected disabled>Select</option>
+                                            <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                        </select>    
+                                </div>
+                                <div class="col-lg-4 pt-2">
+                                        <h6 class="font-type fs-12 fw-semibold"><span>Department </span></h6>
+                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedDeptAddOnetime" (change)="onDeptSelectedAddOnetime()" aria-label="Default select example" required>
+                                            <option value="-1" selected disabled>Select</option>
+                                            <option *ngFor="let combo of deptdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                        </select>
+                                </div>
+                                <div class="col-lg-4 pt-2">  
+                                        <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
+                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpAddOnetime"  aria-label="Default select example" required>
+                                            <option value="-1" selected disabled>Select</option>
+                                            <option *ngFor="let combo of empdata" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
+                                        </select>                     
+                                </div>
+                             
+                                </div>
+                            <div class="row mb-1">
+                                <div class="col-lg-4 pt-2">
+                                    <h6 class="fs-12 font-type fw-semibold"><span>Addition Type</span></h6>
+                                    <select class="form-select font-type fs-11 textbox-15" id="Addition-type" [(ngModel)]="selectedaddtypeOnetime">
+                                        <option value="-1" selected disabled>Select</option>
+                                        <option *ngFor="let combo of addtypeOnetime" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                        <option value="0">Others</option>
+                                    </select>    
+                            </div>
+                               
+                                <div class="col-lg-4 pt-2">
+                                        <h6 class="font-type fs-12 fw-semibold"><span>Amount </span></h6>
+                                        <input type="text" class="form-control font-type fs-13 textbox-15 h-30" placeholder="Enter the Amount" [formControl]="PayrollAmountAddOnetime"> 
+                                </div>
+                                <div class="col-lg-4 pt-2">  
+                                        <h6 class="font-type fs-12 fw-semibold"><span>Payroll Month </span></h6>
+                                        <input type="month" class="form-control font-type fs-11 mb-0 textbox-15" [(ngModel)]="PayrollMonthAddOnetime">                      
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="selectedaddtypeOnetime==0">
+                             <div class="col-lg-4 pt-2"  id="Add-otherType" >
+                                <input type="text" class="form-control font-type fs-11 textbox-15 h-30" placeholder="Others" [formControl]="OthersAddOnetime"> 
+                            </div>
+                            </div>
+
+                            </div>
+                             <!--END ONE TIME DIV ADDITION-->
+
+                                  <!--REPEATED DIV-->
+                    
+                                  <div id="addition-Repeated"  *ngIf="addtimes==='addRepeated'">
+                                    <div class="row mb-2 margin-up-10">
+                                                <div class="col-lg-4 pt-2">
+                                                        <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
+                                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedcompanyAddRepeated" (change)="onCompanySelectedAddRepeated()" aria-label="Default select example" required>
+                                                            <option value="-1" selected disabled>Select</option>
+                                                            <option *ngFor="let combo of companydataAddRepeated" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                        </select>    
+                                                </div>
+                                                <div class="col-lg-4 pt-2">
+                                                        <h6 class="font-type fs-12 fw-semibold"><span>Department </span></h6>
+                                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedDeptAddRepeated" (change)="onDeptSelectedAddRepeated()" aria-label="Default select example" required>
+                                                            <option value="-1" selected disabled>Select</option>
+                                                            <option *ngFor="let combo of deptdataAddRepeated" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                        </select>
+                                                </div>
+                                                <div class="col-lg-4 pt-2">  
+                                                        <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
+                                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpAddRepeated" aria-label="Default select example" required>
+                                                            <option value="-1" selected disabled>Select</option>
+                                                            <option *ngFor="let combo of empdataAddRepeated" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
+                                                        </select>                     
+                                                </div>
+                                             
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-lg-2 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Addition Type</span></h6>
+                                            <select class="form-select font-type fs-11 textbox-15" id="Addition-Rep-type" [(ngModel)]="selectedaddtypeRepeated" >
+                                                <option value="-1" selected disabled>Select</option>
+                                                <option *ngFor="let combo of addtypeRepeated" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                <option value="0">Others</option>
+                                              </select>       
+                                            </div>
+                                    
+                                        <div class="col-lg-2 pt-2">
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Amount </span></h6>
+                                                <input type="text" class="form-control font-type fs-13 textbox-15 h-30" placeholder="Enter the Amount" [formControl]="PayrollAmountAddRepeated"> 
+                                        </div>
+                                        <div class="col-lg-4 pt-2">
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Payroll Months </span></h6>
+                                            <div id="myMultiselectAdditions" class="multiselect">
+                                                <div id="mySelectLabelAdditions" class="selectBox" onclick="toggleCheckboxAreaAdditions()">
+                                                  <select class="form-select">
+                                                    <option id="additionmonth">Select</option>
+                                                  </select>
+                                                  <div class="overSelect"></div>
+                                                </div>
+                                                <div id="mySelectOptionsAdditions">
+                                                  <table>
+                                                      <tr *ngFor="let month of monthlist;  let i = index">
+                                                          <td><label for="checkboxAdditions{{i+1}}"><input type="checkbox" id="checkboxAdditions{{i+1}}" onchange="checkboxStatusChangeAdditions()" value="{{month.DISPLAY_FIELD}}" /> {{month.DISPLAY_FIELD}}</label></td>
+                                                      </tr>
+                                                  </table>
+                                                </div>
+                                              </div>
+                                        </div>                                          
+                                        <div class="col-lg-2 pt-2">  
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Effective Period From  </span></h6>
+                                                <input class="form-control font-type fs-11 mb-0 textbox-15" type="month" id="yearInput"  min="1900" max="2200"[formControl]="EffectivePeriodStartAddRepeated" />     
+                                                                  
+                                        </div>
+                                        <div class="col-lg-2 pt-2">  
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Effective Period To  </span></h6>
+                                            <input type="month" class="form-control font-type fs-11 mb-0 textbox-15"  [formControl]="EffectivePeriodEndAddRepeated">                  
+                                        </div>
+                                     </div>
+                                     <div class="row" *ngIf="selectedaddtypeRepeated==0">
+                                        <div class="col-lg-4 pt-2" id="Add-Rep-otherType">
+                                           <input type="text" class="form-control font-type fs-11 textbox-15 h-30" placeholder="Others" [formControl]="OthersAddRepeated"> 
+                                       </div>
+                                       </div>
+                                    </div>
+                                      <!--End REPEATED DIV-->
+                    </div>
+                    <div class="col-lg-12"*ngIf="addtimes=='addOnetime'">
+                        <div class="hstack gap-2 justify-content-end ma-10">
+                        <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " (click)="addOnetimeSave()" ><i class="ri-add-circle-line label-icon align-middle fs-16 ms-2"></i>Add</button>
+                        <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " (click)="clearAddOnetime()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                        </div>
+                    </div>
+                        <div class="col-lg-12"*ngIf="addtimes=='addRepeated'">
+                            <div class="hstack gap-2 justify-content-end ma-10">
+                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " (click)="addRepeatedSave()"><i class="ri-add-circle-line label-icon align-middle fs-16 ms-2"></i>Add</button>
+                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type "(click)="clearAddRepeated()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                            </div>
+                        </div>
+
+                    </div>
+                     </div>
+    
+                            <!-- LIST FOR ON TIME -->
+                            <div class="row margin-up-10" id="addition-one-time-list" *ngIf="addtimes=='addOnetime'">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header border-0 pa-6-8">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <div class="align-items-center d-flex ">
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">One Time Addition History</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1 pt-2">  
+                                                    <h6 class="font-type fs-12 fw-semibold"><span>Payroll Month </span></h6>
+                                                    </div>
+                                                    <div class="col-md-2 pt-1"> 
+                                                    <input type="month" class="form-control font-type fs-11 mb-0 textbox-15" [(ngModel)]="PayrollMonthAdditionOnetime" (change)="fetchOnetimeAddition();">                      
+                                            </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div class="search-box">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInput" (keyup)="changePageAddOnetime(currentPage)" name="searchInput">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border border-dashed border-end-0 border-start-0">
+                                        </div>
+                                        <div class="card-body pt-0">
+                                                <div class="table-responsive table-card mb-0">
+                                                    <table class="table table-nowrap align-middle" id="orderTable">
+                                                        <thead class="table-light text-white font-type">
+                                                            <tr>
+                                                                <th  id="th-company">Co.</th>
+                                                                <th  id="th-dept">Dept</th>
+                                                                <th  id="th-emp">Employee</th>
+                                                                <th>Addition Type</th>
+                                                                <th>Amount</th>
+                                                                <th>Payroll Month</th>
+                                                                <th >Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="list form-check-all font-type fs-11">
+                                                            <tr class="trstyle fs-11" *ngFor="let item of onetimeadditiondata | search : searchInput | pagination: currentPage: itemsPerPage;index as i">
+                                                                <td id="td-company">{{item.COMPANY_CODE}}</td>
+                                                                <td id="td-dept">{{item.DEPT_NAME}}</td>
+                                                                <td id="td-emp">{{item.EMP_NAME}}</td>
+                                                                <td>{{item.PAYMENT_CATEGORY}} </td>
+                                                                <td>
+                                                                    <ng-container *ngIf="item.isEditing">
+                                                                         <input type="text" class="amountaddonetime"  [(ngModel)]="item.amountAddOnetime">                                                 
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="!item.isEditing">
+                                                                        {{item.AMOUNT}}
+                                                                    </ng-container>
+                                                                </td>                                                                
+                                                                <td>{{item.PAYROLL_MONTHS}}</td>
+                                                                <td>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                                            <button type="button" class="btn btn-outline-warning btn-sm br_radius mr-2 " (click)="EditAddOnetime(item)" [hidden]="item.isEditing" id="buttonEdit" [disabled]="isButtonDisabled(item)"><i class="fa fa-pencil-square-o ic_color" aria-hidden="true" style="font-size: 18px;"></i>
+                                                                            </button>     
+                                                                            
+                                                                        </li>
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Delete">                                                                            
+                                                                            <button type="button" class="btn btn-danger btn-sm margin-left-50" id="buttoncancel[1]" data-bs-toggle="modal" href="#CancelModal" (click)="selecteditem(item)" [hidden]="item.isEditing" [disabled]="isButtonDisabled(item)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>                                                                           
+                                                                        </li>
+                                                                    </ul>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                    
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Save"  >
+                                                                    
+                                                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonSave" (click)="saveAddOnetime(item)"  [hidden]="!item.isEditing" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                            
+                                                                            </li>
+                                                                        
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel" >
+                                                                    
+                                                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" id="buttonCancel" (click)="CancelAddOnetime(item)" [hidden]="!item.isEditing"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                            
+                                                                            </li>
+                                                                   
+                                                                   
+                                                                        </ul>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div *ngIf="onetimeadditiondata">
+                                                    <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResultsAddOnetime>0">
+                                                        <div class="col-sm">
+                                                          <div class="font-type fs-12 text-muted">
+                                                            Showing <span class="fw-semibold">{{ getEntriesStartAddOnetime() }}</span>
+                                                            - <span class="fw-semibold">{{ getEntriesEndAddOnetime() }}</span>
+                                                            of <span class="fw-semibold">{{ totalSearchResultsAddOnetime }}</span> Results
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <div class="font-type fs-12 text-muted">
+                                                                Total Pages : <span class="fw-semibold"> {{ getTotalPagesAddOnetime() }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                <div>
+                                                                    <div class="input-group">
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            
+                                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageAddOnetime()" tabindex="2">Go</button>
+                                                      </div>
+                                                    </div>
+                                                         
+                                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePageAddOnetime(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                            </li>
+                                                            <ng-container *ngFor="let pageNumberAddOnetime of getPageNumbersAddOnetime(currentPage)">
+                                                              <li class="page-item">
+                                                                <button class="page-link" (click)="changePageAddOnetime(pageNumberAddOnetime)" [class.active]="currentPage === pageNumberAddOnetime">{{ pageNumberAddOnetime }}</button>
+                                                              </li>
+                                                            </ng-container>
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePageAddOnetime(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResultsAddOnetime">→</button>
+                                                            </li>
+                                                          </ul>
+                                                        </div>
+                                                      </div>
+                                            </div>
+                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end col-->
+                                </div>
+                                <!-- End LIST FOR ON TIME -->
+
+                            <!-- LIST FOR REPEATED -->
+
+                            <div class="row" id="addition-Repeated-list"  *ngIf="addtimes=='addRepeated'">
+                                <div class="col-lg-12">
+                                    <div class="card margin-up-10">
+                                        <div class="card-header border-0 pa-6-8">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <div class="align-items-center d-flex ">
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Repeated Addition History</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div class="search-box">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInput" (keyup)="changePageAddRepeated(currentPageAddRepeated)" name="searchInput">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border border-dashed border-end-0 border-start-0">
+                                        </div>
+                                        <div class="card-body pt-0">
+                                                <div class="table-responsive table-card mb-0">
+                                                    <table class="table table-nowrap align-middle" id="orderTable">
+                                                        <thead class="table-light text-white font-type">
+                                                            <tr>
+                                                                <th  id="th-company">Co.</th>
+                                                                <th  id="th-dept">Dept</th>
+                                                                <th  id="th-emp">Employee</th>
+                                                                <th>Addition Type</th>
+                                                                <th>Amount</th>
+                                                                <th>Payroll Months</th>
+                                                                <th>Effective Period</th>
+                                                                <th >Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="list form-check-all font-type fs-11">
+                                                            <tr class="trstyle fs-11" *ngFor="let repeatedadditem of repeatedadditiondata | search : searchInput | pagination: currentPageAddRepeated: itemsPerPage;index as i">
+                                                                <td id="td-company">{{repeatedadditem.COMPANY_CODE}}</td>
+                                                                <td id="td-dept">{{repeatedadditem.DEPT_NAME}}</td>
+                                                                <td id="td-emp">{{repeatedadditem.EMP_NAME}}</td>
+                                                                <td>{{repeatedadditem.PAYMENT_CATEGORY}} </td>
+                                                                <td>
+                                                                    <ng-container *ngIf="repeatedadditem.isEditing">
+                                                                         <input type="text" class="amountaddrepeated"  [(ngModel)]="repeatedadditem.amountAddRepeated">                                                 
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="!repeatedadditem.isEditing">
+                                                                        {{repeatedadditem.AMOUNT}}
+                                                                    </ng-container>
+                                                                </td>                                                                
+                                                                <td>{{repeatedadditem.PAYROLL_MONTHS}}</td>
+                                                                <td>{{repeatedadditem.EFFECTIVE_PERIOD}}</td>                                            
+                                                                <td>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                                            <button type="button" class="btn btn-outline-warning btn-sm br_radius mr-2 " (click)="EditAddRepeated(repeatedadditem)" [hidden]="repeatedadditem.isEditing" id="buttonEdit" [disabled]="isButtonDisabledRepeated(repeatedadditem)"><i class="fa fa-pencil-square-o ic_color" aria-hidden="true" style="font-size: 18px;"></i>
+                                                                            </button>      
+                                                                            
+                                                                        </li>
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Delete">                                                                            
+                                                                            <button type="button" class="btn btn-danger btn-sm margin-left-50" id="buttoncancel[1]" data-bs-toggle="modal" href="#deleteModal" (click)="selecteditem(repeatedadditem)" [hidden]="repeatedadditem.isEditing || isStopButtonDisabledRepeated(repeatedadditem)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>                                                                           
+                                                                        <!-- </li>
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Stop" >                                                                             -->
+                                                                            <button type="button" class="btn btn-danger btn-sm margin-left-50" id="buttoncancel[1]" title="Stop" data-bs-toggle="modal" href="#stopModal" (click)="selecteditem(repeatedadditem)" [hidden]="repeatedadditem.isEditing || !isStopButtonDisabledRepeated(repeatedadditem)" [disabled]="isButtonDisabledRepeated(repeatedadditem)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>                                                                           
+                                                                        </li>
+                                                                    </ul>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                    
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Save"  >
+                                                                    
+                                                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonSave" (click)="saveAddRepeated(repeatedadditem)"  [hidden]="!repeatedadditem.isEditing" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                            
+                                                                            </li>
+                                                                        
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel" >
+                                                                    
+                                                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" id="buttonCancel" (click)="CancelAddRepeated(repeatedadditem)" [hidden]="!repeatedadditem.isEditing"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                            
+                                                                            </li>                                                                 
+                                                                   
+                                                                        </ul>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div *ngIf="repeatedadditiondata">
+                                                    <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResultsAddRepeated>0">
+                                                        <div class="col-sm">
+                                                          <div class="font-type fs-12 text-muted">
+                                                            Showing <span class="fw-semibold">{{ getEntriesStartAddRepeated() }}</span>
+                                                            - <span class="fw-semibold">{{ getEntriesEndAddRepeated() }}</span>
+                                                            of <span class="fw-semibold">{{ totalSearchResultsAddRepeated }}</span> Results
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <div class="font-type fs-12 text-muted">
+                                                                Total Pages : <span class="fw-semibold"> {{ getTotalPagesAddRepeated() }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                <div>
+                                                                    <div class="input-group">
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            
+                                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageAddRepeated()" tabindex="2">Go</button>
+                                                      </div>
+                                                    </div>
+                                                         
+                                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePageAddRepeated(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                            </li>
+                                                            <ng-container *ngFor="let pageNumberAddRepeated of getPageNumbersAddRepeated(currentPage)">
+                                                              <li class="page-item">
+                                                                <button class="page-link" (click)="changePageAddRepeated(pageNumberAddRepeated)" [class.active]="currentPage === pageNumberAddRepeated">{{ pageNumberAddRepeated }}</button>
+                                                              </li>
+                                                            </ng-container>
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePageAddRepeated(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResultsAddRepeated">→</button>
+                                                            </li>
+                                                          </ul>
+                                                        </div>
+                                                      </div>
+                                            </div>
+                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end col-->
+                                </div>
+                                 <!-- End LIST FOR REPEATED -->
+
+
+                     </div>
+                  
+                      <!--END TAB ADDITION-->
+
+                      <!--TAB DEDUCTION-->
+                    
+                        <div class="tab-pane fade show  pa-0" id="Deduction-description-info" role="tabpanel" aria-labelledby="Deduction-description-info-tab">
+                           <div class="card topbar-up">
+                           <div class="card-body"> 
+                            <div class="row gy-3 mb-2" style="justify-content: center;">
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="form-check card-radio">
+                                        <input id="deduction01" name="deduction" type="radio" class="form-check-input" checked value="dedOnetime" [(ngModel)]="dedtimes" (change)="showDeductions(dedtimes)">
+                                        <label class="form-check-label" for="deduction01">
+                                            <span class="mb-2 fw-semibold d-block text-blue text-uppercase ms-3 ma-5" >One Time</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="form-check card-radio">
+                                        <input id="deduction02" name="deduction" type="radio" class="form-check-input" value="dedRepeated" [(ngModel)]="dedtimes" (change)="showDeductions(dedtimes)">
+                                        <label class="form-check-label" for="deduction02">
+                                            <span class="mb-2 fw-semibold d-block text-blue text-uppercase ms-3 ma-5">Repeated</span>
+                                        </label>
+                                    </div> 
+                                </div>
+                            </div>
+                           <div class="border border-dashed rounded p-3 pa-0">
+                      
+                               <!--ONE TIME DIV ADDITION-->
+                               <div id="Deduction-one-time" *ngIf="dedtimes=='dedOnetime'">
+                                   <div class="row mb-1 margin-up-10">
+                                    <div class="col-lg-4 pt-2">
+                                        <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
+                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedcompanyDedOnetime" (change)="onCompanySelectedDedOnetime()" aria-label="Default select example" required>
+                                            <option value="-1" selected disabled>Select</option>
+                                            <option *ngFor="let combo of companydataDedOnetime" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                        </select>    
+                                </div>
+                                <div class="col-lg-4 pt-2">
+                                        <h6 class="font-type fs-12 fw-semibold"><span>Department </span></h6>
+                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedDeptDedOnetime" (change)="onDeptSelectedDedOnetime()" aria-label="Default select example" required>
+                                            <option value="-1" selected disabled>Select</option>
+                                            <option *ngFor="let combo of deptdataDedOnetime" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                        </select>
+                                </div>
+                                <div class="col-lg-4 pt-2">  
+                                        <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
+                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpDedOnetime"  aria-label="Default select example" required>
+                                            <option value="-1" selected disabled>Select</option>
+                                            <option *ngFor="let combo of empdataDedOnetime" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
+                                        </select>                     
+                                </div>
+                             
+                                   </div>
+                               <div class="row mb-1">
+                                   <div class="col-lg-4 pt-2">
+                                       <h6 class="fs-12 font-type fw-semibold"><span>Deduction Type</span></h6>
+                                       <select class="form-select font-type fs-11 textbox-15" id="Ded-type" [(ngModel)]="selecteddedtypeOnetime">
+                                        <option value="-1" selected disabled>Select</option>
+                                        <option *ngFor="let combo of dedtypeOnetime" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                        <option value="0">Others</option>
+                                         </select>       
+                                       </div>
+                                  
+                                   <div class="col-lg-4 pt-2">
+                                           <h6 class="font-type fs-12 fw-semibold"><span>Amount </span></h6>
+                                           <input type="text" class="form-control font-type fs-13 textbox-15 h-30" placeholder="Enter the Amount"[formControl]="PayrollAmountDedOnetime"> 
+                                   </div>
+                                   <div class="col-lg-4 pt-2">  
+                                           <h6 class="font-type fs-12 fw-semibold"><span>Payroll Month </span></h6>
+                                           <input type="month" class="form-control font-type fs-11 mb-0 textbox-15"  [(ngModel)]="PayrollMonthDedOnetime">                      
+                                   </div>
+                               </div>
+                               <div class="row" *ngIf="selecteddedtypeOnetime==0">
+                                <div class="col-lg-4 pt-2"  id="Ded-otherType">
+                                   <input type="text" class="form-control font-type fs-11 textbox-15 h-30" placeholder="Others"[formControl]="OthersDedOnetime"> 
+                               </div>
+                               </div>
+   
+                               </div>
+                                <!--END ONE TIME DIV ADDITION-->
+   
+                                     <!--REPEATED DIV-->
+                       
+                                     <div id="Deduction-Repeated" *ngIf="dedtimes=='dedRepeated'">
+                                       <div class="row mb-2 margin-up-10">
+                                        <div class="col-lg-4 pt-2">
+                                            <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
+                                            <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedcompanyDedRepeated" (change)="onCompanySelectedDedRepeated()" aria-label="Default select example" required>
+                                                <option value="-1" selected disabled>Select</option>
+                                                <option *ngFor="let combo of companydataDedRepeated" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                            </select>    
+                                    </div>
+                                    <div class="col-lg-4 pt-2">
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Department </span></h6>
+                                            <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedDeptDedRepeated" (change)="onDeptSelectedDedRepeated()" aria-label="Default select example" required>
+                                                <option value="-1" selected disabled>Select</option>
+                                                <option *ngFor="let combo of deptdataDedRepeated" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                            </select>
+                                    </div>
+                                    <div class="col-lg-4 pt-2">  
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
+                                            <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpDedRepeated" aria-label="Default select example" required>
+                                                <option value="-1" selected disabled>Select</option>
+                                                <option *ngFor="let combo of empdataDedRepeated" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
+                                            </select>                     
+                                    </div>
+                                 
+                                                
+                                       </div>
+                                       <div class="row mb-2">
+                                           <div class="col-lg-2 pt-2">
+                                               <h6 class="fs-12 font-type fw-semibold"><span>Deduction Type</span></h6>
+                                               <select class="form-select font-type fs-11 textbox-15" id="Ded-Rep-type" [(ngModel)]="selecteddedtypeRepeated" >
+                                                <option value="-1" selected disabled>Select</option>
+                                                <option *ngFor="let combo of dedtypeRepeated" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                <option value="0">Others</option>
+                                                 </select>       
+                                               </div>
+                                       
+                                           <div class="col-lg-2 pt-2">
+                                                   <h6 class="font-type fs-12 fw-semibold"><span>Amount </span></h6>
+                                                   <input type="text" class="form-control font-type fs-13 textbox-15 h-30" placeholder="Enter the Amount" [formControl]="PayrollAmountDedRepeated"> 
+                                           </div>
+                                           <div class="col-lg-4 pt-2">
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Payroll Months </span></h6>
+                                            <div id="myMultiselectDeductions" class="multiselect">
+                                                <div id="mySelectLabelDeductions" class="selectBox" onclick="toggleCheckboxAreaDeductions()">
+                                                  <select class="form-select">
+                                                    <option id="deductionmonth">Select</option>
+                                                  </select>
+                                                  <div class="overSelect"></div>
+                                                </div>
+                                                <div id="mySelectOptionsDeductions">
+                                                  <table>
+                                                      <tr *ngFor="let month of monthlist;  let i = index">
+                                                          <td><label for="checkboxDeductions{{i+1}}"><input type="checkbox" id="checkboxDeductions{{i+1}}" onchange="checkboxStatusChangeDeductions()" value="{{month.DISPLAY_FIELD}}" /> {{month.DISPLAY_FIELD}}</label></td>
+                                                      </tr>
+                                                  </table>
+                                                </div>
+                                              </div>
+                                        </div>                                          
+                                        <div class="col-lg-2 pt-2">  
+                                                <h6 class="font-type fs-12 fw-semibold"><span>Effective Period From  </span></h6>
+                                                <input class="form-control font-type fs-11 mb-0 textbox-15" type="month" id="yearInput"  min="1900" max="2100"[formControl]="EffectivePeriodStartDedRepeated" />     
+                                                                  
+                                        </div>
+                                        <div class="col-lg-2 pt-2">  
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Effective Period To  </span></h6>
+                                            <input type="month" class="form-control font-type fs-11 mb-0 textbox-15"  [formControl]="EffectivePeriodEndDedRepeated">                  
+                                        </div>
+                                        </div>
+                                        <div class="row" *ngIf="selecteddedtypeRepeated==0">
+                                           <div class="col-lg-4 pt-2"  id="Ded-Rep-otherType">
+                                              <input type="text" class="form-control font-type fs-11 textbox-15 h-30" placeholder="Others" [formControl]="OthersDedRepeated"> 
+                                          </div>
+                                          </div>
+                                       </div>
+                                    <!--End REPEATED DIV-->
+                       </div>
+                       <div class="col-lg-12" *ngIf="dedtimes=='dedOnetime'">
+                           <div class="hstack gap-2 justify-content-end ma-10">
+                           <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type "(click)="dedOnetimeSave()" ><i class="ri-add-circle-line label-icon align-middle fs-16 ms-2"></i>Add</button>
+                           <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type "(click)="clearDedOnetime()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                           </div>
+                           </div>
+                           <div class="col-lg-12" *ngIf="dedtimes=='dedRepeated'">
+                            <div class="hstack gap-2 justify-content-end ma-10">
+                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type "(click)="dedRepeatedSave()" ><i class="ri-add-circle-line label-icon align-middle fs-16 ms-2"></i>Add</button>
+                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type "(click)="clearDedRepeated()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                            </div>
+                            </div>
+   
+                       </div>
+                        </div>
+       
+                               <!-- LIST FOR ON TIME -->
+                               <div class="row margin-up-10" id="Deduction-one-time-list" *ngIf="dedtimes=='dedOnetime'">
+                                   <div class="col-lg-12">
+                                       <div class="card">
+                                           <div class="card-header border-0 pa-6-8">
+                                               <div class="row align-items-center gy-3">
+                                                   <div class="col-sm">
+                                                       <div class="align-items-center d-flex ">
+                                                           <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">One Time Deduction History</h4>
+                                                       </div>
+                                                   </div>
+                                                   <div class="col-md-1 pt-2">  
+                                                    <h6 class="font-type fs-12 fw-semibold"><span>Payroll Month </span></h6>
+                                                    </div>
+                                                    <div class="col-md-2 pt-1"> 
+                                                    <input type="month" class="form-control font-type fs-11 mb-0 textbox-15" [(ngModel)]="PayrollMonthDeductionOnetime"(change)="fetchOnetimeDeduction();">                      
+                                                  </div>
+                                                   <div class="col-sm-auto">
+                                                       <div class="d-flex gap-1 flex-wrap">
+                                                           <div class="search-box">
+                                                               <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInput" (keyup)="changePageDedOnetime(currentPageDedOnetime)" name="searchInput">
+                                                               <i class="ri-search-line search-icon"></i>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <div class="card-body border border-dashed border-end-0 border-start-0">
+                                           </div>
+                                           <div class="card-body pt-0">
+                                                   <div class="table-responsive table-card mb-0">
+                                                       <table class="table table-nowrap align-middle" id="orderTable">
+                                                           <thead class="table-light text-white font-type">
+                                                               <tr>
+                                                                   <th  id="th-company">Co.</th>
+                                                                   <th  id="th-dept">Dept</th>
+                                                                   <th  id="th-emp">Employee</th>
+                                                                   <th>Deduction Type</th>
+                                                                   <th>Amount</th>
+                                                                   <th>Payroll Month</th>
+                                                                   <th >Action</th>
+                                                               </tr>
+                                                           </thead>
+                                                           <tbody class="list form-check-all font-type fs-11">
+                                                               <tr class="trstyle fs-11" *ngFor="let dedonetimeitem of onetimedeductiondata | search : searchInput | pagination: currentPageDedOnetime: itemsPerPage;index as i">
+                                                                   <td id="td-company">{{dedonetimeitem.COMPANY_CODE}}</td>
+                                                                   <td id="td-dept">{{dedonetimeitem.DEPT_NAME}}</td>
+                                                                   <td id="td-emp">{{dedonetimeitem.EMP_NAME}}</td>
+                                                                   <td>{{dedonetimeitem.PAYMENT_CATEGORY}}</td>
+                                                                   <td>
+                                                                    <ng-container *ngIf="dedonetimeitem.isEditing">
+                                                                         <input type="text" class="amountdedonetime"  [(ngModel)]="dedonetimeitem.amountDedOnetime">                                                 
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="!dedonetimeitem.isEditing">
+                                                                        {{dedonetimeitem.AMOUNT}}
+                                                                    </ng-container>
+                                                                </td>   
+                                                                   <td>{{dedonetimeitem.PAYROLL_MONTHS}}</td>
+                                                                   <td>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                                            <button type="button" class="btn btn-outline-warning btn-sm br_radius mr-2 " (click)="EditDedOnetime(dedonetimeitem)" [hidden]="dedonetimeitem.isEditing" id="buttonEdit" [disabled]="isButtonDisabled(dedonetimeitem)"><i class="fa fa-pencil-square-o ic_color" aria-hidden="true" style="font-size: 18px;"></i>
+                                                                            </button>      
+                                                                            
+                                                                        </li>
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Delete">                                                                            
+                                                                            <button type="button" class="btn btn-danger btn-sm margin-left-50" id="buttoncancel[1]" data-bs-toggle="modal" href="#CancelModal" (click)="selecteditem(dedonetimeitem)" [hidden]="dedonetimeitem.isEditing" [disabled]="isButtonDisabled(dedonetimeitem)" ><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>                                                                           
+                                                                        </li>
+                                                                    </ul>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                    
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Save"  >
+                                                                    
+                                                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonSave" (click)="saveDedOnetime(dedonetimeitem)"  [hidden]="!dedonetimeitem.isEditing" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                            
+                                                                            </li>
+                                                                        
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel" >
+                                                                    
+                                                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" id="buttonCancel" (click)="CancelDedOnetime(dedonetimeitem)" [hidden]="!dedonetimeitem.isEditing"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                            
+                                                                            </li>
+                                                                   
+                                                                   
+                                                                        </ul>
+                                                                </td>
+                                                               </tr>
+                                                           </tbody>
+                                                       </table>
+                                                   </div>                                                   
+                                                   <div *ngIf="onetimedeductiondata">                                 
+                                                    <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResultsDedOnetime>0">
+                                                        <div class="col-sm">
+                                                          <div class="font-type fs-12 text-muted">
+                                                            Showing <span class="fw-semibold">{{ getEntriesStartDedOnetime() }}</span>
+                                                            - <span class="fw-semibold">{{ getEntriesEndDedOnetime() }}</span>
+                                                            of <span class="fw-semibold">{{ totalSearchResultsDedOnetime }}</span> Results
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <div class="font-type fs-12 text-muted">
+                                                                Total Pages : <span class="fw-semibold"> {{ getTotalPagesDedOnetime() }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                <div>
+                                                                    <div class="input-group">
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            
+                                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageDedOnetime()" tabindex="2">Go</button>
+                                                      </div>
+                                                    </div>
+                                                         
+                                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePageDedOnetime(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                            </li>
+                                                            <ng-container *ngFor="let pageNumberDedOnetime of getPageNumbersDedOnetime(currentPage)">
+                                                              <li class="page-item">
+                                                                <button class="page-link" (click)="changePageDedOnetime(pageNumberDedOnetime)" [class.active]="currentPage === pageNumberDedOnetime">{{ pageNumberDedOnetime }}</button>
+                                                              </li>
+                                                            </ng-container>
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePageDedOnetime(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResultsDedOnetime">→</button>
+                                                            </li>
+                                                          </ul>
+                                                        </div>
+                                                      </div>
+                                            </div>
+                                        </div>
+                                            </div>
+                                           
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <!--end col-->
+                                   </div>
+                                   <!-- End LIST FOR ON TIME -->
+   
+                            <!-- LIST FOR REPEATED -->
+   
+                               <div class="row" id="Deduction-Repeated-list" *ngIf="dedtimes=='dedRepeated'">
+                                   <div class="col-lg-12">
+                                       <div class="card margin-up-10">
+                                           <div class="card-header border-0 pa-6-8">
+                                               <div class="row align-items-center gy-3">
+                                                   <div class="col-sm">
+                                                       <div class="align-items-center d-flex ">
+                                                           <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Repeated Deduction History</h4>
+                                                       </div>
+                                                   </div>
+                                                   <div class="col-sm-auto">
+                                                       <div class="d-flex gap-1 flex-wrap">
+                                                           <div class="search-box">
+                                                               <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInput" (keyup)="changePageDedRepeated(currentPageDedRepeated)" name="searchInput">
+                                                               <i class="ri-search-line search-icon"></i>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <div class="card-body border border-dashed border-end-0 border-start-0">
+                                           </div>
+                                           <div class="card-body pt-0">
+                                                   <div class="table-responsive table-card mb-0">
+                                                       <table class="table table-nowrap align-middle" id="orderTable">
+                                                           <thead class="table-light text-white font-type">
+                                                               <tr>
+                                                                   <th  id="th-company">Co.</th>
+                                                                   <th  id="th-dept">Dept</th>
+                                                                   <th  id="th-emp">Employee</th>
+                                                                   <th>Deduction Type</th>
+                                                                   <th>Amount</th>
+                                                                   <th>Payroll Months</th>
+                                                                   <th>Effective Period</th>
+                                                                   <th >Action</th>
+                                                               </tr>
+                                                           </thead>
+                                                           <tbody class="list form-check-all font-type fs-11">
+                                                            <tr class="trstyle fs-11" *ngFor="let repeateddeditem of repeateddeductiondata | search : searchInput | pagination: currentPageDedRepeated: itemsPerPage;index as i">
+                                                                <td id="td-company">{{repeateddeditem.COMPANY_CODE}}</td>
+                                                                <td id="td-dept">{{repeateddeditem.DEPT_NAME}}</td>
+                                                                <td id="td-emp">{{repeateddeditem.EMP_NAME}}</td>
+                                                                <td>{{repeateddeditem.PAYMENT_CATEGORY}} </td>
+                                                                <td>
+                                                                    <ng-container *ngIf="repeateddeditem.isEditing">
+                                                                         <input type="text" class="amountdedrepeated"  [(ngModel)]="repeateddeditem.amountDedRepeated">                                                 
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="!repeateddeditem.isEditing">
+                                                                        {{repeateddeditem.AMOUNT}}
+                                                                    </ng-container>
+                                                                </td>                                                                
+                                                                <td>{{repeateddeditem.PAYROLL_MONTHS}}</td>
+                                                                <td>{{repeateddeditem.EFFECTIVE_PERIOD}}</td>                                            
+                                                                <td>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                                            <button type="button" class="btn btn-outline-warning btn-sm br_radius mr-2 " (click)="EditDedRepeated(repeateddeditem)" [hidden]="repeateddeditem.isEditing" id="buttonEdit" [disabled]="isButtonDisabledRepeated(repeateddeditem)"><i class="fa fa-pencil-square-o ic_color" aria-hidden="true" style="font-size: 18px;"></i>
+                                                                            </button>      
+                                                                            
+                                                                        </li>
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Delete">                                                                            
+                                                                            <button type="button" class="btn btn-danger btn-sm margin-left-50" id="buttoncancel[1]" data-bs-toggle="modal" href="#deleteModal" (click)="selecteditem(repeateddeditem)" [hidden]="repeateddeditem.isEditing || isStopButtonDisabledRepeated(repeateddeditem)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>                                                                           
+                                                                        <!-- </li>
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Stop" >                                                                             -->
+                                                                            <button type="button" class="btn btn-danger btn-sm margin-left-50" id="buttoncancel[1]" title="Stop" data-bs-toggle="modal" href="#stopModal" (click)="selecteditem(repeateddeditem)" [hidden]="repeateddeditem.isEditing || !isStopButtonDisabledRepeated(repeateddeditem)" [disabled]="isButtonDisabledRepeated(repeateddeditem)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>                                                                           
+                                                                        </li>
+                                                                    </ul>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                    
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Save"  >
+                                                                    
+                                                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonSave" (click)="saveDedRepeated(repeateddeditem)"  [hidden]="!repeateddeditem.isEditing" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                            
+                                                                            </li>
+                                                                        
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel" >
+                                                                    
+                                                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" id="buttonCancel" (click)="CancelDedRepeated(repeateddeditem)" [hidden]="!repeateddeditem.isEditing"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                            
+                                                                            </li>                                                                  
+                                                                   
+                                                                        </ul>
+                                                                </td>
+                                                            </tr>
+                                                           </tbody>
+                                                       </table>
+                                                   </div>
+                                                   <div *ngIf="repeateddeductiondata">
+                                                    <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResultsDedRepeated>0">
+                                                        <div class="col-sm">
+                                                          <div class="font-type fs-12 text-muted">
+                                                            Showing <span class="fw-semibold">{{ getEntriesStartDedRepeated() }}</span>
+                                                            - <span class="fw-semibold">{{ getEntriesEndDedRepeated() }}</span>
+                                                            of <span class="fw-semibold">{{ totalSearchResultsDedRepeated }}</span> Results
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <div class="font-type fs-12 text-muted">
+                                                                Total Pages : <span class="fw-semibold"> {{ getTotalPagesDedRepeated() }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                <div>
+                                                                    <div class="input-group">
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            
+                                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageDedRepeated()" tabindex="2">Go</button>
+                                                      </div>
+                                                    </div>
+                                                         
+                                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePageDedRepeated(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                            </li>
+                                                            <ng-container *ngFor="let pageNumberDedRepeated of getPageNumbersDedRepeated(currentPage)">
+                                                              <li class="page-item">
+                                                                <button class="page-link" (click)="changePageDedRepeated(pageNumberDedRepeated)" [class.active]="currentPage === pageNumberDedRepeated">{{ pageNumberDedRepeated }}</button>
+                                                              </li>
+                                                            </ng-container>
+                                                            <li class="page-item">
+                                                              <button class="page-link" (click)="changePageDedRepeated(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResultsDedRepeated">→</button>
+                                                            </li>
+                                                          </ul>
+                                                        </div>
+                                                      </div>
+                                            </div>
+                                        </div>
+                                            </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <!--end col-->
+                                   </div>
+                                    <!-- End LIST FOR REPEATED -->
+   
+   
+                        </div>
+                        </div>
+                       <!--END TAB DEDUCTION-->
+                                        
+
+                 
+        
+                </div>
+            </div>
+            <!--End cancel Request Model-->
+            <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+            <!--Modal For Success Message Start-->
+        <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                        </div>
+                        <div class="modal-body" *ngIf="showModal==1"> 
+                            <div class="container">
+                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                        
+                            </div>
+                        </div>
+                        <div class="modal-body" *ngIf="showModal==2">
+                        <div class="container">
+                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                            
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        <!--Modal For Success Message End-->
+         <!--Delete Model Onetime-->
+         <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-orange padding-up-5">
+                        <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class="text-center">
+                            <h5 class="fs-15 font-type">Are you sure you want to delete ?</h5>                                    
+                            <div class="hstack gap-2 justify-content-center remove"> 
+                                
+                                <button class="btn btn-danger " id="delete-record" data-bs-dismiss="modal" (click)="DeleteOnetime(item)">Yes</button>
+                                <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!--Delete Model Repeated-->
+         <div class="modal fade zoomIn" id="deleteModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-orange padding-up-5">
+                        <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class="text-center">
+                            <h5 class="fs-15 font-type">Are you sure you want to delete ?</h5>                                    
+                            <div class="hstack gap-2 justify-content-center remove"> 
+                                
+                                <button class="btn btn-danger " id="delete-record" data-bs-dismiss="modal" (click)="DeleteRepeated(item)">Yes</button>
+                                <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Stop Model Repeated-->
+        <div class="modal fade zoomIn" id="stopModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-orange padding-up-5">
+                        <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class="text-center">
+                            <h5 class="fs-15 font-type">Are you sure you want to stop ?</h5>                                    
+                            <div class="hstack gap-2 justify-content-center remove"> 
+                                
+                                <button class="btn btn-danger " id="delete-record" data-bs-dismiss="modal" (click)="StopRepeated(item)">Yes</button>
+                                <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     
+            <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->

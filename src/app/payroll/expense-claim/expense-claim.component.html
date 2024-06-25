@@ -1,0 +1,598 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+    
+                    <!-- start page title -->
+                    <div class="row" >
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase">Expense Claim Requests</h4>
+    
+                                <div class="page-title-right padding-up-5" [hidden]="authorityflg == 0">
+                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                        <input type="radio" class="btn-check"  id="btnradio2"  name="user" [(ngModel)]="user" value="personal" (change)="SelectTeamorpersonal(user)">
+                                        <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio2">Personal</label>
+                                       
+                                        <input type="radio" class="btn-check active"  id="btnradio1"  name="user" [(ngModel)]="user" value="team" (change)="SelectTeamorpersonal(user)">
+                                        <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio1">Team</label>
+
+                                    </div>
+                                </div>
+                                
+    
+                            </div>
+                        </div>
+                    </div>
+                
+    
+                <div class="topbar-up row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                        <!-- Team selection -->
+                        <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5" id="teaminput" *ngIf="user === 'team'">
+                            <form>
+                                <div class="row ">
+                                    <div class="col-lg-2 pt-2">
+                                            <h6 class="fs-12 font-type"><span>Company</span></h6>
+                                             <select class="form-select font-type fs-11" aria-label="Default select example" name="company" id ="company" (change)="ListDepByComId()">
+                                                <option  value="-1" [defaultSelected]>All</option>
+                                                <option *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
+                                                {{CompanyList.DATA_VALUE}}
+                                                </option>
+                                             </select>
+                                    </div>
+                                    <div class="col-lg-2 pt-2">
+                                            <h6 class="font-type fs-12"><span>Department </span></h6>
+                                             <select class="form-select font-type fs-11" aria-label="Default select example" name="department" id="department"  (change)="ListEmpByComIdandDep()">
+                                                <option  value="-1" [defaultSelected]>All</option>
+                                                <option  *ngFor="let DepartmentList of listDepartment" value="{{DepartmentList.KEY_ID}}">
+                                                {{DepartmentList.DATA_VALUE}}
+                                                </option>
+                                            </select>
+                                        
+                                    </div>
+                                    <div class="col-lg-2 pt-2">  
+                                            <h6 class="font-type fs-12"><span>Employee Name </span></h6>
+                                            <select class="form-select font-type fs-11" aria-label="Default select example" name="emp_code" id="emp_code" (change)= "ExpenseClaimFilterTeam()" >
+                                                <option value="-1">All</option>
+                                                <option  *ngFor="let EmployeeList of listEmployee" value="{{EmployeeList.EMP_CODE}}">
+                                                {{EmployeeList.EMP_NAME}}
+                                                </option>
+                                            </select>                        
+                                    </div>
+                                    <div class="col-lg-2 pt-2">  
+                                            <h6 class=" font-type fs-12"><span>Status </span></h6>
+                                            <select class="form-select font-type fs-11" aria-label="Default select example" name="tstatus" id="tstatus" (change)= "ExpenseClaimFilterTeam()">
+                                                <option value="-1">All</option>
+                                                <option  *ngFor="let Status of liststatus" value="{{Status.KEY_ID}}" [selected]="Status.DATA_VALUE == 'Pending for Approval'">
+                                                {{Status.DATA_VALUE}}
+                                                </option>
+                                            </select>   
+
+                                    </div>
+                                    <div class="col-lg-2 pt-2">
+                                            <h6 class="font-type fs-12"><span>Start Date </span></h6>
+                                            <input type="date" class="form-control font-type fs-11 mb-0" id="start-datepicker" id="fromdate" name="fromdate" [formControl]="fromdate" (change)="ExpenseClaimFilterTeam()" > 
+                                    </div>
+                                    <div class="col-lg-2 pt-2">
+                                            <h6 class="font-type fs-12"><span>End Date </span></h6>
+                                            <input type="date" class="form-control font-type fs-11 mb-0" id="end-datepicker" id="todate" name="todate" [formControl]="todate" (change)="ExpenseClaimFilterTeam()" >
+                                        
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-body pt-3" *ngIf="user === 'team'">
+                            <div>
+                                <div class="table-responsive table-card mb-0">
+
+                                    <table class="table table-nowrap align-middle" id="orderTable">
+                                        <thead class="table-light text-white font-type">
+                                            <tr>
+                                                <th data-sort="empcode" hidden>Emp Code</th>
+                                                <th data-sort="cmp">Co.</th>
+                                                <th data-sort="dept">Dept</th>
+                                                <th data-sort="empname">Employee</th>
+                                                <th data-sort="reqdate">Request Date</th>
+                                                <th data-sort="expcatgry">Expense Category</th>
+                                                <th data-sort="desc">Description</th>
+                                                <th data-sort="amunt">Amount</th>
+                                                <th data-sort="tbl_currency">Currency</th>
+                                                <th data-sort="tbl_doc">Doc</th>
+                                                <th data-sort="convamunt"  *ngIf="this.grpname.includes('HR')">Converted Amount</th>
+                                                <th data-sort="paydate">Payroll Date</th>
+                                                <th id="th-ViewDocModal">Document</th>
+                                                <th id="th-status">Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11">
+                                            <tr class="trstyle fs-11" *ngFor="let ExpenseClaimList of listexpenseclaim  | pagination: currentPage: itemsPerPage;let i=index">
+                                                <td class="empcode" id="empcode" hidden>{{ExpenseClaimList.EMP_CODE}}</td>
+                                                <td class="cmp" id="cmp">{{ExpenseClaimList.COMPANY_CODE}}</td>
+                                                <td class="dept" id="dept">{{ExpenseClaimList.DEPT_NAME}}</td>
+                                                <td class="empname" id="empname">{{ExpenseClaimList.EMP_NAME}}</td>
+                                                <td class="reqdate" id="reqdate">{{ExpenseClaimList.REQUEST_DATE| date: 'dd-MM-yyyy'}}</td>
+                                                <td class="expcatgry" id="expcatgry">{{ExpenseClaimList.EXPENSE_CATEGORY}}</td>
+                                                <td class="desc" id="desc">{{ExpenseClaimList.DESCRIPTION}}</td>
+                                                <td class="amunt" id="amunt">{{ExpenseClaimList.AMOUNT}}</td>
+                                                <td class="tbl_currency" id="tbl_currency">{{ExpenseClaimList.CURRENCY}}</td>
+                                                <td class="tbl_doc" id="tbl_doc">{{ExpenseClaimList.DOCPATH}}</td>
+                                                <ng-container *ngIf="ExpenseClaimList.APPROVED_STATUS != 'Pending for Approval'">
+                                                    <td *ngIf="this.grpname.includes('HR')">{{ExpenseClaimList.CONVERTED_AMOUNT}}</td>
+                                                </ng-container>
+                                                <ng-container *ngIf="ExpenseClaimList.APPROVED_STATUS == 'Pending for Approval'">
+                                                    <td *ngIf="this.grpname.includes('HR')"><input type="number" class="form-control  font-type fs-11"  id="convamunt{{i+1}}" name ="convamunt" [(ngModel)]="ExpenseClaimList.convamunt"></td>
+                                                </ng-container>
+                                                <td class="paydate" id="paydate">{{ExpenseClaimList.PAYROLL_DATE| date: 'dd-MM-yyyy'}}</td>
+                                                
+                                                <td id="td-ViewDocModal"> <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit" >
+                                                    <a href="#ViewDocModal" data-bs-toggle="modal" class="bar-text d-inline-block edit-item-btn" (click)="ActivereqID(ExpenseClaimList.REQ_ID,ExpenseClaimList.DOCPATH)">
+                                                       View <i class="ri-eye-line"></i>
+                                                    </a>
+                                                </li></td>
+
+                                                <td id="td-status"> <span class="width-budge badge bg-info-subtle text-info p-2">{{ExpenseClaimList.APPROVED_STATUS}}</span></td> 
+                                                <td>
+                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                        
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve">
+                                                            <button type="button" class="btn btn-success btn-sm" id="buttonApprove" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="approve(ExpenseClaimList.REQ_ID,ExpenseClaimList.EMP_CODE,ExpenseClaimList.convamunt)" [disabled]="ExpenseClaimList.APPROVED_STATUS!='Pending for Approval'"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                        </li>
+                                                        
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reject">
+                                                            <button type="button" class="btn btn-danger btn-sm" id="buttonReject" data-bs-toggle="modal" data-bs-target="#RejectModal"(click)="setSelectedvalues(ExpenseClaimList.REQ_ID,ExpenseClaimList.EMP_CODE)" [disabled]="ExpenseClaimList.APPROVED_STATUS!='Pending for Approval'"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i>
+                                                            </button>
+
+                                                            
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div *ngIf="listexpenseclaim">
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                        <div class="col-sm">
+                                          <div class="font-type fs-12 text-muted">
+                                            Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                            - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                            of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                          </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="font-type fs-12 text-muted">
+                                                Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div>
+                                                    <div class="input-group">
+                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                            
+                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                      </div>
+                                    </div>
+                                         
+                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                            </li>
+                                            <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                              <li class="page-item">
+                                                <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                              </li>
+                                            </ng-container>
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                            </div>
+                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end -->
+
+                        <!-- personal -->
+
+                        <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5" id="teaminput" *ngIf="user === 'personal'">
+                            <form>
+                                <div class="row align-items-center">
+                                    <div class="col-lg-3 pt-2">
+                                        <div>
+                                            <h6 class="font-type fs-12"><span>Start Date </span></h6>
+                                            <input type="date" class="form-control  font-type fs-11" id="pfromdate" name="pfromdate" [formControl]="pfromdate" (change)="ExpenseClaimFiterPersonal()">
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 pt-2">
+                                        <div>
+                                            <h6 class="font-type fs-12"><span>End Date </span></h6>
+                                            <input type="date" class="form-control  font-type fs-11" id="ptodate" name="ptodate" [formControl]="ptodate" (change)="ExpenseClaimFiterPersonal()">
+                                        </div>
+                                    </div>
+                              
+                                    <div class="col-lg-3 pt-2">
+                                        <div>
+                                            <h6 class="font-type fs-12"><span>Status </span></h6>
+                                            <select class="form-select font-type fs-11" aria-label="Default select example" id="pstatus" name="pstatus"  #pstatus required (change)="ExpenseClaimFiterPersonal()">
+                                                <option value="-1">All</option>
+                                                <option *ngFor="let Status of liststatus" value="{{Status.KEY_ID}}" [selected]="Status.DATA_VALUE == 'Pending for Approval'">{{Status.DATA_VALUE}}</option> 
+                                            </select>     
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-3">
+                                        <div class="pt-4">    
+                                            <button type="button" class="btn btn-orange font-type fs-12 add-button text-white" data-bs-toggle="modal" id="create-btn" data-bs-target="#AddRequestModal" (click)="ListExpenseCategory();ListcurrencyData()"><span>Add Requests</span></button>
+                                        </div>
+                                    </div>
+                                    </div>
+                            </form>
+                        </div>
+    
+                        
+                        <div class="card-body pt-3" *ngIf="user === 'personal'">
+                            <div>
+                                <div class="table-responsive table-card mb-0">
+
+                                    <table class="table table-nowrap align-middle" id="orderTable">
+                                        <thead class="table-light text-white font-type">
+                                            <tr>
+                                                <th data-sort="empcodep" hidden>Emp Code</th>
+                                                <th data-sort="reqdatep">Request Date</th>
+                                                <th data-sort="expcatp">Expense Category</th>
+                                                <th data-sort="descp">Description</th>
+                                                <th data-sort="amountp">Amount</th>
+                                                <th data-sort="currencyp">Currency</th>
+                                                <th data-sort="docp">Doc</th>
+                                                <th data-sort="conamountp">Converted Amount(in AED)</th>
+                                                <th data-sort="paydatep">Payroll Date</th>
+                                                <th id="th-status">Status</th>
+                                                <th >Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11">
+                                            <tr class="trstyle fs-11" *ngFor="let ExpenseClaimListPersonal of listexpenseclaimPersonal | pagination: currentPage: itemsPerPage;">
+                                                <td class="empcodep" id="empcodep" hidden>{{ExpenseClaimListPersonal.EMP_CODE}}</td>
+                                                <td class="reqdatep" id="reqdatep" >{{ExpenseClaimListPersonal.REQUEST_DATE| date: 'dd-MM-yyyy'}}</td>
+                                                <td class="expcatp" id="expcatp">{{ExpenseClaimListPersonal.EXPENSE_CATEGORY}}</td>
+                                                <td class="descp" id="descp" >{{ExpenseClaimListPersonal.DESCRIPTION}}</td>
+                                                <td class="amountp" id="amountp" >{{ExpenseClaimListPersonal.AMOUNT}}</td>
+                                                <td class="currencyp" id="currencyp">{{ExpenseClaimListPersonal.CURRENCY}}</td>
+                                                <td class="docp" id="docp">{{ExpenseClaimListPersonal.DOCPATH}}</td>
+                                                <td class="conamountp" id="conamountp">{{ExpenseClaimListPersonal.CONVERTED_AMOUNT}}</td>
+                                                <td class="paydatep" id="paydatep">{{ExpenseClaimListPersonal.PAYROLL_DATE| date: 'dd-MM-yyyy'}}</td>
+                                                
+                                                <td id="td-status"> <a data-target="#statusModal" data-bs-toggle="modal" href="#statusModal" (click)="Approvelist(ExpenseClaimListPersonal.REQ_ID)"><span class="width-budge badge bg-info-subtle text-info p-2">{{ExpenseClaimListPersonal.APPROVED_STATUS}}</span></a></td> 
+                                                <td>
+                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel">
+                                                            
+                                                            <button type="button" class="btn btn-danger btn-sm" id="buttoncancel" data-bs-toggle="modal" data-bs-target="#CancelModal" (click) = "setSelectedvalues(ExpenseClaimListPersonal.REQ_ID,ExpenseClaimListPersonal.EMP_CODE)" [disabled]="ExpenseClaimListPersonal.STATUS_VAL!='Pending for Approval'"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i>
+                                                            </button>
+
+
+ 
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div *ngIf="listexpenseclaimPersonal">
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsPersonal>0">
+                                        <div class="col-sm">
+                                          <div class="font-type fs-12 text-muted">
+                                            Showing <span class="fw-semibold">{{ getEntriesStartPersonal() }}</span>
+                                            - <span class="fw-semibold">{{ getEntriesEndPersonal() }}</span>
+                                            of <span class="fw-semibold">{{ totalSearchResultsPersonal }}</span> Results
+                                          </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="font-type fs-12 text-muted">
+                                                Total Pages : <span class="fw-semibold"> {{ getTotalPagesPersonal() }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div>
+                                                    <div class="input-group">
+                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPagePersonal" tabindex="1">                                                                    
+                                            
+                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPagePersonal()" tabindex="2">Go</button>
+                                      </div>
+                                    </div>
+                                         
+                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePagePersonal(currentPagePersonal - 1)" [class.disabled-button]="currentPagePersonal === 1">←</button>
+                                            </li>
+                                            <ng-container *ngFor="let pageNumberPersonal of getPageNumbersPersonal(currentPagePersonal)">
+                                              <li class="page-item">
+                                                <button class="page-link" (click)="changePagePersonal(pageNumberPersonal)" [class.active]="currentPagePersonal === pageNumberPersonal">{{ pageNumberPersonal }}</button>
+                                              </li>
+                                            </ng-container>
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePagePersonal(currentPagePersonal + 1)" [class.disabled-button]="currentPagePersonal * itemsPerPage >= totalSearchResultsPersonal">→</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                            </div>
+                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+                 <!-- Status Model-->
+                 <div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-bottom-right" >
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                            </div>
+                            <div class="table-responsive">
+                    
+                                <table class="table table-bordered table-nowrap align-middle mb-0">
+                                    <thead>
+                                        <tr class="font-type">
+                                            <th scope="col" style="width: 30%;">LEVEL_ID</th>
+                                            <th scope="col" style="width: 30%;">APPROVER </th>
+                                            <th scope="col" style="width: 20%;">STATUS </th>
+                                            <th scope="col" style="width: 20%;">DATE</th>
+                                            <th scope="col" style="width: 20%;">REMARKS</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="font-type">
+                                        <tr  *ngFor="let approvedtl of approvelist">
+                                            <td>{{approvedtl.LEVEL_ID}}</td>
+                                            <td>{{approvedtl.APPROVER}}</td>
+                                            <td>{{approvedtl.STATUS}}</td>
+                                            <td>{{approvedtl.VERIFIED_DATE| date: 'dd-MM-yyyy'}}</td>
+                                            <td>{{approvedtl.VERIFIED_REMARKS}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Status Model-->
+            
+                    <!-- Reject Model-->
+                    <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                    <button type="button" #closebutton class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" style="margin-top:-30px;"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off" >
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="mb-3">
+                                            <label class="form-label">Reason</label>
+                                            <textarea class="form-control" required name="remarks" id="remarks" required #rejectreason [formControl]="reasonControl"></textarea>  
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="hstack gap-2">
+                        
+                                            <button class="btn btn-danger" id="delete-record" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Reject(selectedRequestID,selectedEmpcode,rejectreason.value)">Reject</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Reject Model-->
+                    <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button>
+    
+                    <!--Cancel Request Model-->
+                    <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="modal-title">&nbsp;</h5>
+                                    <button type="button" #cancelclosebutton class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <div class="text-center">
+                                        <h5 class="fs-14">You are about to cancel your request ?</h5>
+                                        <p class="text-muted fs-12 mb-4 pt-1">Do you want to continue?</p>
+                                        <div class="hstack gap-2 justify-content-center remove">
+                                            <button class="btn btn-danger" id="delete-record" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="CancelRequest(selectedEmpcode,selectedRequestID)">Yes</button>
+                                            <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End cancel Request Model-->
+    
+    
+                    <!--Add Request Model-->
+                    <div class="modal fade" id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off"  [formGroup]="requestForm">
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+        
+                                        <div class="mb-3" id="modal-id">
+                                            <label for="empid" class="form-label">Expense Category</label>
+                                            <select class="form-select" aria-label="Default select example" required  id="expense_category" name="expense_category" #expense_category formControlName="expense_category" >
+                                                <option value="-1">Select</option>
+                                                <option *ngFor="let expense of listexpense"  value="{{expense.KEY_ID}}">{{expense.DATA_VALUE}}</option>
+                                            </select>
+                                            <div *ngIf="requestForm.get('expense_category')!.hasError('required') && requestForm.get('expense_category')!.touched" class="text-danger">Please Select Expense Category</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <h3 class="fw-semibold"><span>Input Description</span></h3>
+                                            <input type="text" id="inputdes" name="inputdes"  class="form-control" formControlName="inputdes">
+                                            <div *ngIf="requestForm.get('inputdes')!.hasError('required') && requestForm.get('inputdes')!.touched" class="text-danger">Please Enter Input Description</div>
+                                           
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <h3 class="fw-semibold"><span>Amount</span></h3>
+                                                    <input type="number" id="amount" name="amount"  class="form-control" formControlName="amount" />
+                                                    <div *ngIf="requestForm.get('amount')!.hasError('required') && requestForm.get('amount')!.touched" class="text-danger">Please Enter Amount</div>
+
+                                                
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <h3 class="fw-semibold"><span>Currency</span></h3>
+                                                    <select class="form-select" aria-label="Default select example" id="currency" name="currency" formControlName="currency">
+                                                        <option>Select</option>
+                                                        <option *ngFor="let currency of listcurrency"  value="{{currency.TYPE_ID}}">{{currency.DATA_VALUE}}</option>
+                                                    </select>
+                                                    <div *ngIf="requestForm.get('currency')!.hasError('required') && requestForm.get('currency')!.touched" class="text-danger">Please Select Currency</div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <h3 class="fw-semibold"><span>Doc</span></h3>
+                                                    <input type="file" id="doc" name="doc"  class="form-control" formControlName="doc"  readonly />
+                                                    <div *ngIf="requestForm.get('doc')!.hasError('required') && requestForm.get('doc')!.touched" class="text-danger">Please Select Document</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <h3 class="fw-semibold"><span>Expense Incurred Date</span></h3>
+                                                    <input type="date"  class="form-control fs-12 font-type height-check" id="expincuredate" name="expincuredate"   formControlName="expincuredate"  />
+
+                                                    <div *ngIf="requestForm.get('expincuredate')!.hasError('required') && requestForm.get('expincuredate')!.touched" class="text-danger">
+                                                        Please select Incurred date.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                    <div class="modal-footer">
+                                        <div class="hstack gap-2" *ngIf="!requestForm.valid">
+                                            <button type="submit" class="btn btn-orange font-type text-white" [disabled]="requestForm.valid" id="validate-btn" (click)="validateForm()">Submit</button>
+                                        </div>
+                                        <div class="hstack gap-2 justify-content-center" *ngIf="requestForm.valid">
+                                            <button type="button" class="btn btn-orange font-type text-white" id="add-btn" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal" (click)="AddExpenseRequests()">Submit</button>
+                                        </div>
+                                    </div>  
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Add Request Model-->
+                    <!--Edit Model-->
+                <div class="modal fade" id="ViewDocModal" tabindex="-1" aria-labelledby="ViewDocModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <form class="tablelist-form" autocomplete="off">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" />
+                                        <h6 class="mb-3 fw-semibold text-uppercase font-type">Documents</h6>
+                                        <div class="row g-3">
+                                            <div class="col-xxl-4 col-lg-12">
+                                                <div class="border rounded border-dashed p-2">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="flex-shrink-0 me-3">
+                                                            <div class="avatar-sm">
+                                                                <div class="avatar-title bg-light text-secondary rounded fs-24">
+                                                                    <i class="ri-folder-zip-line"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-shrink-0 ms-2">
+                                                            <div class="d-flex gap-1">
+                                                                <!-- <a href="https://localhost:44381/api/File/GetLeavDocs/{{activereqid}}" download target="_blank"><button type="button" class="btn btn-icon text-muted btn-sm fs-18"><i class="ri-download-2-line"></i></button></a> -->
+                                                               
+                                                                    <a href="#ViewDocModal">
+                                                                    <button class="btn btn-icon text-muted btn-sm fs-18 dropdown" type="button" (click)="download_to_excel()" data-bs-toggle="modal" data-bs-target="#ViewDocModal">
+                                                                        <i class="ri-eye-line"></i>
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end row -->
+                                </div>  
+                            </form>
+                        </div>
+                    </div>
+                </div>
+               <!--End Edit Model-->
+                    <!--Modal For Success Message Start-->
+                    <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==1"> 
+                                    <div class="container">
+                                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                
+                                    </div>
+                                </div>
+                                <div class="modal-body" *ngIf="showModal==2">
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                    
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                <!--Modal For Success Message End-->
+    
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+            <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->

@@ -1,0 +1,289 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <app-header></app-header>
+            <!-- ========== App Menu ========== -->
+            <app-sidemenu></app-sidemenu>
+            <!-- Left Sidebar End -->
+            <!-- Vertical Overlay-->
+            <div class="vertical-overlay"></div>
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+                <div class="page-content">
+                    <div class="container-fluid">
+    
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">SHIFT ASSIGNMENT</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+    
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card" id="orderList">
+                                    <div class="card-header border-bottom" style="padding-bottom: 10px;padding-top: 10px;">
+                                        <div class="row align-items-center gy-3">
+                                            <div class="col-sm">
+                                                <h6 class="card-title"><b>View Shift Assignments</b></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center gy-3">
+                                            <div class="col-lg-2 col-sm-6">
+                                                <h3 class="fs-12 font-type"><span>Select Date</span></h3>
+                                                <input type="week" class="form-control font-type fs-11 mb-0" id="week" name="week" [(ngModel)]="week" (change)="filldaterange()">
+
+                                            </div>
+
+                                            <div class="col-lg-2 col-sm-6">
+                                                <h3 class="fs-12 font-type"><span>Date Range</span></h3>
+                                                <input type="text" class="form-control font-type fs-11 mb-0" value="{{startDay | date:'dd/MM/yyyy'}} - {{endDay | date:'dd/MM/yyyy'}}" readonly>
+                                            </div>
+                                            
+                                            <!--end col-->
+                                         
+                                            <div class="col-lg-3 col-sm-6">
+                                                <h6 class="font-type fs-12"><span>Employee Name</span></h6>
+                                                <!-- <div id="Multiselects" class="multiselect">
+                                                  <div id="Labeles" class="selectBox" onclick="toggleCheckboxes()">
+                                                    <select class="form-select">
+                                                      <option id="employeesflt"></option>
+                                                    </select>
+                                                    <div class="overSelect"></div>
+                                                  </div>
+                                                  <div id="SelectOpt">
+                                                    <label for="checks"><input type="checkbox" id="checks" onchange="checkboxStatus();" value="ALL" /> ALL</label>
+                                                    <table>
+                                                        <tr *ngFor="let EmployeeList of listEmployee;  let i = index">
+                                                            <td><label for="checks{{i+1}}"><input type="checkbox" id="checks{{i+1}}" onchange="checkboxStatus();" value="{{EmployeeList.EMP_CODE}}" /> {{EmployeeList.EMP_NAME}}</label></td>
+                                                        </tr>
+                                                    </table>
+                                                  </div>
+                                                </div> -->
+                                                <ng-multiselect-dropdown #dropdown
+                                                    [settings]="dropdownSettings"
+                                                    [(ngModel)]="selectedItems"
+                                                    [data]="listEmployee">     
+                                                </ng-multiselect-dropdown>   
+                                            </div>
+                                               
+                                            <div class="col-lg-2 col-sm-6">
+                                                <label></label>
+                                                <div>
+                                                    <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="fetchshiftdetails()"> <i class="ri-file-text-line"></i>
+                                                            View Shift
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-lg-2 col-sm-6" *ngIf="this.grpname.includes('HR') || this.grpname.includes('PC')">
+                                                <label></label>
+                                                <div>
+                                                    <a href="shiftassignment">
+                                                        <button type="submit" style="margin-top: 4px!important;" class="btn btn-info font-type fs-12 add-button text-white"> <i class="fa fas far fa-plus-square"></i>
+                                                                Assign Shift
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <!--end row-->
+                                    </div>                           
+                                    <!--end row-->          
+                                    <!--end row-->
+
+                                    <div class="card-body">
+                                    <div class="table-responsive font-type" >
+                                        <table class="table table-bordered table-nowrap align-middle mb-0"    >
+                                            <thead>
+                                                <tr>
+                                                <th scope="col" class="text-center">Employee Code</th>
+                                                <th scope="col" class="text-center">Employee Name</th>
+                                                <th *ngFor="let item of weekdays">
+                                                    <div class="d-flex justify-content-center align-items-center mb-0">
+                                                        <h2 class="me-3 ff-secondary mb-0">{{item | date:"dd"}}</h2>
+                                                        <div>
+                                                            <p class="mb-0">{{item | date:"EEE"}}</p>
+                                                            <p class="text-muted fw-medium mb-0">
+                                                                {{item | date:"MMM"}}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                </tr>
+                                            </thead>
+                                            <!-- <tbody> -->
+                                            <tbody *ngFor="let employee of listshiftdetails | search : searchInput | pagination: currentPage: itemsPerPage;">
+                                                <tr>
+                                                    <td>{{employee.EMP_CODE}}</td>
+                                                    <td>{{employee.EMP_NAME}}</td>
+                                                    <td *ngFor="let workday of employee.workdays" style="padding:2px;">
+                                                        <div class="card-box bg-info-subtle" *ngIf="workday.SHIFT_ID == 1 || workday.SHIFT_ID == 5 || workday.SHIFT_ID == 7 || workday.SHIFT_ID == 11" [hidden]="workday.SHIFT_ID == '-2' || workday.SHIFT_ID == '0'">
+                                                            <div class="d-flex align-items-center">
+                                                               <div class="flex-grow-1 overflow-hidden">
+                                                                  <p class="mb-0 fs-12">{{ workday.START_TIME }} - {{ workday.END_TIME }}</p>
+                                                               </div>
+                                                            </div> 
+                                                            <div class="d-flex justify-content-between py-0">
+                                                               <span class="text-muted fw-medium fs-12">{{ workday.SHIFT_HOURS }} Hrs.</span>
+                                                               <div *ngIf="workday.ABS_STATUS == 'L' || workday.ABS_STATUS == 'B' || workday.ABS_STATUS == 'C'">
+                                                                  <p class="fw-medium mb-0"><i class="ri-checkbox-blank-circle-fill text-danger align-middle me-2" title="On Leave"></i> </p>
+                                                               </div>
+                                                            </div>
+                                                         </div>
+
+                                                         <div class="card-box bg-warning-subtle" *ngIf="workday.SHIFT_ID == 2 || workday.SHIFT_ID == 6 || workday.SHIFT_ID == 8 || workday.SHIFT_ID == 12" [hidden]="workday.SHIFT_ID == '-2' || workday.SHIFT_ID == '0'">
+                                                            <div class="d-flex align-items-center">
+                                                               <div class="flex-grow-1 overflow-hidden">
+                                                                  <p class="mb-0 fs-12">{{ workday.START_TIME }} - {{ workday.END_TIME }}</p>
+                                                               </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between py-0">
+                                                               <span class="text-muted fw-medium fs-12">{{ workday.SHIFT_HOURS }} Hrs.</span>
+                                                               <div *ngIf="workday.ABS_STATUS == 'L' || workday.ABS_STATUS == 'B' || workday.ABS_STATUS == 'C'">
+                                                                  <p class="fw-medium mb-0"><i class="ri-checkbox-blank-circle-fill text-danger align-middle me-2" title="On Leave"></i> </p>
+                                                               </div>
+                                                            </div>
+                                                         </div>
+
+                                                         <div class="card-box bg-success-subtle" *ngIf="workday.SHIFT_ID == 3 || workday.SHIFT_ID == 9 || workday.SHIFT_ID == 13 || workday.SHIFT_ID == 15" [hidden]="workday.SHIFT_ID == '-2' || workday.SHIFT_ID == '0'">
+                                                            <div class="d-flex align-items-center">
+                                                               <div class="flex-grow-1 overflow-hidden">
+                                                                  <p class="mb-0 fs-12">{{ workday.START_TIME }} - {{ workday.END_TIME }}</p>
+                                                               </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between py-0">
+                                                               <span class="text-muted fw-medium fs-12">{{ workday.SHIFT_HOURS }} Hrs.</span>
+                                                               <div *ngIf="workday.ABS_STATUS == 'L' || workday.ABS_STATUS == 'B' || workday.ABS_STATUS == 'C'">
+                                                                  <p class="fw-medium mb-0"><i class="ri-checkbox-blank-circle-fill text-danger align-middle me-2" title="On Leave"></i> </p>
+                                                               </div>
+                                                            </div>
+                                                         </div>
+
+                                                         <div class="card-box bg-orange-subtle" *ngIf="workday.SHIFT_ID == 10 || workday.SHIFT_ID == 4 || workday.SHIFT_ID == 14 || workday.SHIFT_ID > 15" [hidden]="workday.SHIFT_ID == '-2' || workday.SHIFT_ID == '0'">
+                                                            <div class="d-flex align-items-center">
+                                                               <div class="flex-grow-1 overflow-hidden">
+                                                                  <p class="mb-0 fs-12">{{ workday.START_TIME }} - {{ workday.END_TIME }}</p>
+                                                               </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between py-0">
+                                                               <span class="text-muted fw-medium fs-12">{{ workday.SHIFT_HOURS }} Hrs.</span>
+                                                               <div *ngIf="workday.ABS_STATUS == 'L' || workday.ABS_STATUS == 'B' || workday.ABS_STATUS == 'C'">
+                                                                  <p class="fw-medium mb-0"><i class="ri-checkbox-blank-circle-fill text-danger align-middle me-2" title="On Leave"></i> </p>
+                                                               </div>
+                                                            </div>
+                                                         </div>
+                                                         
+                                                        <div class="week-box bg-dark-subtle" *ngIf="workday.SHIFT_ID == 0 || workday.ABS_STATUS == 'WE'" [hidden]="workday.SHIFT_ID >= 1">
+                                                           <div class="d-flex">
+                                                                <div class="flex-grow-1">
+                                                                     <p class="mb-0 text-center middle-text">Week Off</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="text-align: center;" *ngIf="workday.SHIFT_ID == -2"  [hidden]="workday.SHIFT_ID == 0 || workday.ABS_STATUS == 'WE'">
+                                                            <div class="d-flex">
+                                                                <div class="flex-shrink-0" *ngIf="workday.ABS_STATUS == 'L' || workday.ABS_STATUS == 'B' || workday.ABS_STATUS == 'C'">
+                                                                    <i class="fa fa-circle" style="color: red;" title="On Leave"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </td>
+                                                    
+                                                </tr>
+                                             
+                                            </tbody>
+                                        </table>
+                                    </div><!-- end table responsive -->
+                                    <br>
+
+                                    <div *ngIf="listshiftdetails">
+                                        <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                            <div class="col-sm">
+                                              <div class="font-type fs-12 text-muted">
+                                                Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                              </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <div class="font-type fs-12 text-muted">
+                                                    Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-auto mt-4 mt-sm-0">
+                                                <div class="d-flex gap-1 flex-wrap">
+                                                    <div>
+                                                        <div class="input-group">
+                                                <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                
+                                               <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                          </div>
+                                        </div>
+                                             
+                                            <div class="col-sm-auto mt-3 mt-sm-0">
+                                              <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                <li class="page-item">
+                                                  <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                </li>
+                                                <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                  <li class="page-item">
+                                                    <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                  </li>
+                                                </ng-container>
+                                                <li class="page-item">
+                                                  <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                          </div>
+                                </div>
+                            </div>
+                                    </div> 
+                                    <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                                    <!--Modal For Success Message Start-->
+                                    <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-orange padding-up-5">
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                                </div>
+                                                <div class="modal-body" *ngIf="showModal==1"> 
+                                                    <div class="container">
+                                                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                                
+                                                    </div>
+                                                </div>
+                                                <div class="modal-body" *ngIf="showModal==2">
+                                                <div class="container">
+                                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                                    
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                            </div>
+                            <!--end col-->
+                        </div>
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+                <app-footer></app-footer>
+            </div>
+            <!-- end main content-->
+        </div>
+        <!-- END layout-wrapper -->

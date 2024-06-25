@@ -1,0 +1,186 @@
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header>
+
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="profile-foreground position-relative mx-n4 mt-n4">
+                        <div class="profile-wid-bg">
+                            <img src="assets\styles\img\slide4.jpg" alt="" class="profile-wid-img" />
+                        </div>
+                    </div>
+                    <div class="pt-4 mb-2 mb-lg-2 pb-lg-3 profile-wrapper"> 
+                        <div class="row g-3">
+                            <div class="col-auto">
+                              
+                                     <div class="profile-user position-relative d-inline-block mx-auto">
+                                            <img src="{{hostname}}{{photo}}" class="rounded-circle avatar-md img-thumbnail user-profile-image" id="emp_pic" name="emp_pic" alt="user-profile-image">
+                                            <!-- <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
+                                                <input id="profile-img-file-input" type="file" class="profile-img-file-input">
+                                                <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
+                                                    <span class="avatar-title rounded-circle text-body status-circle">
+                                                    </span>
+                                                </label>
+                                            </div> -->
+                                      </div>
+
+                                      
+
+                            </div>
+                            <!--end col-->
+                            <div class="col" *ngFor="let fetchdirectoyList of fetchempviewdirectoylist">
+                                <div class="p-2">
+                                    <h2 class="text-white mb-1 font-type ">{{fetchdirectoyList.EMP_NAME}}</h2>
+                                    <p class="text-white text-opacity-75 font-type">{{fetchdirectoyList.DESIGNATION}}</p>
+                                   
+                                    <div class="hstack gap-2 flex-wrap font-type text-white">
+                                        <div><i class="ri-map-pin-line align-bottom me-1 font-type"></i> {{fetchdirectoyList.LOCATION}}, {{fetchdirectoyList.COUNTRY}}</div>
+                                        <div class="vr"></div>
+                                        <div><i class="ri-building-line align-bottom me-1 font-type"></i> <span class="fw-medium">{{fetchdirectoyList.COMPANY_NAME}}</span></div>
+
+                                        <!--<div class="badge rounded-pill bg-danger fs-12">High</div>-->
+                                    </div>
+                                </div>
+                           
+                            </div>
+                            <div class="col-md-auto col-lg-auto order-last order-lg-0 pb-p1"  *ngFor="let fetchdirectoyList of fetchempviewdirectoylist">
+                                <div class="row text text-white-50">
+                                    <div class="col-lg-12 col-12 row">
+                                        
+                                        <!-- <div class="p-1 font-type"> -->
+                                            <div class="col-lg-4">
+                                                <a href="employee_profile_directory"><button class="btn btn-danger" style="width: 85px;"><i class="fa fa-angle-double-left"></i> Exit </button></a> 
+                                            </div>
+                                            <div class="flex-shrink-0 font-type col-lg-4" *ngIf="this.grpname.includes('Admin') || this.grpname.includes('IT')">
+                                                <a href="profile_limited_edit" (click)="navigateToEditProfile(fetchdirectoyList.EMP_CODE)" class="btn btn-orange">
+                                                    <i class="ri-edit-box-line align-bottom"></i> Edit Assets
+                                                </a>
+                                            </div> 
+                                            <div class="col-lg-4">
+                                                <a href="#" class="btn btn-orange"><i class="ri-stack-line align-bottom"></i> Organization Chart</a>
+                                            </div>
+                                        <!-- </div> -->
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!--end row-->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                       
+                             
+                                <!-- Tab panes -->
+                                <div class="tab-content pt-1 text-muted">
+                                    <div class="tab-pane active" id="overview-tab" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                              
+                                                    <div class="card"  style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                                                        <div class="card-body">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless mb-0 font-type l3-h3">
+                                                                    <tbody *ngFor="let fetchdirectoyList of fetchempviewdirectoylist">
+                                                                        <tr>
+                                                                            <th class="ps-0 fw-semibold fs-13" scope="row">Full Name </th>
+                                                                            <td class="fs-13"><b>:</b> &nbsp;&nbsp;&nbsp;&nbsp; {{fetchdirectoyList.EMP_NAME}}</td>
+                                                                        </tr>
+                                                                        <!-- <tr>
+                                                                            <th class="ps-0 fw-semibold fs-13" scope="row">Nationality </th>
+                                                                            <td class="fs-13"><b>:</b> &nbsp;&nbsp;&nbsp;&nbsp; {{fetchdirectoyList.COUNTRY}}</td>
+                                                                        </tr> -->
+                                                                        <tr>
+                                                                            <th class="ps-0 fw-semibold fs-13" scope="row">Employee Code </th>
+                                                                            <td class="fs-13"><b>:</b> &nbsp;&nbsp;&nbsp;&nbsp; {{fetchdirectoyList.EMP_CODE}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="ps-0 fw-semibold fs-13" scope="row">Company Name </th>
+                                                                            <td class="fs-13"><b>:</b> &nbsp;&nbsp;&nbsp;&nbsp; {{fetchdirectoyList.COMPANY_NAME}}</td>
+                                                                        </tr> 
+                                                                        <!-- <tr>
+                                                                            <th class="ps-0 fw-semibold fs-13" scope="row">Joining Date</th>
+                                                                            <td class="fs-13"><b>:</b> &nbsp;&nbsp;&nbsp;&nbsp; {{fetchdirectoyList.DATE_OF_JOINING | date: 'dd-MM-yyyy'}}</td>
+                                                                        </tr> -->
+                                                                        <tr>
+                                                                            <th class="ps-0 fw-semibold fs-13" scope="row">Department </th>
+                                                                            <td class="fs-13"><b>:</b> &nbsp;&nbsp;&nbsp;&nbsp; {{fetchdirectoyList.DEPT_NAME}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="ps-0 fw-semibold fs-13" scope="row">Designation </th>
+                                                                            <td class="fs-13"><b>:</b> &nbsp;&nbsp;&nbsp;&nbsp; {{fetchdirectoyList.DESIGNATION}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="ps-0 fw-semibold fs-13" scope="row">Work Location </th>
+                                                                            <td class="fs-13"><b>:</b> &nbsp;&nbsp;&nbsp;&nbsp; {{fetchdirectoyList.LOCATION}}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="ps-0 fw-semibold fs-13" scope="row">E-mail </th>
+                                                                            <td class="fs-13"><b>:</b> &nbsp;&nbsp;&nbsp;&nbsp;  {{fetchdirectoyList.OFFICIAL_EMAIL}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="ps-0 fw-semibold fs-13" scope="row">Mobile </th>
+                                                                            <td class="fs-13"><b>:</b> &nbsp;&nbsp;&nbsp;&nbsp; {{fetchdirectoyList.OFFICIAL_MOBILE}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="ps-0 fw-semibold fs-13" scope="row">Extension No </th>
+                                                                            <td class="fs-13"><b>:</b> &nbsp;&nbsp;&nbsp;&nbsp; {{fetchdirectoyList.EXTENSON_NO}}</td>
+                                                                        </tr>
+                                                                      
+                                                                      
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div><!-- end card body -->
+                                                    </div>
+
+                         
+                                             
+                                            
+                                                <!--end card-->
+                                            </div>
+                                
+                                           
+                                        </div>
+                                        <!--end row-->
+                                    </div>
+                            
+              
+                                    <!--end tab-pane-->
+                                </div>
+                                <!--end tab-content-->
+                          
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row-->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <app-footer></app-footer>
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+

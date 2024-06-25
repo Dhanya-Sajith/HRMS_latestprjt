@@ -1,0 +1,176 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+    <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content" style="overflow-x: hidden;">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card mt-n4 mx-n4 mb-n5">
+                                <div class="bg-info-subtle">
+                                    <div class="card-body pb-4 mb-5">
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <div class="row align-items-center">
+                                                    <div class="d-flex align-items-center ma-5">
+                                                        <div class="flex-shrink-0">
+                                                            <div class="avatar-sm">
+                                                                <span class="avatar-title bg-info-subtle">
+                                                                    <img src="assets\styles\img\icons8-checked-checkbox-100.png" alt="" width="120%">
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-2 ma-5">
+                                                            <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Course Effectiveness</h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                        </div>
+                                        <!--end row-->
+                                    </div><!-- end card body -->
+                                </div>
+                            </div><!-- end card -->
+                        </div><!-- end col -->
+                    </div>
+                     <!-- end start page title -->
+
+
+                                <!-- List -->
+                                 <div class="row topbar-up">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header pa-6-8">
+                                                <div class="row align-items-center gy-3">
+                                                    <div class="col-sm">
+                                                        <div class="d-flex gap-1 flex-wrap">
+                                                            <div class="search-box">
+                                                                <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..." [(ngModel)]="searchInput">
+                                                                <i class="ri-search-line search-icon"></i>
+                                                            </div>
+                                                            <div>
+                                                                <select class="form-select font-type fs-12 textbox-15 h-30" name="status"  [(ngModel)]="status" (change)="FetchTrainings()">
+                                                                    <option value="-1">All Status</option>
+                                                                    <option value="0" >Pending</option>
+                                                                    <option value="1">Submitted</option>
+                                                                  </select>  
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive table-card mb-0">
+                                                    <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                                        <thead class="font-type table-light text-white">
+                                                        <tr class="text-center">
+                                                            <!-- <th>SL No</th> -->
+                                                            <th>Areas</th>
+                                                            <th>Training Name</th>
+                                                            <th>Target Date</th>
+                                                            <th width="20%">Employee</th>
+                                                            <th>Status</th>
+                                                            <th>Action</th>
+                                                        </tr>   
+                                                    </thead>
+                                                    <tbody class="list form-check-all font-type fs-11">
+                                                        <ng-container *ngFor="let view of listtrainings | search : searchInput | pagination: currentPage: itemsPerPage; let i=index">
+                                                            <tr class="font-type" *ngFor="let employee of view.EmployeeStatus; let isFirst = first">
+                                                                <ng-container *ngIf="isFirst">
+                                                                    <td [attr.rowspan]="view.EmployeeStatus.length" style="white-space: pre-wrap;">{{view.AREA}}</td>
+                                                                    <td [attr.rowspan]="view.EmployeeStatus.length" style="white-space: pre-wrap;">{{view.SUBJECT_NAME}}</td>
+                                                                    <td [attr.rowspan]="view.EmployeeStatus.length">{{view.TRAINING_DATE | date:"dd-MM-yyyy"}}</td>
+                                                                    <td class="p-1">{{employee.EMP_NAME}}</td>
+                                                                    <td class="status p-1 text-center">{{employee.FEEDBACK_STATUS_VAL}}</td>
+                                                                    <td class="text-center" [hidden]="employee.FEEDBACK_STATUS == -2">
+                                                                        <a [routerLink]="['/course_effectiveness_feedback']" [queryParams]="{ user: view.TRAINING_ID,code:employee.EMP_CODE,view:1}" title="Effectiveness Feedback Form" *ngIf="employee.FEEDBACK_STATUS == 1" (click)="navigateToNewPage(view.TRAINING_ID,employee.EMP_CODE,1)">
+                                                                            <i class="ri-eye-line fs-18 text-success"></i>
+                                                                        </a>
+                                                                        <a [routerLink]="['/course_effectiveness_feedback']" [queryParams]="{ user: view.TRAINING_ID,code:employee.EMP_CODE,view:0}" title="Effectiveness Feedback Form" *ngIf="employee.FEEDBACK_STATUS == 0" (click)="navigateToNewPage(view.TRAINING_ID,employee.EMP_CODE,0)">
+                                                                            <i class="ri-survey-line fs-18 text-orange"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="!isFirst">
+                                                                    <td class="p-1">{{employee.EMP_NAME}}</td>
+                                                                    <td class="status p-1 text-center">{{employee.FEEDBACK_STATUS_VAL}}</td>
+                                                                    <td  class="text-center" [hidden]="employee.FEEDBACK_STATUS == -2">
+                                                                        <a [routerLink]="['/course_effectiveness_feedback']" [queryParams]="{ user: view.TRAINING_ID,code:employee.EMP_CODE,view:1}" title="Effectiveness Feedback Form" *ngIf="employee.FEEDBACK_STATUS == 1" (click)="navigateToNewPage(view.TRAINING_ID,employee.EMP_CODE,1)">
+                                                                            <i class="ri-eye-line fs-18 text-success"></i>
+                                                                        </a>
+                                                                        <a [routerLink]="['/course_effectiveness_feedback']" [queryParams]="{ user: view.TRAINING_ID,code:employee.EMP_CODE,view:0}" title="Effectiveness Feedback Form"  *ngIf="employee.FEEDBACK_STATUS == 0" (click)="navigateToNewPage(view.TRAINING_ID,employee.EMP_CODE,0)">
+                                                                            <i class="ri-survey-line fs-18 text-orange"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                        - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                        of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                    </div>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                        <div class="font-type fs-12 text-muted">
+                                                            Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-auto mt-4 mt-sm-0">
+                                                        <div class="d-flex gap-1 flex-wrap">
+                                                            <div>
+                                                                <div class="input-group">
+                                                        <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                        
+                                                    <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                                </div>
+                                                </div>
+                                                    
+                                                    <div class="col-sm-auto mt-3 mt-sm-0">
+                                                    <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                        <li class="page-item">
+                                                        <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                        </li>
+                                                        <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                        <li class="page-item">
+                                                            <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                        </li>
+                                                        </ng-container>
+                                                        <li class="page-item">
+                                                        <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                    </div>
+                    <!-- end list -->
+                </div>
+                <!-- container-fluid -->   
+                </div>
+                <!-- End Page-content -->
+
+                <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->

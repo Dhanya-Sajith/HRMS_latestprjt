@@ -1,0 +1,279 @@
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu> 
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content" style="overflow-x: hidden;">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 text-uppercase font-type padding-up-5">Competency Assessment</h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- end start page title -->
+
+                    <!-- card header -->      
+                    <div class="topbar-up row">
+                        <div class="col-lg-12 col-md-12">
+                           <div class="d-flex flex-column h-100">
+                               <div class="row">
+                                   <div class="col-lg-12 col-md-12">
+                                       <div class="card card-animate overflow-hidden shadow-lg">
+                                           <div class="position-absolute start-0" style="z-index: 0;">
+                                               <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+                                                   <style>
+                                                       .s0 {
+                                                           opacity: .13;
+                                                           fill: var(--vz-info)
+                                                       }
+                                                   </style>
+                                                   <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
+                                               </svg>
+                                           </div>
+                                           <div class="card-body" style="z-index:1 ;">
+                                               <div class="d-flex align-items-center">
+                                                   <div class="flex-grow-1 overflow-hidden">
+                                                       <div class="row ma-5">
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <h6 class="fs-12 font-type">Employee</h6>
+                                                            <h6 class="fs-12 font-type fw-semibold">{{empdata?.empname}}</h6> 
+                                                        </div>
+                                                           <div class="col-lg-4 col-md-4">
+                                                                   <h6 class="font-type fs-12">Designation</h6>
+                                                                   <h6 class="fs-12 font-type fw-semibold">{{empdata?.desig}}</h6>
+                                                           </div>
+                                                           <div class="col-lg-4 col-lg-4">
+                                                               <h6 class="font-type fs-12">Purpose of Assessment</h6>
+                                                               <h6 class="fs-12 font-type fw-semibold">{{empdata?.Purpose}}</h6>
+                                                           </div>
+                                                    </div>
+                                                   </div>
+                                               </div>
+                                           </div><!-- end card body -->
+                                       </div><!-- end card -->
+                                   </div><!--end col-->
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+                    <!-- end card header -->
+
+                      <!--LIST -->
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="card shadow-lg" >
+                                <div class="card-body">
+                                    <div class="d-flex mb-1 topbar-up">
+                                        <div class="flex-grow-1">
+                                            <h5 class="fs-16 font-type fw-semibold pa-15">Skill Category</h5>
+                                        </div>
+                                    </div>
+                                    <div class="vstack gap-0">
+                                        <div class="p-1" *ngFor="let item of skillcategory; let i = index">
+                                            <div class="d-flex align-items-center">
+                                                <button class="btn btn-sm btn-info h-30 w-100 focus-ring focus-ring-info toggle-button" 
+                                                        id="buttonskill{{item.KEY_ID}}" 
+                                                        type="button"
+                                                        (click)="onskillcategorySelected(item)">                                                    
+                                                    <span class="text-uppercase fs-11 fw-medium font-type text-white">{{item.DATA_VALUE}}</span>
+                                                </button>
+                                            </div>
+                                        </div>                                      
+                                    </div>
+                                </div>
+                                        <div class="filter-choices-input">
+                                        <div class="avatar-title bg-transparent">
+                                            <img src="assets\styles\img\bgg1.png" alt="" class="img-size" />
+                                        </div>
+                                </div>
+                            </div>
+                            <!-- end card -->
+                        </div>
+                        
+                        <div class="col-lg-9">
+                                <div class="card shadow-lg">
+                                    <div class="card-header border-0 bg-light-blue" style="padding:10px">
+                                        <div class="row align-items-center gy-3">
+                                            <div class="col-sm">
+                                                <div class="align-items-center d-flex">
+                                                    <h5 class="mb-0 text-uppercase font-type fw-semibold fs-16 text-blue">{{selectedSkillCategory?.DATA_VALUE}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end card header -->
+
+                                    <div class="card-body ">
+                                        <div class="table-responsive  table-card mb-0">
+                                            <!-- Qualification -->
+                                            <table class="table table-bordered border-info align-middle table-nowrap pl-10 table-hover" id="table_Education" *ngIf="this.selectedSkillCategoryId==1&&tabledata&&tabledata.length>0">
+                                                <thead>
+                                                    <tr class="font-type">
+                                                        <th class="fs-14" rowspan="2">Skill Set</th>
+                                                        <th class="fs-14">
+                                                            Required <br/>
+                                                        </th>
+                                                        <th class="fs-14">
+                                                            Actual
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody >
+                                                    <tr class="h1-50 font-type"*ngFor="let data of tabledata">
+                                                        <td>{{data.COMPETENCY_NAME}}</td>                                                        
+                                                        <td style="white-space: pre-wrap;">{{data.LEVELS}}</td>                                        
+                                                        <td> <input type="text" class="form-control search h-30 textbox-15 font-type w-100 bg-light" placeholder="Enter..." [(ngModel)]="data.ACTUAL_LEVEL"></td>                                                
+                                                    </tr>                                                 
+                                                </tbody>
+                                            </table>
+                                      <!-- Tables Border Colors -->
+                                            <table class="table table-bordered border-info align-middle table-nowrap pl-10 table-hover"*ngIf="this.selectedSkillCategoryId!=1&&tabledata&&tabledata.length>0">
+                                                    <thead>
+                                                        <tr class="font-type">
+                                                            <th class="fs-14" rowspan="2">Skill Set</th>
+                                                            <th rowspan="2" width="5%" class="text-center">
+                                                                Required <br/> Level
+                                                            </th>
+                                                            <th class="text-center" rowspan="1" colspan="4">
+                                                                Actual Level
+                                                            </th>
+                                                        </tr>
+                                                        <tr class="font-type">
+                                                            <th class="text-center">
+                                                                1 <br> Level
+                                                            </th>
+                                                            <th class="text-center">
+                                                                2 <br> Level
+                                                            </th>
+                                                            <th class="text-center">
+                                                                3 <br> Level
+                                                            </th>
+                                                            <th  class="text-center">
+                                                                4 <br> Level
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody >
+                                                        <tr class="h-30 font-type" *ngFor="let data of tabledata">
+                                                            <td>{{data.COMPETENCY_NAME}}</td>
+                                                            <td class="text-center">{{data.LEVELS}}</td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio{{data.COMPETENCY_ID}}-{{data.COMPETENCY_NAME}}" value="1" [checked]="data.ACTUAL_LEVEL === '1'" />
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio{{data.COMPETENCY_ID}}-{{data.COMPETENCY_NAME}}" value="2"[checked]="data.ACTUAL_LEVEL === '2'"  />
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio{{data.COMPETENCY_ID}}-{{data.COMPETENCY_NAME}}" value="3" [checked]="data.ACTUAL_LEVEL === '3'" />
+                                                            </td>
+                                                            <td class="text-center"> 
+                                                                <input type="radio" name="Radio{{data.COMPETENCY_ID}}-{{data.COMPETENCY_NAME}}" value="4" [checked]="data.ACTUAL_LEVEL === '4'" />
+                                                            </td>
+                                                        </tr>                                                      
+                                                        
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                                        <!--IF NO DATA-->
+                                      <div class="text-center py-3" *ngIf="!tabledata||tabledata.length==0">
+                                        <div class="mb-2">
+                                            <img src="assets\styles\img\icons8-search-64.png" alt="">
+                                        </div>
+                                        <h5 class="font-type fw-medium">No data to display for the selected category!</h5>
+                                      </div>
+                                        <div class="col-lg-12 mb-3">
+                                            <div class="hstack gap-2 justify-content-end">
+                                            <!-- <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type "(click)="submit(tabledata)" ><i class="ri-check-double-fill label-icon align-middle fs-16 ms-2"></i>Submit</button> -->
+                                            <!-- <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type"(click)="onskillcategorySelected(selectedSkillCategory)"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button> -->
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row border border-dashed border-top border-start-0 border-end-0 border-bottom-0" *ngIf="this.selectedSkillCategoryId!=1&&tabledata&&tabledata.length>0&&trainingrequired">
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="card-header d-flex bg-light">
+                                                    <h4 class="card-title mb-0 flex-grow-1 text-blue fw-semibold text-uppercase">Training Required</h4>
+
+                                                </div><!-- end card header -->
+                
+                                                <div class="card-body p-0 ">
+                                                    <div data-simplebar>
+                                                        <ul class="list-group list-group-flush border-dashed px-3">
+                                                            <ul class="list-group">
+                                                                <ul class="list-group">
+                                                                    <li class="list-group-item ps-0" *ngFor="let item of trainingrequired | keyvalue; let i = index">
+                                                                        <div class="d-flex align-items-start font-type">
+                                                                            <div class="ps-0 flex-shrink-0">
+                                                                                <label class="form-check-label mb-0 ps-2" for="task_one">{{i + 1}}.</label>
+                                                                            </div>
+                                                                            <div class="flex-grow-1">
+                                                                                <label class="form-check-label mb-0 ps-2" for="task_one">{{item.key}}</label>
+                                                                                <p class="text-muted fs-12 mb-0 ps-2">{{item.value}}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </ul>
+                                                        </ul><!-- end ul -->
+                                                    </div>
+                                                </div><!-- end card body -->
+                                            </div><!-- end card -->
+                                            
+                                        </div><!-- end col -->
+                                    </div><!-- end row -->
+                                    </div>
+                                </div>
+                                     <!-- end card -->
+                                </div>
+                    </div>
+                    <!-- End LIST -->
+                    <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                                            <!--Modal For Success Message Start-->
+                            <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                        </div>
+                                        <div class="modal-body" *ngIf="showModal==1"> 
+                                            <div class="container">
+                                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                        
+                                            </div>
+                                        </div>
+                                        <div class="modal-body" *ngIf="showModal==2">
+                                        <div class="container">
+                                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                            
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!--Modal For Success Message End-->
+                 
+                </div>
+                <!-- container-fluid -->
+            </div>
+                <!-- End Page-content -->
+
+                <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->

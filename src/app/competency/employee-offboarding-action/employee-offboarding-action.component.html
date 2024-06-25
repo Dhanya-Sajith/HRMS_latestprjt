@@ -1,0 +1,279 @@
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header>
+
+        <!-- ========== App Menu ========== -->
+       
+        <app-sidemenu></app-sidemenu>
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                     <!-- start page title -->
+                     <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between font-type">
+                                <h4 class="mb-0 text-uppercase font-type padding-up-5"   style="letter-spacing: 0.2px;">Offboarding Action</h4>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- End start page title -->
+
+                     <div class="topbar-up row">
+                        <div class="col-lg-12 col-md-12">
+                           <div class="d-flex flex-column">
+                               <div class="row">
+                                   <div class="col-lg-12 col-md-12">
+                                       <div class="card card-animate overflow-hidden shadow-lg">
+                                           <div class="position-absolute start-0" style="z-index: 0;">
+                                               <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+                                                   <style>
+                                                       .s0 {
+                                                           opacity: .08;
+                                                           fill: var(--vz-danger)
+                                                       }
+                                                   </style>
+                                                   <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
+                                               </svg>
+                                           </div>
+                                           <div class="card-body" style="z-index:1 ;padding-bottom:6px;">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <div class="row">
+                                                         <div class="col-lg-4 col-md-4">
+                                                             <h6 class="fs-12 font-type">Company</h6>
+                                                             <h6 class="fs-12 font-type fw-semibold">{{this.companynm}}</h6> 
+                                                         </div>
+                                                        <div class="col-lg-5 col-md-5">
+                                                                <h6 class="font-type fs-12">Employee</h6>
+                                                                <h6 class="fs-12 font-type fw-semibold">{{this.employeenm}}</h6>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3">
+                                                            <h6 class="font-type fs-12">Last Working Date</h6>
+                                                            <h6 class="fs-12 font-type fw-semibold">{{this.lastwrkdt | date:"dd-MM-yyyy"}}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- end card body -->
+                                       </div><!-- end card -->
+                                   </div><!--end col-->
+                               </div>
+                           </div>
+                        </div>
+                     </div>
+                      
+                        <!-- TABLE DETAILS -->
+                        <div class="row margin-up-5">
+                                <div class="col-md-12 col-lg-12">
+                                        <div class="card shadow-lg" >
+                                            <div class="card-header pa-6-8">
+                                                <div class="row align-items-center gy-3">
+                                                    <div class="col-sm">
+                                                        <div class="align-items-center d-flex ">
+                                                            <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Assets List</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-auto">
+                                                        <div class="d-flex gap-1 flex-wrap">
+                                                            <div class="search-box">
+                                                                <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search...">
+                                                                <i class="ri-search-line search-icon"></i>
+                                                            </div>
+                                                            <div class="">
+                                                                <select class="form-select font-type fs-12 textbox-15 h-30"  name="statusvl" id="statusvl" (change)="fiterListAssets()" >
+                                                                    <option value ="-1">Select Status</option>
+                                                                    <option  *ngFor="let trainingsts of liststatus" value="{{trainingsts.KEY_ID}}" >
+                                                                        {{trainingsts.DATA_VALUE}}
+                                                                    </option>
+                                                                </select> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end card header -->
+                                            <div class="card-body" style="padding-bottom: 0px;">
+                                                <div class="table-responsive table-card mb-0">
+                                                    <table class="table table-nowrap align-middle border-orange table-hover">
+                                                        <thead class="table-light font-type text-white">
+                                                            <tr>
+                                                                <th>SL No</th>
+                                                                <th>Asset Name</th>
+                                                                <th>Date of Issue</th>
+                                                                <th>Asset Status</th>
+                                                                <th width="5%">Date of Return</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="list form-check-all font-type">
+                                                            <tr class="h1-50"  *ngFor="let offboadingact of offBoardingactiondtls | search : searchInput | pagination: currentPage: itemsPerPage; index as i;">
+                                                                <td class="fw-semibold">{{i+1}}</td>
+                                                                <td>{{offboadingact.ASSET_NAME}}</td>
+                                                                <td>{{offboadingact.DATE_OF_ISSUE | date:'dd-MM-yyyy' }}</td>
+                                                                <td class="col-md-3">
+                                                                    <ng-container [ngSwitch]="true">
+                                                                        <div *ngSwitchCase="this.stsval!=1">
+                                                                            <select class="form-select h-30 font-type textbox-15" name="stsnew" id="stsnew_{{ offboadingact.RECORDID }}">
+                                                                                <option value ="-1">Select Status</option>
+                                                                                <option  *ngFor="let trainingsts of liststatus" value="{{trainingsts.KEY_ID}}"  [selected]="trainingsts.KEY_ID==offboadingact.ASSET_STATUS">
+                                                                                    {{trainingsts.DATA_VALUE}}
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div *ngSwitchCase="this.stsval==1">
+                                                                            <select class="form-select h-30 font-type textbox-15" name="stsnew" id="stsnew_{{ offboadingact.RECORDID }}" style="pointer-events: none;">
+                                                                                <option value ="-1">Select Status</option>
+                                                                                <option  *ngFor="let trainingsts of liststatus" value="{{trainingsts.KEY_ID}}"  [selected]="trainingsts.KEY_ID==offboadingact.ASSET_STATUS">
+                                                                                    {{trainingsts.DATA_VALUE}}
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </td>
+                                                                <td>
+                                                                    
+                                                                    <ng-container [ngSwitch]="true">
+                                                                        <div *ngSwitchCase="this.stsval!=1">
+                                                                            <input type="date" class="form-control font-type fs-11 mb-0 textbox-15 h-30"  name="returndt" id="returndt_{{ offboadingact.RECORDID }}" value="{{offboadingact.DATE_OF_RETURN | date:'yyyy-MM-dd'}}">
+                                                                        </div>
+                                                                        <div *ngSwitchCase="this.stsval==1">
+                                                                            <input type="text" class="form-control font-type fs-11 mb-0 textbox-15 h-30"  name="returndt"  value="{{offboadingact.DATE_OF_RETURN | date:'dd-MM-yyyy'}}" readonly>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                   
+                                                                </td>                                              
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- end table content -->
+
+                                                <div class="p-3 border-top-0 border-start-0 border-end-0 topbar-up">
+                                                    <div class="row align-items-center gy-2">
+                                                        <div class="col-md-6">
+
+                                                            <ng-container [ngSwitch]="true">
+                                                                <div *ngSwitchCase="this.stsval!=1">
+                                                                    <div class="align-items-center d-flex">
+                                                                        <textarea class="form-control textbox-15 font-type mb-1" required rows="2" placeholder="Enter the Remarks"  name="remarks" id="remarks"  value="{{this.offBoardingactiondtlsView[0].DESCRIPTION}}" ></textarea>  
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngSwitchCase="this.stsval==1">
+                                                                    <div class="align-items-center d-flex">
+                                                                        <textarea class="form-control textbox-15 font-type mb-1" required rows="2" placeholder="Enter the Remarks"  name="remarks" id="remarks"  value="{{this.offBoardingactiondtlsView[0].DESCRIPTION}}" readonly ></textarea>  
+                                                                    </div>
+                                                                </div>
+                                                            </ng-container>
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                <div class="form-check form-check-info font-type">
+
+                                                                    <input class="form-check-input" type="checkbox" id="formCheck11" value="1" [checked]="this.offBoardingactiondtlsView[0].CATEGORYNM == 1"  *ngIf="this.stsval!=1" >
+
+                                                                    <ng-container [ngSwitch]="true">
+                                                                        <div *ngSwitchCase="this.stsval!=1">
+                                                                            <label class="form-check-label text-blue fw-semibold fs-13" for="formCheck11" *ngIf="this.category==1" >
+                                                                                Mark Status as <span>IT</span> Cleared
+                                                                            </label>
+                                                                        </div>
+                                                                        <div *ngSwitchCase="this.stsval==1">
+                                                                            <label class="form-check-label text-blue fw-semibold fs-13" for="formCheck11" *ngIf="this.category==1" >
+                                                                                <span>IT</span> Cleared
+                                                                            </label>
+                                                                        </div>
+                                                                    </ng-container>
+
+                                                                    <ng-container [ngSwitch]="true">
+                                                                        <div *ngSwitchCase="this.stsval!=1">
+                                                                            <label class="form-check-label text-blue fw-semibold fs-13" for="formCheck11" *ngIf="this.category==2" >
+                                                                                Mark Status as <span>Admin</span> Cleared
+                                                                            </label>
+                                                                        </div>
+                                                                        <div *ngSwitchCase="this.stsval==1">
+                                                                            <label class="form-check-label text-blue fw-semibold fs-13" for="formCheck11" *ngIf="this.category==2" >
+                                                                                <span>Admin</span> Cleared
+                                                                            </label>
+                                                                        </div>
+                                                                    </ng-container>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                            <!-- end card body -->
+                                        </div>
+                                        <!-- end card -->
+                                </div>
+                        </div><!-- end row -->
+                        <!--END TABLE DETAILS -->
+
+                        <div class="col-lg-12 mb-4">
+                            <div class="d-flex align-items-center flex-wrap gap-2">
+                                <div class="flex-grow-1 text-center" >
+                                    <button  *ngIf="this.stsval!=1" type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type "  (click)="saveOffboardingAction()"  ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                    <!-- <button type="button" class="btn btn-blue btn-label right nexttab nexttab font-type "><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button> -->
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <div class="hstack text-nowrap gap-2">
+                                        <a href="EmployeeOffboarding"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <!--end container-fluid-->
+            </div>
+              <!--end content-->
+   
+              <app-footer></app-footer>
+
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+
+    
+ <button id="openModalButtonForalert"  [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuRecordModal">Open Modal</button>
+  
+ <div class="modal fade zoomIn" id="SuRecordModal" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header bg-orange padding-up-5">
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModal==1">
+                 
+                 <div class="text-center">
+                     <h5 class="fs-13 font-type">{{success}}</h5>
+                 </div>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModal==2">
+                 
+                <div class="text-center">
+                    <h5 class="fs-13 font-type">{{failed}}</h5>
+                </div>
+            </div>
+         </div>
+     </div>
+ </div>
+
+
+  
