@@ -50,35 +50,50 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
   }
 
   convertToPDF() {
-    const element: HTMLElement = <HTMLDivElement>document.getElementById('htmlElementId'); // Replace with your HTML element's ID
-    
+    const element = document.getElementById('htmlElementId'); // Replace with your HTML element's ID
+  
     if (element) {
-      html2canvas(element).then((canvas) => {
-
-        //alert(canvas);
-
-        const contentDataURL = canvas.toDataURL('image/jpeg');
-        const pdf = new jsPDF('portrait', 'mm', 'a4'); // Portrait, millimeters, A4 size
-
-        const imgWidth = 208;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        const xPosition = (pdf.internal.pageSize.width - imgWidth) / 2; // Center horizontally
-        const yPosition = 10; // Center vertically
-
-        // Draw a border around the entire page
-        pdf.rect(0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height);
-
-        // Add the image inside the bordered area
-       // pdf.addImage(contentDataURL, 'JPG', xPosition, yPosition, imgWidth, imgHeight);
-        pdf.addImage(contentDataURL, 'JPEG', xPosition, yPosition, imgWidth, imgHeight);
-
-        pdf.save('Resignation acceptance letter.pdf');
-      }).catch((error) => {
-        console.error('Error during html2canvas conversion:', error);
-      });
+        html2canvas(element, {
+            scale: 3, // Increase scale for better quality
+            useCORS: true // Use CORS to handle images from different origins
+        }).then((canvas) => {
+            const contentDataURL = canvas.toDataURL('image/jpeg');
+            const pdf = new jsPDF('portrait', 'mm', 'a4'); // Portrait, millimeters, A4 size
+  
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const imgWidth = pageWidth - 20; // Leave some margin
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+            const xPosition = 10; // Left margin
+            const yPosition = 10; // Top margin
+  
+            // Check if the image height is greater than the page height
+            if (imgHeight > pageHeight - 20) {
+                let remainingHeight = imgHeight;
+                let yPosition = 10;
+  
+                // Add multiple pages if the content exceeds one page
+                while (remainingHeight > 0) {
+                    pdf.addImage(contentDataURL, 'JPEG', xPosition, yPosition, imgWidth, imgHeight);
+                    remainingHeight -= pageHeight - 20;
+                    if (remainingHeight > 0) {
+                        pdf.addPage();
+                        yPosition = 10;
+                    }
+                }
+            } else {
+                // Add the image to the PDF
+                pdf.addImage(contentDataURL, 'JPEG', xPosition, yPosition, imgWidth, imgHeight);
+            }
+  
+            // Save the PDF
+            pdf.save('Resignation Acceptance Letter.pdf');
+        }).catch((error) => {
+            console.error('Error during html2canvas conversion:', error);
+        });
     } else {
-      console.error("Element with ID 'htmlElementId' not found");
+        console.error("Element with ID 'htmlElementId' not found");
     }
   }
 

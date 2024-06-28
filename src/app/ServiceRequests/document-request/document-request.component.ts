@@ -266,11 +266,15 @@ export class DocumentRequestComponent implements OnInit {
           (<HTMLInputElement>document.getElementById("openModalButton")).click();
           this.showModal = 1;
           this.success = "Request approved successfully!";         
-        }else{
+        }else if(res.Errorid==3){
           (<HTMLInputElement>document.getElementById("openModalButton")).click();
           this.showModal = 2;
-          this.Failed = "Failed";
-        }  
+          this.Failed = "Insufficient data!";
+        }else {
+          (<HTMLInputElement>document.getElementById("openModalButton")).click();
+          this.showModal = 2;
+          this.Failed = "Failed!";
+        }    
         this.doc='';    
         this.filter();
       });
@@ -292,17 +296,17 @@ export class DocumentRequestComponent implements OnInit {
    };
     //alert(JSON.stringify(data))
     this.apicall.ApproveRejectDocumentRequest(data).subscribe((res)=>{
-       //alert(JSON.stringify(res))        
+       alert(JSON.stringify(res))        
       if(res.Errorid==1){
         (<HTMLInputElement>document.getElementById("openModalButton")).click();
         this.showModal = 1;
         this.success = "Request approved successfully!";
         this.upload(item.REQ_ID);
-      }else{
+      }else {
         (<HTMLInputElement>document.getElementById("openModalButton")).click();
         this.showModal = 2;
-        this.Failed = "Failed";
-      }  
+        this.Failed = "Failed!";
+      }    
       this.doc='';    
       this.filter();
     });
@@ -311,6 +315,7 @@ export class DocumentRequestComponent implements OnInit {
   filter(){
     this.apicall.FetchDocumentRequests_Team(this.empcode,this.selectedStatus,this.selectedCompany,this.desigid).subscribe((res)=>{
       this.docreqTeam=res;  
+      //alert(JSON.stringify(this.docreqTeam))
       const maxPageFiltered = Math.ceil(this.docreqTeam.length / this.itemsPerPage);  
 
       if (this.currentPage > maxPageFiltered) {

@@ -64,7 +64,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="p-2">
-                                        <h6 class="fs-13 font-type fw-medium"*ngIf="experiencedata?.length > 0">This is to certify that <span class="fw-semibold fs-13 text-italic"><span>{{ experiencedata[0].GENDER === '1' ? 'Mr.' : 'Ms.' }}</span>{{experiencedata[0].EMP_NAME}}</span> holder of {{experiencedata[0].PLACE}} Passport number <span>{{experiencedata[0].DOCUMENT_NO}}</span> has worked in <span>{{experiencedata[0].COMPANY}}</span> from <span>{{experiencedata[0].DATE_OF_JOINING | date:"dd-MM-yyyy"}}</span> to <span>{{experiencedata[0].LAST_WORKING_DATE | date:"dd-MM-yyyy"}}</span>.  At the time of leaving the company <span>{{ experiencedata[0].GENDER === '1' ? 'he' : 'she' }}</span> was designated as <span>{{experiencedata[0].DESIGNATION}}</span>.</h6>
+                                        <h6 class="fs-13 font-type fw-medium"*ngIf="experiencedata?.length > 0">This is to certify that <span class="fw-semibold fs-13 text-italic"><span>{{ experiencedata[0]?.GENDER === '1' ? 'Mr.' : 'Ms.' }}</span>{{experiencedata[0].EMP_NAME}}</span><span *ngIf="experiencedata[0].PASSPORT_FLAG==1"> holder of {{experiencedata[0].PLACE}} Passport number </span><span>{{experiencedata[0].DOCUMENT_NO}}</span> has worked in <span>{{experiencedata[0].COMPANY}}</span> from <span>{{experiencedata[0].DATE_OF_JOINING | date:"dd-MM-yyyy"}}</span> to <span>{{experiencedata[0].LAST_WORKING_DATE | date:"dd-MM-yyyy"}}</span>.  At the time of leaving the company <span>{{ experiencedata[0]?.GENDER === '1' ? 'he' : 'she' }}</span> was designated as <span>{{experiencedata[0].DESIGNATION}}</span>.</h6>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="p-2">
-                                        <h6 class="fs-13 font-type fw-medium">During <span>{{ experiencedata[0].GENDER === '1' ? 'his' : 'her' }}</span> tenure with us we found <span>{{ experiencedata[0].GENDER === '1' ? 'him' : 'her' }}</span> sincere, trustworthy and hardworking.  We wish <span>{{ experiencedata[0].GENDER === '1' ? 'him' : 'her' }}</span> all the best in <span>{{ experiencedata[0].GENDER === '1' ? 'his' : 'her' }}</span> future endeavors.</h6>
+                                        <h6 class="fs-13 font-type fw-medium">During <span>{{ experiencedata[0]?.GENDER === '1' ? 'his' : 'her' }}</span> tenure with us we found <span>{{ experiencedata[0]?.GENDER === '1' ? 'him' : 'her' }}</span> sincere, trustworthy and hardworking.  We wish <span>{{ experiencedata[0]?.GENDER === '1' ? 'him' : 'her' }}</span> all the best in <span>{{ experiencedata[0]?.GENDER === '1' ? 'his' : 'her' }}</span> future endeavors.</h6>
                                     </div>
                                 </div>
                             </div>

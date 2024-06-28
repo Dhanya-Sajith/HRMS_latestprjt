@@ -12,9 +12,9 @@ export class ApiCallService {
  //Emisoft test cloud
 //public dotnetapi = 'http://15.206.239.91:83/api';
 //Emisoft cloud for customer testing
-//public dotnetapi = 'http://3.111.100.109:81/api';
+public dotnetapi = 'http://3.111.100.109:81/api';
 //Local host
-public dotnetapi = 'https://localhost:5001/api';
+//public dotnetapi = 'https://localhost:5001/api';
 //Live server for Customer intranet
 //public dotnetapi = 'http://192.168.10.29:81/api';
 //public hostname='localhost:44381';
@@ -2542,6 +2542,44 @@ addoffboardingActions(data:any)
 ListAssetsOffboardingactionview(empcode:any, category:any, reqid:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/OffBoarding/View_EmpAssetDetails/${empcode}/${category}/${reqid}`);
+}
+//Hiring Center
+Add_NewHire_request(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/Add_NewHire_request`,data);
+}
+Fetch_HireRequest(empcode:any,reqstatus:any,year:any,mflag:any)
+{  
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/Fetch_HireRequest/${empcode}/${reqstatus}/${year}/${mflag}`);
+}
+ViewJob_Description(reqId:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/ViewJob_Description/${reqId}`);
+}
+ApproveReject_HiringRequest(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/ApproveReject_HiringRequest`,data);
+}
+//Offer Details
+AddSalaryDtlsOfferLetter(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/AddSalaryDtlsOfferLetter`,data);
+}
+AddCandidateOfferDetails(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/AddCandidateOfferDetails`,data);
+}
+Fetch_CandidateOfferDtls(candidateID:any)
+{  
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/Fetch_CandidateOfferDtls/${candidateID}`);
+}
+Fetch_hiring_salarydtl(candidateID:any)
+{  
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/Fetch_hiring_salarydtl/${candidateID}`);
+}
+GenerateOfferLetter(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/GenerateOfferLetter`,data);
 }
 
 }

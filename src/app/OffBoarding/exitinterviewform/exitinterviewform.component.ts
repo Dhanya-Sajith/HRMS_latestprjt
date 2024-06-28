@@ -46,6 +46,7 @@ export class ExitinterviewformComponent implements OnInit {
   empcd: any;
   view: any;
   reqid: any;
+  action: number = 0;
 
   constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute,private router: Router) {
     this.requestForm = this.fb.group({
@@ -109,7 +110,7 @@ export class ExitinterviewformComponent implements OnInit {
     }
    );
 
-    this.apicall.Fetch_EmpDetails_ExitInterview(this.empcode,this.reqid).subscribe((res)=>{
+    this.apicall.Fetch_EmpDetails_ExitInterview(this.empcd,this.reqid).subscribe((res)=>{
       this.empdtl = res;
     })
     this.apicall.genCompanyData(this.company).subscribe((res)=>{
@@ -230,12 +231,10 @@ export class ExitinterviewformComponent implements OnInit {
 
 
       const data = {
-        empcode : this.empcode,
-        reqid:1,
+        empcode : this.empcd,
+        reqid:this.reqid,
         questions : questions
         };
-
-        alert(JSON.stringify(data))
 
         this.apicall.AddEmp_ExitInterviewForm(data).subscribe(res =>{
             
@@ -244,12 +243,14 @@ export class ExitinterviewformComponent implements OnInit {
               this.showModal = 1; 
               this.success = "Exit Interview Qustionnaire Submitted Successfully";
               this.Clear();
+              this.action = 1;
             }
             else        
             {
               this.showModal = 2; 
               this.failed = "Failed";
               this.Clear();
+              this.action = 0;
             }   
           })
     }
@@ -331,7 +332,11 @@ export class ExitinterviewformComponent implements OnInit {
     const element = document.getElementById('htmlElementId'); 
     
     if (element) {
-      html2canvas(element).then((canvas) => {
+      html2canvas(element, {
+        scale: 3, // Increase scale for better quality
+        useCORS: true // Use CORS to handle images from different origins
+    }).then((canvas) => {
+     
         const contentDataURL = canvas.toDataURL('image/jpeg');
         const pdf = new jsPDF('portrait', 'mm', 'a4'); 
   

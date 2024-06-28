@@ -57,12 +57,12 @@
                                    <div class="step-arrow-nav mt-n3 mx-n3 margin-up-5 ">
                                                 <ul class="nav nav-pills nav-justified custom-nav " role="tablist">
                                                         <li class="nav-item" role="presentation" [hidden]="this.grpname.includes('AC') || this.grpname.includes('VP')">
-                                                            <button class="nav-link fs-13 p-2 active font-type " id="pills-request-info-tab" data-bs-toggle="pill" data-bs-target="#pills-request-info" type="button" role="tab" aria-controls="pills-request-info" aria-selected="true" routerLink="/ResignationApprovalHR" [queryParams]="{ tab: 'tab1' }">
+                                                            <button class="nav-link fs-13 p-2 active font-type " id="pills-request-info-tab" data-bs-toggle="pill" data-bs-target="#pills-request-info" type="button" role="tab" aria-controls="pills-request-info" aria-selected="true" routerLink="/ResignationApprovalHR" [queryParams]="{ user: 'tab1' }">
                                                                 Requests List
                                                             </button>
                                                         </li>
                                                         <li class="nav-item" role="presentation">
-                                                            <button class="nav-link fs-13 p-2 font-type" id="pills-EOS-tab" data-bs-toggle="pill" data-bs-target="#pills-EOS-info" type="button" role="tab" aria-controls="pills-EOS-info" aria-selected="false" routerLink="/ResignationApprovalHR" [queryParams]="{ tab: 'tab2' }">
+                                                            <button class="nav-link fs-13 p-2 font-type" id="pills-EOS-tab" data-bs-toggle="pill" data-bs-target="#pills-EOS-info" type="button" role="tab" aria-controls="pills-EOS-info" aria-selected="false" routerLink="/ResignationApprovalHR" [queryParams]="{ user: 'tab2' }">
                                                                EOS Statement
                                                             </button>
                                                         </li>
@@ -94,6 +94,7 @@
                                                            <h6>Status</h6>                                                      
                                                             <select class="form-select font-type fs-12 textbox-15 h-30" [(ngModel)]="selectedStatus"(change)="filter()">
                                                                 <option value="-1" selected disabled>Status</option>
+                                                                <option value="-1" >All</option>
                                                                 <option *ngFor="let combo of status" value="{{combo.KEY_ID}}" [hidden]="combo.KEY_ID==6">{{combo.DATA_VALUE}}</option>                                                            
                                                               </select> 
                                                     </div>
@@ -120,6 +121,7 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Company</th>
+                                                    <th>Empcode</th>
                                                     <th>Employee</th>
                                                     <th>Reason for Resignation</th>
                                                     <th class="text-center">Relieving <br> Type</th>
@@ -134,6 +136,7 @@
                                             <tr class="font-type" *ngFor="let data of tabledata | search : searchInput | pagination: currentPage: itemsPerPage ;let i=index;">
                                                 <td>{{i+1}}</td>
                                                 <td>{{data.COMPANY}}</td>
+                                                <td>{{data.EMP_CODE}}</td>
                                                 <td>{{data.EMP_NAME}}</td>
                                                 <td style="white-space: pre-wrap;">{{data.REASON.substring(0,20)}}...<a href="#RemarksModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-11" style="text-decoration: underline;"(click)="selectedreq(data)">View More</a></td>
                                                 <td>{{data.RELIEVING_TYPE}}</td>
@@ -159,7 +162,7 @@
                                                                         </a>
                                                                     </li>
                                                                     <li>
-                                                                        <a class="dropdown-item text-blue"*ngIf="checkDate(data) && data.EXITINTERVIEW_STATUS==1" [routerLink]="data.EXITINTERVIEW_DATE ? '/exitinterviewform' : null "><i class="ri-draft-line me-2 align-bottom text-blue fs-18"></i><span class="text-blue">Exit Interview Form</span>
+                                                                        <a class="dropdown-item text-blue"*ngIf="checkDate(data) && data.EXITINTERVIEW_STATUS==1" [routerLink]="data.EXITINTERVIEW_DATE ? '/exitinterviewform' : null " [queryParams]="{ REQID:data.REQUEST_ID, CODE:data.EMP_CODE, VIEW:1}"><i class="ri-draft-line me-2 align-bottom text-blue fs-18"></i><span class="text-blue">Exit Interview Form</span>
                                                                             <button type="button" class="btn position-relative">
                                                                                 <span class="position-absolute top-0 translate-middle badge border border-light bg-danger p-1 ms-3 font-type" *ngIf="!data.EXITINTERVIEW_DATE">Pending<span class="visually-hidden"></span></span>
                                                                                 <span class="position-absolute top-0 translate-middle badge border border-light bg-success p-1 ms-3 font-type"*ngIf="data.EXITINTERVIEW_DATE">Submitted<span class="visually-hidden"></span></span>
@@ -260,7 +263,7 @@
                                                 <div class="col-sm-auto">
                                                     <div class="d-flex gap-1 flex-wrap">
                                                         <div class="search-box">
-                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search...">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."  [(ngModel)]="searchInputs">
                                                             <i class="ri-search-line search-icon"></i>
                                                         </div>
                                                         <div>
@@ -272,11 +275,14 @@
                                                         <div>
                                                             <select class="form-select font-type fs-12 textbox-15 h-30" [(ngModel)]="Eosstatus" (change)="FetchProcessList()">
                                                                 <option value="-1">Status</option>
-                                                                <ng-container *ngIf="this.grpname.includes('HR') || this.grpname.includes('AC')">
+                                                                <ng-container *ngIf="this.grpname.includes('HR')">
                                                                    <option *ngFor="let combo of EOSstatus" value="{{combo.KEY_ID}}"  [selected]="combo.KEY_ID == 0">{{combo.DATA_VALUE}}</option>                                                            
                                                                 </ng-container>
                                                                 <ng-container *ngIf="this.grpname.includes('VP')">
                                                                     <option *ngFor="let combo of EOSstatus" value="{{combo.KEY_ID}}"  [selected]="combo.KEY_ID == 2">{{combo.DATA_VALUE}}</option>                                                            
+                                                                </ng-container>
+                                                                <ng-container *ngIf="this.grpname.includes('AC')">
+                                                                    <option *ngFor="let combo of EOSstatus" value="{{combo.KEY_ID}}"  [hidden]="combo.KEY_ID < 3">{{combo.DATA_VALUE}}</option>                                                            
                                                                 </ng-container>
                                                             </select>  
                                                         </div>
@@ -297,6 +303,7 @@
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Company</th>
+                                                        <th>Empcode</th>
                                                         <th>Employee</th>
                                                         <th class="text-center">Relieving <br> Type</th>
                                                         <th class="text-center">Last <br>Working Day</th>
@@ -308,9 +315,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="list form-check-all font-type fs-11">
-                                                <tr class="font-type" *ngFor="let eosdata of Eoslist;index as i">
+                                                <tr class="font-type" *ngFor="let eosdata of Eoslist | search : searchInputs | pagination: currentPagePersonal: itemsPerPage;index as i">
                                                     <td>{{i+1}}</td>
                                                     <td>{{eosdata.COMPANY}}</td>
+                                                    <td>{{eosdata.EMP_CODE}}</td>
                                                     <td>{{eosdata.EMP_NAME}}</td>
                                                     <td>{{eosdata.RELIEVING_TYPE}}</td>
                                                     <td>{{eosdata.LAST_WORK_DATE | date:'dd-MM-YYYY'}}</td>
@@ -328,7 +336,7 @@
                                                     </td>
                                                     <td class="status">
                                                         <ng-container [ngSwitch]="true">
-                                                            <div *ngSwitchCase="eosdata.APPROVED_STATUS == '0' ||eosdata.APPROVED_STATUS == '2' || eosdata.APPROVED_STATUS == '4'" >
+                                                            <div *ngSwitchCase="eosdata.APPROVED_STATUS == '0' ||eosdata.APPROVED_STATUS == '2' || eosdata.APPROVED_STATUS == '4' || eosdata.APPROVED_STATUS == '6'" >
                                                               <span class="badge bg-info-subtle text-info width-budge fs-11 fw-semibold text-uppercase">{{eosdata.STATUS_VAL}}</span>
                                                             </div>
                                                             <div *ngSwitchCase="eosdata.APPROVED_STATUS == '1' ||eosdata.APPROVED_STATUS == '5'" >
@@ -347,24 +355,21 @@
                                                                     <i class="ri-edit-box-fill fs-20"></i>
                                                                 </a>
                                                             </li>
-                                                            <ng-container *ngIf="isClearanceProcessed(eosdata)">
-                                                                <ng-container *ngIf="itCleared == true && accountsCleared == true">
-                                                                    <li *ngIf="this.grpname.includes('HR') && this.desig == 54 && eosdata.APPROVED_STATUS == '0'" class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-toggle="modal" href="#SuccessRecordModal" (click)="EOSprocessing(eosdata.REQUEST_ID,eosdata.EMP_CODE)" data-bs-placement="top" title="process EOS">
-                                                                       <a class="text-blue d-inline-block" href="#">
-                                                                            <i class="ri-loop-left-line me-2 align-bottom text-success fs-14"></i>
-                                                                        </a>
-                                                                    </li>
-                                                                </ng-container>
-                                                            </ng-container>
+
+                                                            <li *ngIf="this.grpname.includes('HR') && this.desig == 54 && eosdata.APPROVED_STATUS == '0'" class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-toggle="modal" href="#SuccessRecordModal" (click)="EOSprocessing(eosdata.REQUEST_ID,eosdata.EMP_CODE)" data-bs-placement="top" title="process EOS">
+                                                                <a class="text-blue d-inline-block" href="#">
+                                                                    <i class="ri-loop-left-line me-2 align-bottom text-success fs-14"></i>
+                                                                </a>
+                                                            </li>
 
                                                             <!------HR------->
 
                                                             <!------AC------->
 
                                                             <ng-container *ngFor="let listclearnce of eosdata.ClearenceModels">
-                                                                <ng-container *ngIf="listclearnce.CATEGORY_TYPE_VAL == 'Accounts Clearence'">
+                                                                <ng-container *ngIf="listclearnce.CATEGORY_TYPE == 3">
                                                                     <ng-container *ngIf="listclearnce.CLEARANCE_FLAG == 0">
-                                                                        <li *ngIf="this.grpname.includes('AC') && (eosdata.APPROVED_STATUS == '0')" class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Finace Clearence" (click)="ActiveId(eosdata.EMP_CODE,eosdata.REQUEST_ID)">
+                                                                        <li *ngIf="this.grpname.includes('AC') && (eosdata.APPROVED_STATUS == '6')" class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Finace Clearence" (click)="ActiveId(eosdata.EMP_CODE,eosdata.REQUEST_ID)">
                                                                             <a href="#AccountclearenceModal" data-bs-toggle="modal" class="text-blue d-inline-block">
                                                                                 <i class="ri-edit-box-fill fs-20"></i>
                                                                             </a>
@@ -378,7 +383,7 @@
                                                                     <i class="ri-edit-box-fill fs-20"></i>
                                                                 </a>
                                                             </li>
-                                                            <li  *ngIf="this.grpname.includes('AC') && (eosdata.APPROVED_STATUS > '2')" class="list-inline-item"  data-bs-trigger="hover" data-bs-placement="top" title="View EOS Statement">
+                                                            <li  *ngIf="this.grpname.includes('AC') && (eosdata.APPROVED_STATUS == '2' || eosdata.APPROVED_STATUS == '5')" class="list-inline-item"  data-bs-trigger="hover" data-bs-placement="top" title="View EOS Statement">
                                                                 <a [routerLink]="['/EOSStatement']" [queryParams]="{ reqid: eosdata.REQUEST_ID,code:eosdata.EMP_CODE,view:0}" class="text-primary d-inline-block text-orange">
                                                                     <i class="ri-eye-fill text-orange fs-20"></i>
                                                                 </a>
@@ -410,21 +415,49 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <!-- <div class="row font-type mb-0">
-                                            <div class="col-sm">
-                                               <div class="dataTables_info fs-12 text-muted" id="scroll-horizontal_info" role="status" aria-live="polite">Showing 1 to 4 of 4 entries</div>
+                                        <div *ngIf="Eoslist">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsPersonal>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStartPersonal() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEndPersonal() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResultsPersonal }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPagesPersonal() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPagePersonal" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPagePersonal()" tabindex="2">Go</button>
+                                              </div>
                                             </div>
-                                            <div class="col-sm-auto mt-3 mt-sm-0">
-                                               <div class="dataTables_paginate paging_simple_numbers" id="scroll-horizontal_paginate">
-                                                  <ul class="pagination">
-                                                     <li class="paginate_button page-item previous disabled" id="scroll-horizontal_previous"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                                                     <li class="paginate_button page-item active"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                                                     <li class="paginate_button page-item "><a href="#" aria-controls="scroll-horizontal" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                                                     <li class="paginate_button page-item next" id="scroll-horizontal_next"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePagePersonal(currentPagePersonal - 1)" [class.disabled-button]="currentPagePersonal === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumberPersonal of getPageNumbersPersonal(currentPagePersonal)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePagePersonal(pageNumberPersonal)" [class.active]="currentPagePersonal === pageNumberPersonal">{{ pageNumberPersonal }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePagePersonal(currentPagePersonal + 1)" [class.disabled-button]="currentPagePersonal * itemsPerPage >= totalSearchResultsPersonal">→</button>
+                                                    </li>
                                                   </ul>
-                                               </div>
+                                                </div>
+                                              </div>
+                                                </div>
                                             </div>
-                                        </div> -->
+                                        </div>  
                                         </div>
                                     </div>
                                     <!--END EOS STATEMENT TAB-->
@@ -871,7 +904,7 @@
                                                 <span class="d-inline-block fs-12 align-middle text-black font-type">{{remark}}</span>
                                              </div>
                                         </div>
-                                        <div class="table-responsive table-card ma-10" [hidden] = "selectedcategory == 'Accounts Clearence'">
+                                        <div class="table-responsive table-card ma-10" [hidden] = "selectedcategory == 'Accounts Clearance' || AssetID == 0">
                                             <table class="table table-nowrap align-middle table-bordered border-dark table-hover">
                                                 <thead class="font-type">
                                                 <tr>

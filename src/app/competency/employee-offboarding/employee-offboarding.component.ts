@@ -69,7 +69,7 @@ export class EmployeeOffboardingComponent implements OnInit {
   listEmpOffBoadingdtls()
   {  
 
-    this.status=-1;
+    this.status=0;
     this.year=-1;
     this.company=-1;
     this.apicall.listOffboardingdtls(this.empcode,this.status,this.year,this.company,this.category).subscribe(res => {

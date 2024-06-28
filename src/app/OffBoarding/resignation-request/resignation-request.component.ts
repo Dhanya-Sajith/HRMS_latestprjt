@@ -30,6 +30,8 @@ export class ResignationRequestComponent implements OnInit {
   tenDaysBefore: any;
   TenDaysBefore: any;
   isWithinTenDaysBefore!: boolean;
+  assetid: any;
+  EosProcessStatus: any;
 
   constructor(private apicall:ApiCallService,private session:LoginService,private formBuilder: FormBuilder) { 
     this.AddReqForm = this.formBuilder.group({      
@@ -75,13 +77,14 @@ export class ResignationRequestComponent implements OnInit {
     date.setHours(0, 0, 0, 0);
   }
     
-  fetchAccounts(){
+  fetchAccounts(){    
     this.apicall.Fetch_Resignation_AccountsDtl(this.empcode).subscribe((res)=>{
       this.accountsdata=res;
       this.accountsRemarks=res[0].REMARKS;
       this.accountsClearStatus=res[0].CLEAR_STATUS;
-      console.log(JSON.stringify(this.accountsdata))      
-      //alert(this.remarks)
+      this.EosProcessStatus=res[0].EOS_PROCESS_STATUS;
+      //alert(JSON.stringify(this.accountsdata))      
+      
     })
   }
   AddRequest(){
@@ -130,7 +133,9 @@ this.apicall.Fetch_AssetDetails_Emp(this.empcode,category).subscribe((res)=>{
   console.log(JSON.stringify(this.assetdata))
   this.clearance_flag=this.assetdata[0]?.RECORDID;
   this.remarks=this.assetdata[0]?.CATEGORYNM;
-  //alert(this.clearance_flag)
+  this.assetid=this.assetdata[0]?.ASSET_ID;
+  // alert(this.clearance_flag)
+  // alert(JSON.stringify(this.assetdata))
 })
 }
 Approvelist(requestID: any){

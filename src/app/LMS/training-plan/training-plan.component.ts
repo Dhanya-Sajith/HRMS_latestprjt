@@ -66,6 +66,8 @@ export class TrainingPlanComponent implements OnInit {
   trainingpurpose: any;
   Trainingskills: any;
 
+  durationval= new FormControl();
+
   constructor(private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private router:Router,private fb: FormBuilder,private route: ActivatedRoute) { 
 
     this.dropdownSettings = {
@@ -932,10 +934,10 @@ fetchskilledemployees()
   const provider=  (<HTMLInputElement>document.getElementById("provider")).value;
  // const duration=  (<HTMLInputElement>document.getElementById("duration")).value;
 
-  const durationval = <HTMLInputElement>document.getElementById('duration');
-  const duration = durationval.value;
+  // const durationval = <HTMLInputElement>document.getElementById('duration');
+  // const duration = durationval.value;
 
- // alert(duration);
+  const duration = this.durationval.value;
 
   const actual_train_dt=  (<HTMLInputElement>document.getElementById("actual_train_dt")).value;
   const assess = (document.querySelector('input[name="assess"]:checked') as HTMLInputElement)?.value;

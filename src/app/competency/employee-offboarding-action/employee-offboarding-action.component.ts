@@ -129,6 +129,7 @@ export class EmployeeOffboardingActionComponent implements OnInit {
         category: this.category,
         remarks: remarks,
         completed_flag: markasvalue,
+        reqid:this.reqstId,
         AssetDetails: assetDetails
     };
 

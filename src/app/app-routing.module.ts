@@ -131,6 +131,8 @@ import { ResignationAcceptanceLetterComponent } from './OffBoarding/resignation-
 import { ExitinterviewformComponent } from './OffBoarding/exitinterviewform/exitinterviewform.component';
 import { EmployeeOffboardingComponent } from './competency/employee-offboarding/employee-offboarding.component';
 import { EmployeeOffboardingActionComponent } from './competency/employee-offboarding-action/employee-offboarding-action.component';
+import { HiringCenterComponent } from './HiringManagement/hiring-center/hiring-center.component';
+import { OfferDetailsComponent } from './HiringManagement/offer-details/offer-details.component';
 
 
 
@@ -271,6 +273,8 @@ const routes: Routes = [
   {path:'exitinterviewform',component:ExitinterviewformComponent},
   {path:'EmployeeOffboarding' , component:EmployeeOffboardingComponent},
   {path:'EmployeeOffboardingAction' , component:EmployeeOffboardingActionComponent},
+  {path:'HiringRequestDashboard' , component:HiringCenterComponent},
+  {path:'OfferLetterUpdation' , component:OfferDetailsComponent},
 
 
 

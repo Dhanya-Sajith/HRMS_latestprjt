@@ -76,6 +76,11 @@ rejectReason: any;
   accountsCleared: boolean = false;
   clearanceStatuses: any;
   EOSstatus: any;
+  Estatus: any;
+  AssetID: any;
+  desiredPagePersonal: any;
+  currentPagePersonal: any =1;
+  searchInputs:string='';
 
   constructor(private apicall:ApiCallService,private session:LoginService,private formBuilder: FormBuilder,private datePipe: DatePipe,private route: ActivatedRoute) { 
     this.AddReqForm = this.formBuilder.group({      
@@ -101,7 +106,7 @@ rejectReason: any;
     // }
 
     this.route.queryParams.subscribe(params => {
-      this.activeTab = params['tab'] || 'tab1';
+      this.activeTab = params['user'] ;
     });
     if(this.activeTab == 'tab2')
     {
@@ -112,14 +117,21 @@ rejectReason: any;
     //   (<HTMLInputElement>document.getElementById("pills-request-info-tab")).click();
     // }
 
-    if(this.grpname.includes('AC') || this.grpname.includes('HR'))
+    if(this.grpname.includes('AC'))
     {
-        this.Eosstatus = 0;
+        this.Eosstatus = 6;
+        this.Estatus = '6,4';
     }
     else if(this.grpname.includes('VP'))
-      {
+    {
         this.Eosstatus = 2;
-      }
+        this.Estatus = '2';
+    }
+    else if(this.grpname.includes('HR'))
+    {
+      this.Eosstatus = 0;
+      this.Estatus = '0,1,3';
+    }
 
     //company combo box
     this.apicall.FetchCompanyList(this.empcode).subscribe((res) => {
@@ -147,7 +159,9 @@ rejectReason: any;
     this.apicall.listCompany(74).subscribe((res)=>{
       this.EOSstatus=res;
     })
-    this.FetchProcessList();
+    this.apicall.Fetch_EOSProcessList(this.empcode,this.Eoscompany,this.Eosyear,this.Estatus).subscribe((res)=>{
+      this.Eoslist=res;
+    })
   }
 
   onCompanySelected(selectedCompanyid: any) { 
@@ -227,7 +241,7 @@ rejectReason: any;
                 this.showModal = 2;
                 this.failed = "Failed!";
             } 
-            //this.fetchRequests();
+            this.filter(); 
             this.CancelReq();       
         });
         }else{
@@ -431,16 +445,6 @@ rejectReason: any;
     })
   }
 
-  isClearanceProcessed(eosdata: any): boolean {
-    this.itCleared = eosdata.ClearenceModels.some(
-      (      clearance: { CATEGORY_TYPE_VAL: string; CLEARANCE_FLAG: number; }) => clearance.CATEGORY_TYPE_VAL === 'IT Clearence' && clearance.CLEARANCE_FLAG === 1
-    );
-    this.accountsCleared = eosdata.ClearenceModels.some(
-      (      clearance: { CATEGORY_TYPE_VAL: string; CLEARANCE_FLAG: number; }) => clearance.CATEGORY_TYPE_VAL === 'Accounts Clearence' && clearance.CLEARANCE_FLAG === 1
-    );
-    return this.itCleared && this.accountsCleared;
-  }
-
   EOSprocessing(REQUEST_ID:any,EMP_CODE:any)
   {
     const data = {
@@ -477,6 +481,7 @@ rejectReason: any;
         this.clearancelist=res;
         this.remark = this.clearancelist[0].DESCRIPTION;
         this.RECORDID = this.clearancelist[0].CATEGORYNM;
+        this.AssetID = this.clearancelist[0].ASSET_ID;
       })
     }else{
       this.apicall.Fetch_Resignation_AccountsDtl(EMP_CODE).subscribe((res)=>{
@@ -504,7 +509,8 @@ rejectReason: any;
         empcode:this.activeempcd,
         updatedby:this.empcode,
         remarks:this.clearence_remarks,
-        completed_flag:1       
+        completed_flag:1 ,     
+        reqid:this.activereqid 
       };
       this.apicall.Add_AccountsClearance(data).subscribe((res)=>{
         if(res.Errorid>0)
@@ -629,5 +635,91 @@ rejectReason: any;
         }
       }
     }
+
+    //PaginationPersonal
+getTotalPagesPersonal(): number {
+  return Math.ceil(this.totalSearchResultsPersonal / this.itemsPerPage);
+  }
+  
+  goToPagePersonal() {
+  const totalPages = Math.ceil(this.totalSearchResultsPersonal / this.itemsPerPage);
+  if (this.desiredPagePersonal >= 1 && this.desiredPagePersonal <= totalPages) {
+    this.currentPagePersonal = this.desiredPagePersonal;
+  } else {  
+    
+    (<HTMLInputElement>document.getElementById("openModalButton")).click();
+    this.showModal = 2; 
+    this.failed='Invalid page number!'; 
+    this.desiredPagePersonal=''; 
+  }   
+  
+  }
+  getPageNumbersPersonal(currentPage: number): number[] {
+  const totalPages = Math.ceil(this.totalSearchResultsPersonal / this.itemsPerPage);
+  const maxPageNumbers = 5; // Number of page numbers to show
+  const middlePage = Math.ceil(maxPageNumbers / 2);
+  let startPage = Math.max(currentPage - middlePage, 1);
+  let endPage = Math.min(startPage + maxPageNumbers - 1, totalPages);
+  
+  if (endPage - startPage + 1 < maxPageNumbers) {
+    startPage = Math.max(endPage - maxPageNumbers + 1, 1);
+  }
+  
+  return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+  }
+  
+  // Function to Calculate the total number of search results
+  get totalSearchResultsPersonal(): number {
+  const totalResults = this.Eoslist.filter((policy: any) => {
+  return Object.values(policy).some((value: any) =>
+    typeof value === 'string' && value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+  );
+  }).length;
+  
+  const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage);  
+  
+  if (this.currentPagePersonal > maxPageFiltered) {
+  this.currentPagePersonal = 1; 
+  }
+  
+  return totalResults;
+  }
+  
+  // Function to change the current page
+  changePagePersonal(page: number): void { 
+  this.desiredPagePersonal = '';   
+  this.currentPagePersonal = page;
+  const maxPage = Math.ceil(this.totalSearchResultsPersonal / this.itemsPerPage);
+  if (this.currentPagePersonal > maxPage) {
+    this.currentPagePersonal = 1;
+  }        
+  }
+  getEntriesStartPersonal(): number {
+  if (this.currentPage === 1) {
+  return 1;
+  }
+  
+  const filteredData = this.Eoslist.filter((policy: any) =>
+  Object.values(policy).some((value: any) =>
+    typeof value === 'string' &&
+    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+  )
+  );
+  
+  const start = (this.currentPagePersonal - 1) * this.itemsPerPage + 1;
+  return Math.min(start, filteredData.length);
+  }
+  
+  
+  getEntriesEndPersonal(): number {  
+  const filteredData = this.Eoslist.filter((policy: any) =>
+  Object.values(policy).some((value: any) =>
+    typeof value === 'string' &&
+    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+  )
+  );
+  const end = this.currentPagePersonal * this.itemsPerPage;
+  return Math.min(end, filteredData.length);
+  }
 
 }

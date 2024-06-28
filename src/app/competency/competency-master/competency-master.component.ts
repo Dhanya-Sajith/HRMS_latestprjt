@@ -55,6 +55,16 @@ export class CompetencyMasterComponent implements OnInit {
     this.apicall.FetchCompanyList(this.empcode).subscribe((res) => {
       this.companydata=res;      
     }); 
+    //Department combo box
+    this.apicall.listCompanyList(1).subscribe((res) => {
+      this.deptdata=res; 
+      //alert(JSON.stringify(this.deptdata))   
+    }); 
+     //Designation combo box
+     this.apicall.listCompanyList(2).subscribe((res) => {
+      this.desigdata=res; 
+      //alert(JSON.stringify(this.deptdata))   
+    }); 
   }
 
   // Bulk upload
@@ -73,19 +83,19 @@ export class CompetencyMasterComponent implements OnInit {
     this.selectedDesig=-1; 
     this.desigdata=[];
     this.skillcategory='';
-    this.apicall.FetchDepartmentList(selectedCompanyid,this.empcode).subscribe((res) => {
-      this.deptdata=res; 
-      //alert(JSON.stringify(this.deptdata))   
-    }); 
+    // this.apicall.FetchDepartmentList(selectedCompanyid,this.empcode).subscribe((res) => {
+    //   this.deptdata=res; 
+    //   //alert(JSON.stringify(this.deptdata))   
+    // }); 
     }
     onDeptSelected(selectedDeptid:any){
       this.selectedDeptid=selectedDeptid;
       this.selectedDesig=-1; 
       this.skillcategory='';
-      this.apicall.DesignationCombo_Company_Dept_Wise(selectedDeptid,this.empcode).subscribe((res) => {
-        this.desigdata=res; 
-        //alert(JSON.stringify(this.deptdata))   
-      }); 
+      // this.apicall.DesignationCombo_Company_Dept_Wise(selectedDeptid,this.empcode).subscribe((res) => {
+      //   this.desigdata=res; 
+      //   //alert(JSON.stringify(this.deptdata))   
+      // }); 
     }
     onDesigSelected(selectedDesig:any){
       this.selectedDesig=selectedDesig;

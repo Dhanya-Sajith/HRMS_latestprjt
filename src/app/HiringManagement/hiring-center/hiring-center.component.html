@@ -1,0 +1,902 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content" style="overflow-x: hidden;">
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!--header-->
+                <div class="card mt-n4 mx-n4 mb-n5">
+                    <div class="bg-info-subtle">
+                        <div class="card-body pb-3 mb-5">
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="row align-items-center">
+                                        <div class="d-flex align-items-center ma-10">
+                                            <div class="flex-shrink-0">
+                                                <div class="avatar-sm">
+                                                    <span class="avatar-title bg-info-subtle">
+                                                        <img src="assets\styles\img\icons8-recruitment-64 (3).png" alt="" width="110%">
+                                                    </span>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="flex-grow-1 ms-2 ma-5">
+                                                <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Hiring Center</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end row-->
+                                </div>
+                            </div>
+                            <!--end row-->
+                        </div><!-- end card body -->
+                    </div>
+                </div>
+                <!--end header-->
+
+                <!--Tabs-->
+                <div class="row  topbar-up">
+                    <div class="col-lg-12">
+                        <div class="card bg-blue">
+                            <div class="card-body">
+                            <div class="d-flex profile-wrapper">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-pills animation-nav profile-nav gap-2 gap-lg-3 flex-grow-1 fs-12" role="tablist">
+                                    <li class="nav-item" *ngIf="grpname.includes('HR') || grpname.includes('HOD') || grpname.includes('LM')">
+                                        <a class="nav-link fs-14 active font-type" data-bs-toggle="tab" href="#JobOpenings" role="tab"(click)="ontabSelected(1)">
+                                            <i class="ri-briefcase-4-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Hiring Requests</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link fs-14  font-type" data-bs-toggle="tab" href="#JobRequests" role="tab"(click)="ontabSelected(2)">
+                                            <i class="ri-briefcase-4-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Approval Requests</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#CandidatesEvaluation" role="tab"(click)="ontabSelected(3)">
+                                            <i class="ri-list-unordered d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Candidate Evaluation Process
+                                                <!-- <span class="badge bg-orange align-middle ms-1 fs-12">2</span> -->
+                                        </span>
+                                        </a>
+                                    </li>                                   
+                                </ul>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Tabs-->
+                            <!-- Tab panes -->
+                            <div class="tab-content pt-2 text-muted">
+                                <!-- Job openings -->
+                                <div class="tab-pane active" id="JobOpenings" role="tabpanel"*ngIf="grpname.includes('HR') || grpname.includes('HOD') || grpname.includes('LM')">
+                                    <div class="row topbar-up">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header border-0 bg-info-subtle">
+                                                    <div class="row g-4 mb-0">
+                                                        <div class="col-sm">
+                                                            <div class="d-flex flex-wrap gap-1">
+                                                                <div class="search-box">
+                                                                    <input type="text" class="form-control font-type fs-12 textbox-15" placeholder="Search..." [(ngModel)]="searchInput">
+                                                                    <i class="ri-search-line search-icon"></i>
+                                                                </div>
+                                                                <div class="ms-2" style="margin-top: 6px;">
+                                                                    <span class="font-type fs-12">Status :</span>
+                                                                </div>
+                                                                <div>
+                                                                    
+                                                                    <select class="form-select font-type fs-12 textbox-15 h-30"[(ngModel)]="selectedStatusReq"(change)="FetchHireRequests()">                                                                       
+                                                                        <option value="-1">All</option>
+                                                                        <option *ngFor="let combo of Statusreq" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>  
+                                                                      </select>  
+                                                                </div>
+                                                                <div>
+                                                                    <select class="form-select font-type fs-12 textbox-15 h-30"[(ngModel)]="yearReq" (change)="FetchHireRequests()">
+                                                                        <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD">{{ combo.DISPLAY_FIELD }}</option>
+                                                                      </select>  
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-auto">
+                                                            <div>
+                                                                <button type="button" class="btn btn-info font-type fs-13 h-30" data-bs-toggle="modal" data-bs-target="#AddJobPostModal"><i class="ri-add-line me-1 align-middle me-1"></i>Add New Hire Request</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end col-->
+                                    </div>
+                                    <!-- end row -->
+
+                                     <!-- Lists -->
+                                    <div class="row margin-up-7">
+                                        <div class="col-lg-6 col-md-6" *ngFor="let item of HireRequests | search : searchInput | pagination: currentPagePersonal: itemsPerPagePersonal">
+                                            <div class="card card-animate profile-project-card profile-project-Orange material-shadow shadow-lg textbox-15" >
+                                                <div class="card-body p-3 font-type">
+                                                    <div class="d-flex">
+                                                        <div class="flex-grow-1 text-muted overflow-hidden">
+                                                            <h5 class="fs-15 font-type fw-semibold"><a href="#" class="text-body">{{item.DESIGNATION}}</a></h5>
+                                                            <p class="text-muted mb-1 fs-12">Company : <span class="fw-semibold text-body">{{item.COMPANY}}</span></p>
+                                                            <p class="text-muted mb-1 fs-12">Department : <span class="fw-semibold text-body">{{item.DEPARTMENT}}</span></p>
+                                                            <p class="text-muted mb-1 fs-12">Work Location : <span class="fw-semibold text-body">{{item.WORK_LOCATION}}</span></p>
+                                                            <p class="text-muted mb-1 fs-12">No of Openings : <span class="fw-semibold text-body">{{item.NO_OF_POSITIONS}}</span></p>
+                                                            <p class="text-muted mb-0 fs-12">Job Details :<a href="#JobDescriptionModal" data-bs-toggle="modal" (click)="ViewJobDetails(item.REQID)" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;">View More Details</a></p>
+                                                        </div>
+                                                        
+                                                            <div class="status" *ngIf="item.STATUS==0 || item.STATUS==4"><span class="badge bg-info-subtle text-blue  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></div>
+                                                            <div class="status" *ngIf="item.STATUS==2"><span class="badge badge-height bg-warning-subtle text-warning  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></div>
+                                                            <div class="status" *ngIf="item.STATUS==1"><span class="badge bg-success-subtle text-success  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></div>
+                                                            <div class="status" *ngIf="item.STATUS==6 || item.STATUS==7 || item.STATUS==3"><span class="badge bg-danger-subtle text-danger  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></div>
+                                                                <!-- <a href="#AddJobPostModal" class="text-blue d-inline-block edit-item-btn ms-1">
+                                                                    <i class="ri-pencil-fill fs-16"></i>
+                                                                </a> -->
+                                                            <div class="flex-shrink-0 ms-2">
+                                                                <a class="remove-item-btn ms-1" data-bs-toggle="modal" href="#CancelModal"(click)="selectedItem(item)"*ngIf="item.STATUS==0">
+                                                                   <i class="ri-delete-bin-5-fill fs-16 text-danger"></i>
+                                                                </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end card body -->
+                                            </div>
+                                            <!-- end card -->
+                                        </div>
+                                        <!--end col-->
+                                        
+                                    </div>
+                                        <!--end col-->
+                                    
+                                        <div *ngIf="HireRequests">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsPersonal>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStartPersonal() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEndPersonal() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResultsPersonal }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPagesPersonal() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPagePersonal" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPagePersonal()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePagePersonal(currentPagePersonal - 1)" [class.disabled-button]="currentPagePersonal === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumberPersonal of getPageNumbersPersonal(currentPagePersonal)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePagePersonal(pageNumberPersonal)" [class.active]="currentPagePersonal === pageNumberPersonal">{{ pageNumberPersonal }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePagePersonal(currentPagePersonal + 1)" [class.disabled-button]="currentPagePersonal * itemsPerPagePersonal >= totalSearchResultsPersonal">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                    </div>
+                                </div>
+                            </div>
+                                         <!--End Lists -->
+                                </div>
+                                <!-- end Job openings tab -->
+                                <!-- Job requests approvals -->
+                        <div class="tab-pane" id="JobRequests" role="tabpanel">
+                            <div class="row topbar-up">
+                                <div class="col-lg-12">
+                                    <div class="card shadow-lg">
+                                        <div class="card-header" style="padding:10px">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <div class="align-items-center d-flex ">
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Request List</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div class="search-box">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInputApproval">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                        <div>
+                                                            <select class="form-select font-type fs-11 textbox-15"[(ngModel)]="selectedStatusApproval"(change)="ontabSelected(2)">
+                                                                <option value="-1">All</option>
+                                                                        <option *ngFor="let combo of Statusreq" value="{{combo.KEY_ID}}"[hidden]="combo.KEY_ID==6">{{combo.DATA_VALUE}}</option>  
+                                                              </select>  
+                                                        </div>
+                                                        <div>
+                                                            <select class="form-select font-type fs-12 textbox-15 h-30"[(ngModel)]="yearApproval" (change)="ontabSelected(2)">
+                                                                <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD">{{ combo.DISPLAY_FIELD }}</option>
+                                                              </select>   
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive table-card mb-0">
+                                                <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                                <thead class="table-light text-white font-type">
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Job Details</th>
+                                                        <th>Requested by</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all font-type fs-11">
+                                                <tr class="font-type" *ngFor="let item of HireRequestsApproval | search : searchInputApproval | pagination: currentPageApproval: itemsPerPageApproval">
+                                                    <td>{{item.JOB_ID}}</td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div class="flex-grow-1">
+                                                                <h5 class="fs-15 font-type ma-5" style="white-space: pre-wrap;"><a href="#" class="text-orange text-italic" style="text-decoration: underline;">{{item.DESIGNATION}}</a></h5>
+                                                                <p class="text-muted mb-1 fs-12" style="white-space: pre-wrap;">Company: <span class="fw-medium text-black">{{item.COMPANY}}</span></p>
+                                                                <p class="text-muted mb-1 fs-12" style="white-space: pre-wrap;">Department: <span class="fw-medium text-black">{{item.DEPARTMENT}}</span></p>
+                                                                <p class="text-muted mb-1 fs-12" style="white-space: pre-wrap;">Work Location: <span class="fw-medium text-black">{{item.WORK_LOCATION}}</span></p>
+                                                                <p class="text-muted mb-1 fs-12">No of Openings : <span class="fw-medium text-black">{{item.NO_OF_POSITIONS}}</span></p>
+                                                                <p class="text-muted mb-0 fs-12"><a href="#JobDescriptionModal" data-bs-toggle="modal" class="text-blue d-inline-block edit-item-btn ms-1 fs-12" (click)="ViewJobDetails(item.REQID)"  style="text-decoration: underline;">View More Details</a></p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div class="flex-grow-1">
+                                                                <p class="mb-1 fs-12" style="white-space: pre-wrap;">{{item.EMP_NAME}}</p>
+                                                                <p class="text-muted mb-1 fs-12" style="white-space: pre-wrap;">Requested Date: <span class="fw-medium text-black">{{item.REQUESTED_DATE | date:"dd-MM-yyyy"}}</span></p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="status" *ngIf="item.STATUS==0 || item.STATUS==4"><span class="badge bg-info-subtle text-blue  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                    <td class="status" *ngIf="item.STATUS==2"><span class="badge badge-height bg-warning-subtle text-warning  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                    <td class="status" *ngIf="item.STATUS==1"><span class="badge bg-success-subtle text-success  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                    <td class="status" *ngIf="item.STATUS==6 || item.STATUS==7 || item.STATUS==3"><span class="badge bg-danger-subtle text-danger  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                    
+                                                    <td>
+                                                        <ul class="list-inline hstack gap-2 mb-0"*ngIf="item.STATUS==0">
+                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve">
+                                                                <a href="#approvedModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn">
+                                                                <button type="button" class="btn btn-success btn-sm" id="buttonApprove" (click)="ApproveReject(item,1,'Approved')"><i class="ri-task-fill fs-22"></i></button>
+                                                                </a>
+                                                             </li>
+                                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reject">
+                                                                 <a class="remove-item-btn" data-bs-toggle="modal" href="#RejectModal">
+                                                                 <button type="button" class="btn btn-danger btn-sm" id="buttonReject"(click)="ApproveReject(item,7,'Rejected')"><i class="ri-close-circle-fill fs-22"></i></button>
+                                                                 </a>
+                                                             </li>
+                                                         </ul>
+                                                    </td>
+                                                </tr>                                              
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+                                        <div *ngIf="HireRequestsApproval">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsApproval>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStartApproval() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEndApproval() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResultsApproval }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPagesApproval() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPageApproval" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageApproval()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePageApproval(currentPageApproval - 1)" [class.disabled-button]="currentPageApproval === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumberApproval of getPageNumbersApproval(currentPageApproval)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePageApproval(pageNumberApproval)" [class.active]="currentPageApproval === pageNumberApproval">{{ pageNumberApproval }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePageApproval(currentPageApproval + 1)" [class.disabled-button]="currentPageApproval * itemsPerPageApproval >= totalSearchResultsApproval">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                    </div>
+                                </div>
+                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                            </div>
+                        </div>
+                        <!-- end Job requests approvals tab -->
+
+                                <!-- Candidates Evaluation tab -->
+                                <div class="tab-pane fade" id="CandidatesEvaluation" role="tabpanel">
+                                    <div class="row topbar-up">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header" style="padding:10px">
+                                                    <div class="row align-items-center gy-3">
+                                                        <div class="col-sm">
+                                                            <div class="align-items-center d-flex ">
+                                                                <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Candidates Evaluation List</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-auto">
+                                                            <div class="d-flex gap-1 flex-wrap">
+                                                                <div class="search-box">
+                                                                    <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInputCandidate">
+                                                                    <i class="ri-search-line search-icon"></i>
+                                                                </div>
+                                                                <div>                                                                     
+                                                                      <select class="form-select font-type fs-11 textbox-15"[(ngModel)]="selectedStatusCandidate"(change)="ontabSelected(3)">
+                                                                        <option value="-1">All</option>
+                                                                        <option *ngFor="let combo of StatusCandidate" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>  
+                                                                      </select> 
+                                                                </div>
+                                                                <div>                                                                  
+                                                                      <select class="form-select font-type fs-11 textbox-15"[(ngModel)]="yearCandidate" (change)="ontabSelected(3)">
+                                                                        <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD">{{ combo.DISPLAY_FIELD }}</option>
+                                                                      </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-responsive table-card mb-0">
+                                                        <table class="table table-nowrap align-middle table-bordered border-orange">
+                                                            <thead class="table-light text-white font-type">
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Candidates</th>
+                                                                <th>Job Title</th>
+                                                                <th>Department</th>
+                                                                <th>Work Location</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="list form-check-all font-type fs-11">
+                                                        <tr class="font-type" *ngFor="let item of CandidateEvaluationList | search : searchInputCandidate | pagination: currentPageCandidate: itemsPerPageCandidate;let i=index">
+                                                            <td>{{i+1}}</td>
+                                                            <td style="white-space: pre-wrap;">{{item.EMP_NAME}}</td>
+                                                            <td style="white-space: pre-wrap;">{{item.DESIGNATION}}</td>
+                                                            <td style="white-space: pre-wrap;">{{item.DEPARTMENT}}</td>
+                                                            <td style="white-space: pre-wrap;">{{item.WORK_LOCATION}}</td>
+                                                            <td class="status"*ngIf="item.STATUS==0"><span class="badge bg-info-subtle text-blue  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                            <td class="status"*ngIf="item.STATUS==1"><span class="badge bg-success-subtle text-success  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                            <td class="status"*ngIf="item.STATUS==3"><span class="badge bg-danger-subtle text-danger  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                            <td class="status" *ngIf="item.STATUS==2"><span class="badge badge-height bg-warning-subtle text-warning  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                            <td>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                                        <li class="list-inline-item edit" *ngIf="item.STATUS!=1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Submit Evaluation Form">
+                                                                            <a href="#" class="text-blue d-inline-block edit-item-btn" [routerLink]="['/candidate-evaluation']" [queryParams]="{ ID: 0,VIEW:item.NO_OF_POSITIONS,REQ_ID:item.REQID}">
+                                                                                <span class="badge bg-blue text-white  width-budge fs-11 fw-medium"><i class="ri-pencil-fill fs-16"></i></span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="list-inline-item" *ngIf="item.STATUS==1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Evaluation Form">
+                                                                            <a href="#" class="text-info d-inline-block edit-item-btn" [routerLink]="['/candidate-evaluation']" [queryParams]="{ ID: 1,VIEW:item.NO_OF_POSITIONS,REQ_ID:item.REQID}">
+                                                                                <span class="badge bg-orange text-white  width-budge fs-11 fw-medium"><i class="ri-eye-line fs-16"></i></span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                            </td>
+                                                        </tr>                                                       
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                  
+                                        <div *ngIf="CandidateEvaluationList">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsCandidate>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStartCandidate() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEndCandidate() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResultsCandidate }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPagesCandidate() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPageCandidate" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageCandidate()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePageCandidate(currentPageCandidate - 1)" [class.disabled-button]="currentPageCandidate === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumberCandidate of getPageNumbersCandidate(currentPageCandidate)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePageCandidate(pageNumberCandidate)" [class.active]="currentPageCandidate === pageNumberCandidate">{{ pageNumberCandidate }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePageCandidate(currentPageCandidate + 1)" [class.disabled-button]="currentPageCandidate * itemsPerPageCandidate >= totalSearchResultsCandidate">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                </div>
+                                            </div>
+                                        </div><!--end col-->
+                                    </div>
+                                    <!--end card-->
+                                </div>
+                                 <!-- end Candidates Evaluation tab -->
+                                <!--end tab-pane-->
+                            </div>
+                            <!--end tab-content-->
+                  
+                       <!-- Modal Box -->    
+
+                          <!-- Add Job Modal Box -->    
+                          <div class="modal fade" id="AddJobPostModal" tabindex="-1" aria-labelledby="AddJobPostModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <h5 class="fs-13 font-type text-white ma-5 fw-semibold">New Hire Request</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"(click)="ClearAddJobPostForm()"></button>
+                                    </div>
+                                    <form class="tablelist-form" autocomplete="off"[formGroup]="addJobPostForm">
+                                        <div class="modal-body">
+                                            <input type="hidden" id="id-field" />
+                                            <div class="row mb-3">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Company</span></h3>
+                                                </div>
+                                                <div class="col-lg-8"[class.has-error]="addJobPostForm.get('company_code')?.invalid && addJobPostForm.get('company_code')?.touched">
+                                                    <select class="form-select h-30 font-type textbox-15"formControlName="company_code">
+                                                      <option value=""selected disabled>Select</option>
+                                                      <option *ngFor="let combo of companylist" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option> 
+                                                  </select>
+                                                  <div *ngIf="addJobPostForm.get('company_code')?.invalid && addJobPostForm.get('company_code')?.touched" class="text-danger">
+                                                    *Required!
+                                                </div> 
+                                                </div>                                                
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Designation</span></h3>
+                                                </div>
+                                                <div class="col-lg-8"[class.has-error]="addJobPostForm.get('desig')?.invalid && addJobPostForm.get('desig')?.touched">
+                                                   <select class="form-select h-30 font-type textbox-15" id="jobTitle_Modal"formControlName="desig"(change)="onDesigSelected()">
+                                                        <option value=""selected disabled>Select</option>
+                                                        <option *ngFor="let combo of desiglist" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>                                                     
+                                                        <option class="bg-info-subtle"value="-1"selected> New Designation </option>
+                                                    </select>
+                                                    <div *ngIf="addJobPostForm.get('desig')?.invalid && addJobPostForm.get('desig')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div>
+                                                 </div> 
+                                                 
+                                                    <div class="col-lg-8" *ngIf="showDesig" style="margin-left:33%;" [class.has-error]="addJobPostForm.get('job_title')?.invalid && addJobPostForm.get('job_title')?.touched">
+                                                        <input type="text" class="form-control bg-info-subtle border-0 font-type textbox-15 ma-10" formControlName="job_title" placeholder="Job Title" id="OtherJob_txt" />
+                                                        <div *ngIf="addJobPostForm.get('job_title')?.invalid && addJobPostForm.get('job_title')?.touched" class="text-danger">
+                                                            *Required!
+                                                        </div>
+                                                    </div>                                               
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Department</span></h3>
+                                                </div>
+                                                <div class="col-lg-8"[class.has-error]="addJobPostForm.get('dept')?.invalid && addJobPostForm.get('dept')?.touched">
+                                                     <select class="form-select font-type h-30 textbox-15"formControlName="dept">
+                                                        <option value=""selected disabled>Select</option>
+                                                        <option *ngFor="let combo of deptlist" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>  
+                                                      </select>
+                                                      <div *ngIf="addJobPostForm.get('dept')?.invalid && addJobPostForm.get('dept')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>No of Openings</span></h3>
+                                                </div>
+                                                <div class="col-lg-5"[class.has-error]="addJobPostForm.get('no_of_opening')?.invalid && addJobPostForm.get('no_of_opening')?.touched">
+                                                    <input type="text" class="form-control font-type textbox-15" placeholder="No of Openings"formControlName="no_of_opening" />
+                                                    <div *ngIf="addJobPostForm.get('no_of_opening')?.invalid && addJobPostForm.get('no_of_opening')?.touched" class="text-danger">
+                                                        *Please enter no of openings in numbers!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Work Location</span></h3>
+                                                </div>
+                                                <div class="col-lg-5"[class.has-error]="addJobPostForm.get('work_location')?.invalid && addJobPostForm.get('work_location')?.touched">
+                                                    <select class="form-select font-type h-30 textbox-15"formControlName="work_location">
+                                                        <option value=""selected disabled>Select</option>
+                                                        <option *ngFor="let combo of locationlist" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>  
+                                                    </select>
+                                                    <div *ngIf="addJobPostForm.get('work_location')?.invalid && addJobPostForm.get('work_location')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Employment Type</span></h3>
+                                                </div>
+                                                <div class="col-lg-5"[class.has-error]="addJobPostForm.get('employment_type')?.invalid && addJobPostForm.get('employment_type')?.touched">
+                                                    <select class="form-select h-30 font-type textbox-15" id="emp_Type" formControlName="employment_type"(change)="onDesigSelected()">
+                                                        <option value=""selected disabled>Select</option>
+                                                        <option *ngFor="let combo of employementTypes" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>  
+                                                      </select>
+                                                      <div *ngIf="addJobPostForm.get('employment_type')?.invalid && addJobPostForm.get('employment_type')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3"[class.has-error]="addJobPostForm.get('no_of_days')?.invalid && addJobPostForm.get('no_of_days')?.touched">
+                                                    <input type="text" *ngIf="showNoOfDays" class="form-control bg-info-subtle border-0 font-type textbox-15" placeholder="No.of Days" formControlName="no_of_days" id="txt_MonthsDates" />
+                                                    <div *ngIf="addJobPostForm.get('no_of_days')?.invalid && addJobPostForm.get('no_of_days')?.touched" class="text-danger">
+                                                        *Please enter no of days in numbers!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Work Schedule</span></h3>
+                                                </div>
+                                                <div class="col-lg-5"[class.has-error]="addJobPostForm.get('work_schedule')?.invalid && addJobPostForm.get('work_schedule')?.touched">
+                                                    <select class="form-select h-30 font-type textbox-15"formControlName="work_schedule">
+                                                        <option value=""selected disabled>Select</option>
+                                                        <option *ngFor="let combo of WorkSchedule" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>  
+                                                      </select>
+                                                      <div *ngIf="addJobPostForm.get('work_schedule')?.invalid && addJobPostForm.get('work_schedule')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Comments</span></h3>
+                                                </div>
+                                                <div class="col-lg-8"[class.has-error]="addJobPostForm.get('comments')?.invalid && addJobPostForm.get('comments')?.touched">
+                                                    <textarea class="form-control textbox-15 font-type" required rows="3" placeholder="Comments"formControlName="comments"></textarea>
+                                                    <div *ngIf="addJobPostForm.get('comments')?.invalid && addJobPostForm.get('comments')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3" [hidden]="grpname.includes('HR')||grpname.includes('HOD')">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Approver</span></h3>
+                                                </div>
+                                                <div class="col-lg-8"[class.has-error]="addJobPostForm.get('approver_id')?.invalid && addJobPostForm.get('approver_id')?.touched">
+                                                        <ng-multiselect-dropdown
+                                                            [settings]="dropdownSettings"                                                                   
+                                                            formControlName="approver_id"
+                                                            [data]="empdata">     
+                                                        </ng-multiselect-dropdown> 
+                                                    <div *ngIf="addJobPostForm.get('approver_id')?.invalid && addJobPostForm.get('approver_id')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="description_div" *ngIf="showDesig" class="bg-info-subtle p-3 textbox-15">
+                                            <h3 class="fw-semibold fs-13 mb-3 font-type margin-up-5" style="text-decoration: underline;"><span>Job Description</span></h3>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Primary Responsibilities</span></h3>
+                                                </div>
+                                                <div class="col-lg-8"[class.has-error]="addJobPostForm.get('prime_resp')?.invalid && addJobPostForm.get('prime_resp')?.touched">
+                                                    <textarea class="form-control textbox-15 font-type" required rows="6" placeholder="Primary Responsibilities"formControlName="prime_resp"></textarea>
+                                                    <div *ngIf="addJobPostForm.get('prime_resp')?.invalid && addJobPostForm.get('prime_resp')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Required Education</span></h3>
+                                                </div>
+                                                <div class="col-lg-8"[class.has-error]="addJobPostForm.get('req_education')?.invalid && addJobPostForm.get('req_education')?.touched">
+                                                    <textarea class="form-control textbox-15 font-type" required rows="3" placeholder="Required Education"formControlName="req_education"></textarea>
+                                                    <div *ngIf="addJobPostForm.get('req_education')?.invalid && addJobPostForm.get('req_education')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Required Experience</span></h3>
+                                                </div>
+                                                <div class="col-lg-8"[class.has-error]="addJobPostForm.get('reqd_exp')?.invalid && addJobPostForm.get('reqd_exp')?.touched">
+                                                    <textarea class="form-control textbox-15 font-type" required rows="3" placeholder="Required Experience"formControlName="reqd_exp"></textarea>
+                                                    <div *ngIf="addJobPostForm.get('reqd_exp')?.invalid && addJobPostForm.get('reqd_exp')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Required Key Skills</span></h3>
+                                                </div>
+                                                <div class="col-lg-8"[class.has-error]="addJobPostForm.get('req_keyskill')?.invalid && addJobPostForm.get('req_keyskill')?.touched">
+                                                    <textarea class="form-control textbox-15 font-type" required rows="3" placeholder="Required Key Skills"formControlName="req_keyskill"></textarea>
+                                                    <div *ngIf="addJobPostForm.get('req_keyskill')?.invalid && addJobPostForm.get('req_keyskill')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        <div class="col-lg-12 pt-2 ma-5">
+                                            <div class="hstack gap-2">
+                                                <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type"(click)="onSubmit()" ><i class="ri-add-line label-icon align-middle fs-16 ms-2"></i>Add</button>
+                                                <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type"(click)="ClearAddJobPostForm()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                           <!-- End Add Job Modal Box -->
+                       
+                               <!-- Job Description Modal-->
+                               <div class="modal fade zoomIn" id="JobDescriptionModal" tabindex="-1" aria-labelledby="JobDescriptionModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <h5 class="fs-13 font-type text-white ma-5 fw-semibold">Job Description</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                        </div>
+                                        <div class="modal-body pa-5-5">
+                                            <input type="hidden" id="id-field" />
+                                            <div class="row mb-2 ma-10">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Company</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-check-label font-type fs-12">
+                                                        {{company}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Designation</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-check-label font-type fs-12">
+                                                        {{designation}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Department</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-check-label font-type fs-12">
+                                                        {{department}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>No of Openings</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-check-label font-type fs-12">
+                                                        {{no_of_openings}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Work Location</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-check-label font-type fs-12">
+                                                        {{work_location}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Employment Type</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-check-label font-type fs-12">
+                                                        {{employment_type}}
+                                                    </label>
+                                                    <h6 class="font-type fs-12 ma-5 text-muted" *ngIf="employment_type_id!=1">
+                                                        No of Days/Months : <span class="fw-medium">{{contract_work_days}}</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Work Schedule</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-check-label font-type fs-12">
+                                                        {{work_schedule}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Comments</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <p class="form-check-label font-type fs-12" style="text-align: justify;">
+                                                       {{comments}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3" [hidden]="grpname.includes('HR')||grpname.includes('HOD')">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Approver</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-check-label font-type fs-12">
+                                                        {{approver}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="position_flag==1">
+                                            <h3 class="fw-semibold fs-13 mb-3 font-type margin-up-5" style="text-decoration: underline;"><span>Job Description</span></h3>
+                                            <div class="row mb-1">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Primary Responsibilities</span></h3>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <label class="form-label font-type fs-12" style="text-align: justify;">
+                                                        <p class="p-space">{{Primary_resp}}</p>
+                                                        
+                                                    </label>  
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Required Education</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-check-label font-type fs-12">
+                                                        {{required_education}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Required Experience</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-label font-type fs-12" style="text-align: justify;">
+                                                        <p class="p-space">{{required_exp}}</p>                                                        
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Required Key Skills</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-label font-type fs-12" style="text-align: justify;">
+                                                        <p class="p-space">{{required_skills}}</p>                                                        
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               </div>
+                               <!-- End Detailed Description  Modal--> 
+    
+
+                                <!--Cancel Request Model-->
+                                <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-orange padding-up-5">
+                                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <div class="text-center">
+                                                    <h5 class="fs-13 font-type">You are about to cancel your request ?</h5>
+                                                    <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                                                    <div class="hstack gap-2 justify-content-center remove">   
+                                                        <button class="btn btn-success font-type"data-bs-dismiss="modal">No, Go back!</button>
+                                                        <button class="btn btn-danger font-type"(click)="CancelReq()">Yes, Continue</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Cancel Request Model-->
+                                <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button>
+                                <!--Modal For Success Message Start-->
+                                <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-orange padding-up-5">
+                                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                            </div>
+                                            <div class="modal-body" *ngIf="showModal==1"> 
+                                                <div class="container">
+                                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="modal-body" *ngIf="showModal==2">
+                                            <div class="container">
+                                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                                
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!--Modal For Success Message End-->  
+
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

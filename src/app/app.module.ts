@@ -146,6 +146,8 @@ import { ExitinterviewformComponent } from './OffBoarding/exitinterviewform/exit
 import { NumberToWordsPipe } from './number-to-words.pipe';
 import { EmployeeOffboardingComponent } from './competency/employee-offboarding/employee-offboarding.component';
 import { EmployeeOffboardingActionComponent } from './competency/employee-offboarding-action/employee-offboarding-action.component';
+import { HiringCenterComponent } from './HiringManagement/hiring-center/hiring-center.component';
+import { OfferDetailsComponent } from './HiringManagement/offer-details/offer-details.component';
 
 
 @NgModule({
@@ -289,6 +291,8 @@ import { EmployeeOffboardingActionComponent } from './competency/employee-offboa
     NumberToWordsPipe,
     EmployeeOffboardingComponent,
     EmployeeOffboardingActionComponent,
+    HiringCenterComponent,
+    OfferDetailsComponent,
     
     
   ],

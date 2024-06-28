@@ -56,7 +56,7 @@
                                         <div class="row align-items-center gy-3">
                                             <div class="col-sm">
                                                 <div class="align-items-center d-flex ">
-                                                    <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Requests List </h4>
+                                                    <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Offboarding Requests Approval </h4>
                                                 </div>
                                             </div>
                                             <div class="col-sm-auto">
@@ -68,6 +68,7 @@
                                                     <div class="">
                                                         <select class="form-select font-type fs-12 textbox-15 h-30" [(ngModel)]="selectedStatus"(change)="filter()">
                                                             <option value="" selected disabled>Status</option>
+                                                            <option value="-1" >All</option>
                                                             <option *ngFor="let combo of status" value="{{combo.KEY_ID}}" [hidden]="combo.KEY_ID==6">{{combo.DATA_VALUE}}</option>                                                            
                                                           </select>  
                                                     </div>

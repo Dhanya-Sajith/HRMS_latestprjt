@@ -141,7 +141,7 @@ download_to_excel()
   this.griev_report.forEach((data:detaildata) => { 
   // GrievenceId, ReportedDate, Emp Name , EMp id , Issue,  Resolution, status, ResolvedDate, Resolvedby
         const details = {
-          GrievenceId: data.REQUEST_ID ,
+          GrievanceId: data.REQUEST_ID ,
           EmployeeCode: data.EMP_CODE ,
           EmployeeName: data.EMP_NAME,
           ReportedDate: this.datePipe.transform(data.REQUEST_DATE, "dd-MM-yyyy") ,

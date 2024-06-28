@@ -109,7 +109,7 @@
                                         <label class="form-label fw-semibold fs-12">START DATE IN POSITION:</label>
                                     </div>
                                     <div class="col-lg-7">
-                                        <input type="text" class="form-control bg-light border-0" placeholder="Start Date In Position" readonly/>
+                                        <input type="text" class="form-control bg-light border-0" placeholder="Start Date In Position"  value="{{empdata.DATE_OF_JOINING | date : 'dd-MM-yyyy'}}" readonly/>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -125,7 +125,7 @@
                                         <label class="form-label fw-semibold fs-12">OTHER POSITIONS HELD WITH ORGANIZATION: </label>
                                     </div>
                                     <div class="col-lg-7">
-                                        <textarea class="form-control bg-light border-0" rows="2" placeholder="Other Positions Held With Organization"></textarea>
+                                        <textarea class="form-control bg-light border-0" rows="2" placeholder="Other Positions Held With Organization" value="{{empdata.POSITIONS_HELD}}"></textarea>
                                     </div>
                                 </div>
                             </form>
@@ -1004,7 +1004,7 @@
 
                             <div class="col-lg-12 mb-3" [hidden]="view == 1">
                                 <div class="d-flex align-items-center flex-wrap gap-2">
-                                    <div class="flex-grow-1 text-center">
+                                    <div class="flex-grow-1 text-center"  *ngIf="action == 0">
                                         <div  *ngIf="!requestForm.valid">
                                             <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" [disabled]="requestForm.valid" id="validate-btn"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
                                             <button type="button" class="btn btn-blue btn-label right nexttab nexttab font-type" (click)="Clear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>

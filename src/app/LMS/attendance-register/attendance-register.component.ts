@@ -25,31 +25,35 @@ export class AttendanceRegisterComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.trainingid = params['Id'];
       //alert(this.trainingid)
-      this.apicall.FetchMarkAttendanceTraining(this.trainingid).subscribe((res)=>{
-        this.tabledata=res;
-        console.log(JSON.stringify(res));
-      })
+      this.FetchAttendanceDtls();
     });    
   } 
+  FetchAttendanceDtls(){
+    this.apicall.FetchMarkAttendanceTraining(this.trainingid).subscribe((res)=>{
+      this.tabledata=res;
+      console.log(JSON.stringify(res));
+    })
+  }
   checkAll(event: any) {
     const isChecked = event.target.checked;
-    this.tabledata.Employees.forEach((item: { checked: any; }) => {
-      item.checked = isChecked;
+    this.tabledata.Employees.forEach((item: { EMP_ATTENDANCE_FLAG: any; }) => {
+      item.EMP_ATTENDANCE_FLAG = isChecked;
     });
   }
   validate(){
-    const checkedFields = this.tabledata.Employees.filter((item: { checked: any; }) => item.checked);
-    if (checkedFields.length == 0) {
-      (<HTMLInputElement>document.getElementById("openModalButton")).click();
-            this.showModal = 2;
-            this.failed = "Please mark attendance!";
-    }else{
+    // const checkedFields = this.tabledata.Employees.filter((item: { checked: any; }) => item.checked);
+    // if (checkedFields.length == 0) {
+    //   (<HTMLInputElement>document.getElementById("openModalButton")).click();
+    //         this.showModal = 2;
+    //         this.failed = "Please mark attendance!";
+    // }else{
       (<HTMLInputElement>document.getElementById("cancelModalButton")).click();
 
-    }
+    // }
   }
   submit() {
-    const checkedFields = this.tabledata.Employees.filter((item: { checked: any; }) => item.checked);
+    const checkedFields = this.tabledata.Employees.filter((item: {
+      EMP_ATTENDANCE_FLAG: any; }) => item.EMP_ATTENDANCE_FLAG);
      
         const checkedTypeIDs: string[] = checkedFields.map(({ EMP_CODE }: { EMP_CODE: number }) => EMP_CODE);
               this.empCodeStr = checkedTypeIDs.join(',');    
@@ -63,20 +67,20 @@ export class AttendanceRegisterComponent implements OnInit {
       if(res.Errorid==1){
         (<HTMLInputElement>document.getElementById("openModalButton")).click();
         this.showModal = 1;
-        this.success = "Attendance marked successfully!";
-        this.disablesubmit=true;
+        this.success = "Attendance marked successfully!";        
        }
        else{
         (<HTMLInputElement>document.getElementById("openModalButton")).click();
         this.showModal = 2;
         this.failed = "Failed!";
        }
+       this.FetchAttendanceDtls();
     })
   
 }
 clearAll() {
-  this.tabledata.Employees.forEach((item: { checked: boolean; }) => {
-      item.checked = false;
+  this.tabledata.Employees.forEach((item: { EMP_ATTENDANCE_FLAG: boolean; }) => {
+      item.EMP_ATTENDANCE_FLAG = false;
   });
   const selectAllCheckbox = document.getElementById('formCheck11') as HTMLInputElement;
     if (selectAllCheckbox) {

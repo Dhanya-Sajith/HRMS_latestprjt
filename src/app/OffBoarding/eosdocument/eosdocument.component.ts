@@ -85,7 +85,7 @@ export class EOSDocumentComponent implements OnInit {
   
     if (element) {
         html2canvas(element, {
-            scale: 5, // Increase scale for better quality
+            scale: 3, // Increase scale for better quality
             useCORS: true // Use CORS to handle images from different origins
         }).then((canvas) => {
             const contentDataURL = canvas.toDataURL('image/jpeg');
@@ -93,7 +93,7 @@ export class EOSDocumentComponent implements OnInit {
   
             const pageWidth = pdf.internal.pageSize.getWidth();
             const pageHeight = pdf.internal.pageSize.getHeight();
-            const imgWidth = pageWidth - 10; // Leave some margin
+            const imgWidth = pageWidth - 20; // Leave some margin
             const imgHeight = (canvas.height * imgWidth) / canvas.width;
   
             const xPosition = 10; // Left margin

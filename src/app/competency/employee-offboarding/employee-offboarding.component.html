@@ -70,7 +70,7 @@
                                                             <i class="ri-search-line search-icon"></i>
                                                         </div>
                                                         <div>
-                                                            <select class="form-select h-30 font-type textbox-15"  id="comname" name="comname"  (click)="listEmpOffBoadingdtlsfilter()">
+                                                            <select class="form-select h-30 font-type textbox-15"  id="comname" name="comname"  (change)="listEmpOffBoadingdtlsfilter()">
                                                                 <option value ="-1">Company Name</option>
                                                                 <option  *ngFor="let CompanyList of listaccesscompany" value="{{CompanyList.KEY_ID}}">
                                                                     {{CompanyList.DATA_VALUE}}
@@ -78,14 +78,14 @@
                                                             </select> 
                                                         </div>
                                                         <div class="">
-                                                            <select class="form-select font-type fs-12 textbox-15 h-30" id="statusnm" name="statusnm" (click)="listEmpOffBoadingdtlsfilter()">
+                                                            <select class="form-select font-type fs-12 textbox-15 h-30" id="statusnm" name="statusnm" (change)="listEmpOffBoadingdtlsfilter()">
                                                                 <option value="-1">Status</option>
                                                                 <option value="1">Completed</option>
                                                                 <option value="0">Pending</option>
                                                             </select>  
                                                         </div>
                                                         <div>
-                                                            <select class="form-select font-type fs-12 textbox-15 h-30" id="year" name="year" (click)="listEmpOffBoadingdtlsfilter()">
+                                                            <select class="form-select font-type fs-12 textbox-15 h-30" id="year" name="year" (change)="listEmpOffBoadingdtlsfilter()">
                                                                 <option value ="-1">Select Year</option>
                                                                 <option  *ngFor="let yrlist of yearlist" value="{{yrlist.DISPLAY_FIELD}}">
                                                                     {{yrlist.DISPLAY_FIELD}} 

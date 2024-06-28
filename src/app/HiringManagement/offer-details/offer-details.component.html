@@ -1,0 +1,407 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+                 <!-- start page title -->
+                 <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between font-type">
+                            <h4 class="mb-0 text-uppercase font-type padding-up-5"   style="letter-spacing: 0.2px;">Offer Details</h4>
+                        </div>
+                    </div>
+                </div>
+                 <!-- End start page title -->
+
+                <!--Employee Details-->
+                 <div class="card topbar-up textbox-15">
+                    <div class="card-header h-30 bg-info-subtle">
+                        <h5 class="card-title font-type fw-semibold fs-13 margin-up-7">Employee Details</h5>
+                    </div>
+                    <div class="card-body" style="padding-bottom:5px;">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h6 class="fs-12 font-type">Company : <span class="fs-12 font-type fw-semibold">{{OfferDtls[0]?.COMPANY}}</span></h6>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h6 class="fs-12 font-type">Employee : <span class="fs-12 font-type fw-semibold">{{OfferDtls[0]?.CANDIDATE_NAME}}</span></h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                            <h6 class="font-type fs-12">Designation : <span class="fs-12 font-type fw-semibold">{{OfferDtls[0]?.DESIGNATION}}</span></h6>
+                                            <h6 class="fs-12 font-type fw-semibold"></h6>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h6 class="font-type fs-12">Department : <span class="fs-12 font-type fw-semibold">{{OfferDtls[0]?.DEPARTMENT}}</span></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card body -->
+                </div>
+                <!-- end card -->
+                <!--end-Employee Details-->
+                 
+                    <!-- OFFER LETTER DETAILS -->
+                    <div class="card shadow-lg margin-up-7 pa-0">
+                        <div class="card-header h-30 border-black">
+                            <h5 class="card-title font-type fw-semibold fs-13 margin-up-7">Offer Details</h5>
+                        </div>
+                        <div class="card-body pa-0">
+                            <form [formGroup]="OfferDetailsForm">
+                            <div class="row p-2 margin-up-10">
+                                <div class="col-lg-6 mb-2"[class.has-error]="OfferDetailsForm.get('passportNo')?.invalid && OfferDetailsForm.get('passportNo')?.touched">
+                                    <label class="form-label font-type fs-12 fw-semibold">Passport Number</label>
+                                    <input type="text" class="form-control font-type textbox-15" placeholder="Passport Number"formControlName="passportNo">
+                                    <div *ngIf="OfferDetailsForm.get('passportNo')?.invalid && OfferDetailsForm.get('passportNo')?.touched" class="text-danger">
+                                        *Required!
+                                    </div> 
+                                </div>
+                                <div class="col-lg-6 mb-2"[class.has-error]="OfferDetailsForm.get('mobileNo')?.invalid && OfferDetailsForm.get('mobileNo')?.touched">
+                                    <label class="form-label font-type fs-12 fw-semibold">Mobile Number</label>
+                                    <input type="number" class="form-control font-type textbox-15" placeholder="Mobile Number"formControlName="mobileNo">
+                                    <div *ngIf="OfferDetailsForm.get('mobileNo')?.invalid && OfferDetailsForm.get('mobileNo')?.touched" class="text-danger">
+                                        *Required!
+                                        <small *ngIf="OfferDetailsForm.get('mobileNo')?.errors?.['pattern']">Mobile number should contain only numbers.</small>
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="row p-2 topbar-up">
+                                <div class="col-lg-12"[class.has-error]="OfferDetailsForm.get('address')?.invalid && OfferDetailsForm.get('address')?.touched">
+                                    <label class="form-label font-type fs-12 fw-semibold">Address</label>
+                                    <textarea class="form-control font-type textbox-15" placeholder="Address" rows=""formControlName="address"></textarea>
+                                    <div *ngIf="OfferDetailsForm.get('address')?.invalid && OfferDetailsForm.get('address')?.touched" class="text-danger">
+                                        *Required!
+                                    </div> 
+                                </div>
+                            </div><br>
+                            <div class="row p-2 topbar-up">
+                                <div class="accordion ma-20" id="accordionFill3">
+                                    <div class="accordion-item material-shadow">
+                                    <h2 class="accordion-header bg-light-blue text-blue" id="accordionFill3Example1">
+                                        <button class="accordion-button text-blue bg-light-blue fs-12 font-type fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#accor_fill31" aria-expanded="true" aria-controls="accor_fill31">Salary Breakdown</button>
+                                    </h2>
+                                    <div id="accor_fill31" class="accordion-collapse collapse show" aria-labelledby="accordionFill3Example1" data-bs-parent="#accordionFill3">
+                                        <div class="accordion-body">
+                                        <form [formGroup]="SalaryDetailsForm">
+                                        <div class="row" style="justify-content:center;">
+                                            
+                                            <div class="col-lg-4"[class.has-error]="SalaryDetailsForm.get('allowanceId')?.invalid && SalaryDetailsForm.get('allowanceId')?.touched">
+                                            <div class="mb-3">
+                                                <label class="form-label font-type fs-12">Component</label>
+                                                <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="allowanceId">
+                                                    <option  value=""selected disabled>Select</option>                                            
+                                                    <option  *ngFor="let combo of SalaryComponent" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>
+                                                </select>
+                                                <div *ngIf="SalaryDetailsForm.get('allowanceId')?.invalid && SalaryDetailsForm.get('allowanceId')?.touched" class="text-danger">
+                                                    *Required!
+                                                </div>                                               
+                                            </div>
+                                            </div>
+                                            <div class="col-lg-4"[class.has-error]="SalaryDetailsForm.get('amount')?.invalid && SalaryDetailsForm.get('amount')?.touched">
+                                            <div class="mb-3">
+                                                <label class="form-label font-type fs-12">Value(In AED)</label>
+                                                <input type="number" class="form-control font-type textbox-15" placeholder="Value"formControlName="amount">
+                                                <div *ngIf="SalaryDetailsForm.get('amount')?.invalid && SalaryDetailsForm.get('amount')?.touched" class="text-danger">
+                                                    *Required!
+                                                </div> 
+                                            </div>
+                                            </div>
+                                            <div class="col-lg-1">
+                                            <div class="pt-3">
+                                                <button type="button" class="btn bg-info-subtle ma-5"(click)="SubmitSalaryDtls()"><i class="ri-add-circle-fill fs-24 text-blue"></i></button>
+                                            </div>
+                                            </div>                                        
+                                        </div>
+                                    </form>
+                                        <div class="row ma-10 mb-1" style="justify-content:center;" id="GrossSalaryTable"*ngIf="calculateTotal()!=''">
+                                            <div class="col-md-10 col-lg-10">
+                                            <div class="live-preview" id="grosssalary">
+                                                <h6 class="font-type fw-semibold fs-12 text-italic">Salary breakdown is as follows: </h6>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered border-dark table-nowrap align-middle mb-0 table-hover">
+                                                    <thead class="bg-light">
+                                                        <tr class="font-type">
+                                                        <th scope="col">Component</th>
+                                                        <th scope="col">Value(In AED)</th>
+                                                        <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="font-type" *ngFor="let item of SalaryDtls">
+                                                        <td>{{item.ALLOWANCE_NAME}}</td>                                                        
+                                                        <td>
+                                                            <ng-container *ngIf="item.isEditing">
+                                                                 <input type="number" class="amount" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.amount">                                                 
+                                                            </ng-container>
+                                                            <ng-container *ngIf="!item.isEditing">
+                                                                {{item.AMOUNT}}
+                                                            </ng-container>
+                                                        </td>  
+                                                        <td width="10%">
+                                                            <ul class="list-inline hstack gap-2 mb-0">
+                                                            <li class="list-inline-item edit" title="Edit"[hidden]="item.isEditing">
+                                                                <a class="text-blue d-inline-block edit-item-btn"(click)="Edit(item)"  id="buttonEdit">
+                                                                <i class="ri-pencil-fill fs-14"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-inline-item" title="Remove"[hidden]="item.isEditing">
+                                                                <a class="text-danger d-inline-block remove-item-btn" (click)="EditDeleteSalaryDtls(item.ALLOWANCE_ID,item.AMOUNT,3)">
+                                                                <i class="ri-delete-bin-5-fill fs-14"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-inline-item" title="Save"[hidden]="!item.isEditing">
+                                                                <a class="text-blue d-inline-block save-item-btn" (click)="EditDeleteSalaryDtls(item.ALLOWANCE_ID,item.amount,2)">
+                                                                <i class="ri-save-2-fill fs-17"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-inline-item" title="Cancel"[hidden]="!item.isEditing">
+                                                                <a class="text-danger d-inline-block cancel-item-btn" (click)="CancelEdit(item)">
+                                                                <i class="ri-close-circle-fill fs-17"></i>
+                                                                </a>
+                                                            </li>
+                                                            </ul>
+                                                        </td>
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                    <tfoot class="font-type">
+                                                        <tr class="bg-light">
+                                                            <td class="fw-semibold fs-12 text-blue" colspan="1">Total</td>
+                                                            <td class="fw-semibold fs-12 text-blue" colspan="2"formControlName="total"ngDefaultControl>{{ calculateTotal() }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div class="row ma-10">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="p-2 font-type margin-up-7">
+                                        <div class="row">
+                                        <div class="col-lg-2 col-md-3">
+                                        <!-- Checkboxes -->
+                                            <div class="form-check form-check-info mb-3">
+                                                <input class="form-check-input" type="checkbox" id="formCheck1"formControlName="Accommodation">
+                                                <label class="form-check-label fs-12 fw-semibold">
+                                                    Accommodation
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-3">
+                                            <!-- Checkboxes -->
+                                            <div class="form-check form-check-info mb-3">
+                                                <input class="form-check-input" type="checkbox" id="formCheck4"formControlName="Transportation">
+                                                <label class="form-check-label fs-12 fw-semibold">
+                                                    Transportation
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-3">
+                                            <!-- Custom Checkboxes Color -->
+                                            <div class="form-check form-check-info mb-3">
+                                                <input class="form-check-input" type="checkbox" id="formCheck10"formControlName="OvertimeEligible">
+                                                <label class="form-check-label fs-12 fw-semibold">
+                                                    Overtime Eligible
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-3">
+                                        <div class="form-check form-check-info mb-3">
+                                            <input class="form-check-input" type="checkbox" id="formCheck2"formControlName="MedicalInsurance">
+                                            <label class="form-check-label fs-12 fw-semibold fs-12 fw-semibold">
+                                                Medical Insurance
+                                            </label>
+                                        </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-3">
+                                        <div class="form-check form-check-info mb-3">
+                                            <input class="form-check-input" type="checkbox" id="formCheck5"formControlName="LifeInsurance">
+                                            <label class="form-check-label fs-12 fw-semibold">
+                                                Life Insurance
+                                            </label>
+                                        </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row p-2 topbar-up">
+                                <div class="col-lg-12">
+                                  <label class="form-label font-type fs-12 fw-semibold text-blue text-italic mb-3" style="text-decoration: underline;">Family Benefits :</label>
+                                </div>
+                                <div class="col-lg-12">
+                                <div class="row">
+                                <div class="col-lg-2 col-md-3">
+                                    <!-- Checkboxes -->                                     
+                                    <div class="form-check form-check-info mb-3">
+                                        <input class="form-check-input" type="checkbox" id="formCheck5"formControlName="FamilyInsurance">
+                                        <label class="form-check-label fs-12 fw-semibold font-type">
+                                            Family Insurance
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    <!-- Checkboxes -->
+                                    <div class="form-check form-check-info mb-3">
+                                        <input class="form-check-input" type="checkbox" id="formCheck7"formControlName="FamilyAirticket">
+                                        <label class="form-check-label fs-12 fw-semibold font-type">
+                                            Family Airticket
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    <!-- Custom Checkboxes Color -->
+                                    <div class="form-check form-check-info mb-2">
+                                        <input class="form-check-input" type="checkbox" id="formCheck10"formControlName="FamilyVisa">
+                                        <label class="form-check-label fs-12 fw-semibold font-type">
+                                            Family Visa
+                                        </label>
+                                    </div>
+                                </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row p-2 topbar-up">
+                                <div class="col-lg-12">
+                                  <label class="form-label font-type fs-12 fw-semibold text-blue text-italic mb-3" style="text-decoration: underline;">Work Schedule :</label>
+                                </div>
+                                <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-6 mb-3"[class.has-error]="OfferDetailsForm.get('shift')?.invalid && OfferDetailsForm.get('shift')?.touched">
+                                        <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="shift">
+                                            <option  value=""selected disabled>Shift Timings</option>                                            
+                                            <option  *ngFor="let shifts of listshift" value="{{shifts.VALUE_FIELD}}">{{shifts.DISPLAY_FIELD}}</option>
+                                        </select>
+                                        <div *ngIf="OfferDetailsForm.get('shift')?.invalid && OfferDetailsForm.get('shift')?.touched" class="text-danger">
+                                            *Required!
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3"[class.has-error]="OfferDetailsForm.get('work_schedule')?.invalid && OfferDetailsForm.get('work_schedule')?.touched">                                     
+                                               
+                                        <select class="form-select h-30 font-type textbox-15 fs-12"formControlName="work_schedule">
+                                            <option value=""selected disabled>Working Day</option>
+                                            <option *ngFor="let combo of WorkSchedule" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>  
+                                        </select>
+                                        <div *ngIf="OfferDetailsForm.get('work_schedule')?.invalid && OfferDetailsForm.get('work_schedule')?.touched" class="text-danger">
+                                            *Required!
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row p-2 topbar-up">
+                                <div class="col-lg-3 mb-3"[class.has-error]="OfferDetailsForm.get('AirTicketEligibility')?.invalid && OfferDetailsForm.get('AirTicketEligibility')?.touched">
+                                  <label class="form-label font-type fs-12 fw-semibold">Air Ticket Eligibility</label>
+                                  <select class="form-select h-30 font-type textbox-15"formControlName="AirTicketEligibility">                                      
+                                      <option value="null"selected disabled>Select</option>
+                                      <option *ngFor="let combo of AirTicketEligibility" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>  
+                                    </select>
+                                    <div *ngIf="OfferDetailsForm.get('AirTicketEligibility')?.invalid && OfferDetailsForm.get('AirTicketEligibility')?.touched" class="text-danger">
+                                        *Required!
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 mb-3"[class.has-error]="OfferDetailsForm.get('ProbationPeriod')?.invalid && OfferDetailsForm.get('ProbationPeriod')?.touched">
+                                  <label class="form-label font-type fs-12 fw-semibold">Probation Period (In Months)</label>
+                                  <input type="number"  class="form-control font-type textbox-15 h-30" placeholder="Probation Period (In Months)"formControlName="ProbationPeriod">
+                                  <div *ngIf="OfferDetailsForm.get('ProbationPeriod')?.invalid && OfferDetailsForm.get('ProbationPeriod')?.touched" class="text-danger">
+                                    *Required!
+                                </div>
+                                </div>
+                                <div class="col-lg-3"[class.has-error]="OfferDetailsForm.get('NoticePeriod')?.invalid && OfferDetailsForm.get('NoticePeriod')?.touched">
+                                    <label class="form-label font-type fs-12 fw-semibold">Notice Period (In Months)</label>
+                                    <input type="number" class="form-control font-type textbox-15 h-30" placeholder="Notice Period (In Months)"formControlName="NoticePeriod">
+                                    <div *ngIf="OfferDetailsForm.get('NoticePeriod')?.invalid && OfferDetailsForm.get('NoticePeriod')?.touched" class="text-danger">
+                                        *Required!                                        
+                                    </div>
+                                    
+                                  </div>
+                                  <div class="col-lg-3 col-md-3">
+                                    <label class="form-label font-type fs-12 fw-semibold" style="visibility: hidden;">Checkbox</label>
+                                    <div class="form-check form-check-info mb-3 ma-5">
+                                        <input class="form-check-input" type="checkbox" id="formCheck2"formControlName="Non_CompeteClause">
+                                        <label class="form-check-label fs-12 fw-semibold fs-12 fw-semibold font-type">
+                                            Non-Compete Clause 
+                                        </label>
+                                    </div>
+                                    </div>
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!--END OFFER LETTER DETAILS -->
+
+                    <div class="col-lg-12 mb-3">
+                        <div class="d-flex align-items-center flex-wrap">
+                            <div class="flex-grow-1 text-center">
+                                <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type mb-1"(click)="SaveOfferDetails()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Save</button>
+                                <button type="button" class="btn btn-info btn-label right nexttab nexttab font-type mb-1"(click)="GenerateOfferLetter()"><i class="ri-file-ppt-2-line label-icon align-middle fs-16 ms-2"></i>Generate Offer Letter</button>
+                                <button type="button" class="btn btn-danger btn-label right nexttab nexttab font-type mb-1"(click)="Fetch_CandidateOfferDtls();clearSalaryDetailsForm();"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <div class="hstack text-nowrap gap-2">
+                                    <a routerLink="/hiring_management"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+             <!-- container-fluid -->
+        </div>
+         <!-- End Page-content -->
+         <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+         <!--Modal For Success Message Start-->
+     <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+             <div class="modal-dialog modal-dialog-centered">
+                 <div class="modal-content">
+                     <div class="modal-header bg-orange padding-up-5">
+                         <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                     </div>
+                     <div class="modal-body" *ngIf="showModal==1"> 
+                         <div class="container">
+                             <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                     
+                         </div>
+                     </div>
+                     <div class="modal-body" *ngIf="showModal==2">
+                     <div class="container">
+                         <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>                         
+                     </div>
+                 </div>
+                 </div>
+             </div>
+         </div>
+     <!--Modal For Success Message End-->
+                                           
+
+         <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

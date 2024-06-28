@@ -71,14 +71,14 @@
                         <div class="row mb-2"  id="div_individual" *ngIf="radioselected=='individual'">
                             <div class="col-md-4 col-lg-4 pt-1">
                                         <h6 class="fs-12 font-type fw-semibold">Company</h6>
-                                        <select class="form-select font-type h-30 textbox-15 " [(ngModel)]="selectedCompanyid" (change)="onCompanySelected(selectedCompanyid)">
+                                        <select class="form-select font-type h-30 textbox-15 " [(ngModel)]="selectedCompanyid" >
                                             <option value="-1" selected disabled >Select</option>
                                             <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
                                         </select>  
                             </div>
                             <div class="col-md-4 col-lg-4 pt-1">
                                         <h6 class="fs-12 font-type fw-semibold">Department</h6>
-                                        <select class="form-select font-type h-30 textbox-15 " [(ngModel)]="selectedDeptid" (change)="onDeptSelected(selectedDeptid)">
+                                        <select class="form-select font-type h-30 textbox-15 " [(ngModel)]="selectedDeptid" >
                                             <option value="-1" selected disabled >Select</option>
                                             <option *ngFor="let combo of deptdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
                                         </select> 

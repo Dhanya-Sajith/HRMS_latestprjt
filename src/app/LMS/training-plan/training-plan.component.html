@@ -974,7 +974,7 @@
                                                         <label for="leaveemails" class="form-label font-type fw-semibold">Duration</label>
                                                     </div>
                                                     <div class="col-lg-10"> 
-                                                        <ngx-timepicker-field [format]="24"   class="editedIntime" id="duration" name="duration" ></ngx-timepicker-field>
+                                                        <ngx-timepicker-field [format]="24"   class="editedIntime" id="duration" name="duration" [formControl]="durationval" ></ngx-timepicker-field>
                                                         <!-- <input type="text" class="form-control font-type textbox-15" placeholder="Enter Duration" id="duration" name="duration" value="{{fetcdtls.CONFIRMED_QUARTER}}" > -->
                                                     </div>
                                                 </div>

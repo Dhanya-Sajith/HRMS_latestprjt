@@ -297,7 +297,7 @@
                
                      <div class="hstack gap-2 justify-content-end d-print-none margin-up-7 mb-3">
                         <a *ngIf="view == 1"  [hidden]="successflag == 1" href="#SuccessRecordModal" data-bs-toggle="modal" class="btn btn-success font-type" (click)="SendtoVP()"><i class="ri-send-plane-fill align-bottom me-1"></i> Send to VP</a>
-                        <a routerLink="/ResignationApprovalHR" [queryParams]="{ tab: 'tab2' }" class="btn btn-orange font-type text-white"><i class="ri-arrow-go-back-fill align-bottom me-1"></i> Back</a>
+                        <a routerLink="/ResignationApprovalHR" [queryParams]="{ user: 'tab2' }" class="btn btn-orange font-type text-white"><i class="ri-arrow-go-back-fill align-bottom me-1"></i> Back</a>
                      </div>     
 
                 </div>

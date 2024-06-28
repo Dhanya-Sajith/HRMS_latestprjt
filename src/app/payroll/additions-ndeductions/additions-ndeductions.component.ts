@@ -107,6 +107,7 @@ empid:any =this.userSession.id;
   month = String(this.currentDate.getMonth() + 1).padStart(2, '0'); 
   PayrollMonthAdditionOnetime: any=`${this.year}-${this.month}`;
   PayrollMonthDeductionOnetime: any=`${this.year}-${this.month}`;
+  lastPayrollDate!: Date;
   
   
 
@@ -145,15 +146,20 @@ empid:any =this.userSession.id;
     
   }
   isButtonDisabled(item: any): boolean {      
-  this.formattedlastPayrollDay = this.datepipe.transform(item.LAST_PAYROLL_DATE, 'dd');  
+  //this.formattedlastPayrollDay = this.datepipe.transform(item.LAST_PAYROLL_DATE, 'dd');
+  this.lastPayrollDate=new Date(item.LAST_PAYROLL_DATE);  
   if(item.PAYROLL_MONTHS){  
   this.effectivedate = new Date(item.PAYROLL_MONTHS); 
   }
-  this.effectivedate.setDate(parseInt(this.formattedlastPayrollDay));  
-  if (this.effectivedate && this.effectivedate<this.curDate) {    
+  //this.effectivedate.setDate(parseInt(this.formattedlastPayrollDay));  
+  if (this.effectivedate && this.effectivedate<this.lastPayrollDate) {    
     return true;
-  } else {   
-   return false;
+  } else {  
+    if(item.ACTION_FLAG==1){
+      return false;
+    }else{
+      return true;
+    }
   }   
   } 
   isButtonDisabledRepeated(item: any): boolean {  
