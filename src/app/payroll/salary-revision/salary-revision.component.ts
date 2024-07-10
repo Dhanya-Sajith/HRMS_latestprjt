@@ -40,8 +40,10 @@ export class SalaryRevisionComponent implements OnInit {
   DOJ: any;
   today:any = new Date();
   nextfirstday = new Date(this.today.getFullYear(), this.today.getMonth()+1, 1);
-  mindate = this.datePipe.transform(this.nextfirstday,"yyyy-MM-dd");
-  effectivedt = this.datePipe.transform(this.nextfirstday,"yyyy-MM-dd");
+  //mindate = this.datePipe.transform(this.nextfirstday,"yyyy-MM-dd");
+  //effectivedt = this.datePipe.transform(this.nextfirstday,"yyyy-MM-dd");
+  mindate:any;
+  effectivedt:any
   yearofservice: any;
   currentyear: any;
   DOJyear: any;
@@ -65,6 +67,7 @@ export class SalaryRevisionComponent implements OnInit {
   isFormValid: boolean=false;
   submitted = false;
   inputfield: any;
+  FROM_DATE: any;
   
   constructor(private apicall:ApiCallService, private datePipe: DatePipe,private fb:FormBuilder,private session:LoginService,private route:Router) {
     this.EditForm = this.fb.group({
@@ -199,6 +202,9 @@ export class SalaryRevisionComponent implements OnInit {
         this.amount = this.Allowance[i].AMOUNT;
         this.grosssalary = this.grosssalary + this.amount;
       }
+    })
+    this.apicall.Fetch_EffectiveDate_SalRevision(this.emp_code).subscribe(res =>{
+      this.effectivedt=this.datePipe.transform(res.FROM_DATE,"yyyy-MM-dd");
     })
   }
 

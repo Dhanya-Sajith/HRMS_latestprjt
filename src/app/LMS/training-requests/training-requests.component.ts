@@ -66,6 +66,7 @@ export class TrainingRequestsComponent implements OnInit {
   pendinghrs: any;
   viewdtl: any;
   BtnActive: any;
+  statusdata: any;
 
   constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute) { 
     this.requestForm = this.fb.group({
@@ -484,6 +485,13 @@ export class TrainingRequestsComponent implements OnInit {
   {
     this.apicall.ViewUpcomingTrainingDetails(id).subscribe((res) => {
       this.viewdtl = res
+    })
+  }
+
+  statusmodal(id:any)
+  {
+    this.apicall.Fetch_EmpApprover_Training(this.empcode,id).subscribe((res) => {
+      this.statusdata = res
     })
   }
 

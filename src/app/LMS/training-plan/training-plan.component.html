@@ -124,10 +124,8 @@
                                                                 <table class="table table-nowrap align-middle table-bordered border-orange table-hover" id="table2">
                                                                     <thead class="font-type table-light text-white">
                                                                     <tr class="text-center">
-                                                                        <th>
-                                                                            <div class="form-check form-check-info">
-                                                                                <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
-                                                                            </div>
+                                                                        <th style="text-align: left;">
+                                                                            Select
                                                                         </th>
                                                                         <td>ID</td>
                                                                         <th>
@@ -318,6 +316,9 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-auto">
+                                                                            <a href="#trainingtarget" data-bs-toggle="modal"><button class="btn btn-blue btn-sm font-type fs-13 font-type text-white h-30" ><i class="ri-book-open-line 60 fs-16 align-bottom me-1"></i>Training Target</button></a>
+                                                                        </div>
+                                                                        <div class="col-sm-auto">
                                                                             <a href="online-training"><button class="btn btn-blue btn-sm font-type fs-13 font-type text-white h-30"><i class="ri-global-line fs-16 align-bottom me-1"></i>Online Trainings</button></a>
                                                                         </div>
                                                                     </div>
@@ -364,6 +365,11 @@
                                                                                                     <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit Details">
                                                                                                         <a href="#editScheduledModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn" (click)="editscheduledplan(schePlans.TRAINING_ID)">
                                                                                                             <i class="ri-edit-circle-fill fs-22 text-orange text-center"></i>
+                                                                                                        </a>
+                                                                                                    </li> 
+                                                                                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit Details">
+                                                                                                        <a href="#trainingcost" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn"  (click)="addCostdtls(schePlans.TRAINING_ID)" >
+                                                                                                            <i class="fa fa-money fs-22 text-orange text-center"></i>
                                                                                                         </a>
                                                                                                     </li> 
                                                                                             </ul>
@@ -840,6 +846,141 @@
  </div>
 
 
+ <!--Training Target Modal-->
+
+<div class="modal fade zoomIn " id="trainingtarget" tabindex="-1" aria-labelledby="trainingtarget" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <form class="tablelist-form" autocomplete="off">
+                <div class="modal-body">
+                    <div>
+                        <div class="row mb-3"> <div class="col-lg-12" style="text-align: right;"> <span><b> Year : </b></span> {{ currentYear }} </div> </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-4">
+                                <label for="timeInput" class="form-label font-type fw-semibold">Company Name</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <select class="form-select font-type fs-12 textbox-15 h-30" name="com_name" id="com_name"  [formControl]="com_name"  (change)="changecomname()"> 
+                                    <option value ="null">Company Name</option>
+                                    <option  *ngFor="let CompanyList of listaccesscompany" value="{{CompanyList.KEY_ID}}">
+                                        {{CompanyList.DATA_VALUE}}
+                                    </option>
+                                </select>  
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-4">
+                                <label for="leaveemails" class="form-label font-type fw-semibold">Existing Employee Duration</label>
+                            </div>
+                            <div class="col-lg-8"> 
+                                <ngx-timepicker-field  #timePicker [format]="24"   class="editedIntime" id="oldEmpduration" name="oldEmpduration" [formControl]="oldEmpduration" [(ngModel)]="existing" ></ngx-timepicker-field>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-4">
+                                <label for="leaveemails" class="form-label font-type fw-semibold">New Employee Duration</label>
+                            </div>
+                            <div class="col-lg-8"> 
+                                <ngx-timepicker-field  #timePicker [format]="24"   class="editedIntime" id="newEmpduration" name="newEmpduration" [formControl]="newEmpduration" [(ngModel)]="newduration"></ngx-timepicker-field>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-lg-6 pt-2 mb-2" style="float: inline-end;">
+                        <div class="hstack gap-2 justify-content-end">
+                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type"  (click)="UpdateTrainingtarget()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                        </div>
+                    </div>
+                </div> 
+            </form>
+        </div>
+    </div>
+</div> 
+
+<!--Training Target Modal End-->
+
+<!--Training cost Modal start-->
+
+<div class="modal fade zoomIn " id="trainingcost" tabindex="-1" aria-labelledby="trainingcost" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <form class="tablelist-form" autocomplete="off">
+                <div class="modal-body">
+                    <div>
+                        <div class="row mb-3">
+                            <div class="col-lg-4">
+                                <label for="leaveemails" class="form-label font-type fw-semibold">Training Fees</label>
+                            </div>
+                            <div class="col-lg-8"> 
+                                <input type="number" class="form-control font-type textbox-15"  id="trainingfee" name="trainingfee"  [(ngModel)]="trainingfee" (keyup)="display_total()">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-4">
+                                <label for="leaveemails" class="form-label font-type fw-semibold">Accomodation Fees</label>
+                            </div>
+                            <div class="col-lg-8"> 
+                                <input type="number" class="form-control font-type textbox-15"  id="accomodation" name="accomodation" [(ngModel)]="accomodation" (keyup)="display_total()">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-4">
+                                <label for="leaveemails" class="form-label font-type fw-semibold">Transportation Fees</label>
+                            </div>
+                            <div class="col-lg-8"> 
+                                <input type="number" class="form-control font-type textbox-15"  id="transportation" name="transportation" [(ngModel)]="transport" (keyup)="display_total()">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-4">
+                                <label for="leaveemails" class="form-label font-type fw-semibold">Allowance</label>
+                            </div>
+                            <div class="col-lg-8"> 
+                                <input type="number" class="form-control font-type textbox-15"  id="allowance" name="allowance" [(ngModel)]="allowance" (keyup)="display_total()">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-4">
+                                <label for="leaveemails" class="form-label font-type fw-semibold">Total Cost</label>
+                            </div>
+                            <div class="col-lg-8"> 
+                                <input type="number" class="form-control font-type textbox-15 bg-light"  id="totalcost" name="totalcost" [(ngModel)]="totalcost" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <!-- <div class="col-lg-4">
+                                <label for="leaveemails" class="form-label font-type fw-semibold">Total Cost</label>
+                            </div> -->
+                            <div class="col-lg-8"> 
+                                <div class="form-check form-check-info mb-3">
+                                    <input class="form-check-input" type="checkbox" id="formCheck11" value="1" >
+                                    <label class="form-check-label font-type fw-semibold" for="formCheck11" >
+                                        No Cost Applicable
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-lg-6 pt-2 mb-2" style="float: inline-end;">
+                        <div class="hstack gap-2 justify-content-end">
+                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type"  (click)="savecostdtls(this.trainingID)" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                        </div>
+                    </div>
+                </div> 
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Training cost Modal End-->
+
 
 
 
@@ -1028,7 +1169,7 @@
                                                     </div>
                                                     </div>
                                             </div>
-                                            <div class="row row-cols-lg-auto g-2 align-items-center" style="margin-top: 10px;">
+                                            <div class="row row-cols-lg-auto g-2 align-items-center" style="margin-top: 10px;display: none;">
                                                     <div class="col-12 pt-2 p-1">
                                                         <div class="form-check form-check-info mb-3">
                                                             <input class="form-check-input" type="checkbox" id="formCheck11" value="1" >

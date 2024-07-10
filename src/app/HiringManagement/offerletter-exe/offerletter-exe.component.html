@@ -1,0 +1,359 @@
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header>
+
+        <!-- ========== App Menu ========== -->
+      
+        <app-sidemenu></app-sidemenu>
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!--Offer Letter Style-->
+                    <div class="row" style="justify-content:center;">
+                    <div class="col-lg-9">
+                        <div class="card hadow-lg">
+                            <div class="card-body p-3">
+                                <!--Header-->
+                                <div class="row gy-3 ma-5 center">
+                                    <!-- <div class="col-sm-auto "> -->
+                                        <div class="avatar-title-lg">
+                                            <img src="{{logo}}" alt=""  class="img-size">
+                                        </div>
+                                    <!-- </div> -->
+                                    <div class="col-sm text-center">
+                                        <h2 class="tfont-type fs-20 text-uppercase text-black" style="font-weight: bold;">{{this.companydata[0].COMPANY_ID}}</h2>
+                                        <h5 class="font-type fs-14 text-black" >{{this.companydata[0].DESCRIPTION}}</h5>
+                                        <h5 class="font-type fs-14 text-black" >(UAE); {{this.companydata[0].PHONE_NO}}; {{this.companydata[0].EMAI_ID}}</h5> 
+                                    </div>
+                                </div>
+                                <hr class="px-5">
+                                <!--end Header-->
+
+                         <div class="px-4">
+                                  <div class="mb-2 border-hr"></div>
+
+                                    <div class="mt-3 text-center mb-3">
+                                        <h5 class="mb-1 font-type fw-semibold fs-16 text-black" style="text-decoration: underline;">Private & Confidential</h5>
+                                    </div>
+
+                                    <!--Details-->   
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="p-2">
+                                                <h6 class="fs-14 font-type text-black">Date<span class="ms-1">:</span> <span class="fw-semibold fs-14 text-italic">{{this.offerletterdt[0].ENTER_DATE |date:'dd-MM-yyyy'}}</span></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-12 col-md-12">
+                                                <div class="p-2">
+                                                    <h6 class="fs-14 lh-base font-type fw-semibold mb-1 text-black">To,</h6>
+                                                    <h6 class="fs-14 lh-base font-type fw-semibold text-italic mb-1 text-black"><span>{{offerletterdt[0].GENDER === 'Female' ? 'Ms.' : 'Mr.' }} </span>{{this.offerletterdt[0].CANDIDATE_NAME}}</h6>
+                                                </div>
+                                                <div class="table-responsive margin-up-10">
+                                                    <table class="table table-borderless">
+                                                        <tbody class="font-type">
+                                                            <tr class="h-20">
+                                                                <td class="text-black fs-14" width="19%">Passport Number</td>
+                                                                <td class="text-black fs-14">:</td>
+                                                                <td class="fs-14">{{this.offerletterdt[0].PASSPORT_NO}}</td>
+                                                            </tr>
+                                                            <tr class="h-20">
+                                                                <td class="text-black fs-14">Mobile Number</td>
+                                                                <td class="text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">{{this.offerletterdt[0].MOBILE_NO}}</td>
+                                                            </tr>
+                                                            <tr class="h-20">
+                                                                <td class="text-black fs-14">Address</td>
+                                                                <td class="text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">{{this.offerletterdt[0].CANDIDATE_ADDRESS}}</td>
+                                                            </tr>
+                                                        </tbody>                                        
+                                                    </table>
+                                                </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row ma-10">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="p-2">
+                                                <h6 class="fs-14 font-type text-black">Dear<span class="fw-semibold fs-14 text-italic text-black ms-1">{{this.offerletterdt[0].CANDIDATE_NAME}}</span>,</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="p-2">
+                                                <h6 class="fs-14 font-type lh-base text-black">On behalf of <span class="fw-semibold text-italic fs-14">Worldwide Oilfield Machine M.E. "({{this.offerletterdt[0].COMPANY}})", </span> It is my pleasure to offer you the position of <span class="fw-semibold text-italic fs-14">"{{this.offerletterdt[0].DESIGNATION}}".</span></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-0">
+                                        <div class="col-md-12 col-lg-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless">
+                                                    <tbody class="font-type">
+                                                        <tr class="fs-14 text-black">
+                                                            <td class="fs-14 text-black" width="25%">Location of Employement</td>
+                                                            <td class="fs-14 text-black" width="5%">:</td>
+                                                            <td class="fs-14 text-black">WOM Group Middle East (Dubai & Sharjah)</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="fs-14 text-black">Employment Start Date</td>
+                                                            <td class="fs-14 text-black">:</td>
+                                                            <td class="fs-14 text-black">26/06/2024</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row margin-up-5">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="p-2">
+                                                    <h6 class="fs-14 font-type fw-medium text-black">You will be entitled to the following remuneration:</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-9 col-md-9">
+                                                <div class="table-responsive">
+                                                    <table class="table  table-borderless border-black">
+                                                        <tbody class="font-type">
+                                                            <tr *ngFor="let saldtls of salarydtls">
+                                                                <td class="fw-semibold fs-14 text-black">{{saldtls.ALLOWANCE_NAME}}</td>
+                                                                <td class="fw-semibold fs-14 text-black">:</td>
+                                                                <td class="fw-semibold fs-14 text-black">AED {{saldtls.AMOUNT}} / month</td>
+                                                            </tr>
+                                                            <!-- <tr>
+                                                                <td class="fw-semibold fs-14 text-black">Other Allowance</td>
+                                                                <td class="fw-semibold fs-14 text-black">:</td>
+                                                                <td class="fw-semibold fs-14 text-black">AED 00.00/month</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="fw-semibold fs-14 text-black">Transportation Allowance	</td>
+                                                                <td class="fw-semibold fs-14 text-black">:</td>
+                                                                <td class="fw-semibold fs-14 text-black">AED 00.00/month</td>
+                                                            </tr> -->
+                                                        </tbody>
+                                                        <tfoot class="font-type">
+                                                            <tr>
+                                                                <td class="fw-semibold fs-14 text-blue">Total</td>
+                                                                <td class="fw-semibold fs-14 text-blue">:</td>
+                                                                <td class="fw-semibold fs-14 text-blue">AED 00.00/month</td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                        </div>
+                                    </div>
+                                        
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+                                                <div class="p-2">
+                                                        <h6 class="fs-14 font-type text-black">The employment status of this position is full time and the other benefits will include :</h6>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table class="table table-borderless">
+                                                        <tbody class="font-type">
+                                                            <tr *ngIf="this.offerletterdt[0].OVERTIME==1">
+                                                                <td class="fw-semibold text-black fs-14" width="25%">Overtime</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">Eligible for overtime paid as per UAE Labour Law</td>
+                                                            </tr>
+                                                            <tr *ngIf="this.offerletterdt[0].ACCOMMODATION==1">
+                                                                <td class="fw-semibold text-black fs-14">Accommodation</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">Shared accommodation provided by the company</td>
+                                                            </tr>
+                                                            <tr *ngIf="this.offerletterdt[0].TRANSPORTATION==1">
+                                                                <td class="fw-semibold text-black fs-14">Transportation</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">To and from work place provided by the company</td>
+                                                            </tr>
+                                                            <tr *ngIf="this.offerletterdt[0].MEDICAL_INSURANCE==1">
+                                                                <td class="fw-semibold text-black fs-14">Medical Insurance</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">Private medical insurance to self (spouse and two kids below 18 years of age) by the company</td>
+                                                            </tr>
+                                                            <tr *ngIf="this.offerletterdt[0].LIFE_INSURANCE==1">
+                                                                <td class="fw-semibold text-black fs-14">Life Insurance</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">Group life insurance to self by the company</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="fw-semibold text-black fs-14">Visa/Work permit</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">Provided by the company</td>
+                                                            </tr>
+                                                            <tr *ngIf="this.offerletterdt[0].FAMILY_AIRTICKET==1">
+                                                                <td class="fw-semibold text-black fs-14">Home Ticket</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">One economy class air ticket to and from the home country for self (spouse and two kids below 18 years of age) once every 24/12 months of employment. </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                        </div>
+                                    </div>       
+                
+                                    <div class="row mb-3">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="p-2">
+                                                    <h6 class="fs-14 font-type fw-medium text-black">Other terms of employment are :</h6>
+                                            </div>
+                                                <div class="table-responsive">
+                                                    <table class="table  table-borderless border-black">
+                                                        <tbody class="font-type">
+                                                            <tr>
+                                                                <td class="fw-semibold text-black fs-14" width="25%">Work Schedule</td> 
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="fw-medium text-black fs-14">{{this.offerletterdt[0].WORKINGTIME}}, {{this.offerletterdt[0].WORKINGDAYS}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="fw-semibold text-black fs-14">Probation period</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="fw-medium text-black fs-14">{{this.offerletterdt[0].PROBATION_PERIOD}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="fw-semibold text-black fs-14">Notice period</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="fw-medium text-black fs-14">{{this.offerletterdt[0].NOTICE_PERIOD}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="fw-semibold text-black fs-14">Vacation</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="fw-medium text-black fs-14">As per UAE law</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="fw-semibold text-black fs-14">Termination Clause</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td style="text-align: justify;" class="fw-medium text-black fs-14">
+                                                                    The company or the employee shall be entitled to terminate the existing         
+                                                                    employment contract by giving, at any time, one month notice in writing or 
+                                                                    salary in lieu as per the UAE Labor Law. The employee agrees to pay the recruitment cost to company if he decides to terminate the employment contract within one year of service with the company
+                                                                </td>
+                                                            </tr>
+                                                            <tr *ngIf="this.offerletterdt[0].NC_CLAUSE==1">
+                                                                <td class="fw-semibold text-black fs-14">Non-Compete Clause</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td style="text-align: justify;" class="fw-medium text-black fs-14">
+                                                                    The Second Party commits to refraining from participating in competitive
+                                                                    activities with the employer or seeking employment with a competing
+                                                                    organization for a period of two calendar years after the conclusion or 
+                                                                    termination of the Employment Contract, regardless of whether the 
+                                                                    termination is initiated by the Second Party or mutually agreed upon.
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                    </div>
+                            
+                                    <div class="row mb-4">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="p-2">
+                                                <h6 class="fs-14 font-type text-black mb-4">Yours Sincerely,</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="row">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="p-2">
+                                        <div class="mb-2 border-hr "></div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="row margin-up-10">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="p-2">
+                                                <h6 class="fs-14 font-type fw-semibold text-black">Merlin Vathana</h6>
+                                                <h6 class="fs-14 font-type fw-medium text-black">HR Manager</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row ma-10">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="p-2">
+                                                <h6 class="fs-14 font-type fw-medium mb-4">If you choose to accept this offer, please sign a copy of this offer and return it to us within 3 days from the receipt of this offer.</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+
+                                    <div class="row ma-10">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="p-2">
+                                                <h6 class="fs-14 lh-base font-type mb-5 text-black">Name<span class="ms-2">:</span><span class="ms-2 fw-semibold fs-14 text-black">{{this.offerletterdt[0].CANDIDATE_NAME}}</span></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="p-2">
+                                            <div class="mb-2 border-hr "></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                              
+                                    <div class="row margin-up-10">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="p-2">
+                                                <h6 class="fs-14 font-type fw-medium text-black">I confirm acceptance after reading and understanding all the terms and conditions of the employment.</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                        </div>
+                             <!--End Details-->   
+                            </div>
+                        </div>
+                        <!-- card body -->
+                    </div>           
+                    </div>
+                    <!--end row-->
+
+                    <div class="col-lg-12 mb-3">
+                        <div class="d-flex align-items-center flex-wrap gap-2">
+                            <div class="flex-grow-1 text-center">
+                                <button class="btn btn-success font-type" (click)="convertToPDF()"><i class="ri-file-pdf-line me-1 align-bottom"></i> Download PDF</button>
+                                <a href="javascript:history.back()"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                            </div>
+                        </div>
+                    </div>
+    
+                 </div>
+                   <!-- container-fluid --> 
+                </div>
+                  <!-- End Page-content -->
+
+                  <app-footer></app-footer>
+
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+   

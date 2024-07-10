@@ -289,6 +289,7 @@
                                 <div class="col-lg-12">
                                   <label class="form-label font-type fs-12 fw-semibold text-blue text-italic mb-3" style="text-decoration: underline;">Work Schedule :</label>
                                 </div>
+                                
                                 <div class="col-lg-12">
                                 <div class="row">
                                     <div class="col-lg-6 mb-3"[class.has-error]="OfferDetailsForm.get('shift')?.invalid && OfferDetailsForm.get('shift')?.touched">
@@ -307,6 +308,24 @@
                                             <option *ngFor="let combo of WorkSchedule" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>  
                                         </select>
                                         <div *ngIf="OfferDetailsForm.get('work_schedule')?.invalid && OfferDetailsForm.get('work_schedule')?.touched" class="text-danger">
+                                            *Required!
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row p-2 topbar-up">
+                                <div class="col-lg-12">
+                                  <label class="form-label font-type fs-12 fw-semibold text-blue text-italic mb-3" style="text-decoration: underline;">Grade :</label>
+                                </div>
+                                <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-6 mb-3"[class.has-error]="OfferDetailsForm.get('grade')?.invalid && OfferDetailsForm.get('grade')?.touched">
+                                        <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="grade">
+                                            <option  value="null"selected disabled>Grade</option>                                            
+                                            <option  *ngFor="let grades of listgrade" value="{{grades.KEY_ID}}">{{grades.DATA_VALUE}}</option>
+                                        </select>
+                                        <div *ngIf="OfferDetailsForm.get('grade')?.invalid && OfferDetailsForm.get('grade')?.touched" class="text-danger">
                                             *Required!
                                         </div>
                                     </div>
@@ -359,11 +378,11 @@
                             <div class="flex-grow-1 text-center">
                                 <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type mb-1"(click)="SaveOfferDetails()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Save</button>
                                 <button type="button" class="btn btn-info btn-label right nexttab nexttab font-type mb-1"(click)="GenerateOfferLetter()"><i class="ri-file-ppt-2-line label-icon align-middle fs-16 ms-2"></i>Generate Offer Letter</button>
-                                <button type="button" class="btn btn-danger btn-label right nexttab nexttab font-type mb-1"(click)="Fetch_CandidateOfferDtls();clearSalaryDetailsForm();"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                <button type="button" class="btn btn-danger btn-label right nexttab nexttab font-type mb-1"(click)="Fetch_CandidateOfferDtls()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
                             </div>
                             <div class="flex-shrink-0">
                                 <div class="hstack text-nowrap gap-2">
-                                    <a routerLink="/hiring_management"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                    <a routerLink="/hiring_dashboard"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
                                 </div>
                             </div>
                         </div>

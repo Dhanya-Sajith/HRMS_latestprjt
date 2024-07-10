@@ -464,7 +464,7 @@ rejectReason: any;
           this.apicall.FetchEOSDataofEmployee(EMP_CODE).subscribe((res)=>{
             this.fetchedData = res
             this.showModal = 3;
-            this.failed = "Please, Re-Run the checklist";
+            this.failed = "Please correct the checklist findings and rerun the processing.";
           })
 
         }   

@@ -109,9 +109,9 @@ export class HiringCenterComponent implements OnInit {
       clearSearchFilter: true,
     };
     //Company
-    this.apicall.listCompany(12).subscribe((res)=>{
-      this.companylist=res;
-    })
+    this.apicall.FetchCompanyList_Resource(this.empcode).subscribe((res) => {
+      this.companylist=res;      
+    }); 
     //Department
     this.apicall.listCompany(1).subscribe((res)=>{
       this.deptlist=res;
@@ -148,13 +148,18 @@ export class HiringCenterComponent implements OnInit {
   this.apicall.ResourceEmployeesComboData(-1,-1,this.empcode,1).subscribe((res)=>{
     this.empdata=res;
    }) 
-    this.FetchHireRequests();
+    
     if(!this.grpname.includes('HR') && !this.grpname.includes('HOD')){
       this.addJobPostForm.get('approver_id')?.setValidators(Validators.required);
     }else{
       this.addJobPostForm.get('approver_id')?.clearValidators();
     }
     this.addJobPostForm.get('approver_id')?.updateValueAndValidity();
+    if(!this.grpname.includes('HR') && !this.grpname.includes('HOD') && !this.grpname.includes('LM')){
+      this.ontabSelected(2);
+    }else{
+      this.FetchHireRequests();
+    }
   }
    //New hire requests
   FetchHireRequests(){
@@ -183,7 +188,7 @@ export class HiringCenterComponent implements OnInit {
     }else if(mflag==2){ //Approval Requests
       this.apicall.Fetch_HireRequest(this.empcode,this.selectedStatusApproval,this.yearApproval,2).subscribe((res)=>{
         this.HireRequestsApproval=res;
-       // alert(JSON.stringify(res))
+       //alert(JSON.stringify(res))
        const maxPageFiltered = Math.ceil(this.HireRequestsApproval.length / this.itemsPerPageApproval);  
 
       if (this.currentPageApproval > maxPageFiltered) {

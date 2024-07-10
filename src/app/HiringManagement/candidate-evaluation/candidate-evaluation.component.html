@@ -1,0 +1,460 @@
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!--Form Style-->
+                    <div class="row">
+                    <div class="col-lg-12">
+                            <div class="card pa-0 shadow-lg mb-1">
+                                <div class="card-body">
+                                <!--Header-->
+                                <div class="row margin-up-5" style="justify-content: center;">
+                                    <div class="col-sm-auto">
+                                        <div class="avatar-title-lg p-1">
+                                            <img src="styles\img\logo3.png" alt="" class="img-fluid-lg">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="justify-content: center;">
+                                    <div class="col-sm text-center">
+                                        <h2 class="font-type" style="font-weight: bold;">Candidate Evaluation Form</h2>
+                                    </div>
+                                </div>
+                                <div style="border:1px solid black" class="mb-3"></div>
+                                <!--end Header-->
+
+                                <!--Evaluation Details-->   
+                                <div class="row ma-10">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="p-3">
+                                        <div class="table-card mb-0 table-responsive">
+                                            <table class="table align-middle table-hover table-bordered border-black p-3">
+                                            <tbody class="list form-check-all font-type fs-11">
+                                            <tr class="font-type fs-12">
+                                                <td width="15%">Name of Applicant</td>
+                                                <td class="fw-semibold" width="35%" style="white-space: pre-wrap;">{{Candidate_Nme}}</td>
+                                                <td width="15%">Evaluator</td>
+                                                <td class="fw-semibold" width="35%" style="white-space: pre-wrap;">{{evaluator_Name}}</td>
+                                            </tr>
+                                            <tr class="font-type fs-12">
+                                                <td>Position</td>
+                                                <td class="fw-semibold" style="white-space: pre-wrap;">{{designation}}</td>
+                                                <td>Date of Evaluation</td>
+                                                <td class="fw-semibold">{{evaluation_Date| date:"dd, MMM yyyy"}}</td>
+                                            </tr>
+                                            <tr class="font-type fs-12">
+                                                <td>Department</td>
+                                                <td class="fw-semibold" colspan="3">{{deprtment}}</td>
+                                            </tr>
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Evaluation Details-->  
+
+                                <!--Evaluation Result Details-->  
+                                <form autocomplete="off" [formGroup]="requestForm" (ngSubmit)="validateForm()" [ngClass]="{'disabled': isDisabled}">
+                                <div class="row margin-up-10">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="p-3">
+                                        <div class="table-card mb-0 table-responsive">
+                                            <table class="table align-middle table-bordered border-black p-3">
+                                            <tbody class="list form-check-all font-type fs-11">
+                                            <tr class="font-type fs-12 bg-light fw-semibold">
+                                                <td>Result</td>
+                                            </tr>
+                                            <tr class="font-type fs-12 table-borderless p-0">
+                                                <td style="padding:0px;">
+                                                    
+
+                                                    <textarea class="form-control font-type border-0" required rows="7" placeholder="Enter the result here..." formControlName="resultt" ></textarea>
+                                                    <div *ngIf="requestForm.get('resultt')!.hasError('required') && requestForm.get('resultt')!.touched" class="text-danger">Please Fill the field.</div>
+                                                
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-up-10">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="p-2 topbar-up">
+                                            <h6 class="fs-13 font-type fw-medium text-italic">Answer the following question as they pertain to the requirement of the job:</h6>
+                                        </div>
+                                   </div>
+                                </div>
+
+                                <div class="row margin-up-7">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="p-3">
+                                        <div class="table-card table-responsive">
+                                            <table class="table align-middle table-bordered border-black p-3">
+                                            <tbody class="list form-check-all font-type fs-11">
+                                            <tr class="font-type fs-12 bg-light fw-semibold">
+                                                <td colspan="2">Education
+                                                
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 table-borderless p-0">
+                                                <td> 
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio1" formControlName="Radio1" value="1"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Excellent
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio1" formControlName="Radio1" value="2"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Meets Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio1" formControlName="Radio1" value="3"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Does Not Meet Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio1" formControlName="Radio1" value="4"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Not Applicable For This Position
+                                                        </label>
+                                                        
+                                                    </div>
+                                                    <div *ngIf="requestForm.get('Radio1')!.hasError('required') && requestForm.get('Radio1')!.touched" class="text-danger">Please select the Options</div>
+                                                </td>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..." formControlName="cmmt1" ></textarea>
+                                                <div *ngIf="requestForm.get('cmmt1')!.hasError('required') && requestForm.get('cmmt1')!.touched" class="text-danger">Please Fill the field.</div>
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 bg-light fw-semibold">
+                                                <td colspan="2">Relevant Job Experience
+                                                
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 table-borderless p-0">
+                                                <td> 
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio2" formControlName="Radio2" value="1"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Excellent
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio2" formControlName="Radio2" value="2"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Meets Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio2" formControlName="Radio2" value="3"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Does Not Meet Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio2" formControlName="Radio2" value="4"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Not Applicable For This Position
+                                                        </label>
+                                                    </div>
+                                                    <div *ngIf="requestForm.get('Radio2')!.hasError('required') && requestForm.get('Radio2')!.touched" class="text-danger">Please select the Options</div>
+                                                </td>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..." formControlName="cmmt2" ></textarea>
+                                                <div *ngIf="requestForm.get('cmmt2')!.hasError('required') && requestForm.get('cmmt2')!.touched" class="text-danger">Please Fill the field.</div>
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 bg-light fw-semibold">
+                                                <td colspan="2">Supervisory Experience
+                                                
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 table-borderless p-0">
+                                                <td> 
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio3" formControlName="Radio3" value="1"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Excellent
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio3" formControlName="Radio3" value="2"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Meets Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio3" formControlName="Radio3" value="3"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Does Not Meet Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio3" formControlName="Radio3" value="4"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Not Applicable For This Position
+                                                        </label>
+                                                    </div>
+                                                    <div *ngIf="requestForm.get('Radio3')!.hasError('required') && requestForm.get('Radio3')!.touched" class="text-danger">Please select the Options</div>
+                                                </td>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..."formControlName="cmmt3"  ></textarea>
+                                                <div *ngIf="requestForm.get('cmmt3')!.hasError('required') && requestForm.get('cmmt3')!.touched" class="text-danger">Please Fill the field.</div>
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 bg-light fw-semibold">
+                                                <td colspan="2">Technical Skills
+                                                
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 table-borderless p-0">
+                                                <td> 
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio4" formControlName="Radio4" value="1"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Excellent
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio4" formControlName="Radio4" value="2"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Meets Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio4" formControlName="Radio4" value="3"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Does Not Meet Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio4" formControlName="Radio4" value="4"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Not Applicable For This Position
+                                                        </label>
+                                                    </div>
+                                                    <div *ngIf="requestForm.get('Radio4')!.hasError('required') && requestForm.get('Radio4')!.touched" class="text-danger">Please select the Options</div>
+                                                </td>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..." formControlName="cmmt4" ></textarea>
+                                                <div *ngIf="requestForm.get('cmmt4')!.hasError('required') && requestForm.get('cmmt4')!.touched" class="text-danger">Please Fill the field.</div>
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 bg-light fw-semibold">
+                                                <td colspan="2">Interpersonal Skills
+                                                
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 table-borderless p-0">
+                                                <td> 
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio5" formControlName="Radio5" value="1"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Excellent
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio5" formControlName="Radio5" value="2"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Meets Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio5" formControlName="Radio5" value="3"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Does Not Meet Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio5" formControlName="Radio5" value="4"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Not Applicable For This Position
+                                                        </label>
+                                                    </div>
+                                                    <div *ngIf="requestForm.get('Radio5')!.hasError('required') && requestForm.get('Radio5')!.touched" class="text-danger">Please select the Options</div>
+                                                </td>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..."  formControlName="cmmt5"></textarea>
+                                                <div *ngIf="requestForm.get('cmmt5')!.hasError('required') && requestForm.get('cmmt5')!.touched" class="text-danger">Please Fill the field.</div>
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 bg-light fw-semibold">
+                                                <td colspan="2">Motivation
+                                                
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 table-borderless p-0">
+                                                <td> 
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio6" formControlName="Radio6" value="1"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Excellent
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio6" formControlName="Radio6" value="2"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Meets Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio6" formControlName="Radio6" value="3"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Does Not Meet Job Requirements
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-radio-info mb-1 list-inline hstack ma-5">
+                                                        <input type="radio" name="Radio6" formControlName="Radio6" value="4"/>
+                                                        <label class="form-check-label ms-1">
+                                                            Not Applicable For This Position
+                                                        </label>
+                                                    </div>
+                                                    <div *ngIf="requestForm.get('Radio6')!.hasError('required') && requestForm.get('Radio6')!.touched" class="text-danger">Please select the Options</div>
+                                                </td>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..." formControlName="cmmt6" ></textarea>
+                                                <div *ngIf="requestForm.get('cmmt6')!.hasError('required') && requestForm.get('cmmt6')!.touched" class="text-danger">Please Fill the field.</div>
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 bg-light fw-semibold">
+                                                <td colspan="2">Strenghts</td>
+                                            </tr>
+                                            <tr class="font-type fs-12 table-borderless p-0">
+                                                <td style="padding: 0px;" colspan="2"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..."formControlName="cmmt7"  ></textarea>
+                                                <div *ngIf="requestForm.get('cmmt7')!.hasError('required') && requestForm.get('cmmt7')!.touched" class="text-danger">Please Fill the field.</div>
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 bg-light fw-semibold">
+                                                <td colspan="2">Weaknesses</td>
+                                            </tr>
+                                            <tr class="font-type fs-12 table-borderless p-0">
+                                                <td style="padding: 0px;" colspan="2"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..." formControlName="cmmt8" ></textarea>
+                                                <div *ngIf="requestForm.get('cmmt8')!.hasError('required') && requestForm.get('cmmt8')!.touched" class="text-danger">Please Fill the field.</div>
+                                            </td>
+                                            </tr>
+                                            <tr class="font-type fs-12 bg-light fw-semibold">
+                                                <td colspan="2">Other Comments</td>
+                                            </tr>
+                                            <tr class="font-type fs-12 table-borderless p-0">
+                                                <td style="padding: 0px;" colspan="2"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..." formControlName="cmmt9"  ></textarea>
+                                                <div *ngIf="requestForm.get('cmmt9')!.hasError('required') && requestForm.get('cmmt9')!.touched" class="text-danger">Please Fill the field.</div> 
+                                            </td>
+                                            </tr>
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 p-3" [hidden]="view == 1" >
+                                    <div class="d-flex align-items-center flex-wrap gap-2">
+                                        <div class="flex-grow-1 text-center">
+                                            <div>
+                                                <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" id="validate-btn"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                <button type="button" class="btn btn-blue btn-label right nexttab nexttab font-type" (click)="Clear()" ><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                            </div>
+                                            <!-- <div *ngIf="requestForm.valid">
+                                                <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" id="add-btn"  data-bs-toggle="modal" (click)="AddCandidateEvalution()"><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                <button type="button" class="btn btn-blue btn-label right nexttab nexttab font-type" (click)="Clear()" ><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                            </div> -->
+                                        </div>
+                                        
+                                        <!-- <div class="flex-shrink-0">
+                                            <div class="hstack text-nowrap gap-2">
+                                                <a href=""><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                
+                                </div>
+                            </form>
+                                <!--End Details-->  
+
+                                </div>
+                            </div>
+                             <!--end card body-->
+                    </div>      
+                    </div>
+                    <!-- End Form Style -->
+
+                    
+                    <div class="col-lg-12" >
+                        <div class="hstack gap-1 justify-content-end">
+                            <a href="HiringRequestDashboard">
+                            <button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button>
+                            </a>
+                        </div>
+                    </div>
+                    <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button>  
+                 <!--Modal For Success Message Start-->
+                 <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==1"> 
+                                <div class="container">
+                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                            
+                                </div>
+                            </div>
+                            <div class="modal-body" *ngIf="showModal==2">
+                            <div class="container">
+                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                                
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="cancelModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#CancelModal">Open Modal</button> 
+                 <!--Delete Entry Modal-->
+                 <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-orange padding-up-5">
+                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-closeDelete"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="text-center">
+                                    <h5 class="fs-13 font-type">Are you sure you want to submit?</h5>
+                                    <p class="text-muted fs-12 mb-2 pt-1 font-type">Form once submitted cannot be edited!</p>
+                                    <div class="hstack gap-2 justify-content-center remove">   
+                                        <button class="btn btn-success font-type" data-bs-dismiss="modal">No, Go back!</button>
+                                        <button class="btn btn-danger font-type"(click)="AddCandidateEvalution()">Yes, Continue</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Delete Entry Modal-->
+                 </div>
+                
+                   <!-- container-fluid --> 
+                </div>
+                  <!-- End Page-content -->
+
+                  <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    

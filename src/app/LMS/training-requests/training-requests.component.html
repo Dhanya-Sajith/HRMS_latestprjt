@@ -187,7 +187,7 @@
                                                     <td style="white-space: pre-wrap;">{{empdata.SUBJECT_NAME}}</td>
                                                     <td>{{empdata.TRAINING_TYPE}}</td>
                                                     <td>{{empdata.PROPOSED_QUARTER}}</td>
-                                                    <td class="status"><a href="#statusModal" class="text-white d-inline-block w-100"><span [ngStyle]="getStatusStyles(empdata.PLAN_STATUS)" class="badge text-white width-budge fs-11 fw-medium">{{empdata.PLAN_STATUS_VAL}}</span></a></td>
+                                                    <td class="status"><a href="#statusModal" data-bs-toggle="modal" class="text-white d-inline-block w-100" (click)="statusmodal(empdata.PLAN_ID)"><span [ngStyle]="getStatusStyles(empdata.PLAN_STATUS)" class="badge text-white width-budge fs-11 fw-medium">{{empdata.PLAN_STATUS_VAL}}</span></a></td>
                                                     <td>
                                                         <ul class="list-inline hstack gap-2 mb-0 ms-2">
                                                             <!--The cancellation option is only available when a request is created by an employee and the HOD has not approved the request.-->
@@ -470,57 +470,41 @@
                             </div> 
                             <!--End Training Request Model Team-->
 
-                            <!-- Status Model-->
-                            <div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-bottom" style="float:right">
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-orange padding-up-5">
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-                                        </div>
-                                        <div class="modal-body text-center ma-5">
-                                            <div class="mb-1">
-                                                <div class="table-responsive table-card">
-                                                    <table class="table table-nowrap mb-0 table-bordered border-dark">
-                                                        <thead class="font-type">
-                                                            <tr>
-                                                                <th scope="col">Levels</th>
-                                                                <th scope="col">Approver</th>
-                                                                <th scope="col">Date</th>
-                                                                <th scope="col">Status</th>
-                                                                <th scope="col">Remarks/Reason</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="fs-12 font-type">
-                                                                <td>L1</td>
-                                                                <td>HOD</td>
-                                                                <td>07 Feb, 2024</td>
-                                                                <td><span class="badge bg-success width-budge fs-11 fw-medium">Approved</span></td>
-                                                                <td style="white-space: pre-wrap;">The performance review evaluates how well one learns new skills and information through training programs, and applies that new knowledge in the job.</td>
-                                                            </tr>
-                                                            <tr class="fs-12 font-type">
-                                                                <td>L2</td>
-                                                                <td>HR</td>
-                                                                <td>07 Feb, 2024</td>
-                                                                <td><span class="badge bg-success width-budge fs-11 fw-medium">Approved</span></td>
-                                                                <td style="white-space: pre-wrap;">The performance review evaluates how well one learns new skills and information through training programs, and applies that new knowledge in the job.</td>
-                                                            </tr>
-                                                            <tr class="fs-12 font-type">
-                                                                <td>L3</td>
-                                                                <td>VP</td>
-                                                                <td>07 Feb, 2024</td>
-                                                                <td><span class="badge bg-blue width-budge fs-11 fw-medium">Pending</span></td>
-                                                                <td style="white-space: pre-wrap;">The performance review evaluates how well one learns new skills and information through training programs, and applies that new knowledge in the job.</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                           <!-- Status Model-->
+                           <div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-bottom" style="float:right">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                    </div>
+                                    <div class="modal-body text-center ma-5">
+                                        <div class="mb-1">
+                                            <div class="table-responsive table-card">
+                                                <table class="table table-nowrap mb-0 table-bordered border-dark">
+                                                    <thead class="font-type">
+                                                        <tr>
+                                                            <th scope="col">Approver</th>
+                                                            <th scope="col">Date</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Remarks/Reason</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="fs-12 font-type" *ngFor="let sdata of statusdata">
+                                                            <td>{{sdata.APPROVER}}</td>
+                                                            <td>{{sdata.VERIFIED_DATE | date:'dd-MM-yyyy'}}</td>
+                                                            <td><span class="badge bg-success width-budge fs-11 fw-medium">{{sdata.STATUS}}</span></td>
+                                                            <td style="white-space: pre-wrap;">{{sdata.VERIFIED_REMARKS}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- End Status Model-->
+                        </div>
+                        <!-- End Status Model-->
 
                      <!--Modal For Success Message Start-->
                      <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">

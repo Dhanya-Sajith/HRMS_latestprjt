@@ -133,6 +133,13 @@ import { EmployeeOffboardingComponent } from './competency/employee-offboarding/
 import { EmployeeOffboardingActionComponent } from './competency/employee-offboarding-action/employee-offboarding-action.component';
 import { HiringCenterComponent } from './HiringManagement/hiring-center/hiring-center.component';
 import { OfferDetailsComponent } from './HiringManagement/offer-details/offer-details.component';
+import { CareerComponent } from './HiringManagement/career/career.component';
+import { HiringDashboardComponent } from './HiringManagement/hiring-dashboard/hiring-dashboard.component';
+import { TurnoverReportComponent } from './reports/turnover-report/turnover-report.component';
+import { CandidateEvaluationComponent } from './HiringManagement/candidate-evaluation/candidate-evaluation.component';
+import { AccountPayableComponent } from './payroll/account-payable/account-payable.component';
+import { OfferletterExeComponent } from './HiringManagement/offerletter-exe/offerletter-exe.component';
+import { OfferletterIntComponent } from './HiringManagement/offerletter-int/offerletter-int.component';
 
 
 
@@ -275,6 +282,14 @@ const routes: Routes = [
   {path:'EmployeeOffboardingAction' , component:EmployeeOffboardingActionComponent},
   {path:'HiringRequestDashboard' , component:HiringCenterComponent},
   {path:'OfferLetterUpdation' , component:OfferDetailsComponent},
+  {path:'career' ,component:CareerComponent},
+  {path:'hiring_dashboard' ,component:HiringDashboardComponent},
+  {path:'turnover-report',component:TurnoverReportComponent},
+  {path:'candidate-evaluation',component:CandidateEvaluationComponent},
+  {path:'account-payable',component:AccountPayableComponent},
+
+  {path:'Offer_Letter_Exe' , component:OfferletterExeComponent},
+  {path:'Offer_Letter_Int' , component:OfferletterIntComponent},
 
 
 

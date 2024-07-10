@@ -309,7 +309,8 @@
                                             <h6 class="fs-12 font-type fw-semibold"><span>Duration</span></h6>
                                         </div>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control font-type fs-11 mb-0 textbox-15" id="duration" name="duration" formControlName="duration">  
+                                            <ngx-timepicker-field [format]="24"   class="editedIntime" id="duration" name="duration" formControlName="duration" ></ngx-timepicker-field>
+                                            <!-- <input type="text" class="form-control font-type fs-11 mb-0 textbox-15" id="duration" name="duration" formControlName="duration">   -->
                                             <div *ngIf="OnlinAddForm.get('duration')!.hasError('required') && OnlinAddForm.get('duration')!.touched" class="text-danger">Please enter duration</div>  
                                         </div>
                                     </div>

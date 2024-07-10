@@ -67,6 +67,22 @@ export class TrainingPlanComponent implements OnInit {
   Trainingskills: any;
 
   durationval= new FormControl();
+  currentYear: any;
+
+  com_name= new FormControl();
+  oldEmpduration= new FormControl();
+  newEmpduration= new FormControl();
+  trtargetdata: any;
+  existing: any;
+  newduration: any;
+  trainingID: any;
+  trainingCost: any;
+  trainingfee: any;
+  transport: any;
+  accomodation: any;
+  allowance: any;
+  totalcost: any;
+
 
   constructor(private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private router:Router,private fb: FormBuilder,private route: ActivatedRoute) { 
 
@@ -92,6 +108,8 @@ export class TrainingPlanComponent implements OnInit {
   }  
 
   ngOnInit(): void {
+
+  this.currentYear = new Date().getFullYear();
 
   this.route.queryParams
     .subscribe(params => {
@@ -1026,6 +1044,162 @@ fetchskilledemployees()
    })
  }
 
+
+ UpdateTrainingtarget()
+ {
+
+  const com_name = this.com_name.value;
+  const oldEmpduration = this.oldEmpduration.value;
+  const oldtypeval="17";
+  const newEmpduration = this.newEmpduration.value;
+  const newtypeval="18";
+
+  const exist_duration = [];
+  exist_duration.push(oldtypeval,oldEmpduration);
+
+  const new_duration = [];
+  new_duration.push(newtypeval,newEmpduration);
+ 
+  const data = {
+    company : com_name,
+    value_type : 17,   
+    exist_duration:exist_duration,
+    new_duration:new_duration
+    };
+
+  //alert(JSON.stringify(data))
+
+  this.apicall.SaveOnlineTrainingTarget(data).subscribe(res =>{
+  //  alert(res.Errorid);
+    if(res.Errorid!=0){
+      (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
+      this.showModals = 1;
+      this.successs = "Online Training Added Successfully";
+    }
+    else{
+      (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
+      this.showModals = 2;
+      this.faileds = "Failed!";
+    }  
+
+  })
+
+ }
+
+
+ changecomname()
+ {
+  const type=17;
+  const company=this.com_name.value;
+  this.apicall.Fetch_TrainingTarget_HR(type,company).subscribe((res) => {
+    this.trtargetdata = res;
+
+   this.existing = this.trtargetdata[0].EXISTING_EMP_DURATION;
+   this.newduration = this.trtargetdata[0].NEW_EMP_DURATION;
+
+  // alert(this.existing);
+  //  alert(JSON.stringify(res))
+  
+  })
+ }
+
+
+ addCostdtls(trainingId:any)
+{
+  
+  this.trainingID=trainingId;
+
+ // alert(this.trainingID)
+
+  this.apicall.Fetch_Trainingcost(trainingId).subscribe((res) => {
+    this.trainingCost = res;
+
+    this.trainingfee = this.trainingCost[0].TRAINING_FEE;
+    this.accomodation = this.trainingCost[0].ACCOMMODATION;
+    this.transport = this.trainingCost[0].TRANSPORT;
+    this.allowance = this.trainingCost[0].ALLOWANCE;
+    this.totalcost = this.trainingCost[0].TOTAL_COST;
+  
+  })
+
+}
+
+savecostdtls(trainingId:any)
+{
+
+  const training_fee =  (<HTMLInputElement>document.getElementById("trainingfee")).value;
+  const accommadation =  (<HTMLInputElement>document.getElementById("accomodation")).value;
+  const transport =  (<HTMLInputElement>document.getElementById("transportation")).value;
+  const allowance =  (<HTMLInputElement>document.getElementById("allowance")).value;
+  const total =  (<HTMLInputElement>document.getElementById("totalcost")).value;
+  //const mflag =  (<HTMLInputElement>document.getElementById("cashnotapp")).value;
+
+  const checkbox = (<HTMLInputElement>document.getElementById("formCheck11"))
+  const markasvalue = checkbox.checked ? checkbox.value : "0";
+
+  const data = {
+    trainingid : trainingId,
+    training_fee : training_fee,   
+    accommadation:accommadation,
+    transport:transport,
+    allowance:allowance,
+    total:total,
+    user:this.empcode,
+    mflag:markasvalue,
+    };
+
+   this.apicall.SaveCostDetails(data).subscribe(res =>{
+      // alert(res.Errorid);
+        if(res.Errorid!=0){
+          (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
+          this.showModals = 1;
+          this.successs = "Saved Successfully";
+        }
+        else{
+          (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
+          this.showModals = 2;
+          this.faileds = "Failed!";
+        }  
+    
+     })
+  
+}  
+
+
+
+display_total() {
+  // Get the values from input fields
+  const trainingfeeStr = (<HTMLInputElement>document.getElementById("trainingfee")).value;
+  const accomodationStr = (<HTMLInputElement>document.getElementById("accomodation")).value;
+  const transportationStr = (<HTMLInputElement>document.getElementById("transportation")).value;
+  const allowanceStr = (<HTMLInputElement>document.getElementById("allowance")).value;
+
+  // Convert strings to numbers
+  const trainingfee = parseFloat(trainingfeeStr);
+  const accomodation = parseFloat(accomodationStr);
+  const transportation = parseFloat(transportationStr);
+  const allowance = parseFloat(allowanceStr);
+
+  // Initialize total to 0
+  let total = 0;
+
+  // Add valid numbers to total
+  if (!isNaN(trainingfee)) {
+    total += trainingfee;
+  }
+  if (!isNaN(accomodation)) {
+    total += accomodation;
+  }
+  if (!isNaN(transportation)) {
+    total += transportation;
+  }
+  if (!isNaN(allowance)) {
+    total += allowance;
+  }
+
+  // Display the total
+  (<HTMLInputElement>document.getElementById("totalcost")).value = total.toString();
+}
 
 
 

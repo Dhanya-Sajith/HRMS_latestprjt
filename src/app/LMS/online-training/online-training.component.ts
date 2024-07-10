@@ -41,6 +41,7 @@ export class OnlineTrainingComponent implements OnInit {
   viewsts: any;
   oldvideo_path=new FormControl();
   olddoc_path=new FormControl();
+  durationval= new FormControl();
 
   constructor(private session:LoginService,private apicall:ApiCallService,private route:Router,private fb: FormBuilder) {
 

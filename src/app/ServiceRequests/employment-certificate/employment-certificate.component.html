@@ -35,29 +35,16 @@
                         <div class="card p-3 shadow-lg" id="htmlElementId" *ngIf="employmentdata&&employmentdata!=''">
 
                             <!--Header-->
-                            <div class="row gy-2 ma-10 px-5">
-                                <div class="col-sm-auto">
-                                    <!-- <div class="avatar-title-lg p-1">
-                                        <img *ngIf="companydata?.length > 0" src="assets\styles\img\{{companydata[0].LOGO}}" alt="" class="img-fluid-lg" width="350px" height="100px">
-                                        <img src="" id="tableBanner" />
-                                    </div> -->
-                                    <div class="row gy-3" style="border-bottom: 3px ;">
-                                        <!-- <img src={{hostname}}{{this.companyData[0].DATA_VALUE}} alt="" class="img-size"> -->
-                                        <div class="avatar-title-lg p-1" *ngIf="this.companydata[0]?.COMPANY_ID=='Worldwide Oilfield Machine Middle East' || this.companydata[0]?.COMPANY_ID=='Worldwide Oilfield Machine Sales and Marketing Ltd' ">
-                                            <img src="assets\styles\img\WOM Logo - 2024.png" alt="" class="img-size">
-                                        </div>
-                                        <div class="avatar-title-lg p-1" *ngIf="this.companydata[0]?.COMPANY_ID=='WOM Valves & Controls International FZE' ">
-                                            <img src="assets\styles\img\WVC-LOGO-2024.png" alt="" class="img-size">
-                                        </div>
-                                        <div class="avatar-title-lg p-1" *ngIf="this.companydata[0]?.COMPANY_ID=='Magnum Technology Center FZE' ">
-                                            <img src="assets\styles\img\MTC logo.png" alt="" class="img-size">
-                                        </div>
+                            <div class="row gy-3 ma-5 center">
+                                <!-- <div class="col-sm-auto "> -->
+                                    <div class="avatar-title-lg">
+                                        <img src="{{logo}}" alt=""  class="img-size">
                                     </div>
-                                </div>
+                                <!-- </div> -->
                                 <div class="col-sm text-center">
-                                    <h2 class="text-blue font-type fs-16 ma-10" style="font-weight: bold;"*ngIf="companydata?.length > 0">{{companydata[0]?.COMPANY_ID}}</h2>
-                                    <h5 class="text-blue font-type fs-16" *ngIf="companydata?.length > 0">{{companydata[0].DESCRIPTION}}</h5>
-                                    <h5 class="text-blue font-type fs-16" *ngIf="companydata?.length > 0">(UAE); {{companydata[0].PHONE_NO}}; {{companydata[0].EMAI_ID}}</h5> 
+                                    <h2 class="tfont-type fs-20 text-uppercase text-black" style="font-weight: bold;">{{this.companydata[0].COMPANY_ID}}</h2>
+                                    <h5 class="font-type fs-14 text-black" >{{this.companydata[0].DESCRIPTION}}</h5>
+                                    <h5 class="font-type fs-14 text-black" >(UAE); {{this.companydata[0].PHONE_NO}}; {{this.companydata[0].EMAI_ID}}</h5> 
                                 </div>
                             </div>
                             <hr>

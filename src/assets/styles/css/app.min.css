@@ -18655,3 +18655,43 @@ text-transform: uppercase;
 .ma-5{
     margin-top: 5px
 }
+.card-radio-new .form-check-label {
+    background-color: var(--vz-info-bg);
+    border-radius: .25rem;
+    padding: 0.1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    position: relative;
+    padding-right: 32px
+}
+
+.card-radio-new .form-check-label:hover {
+    cursor: pointer
+}
+
+.card-radio-new .form-check-input {
+    display: none
+}
+
+.card-radio-new .form-check-input:checked+.form-check-label {
+    border-color: #54b4e4!important
+}
+
+.card-radio-new .form-check-input:checked+.form-check-label:before {
+    content: "\eb80";
+    font-family: remixicon;
+    position: absolute;
+    top: 2px;
+    right: 6px;
+    font-size: 25px;
+    color: white;
+}
+
+.card-radio-new.dark .form-check-input:checked+.form-check-label:before {
+    color: #fff
+}
+.card-radio-new {
+    padding: 0
+}

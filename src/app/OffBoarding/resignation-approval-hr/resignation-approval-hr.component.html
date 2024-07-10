@@ -170,7 +170,7 @@
                                                                         </a>
                                                                     </li>
                                                                     <li>
-                                                                        <a class="dropdown-item"*ngIf="(data.EXITINTERVIEW_STATUS==1 && data.EXITINTERVIEW_DATE) || (data.EXITINTERVIEW_STATUS==0 && data.EOS_PROCESS_STATUS==1)" routerLink="/ExperienceLetter">
+                                                                        <a class="dropdown-item"*ngIf="(data.EXITINTERVIEW_STATUS==1 && data.EXITINTERVIEW_DATE) || (data.EXITINTERVIEW_STATUS==0 && data.EOS_PROCESS_STATUS==1)" routerLink="/ExperienceLetter" [queryParams]="{ REQID:data.REQUEST_ID, CODE:data.EMP_CODE}">
                                                                             <i class="ri-article-line me-2 align-bottom text-blue fs-18"></i>
                                                                             <span class="text-blue">Experience Letter</span>
                                                                         </a>

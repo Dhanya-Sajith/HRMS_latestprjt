@@ -12,18 +12,19 @@ export class ApiCallService {
  //Emisoft test cloud
 //public dotnetapi = 'http://15.206.239.91:83/api';
 //Emisoft cloud for customer testing
-public dotnetapi = 'http://3.111.100.109:81/api';
+//public dotnetapi = 'http://3.111.100.109:81/api';
 //Local host
-//public dotnetapi = 'https://localhost:5001/api';
+public dotnetapi = 'https://localhost:5001/api';
 //Live server for Customer intranet
 //public dotnetapi = 'http://192.168.10.29:81/api';
 //public hostname='localhost:44381';
 //Live server for Customer Cloud 
  //public dotnetapi = 'http://72.167.151.157:81/api';
-  // Emisoft common
- //public dotnetapi = 'http://192.168.1.45:85/api';
-
-
+  // Emisoft common Test server
+ //public dotnetapi = 'http://192.168.1.55:84/api';
+  // Emisoft common Test cloud server
+  //public dotnetapi = 'http://13.53.118.116:81/api';
+ 
   // common for all
 
   FetchLeaveTypes()
@@ -1257,11 +1258,11 @@ edusubmit(fieldids:any,fieldname:any)
   return this.http.get<any>(`${this.dotnetapi}/EmployeeManagement/SaveProfessionalfields/${fieldids}/${fieldname}`);
 }
 
-
-fetchemp_completests(completests:any,empcode:any)
+fetchemp_completests(activests:any,completests:any,empcode:any)
 {
-  return this.http.get<any>(`${this.dotnetapi}/EmployeeManagement/FetchempCompletests/${completests}/${empcode}`);
+  return this.http.get<any>(`${this.dotnetapi}/EmployeeManagement/FetchempCompletests/${activests}/${completests}/${empcode}`);
 }
+
 
 //Request Management
 FetchCompReq_Filter_HR(data:any)
@@ -2581,5 +2582,171 @@ GenerateOfferLetter(data:any)
 {
   return this.http.post<any>(`${this.dotnetapi}/Hiring/GenerateOfferLetter`,data);
 }
+
+//Training approver details - New
+Fetch_EmpApprover_Training(empcode:any,reqid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/LMS/Fetch_EmpApprover_Training/${empcode}/${reqid}`);
+}
+
+//Hiring
+Get_eligible_openings(years:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/Get_eligible_openings/${years}`);
+}
+Apply_for_job(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/Apply_for_job`,data);
+}
+Get_applied_jobs(year:any,company:any,status:any,ecode:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/Get_applied_jobs/${year}/${company}/${status}/${ecode}`);
+}
+Job_CV_upload(data:any,reqid:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/File/Job_CV_upload/${reqid}`,data);
+}
+
+//Hiring  Management
+JobRequest_ListHR(empcode:any,reqstatus:any,year:any,company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/JobRequest_ListHR/${empcode}/${reqstatus}/${year}/${company}`);
+}
+HireRequest_StatusCount(empcode:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/HireRequest_StatusCount/${empcode}`);
+}
+FetchApplicantsList(reqId:any,designation:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/FetchApplicantsList/${reqId}/${designation}`);
+}
+GetCandidateCV(activereqid:any,flag:any)
+{
+  let urls=`${this.dotnetapi}/File/GetCandidateCV/${activereqid}/${flag}`;
+   return urls;
+}
+Hiring_Updates(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/Hiring_Updates`,data);
+}
+CandidateNameCombo(reqid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/CandidateNameCombo/${reqid}`);
+}
+HR_CandidateDocUpload(data:any,reqid:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/File/HR_CandidateDocUpload/${reqid}`,data);
+}
+HR_AddCandidateDetails(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/HR_AddCandidateDetails`,data);
+}
+HireRequestCandidates(reqid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/HireRequestCandidates/${reqid}`);
+}
+HR_EditCandidateDetails(reqid:any,candid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/HR_EditCandidateDetails/${reqid}/${candid}`);
+}
+Candidate_ListHR(user:any,reqstatus:any,company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/Candidate_ListHR/${user}/${reqstatus}/${company}`);
+}
+Update_OfferAccept_Details(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/Update_OfferAccept_Details`,data);
+}
+ConvertToEmployee_HR(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/ConvertToEmployee_HR`,data);
+}
+Save_Employee_Transfer(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/Save_Employee_Transfer`,data);
+}
+//Anjana 21-05-2024
+viewTurnoverReport(company:any,startmonth:any,endmonth:any,startyr:any,endyr:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/FetchturnoverReport/${company}/${startmonth}/${endmonth}/${startyr}/${endyr}`);
+}
+
+Fetch_EffectiveDate_SalRevision(company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Payroll/Fetch_EffectiveDate_SalRevision/${company}`); 
+}
+//Candidate Evaluation
+  FetchCandidateDetails(candidate_id:any)
+  {
+    return this.http.get<any>(`${this.dotnetapi}/Hiring/Fetch_Candidate_Details/${candidate_id}`);
+  } 
+  SaveCandidateDetails(data:any)
+  {
+    
+    return this.http.post<any>(`${this.dotnetapi}/Hiring/AddCandidate_EvaluationDtl`,data);
+  }
+  ViewCandidateDetails(candidate_id:any)
+  {
+    return this.http.get<any>(`${this.dotnetapi}/Hiring/ViewCandidate_EvaluationDtl/${candidate_id}`);
+  } 
+//Accounts_Payable
+AccountsExpenseClaimFilter(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Payroll/FetchAccountsExpenseClaim_Filter`,data);
+} 
+AccountsLoanFilter(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Payroll/FetchAccountsLoanRequest_Filter`,data);
+} 
+GetAccountsExpenseclaimFile(reqid:any,docname:any)
+{
+let urls=`${this.dotnetapi}/File/GetAccountsExpenseClaimDocs/${reqid}/${docname}`;
+ return urls;
+}
+AccountsLoanPaymentDetails(empcode:any,reqid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Payroll/Fetch_AccountsLoanPaymentDetails/${empcode}/${reqid}`);
+}
+
+fetchofferletterdtlsApi(candidateid:any)
+{
+  //alert(candidateid);
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/Fetch_offer_letter_data/${candidateid}`);
+}
+
+fetchsalarydtlsApi(candidateid:any)
+{
+  //alert(candidateid);
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/Fetch_hiring_salarydtl/${candidateid}`);
+}
+FetchCompanyList_Resource(empcode:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/MasterManagement/FetchCompanyList_Resource/${empcode}`);
+}
+
+
+Fetch_TrainingTarget_HR(type:any,company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/LMS/Fetch_TrainingTarget_HR/${type}/${company}`);
+}
+
+SaveOnlineTrainingTarget(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/LMS/Update_TrainingTarget`,data);
+}
+
+
+SaveCostDetails(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/LMS/Add_TrainingCost`,data);
+}
+
+Fetch_Trainingcost(trainingid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/LMS/Fetch_TrainingCost/${trainingid}`);
+}
+
+
+
 
 }

@@ -148,6 +148,13 @@ import { EmployeeOffboardingComponent } from './competency/employee-offboarding/
 import { EmployeeOffboardingActionComponent } from './competency/employee-offboarding-action/employee-offboarding-action.component';
 import { HiringCenterComponent } from './HiringManagement/hiring-center/hiring-center.component';
 import { OfferDetailsComponent } from './HiringManagement/offer-details/offer-details.component';
+import { CareerComponent } from './HiringManagement/career/career.component';
+import { HiringDashboardComponent } from './HiringManagement/hiring-dashboard/hiring-dashboard.component';
+import { TurnoverReportComponent } from './reports/turnover-report/turnover-report.component';
+import { CandidateEvaluationComponent } from './HiringManagement/candidate-evaluation/candidate-evaluation.component';
+import { AccountPayableComponent } from './payroll/account-payable/account-payable.component';
+import { OfferletterIntComponent } from './HiringManagement/offerletter-int/offerletter-int.component';
+import { OfferletterExeComponent } from './HiringManagement/offerletter-exe/offerletter-exe.component';
 
 
 @NgModule({
@@ -293,6 +300,13 @@ import { OfferDetailsComponent } from './HiringManagement/offer-details/offer-de
     EmployeeOffboardingActionComponent,
     HiringCenterComponent,
     OfferDetailsComponent,
+    CareerComponent,
+    HiringDashboardComponent,
+    TurnoverReportComponent,
+    CandidateEvaluationComponent,
+    AccountPayableComponent,
+    OfferletterIntComponent,
+    OfferletterExeComponent,
     
     
   ],

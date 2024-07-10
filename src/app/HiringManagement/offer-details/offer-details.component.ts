@@ -3,7 +3,6 @@ import { ApiCallService } from 'src/app/api-call.service';
 import { LoginService } from 'src/app/login.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
 @Component({
   selector: 'app-offer-details',
   templateUrl: './offer-details.component.html',
@@ -35,6 +34,7 @@ export class OfferDetailsComponent implements OnInit {
   failed: any;
   success:any;
   Sourcetype: any;
+  listgrade: any;
 
 
   constructor(private apicall:ApiCallService,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute,private router: Router) {
@@ -52,6 +52,7 @@ export class OfferDetailsComponent implements OnInit {
       FamilyAirticket: [false],
       FamilyVisa: [false],
       shift: ['', Validators.required],
+      grade: [null, Validators.required],
       work_schedule: ['', Validators.required],
       AirTicketEligibility: [null, Validators.required],
       ProbationPeriod: ['', Validators.required],
@@ -65,12 +66,13 @@ export class OfferDetailsComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    
     this.route.queryParams
       .subscribe(params => {
          this.CandidateId = params['CandidateId']; 
          this.Sourcetype = params['Sourcetype'];      
       }
-    );
+    );   
     
      //Work Schedule
      this.apicall.listCompany(9).subscribe((res)=>{
@@ -79,6 +81,10 @@ export class OfferDetailsComponent implements OnInit {
     //Shift Timings
     this.apicall.listshift().subscribe((res)=>{
       this.listshift=res;
+    })
+    //Grade
+    this.apicall.listCompany(8).subscribe((res)=>{
+      this.listgrade=res;
     })
     //Air Ticket Eligibility
     this.apicall.listCompany(36).subscribe((res)=>{
@@ -116,6 +122,7 @@ export class OfferDetailsComponent implements OnInit {
         FamilyVisa: this.OfferDtls[0].VISA_WORK_PERMIT,
         shift: this.OfferDtls[0].WORKINGTIME, 
         work_schedule: this.OfferDtls[0].WORKINGDAYS,
+        grade: this.OfferDtls[0].GRADE,
         AirTicketEligibility: this.OfferDtls[0].AIRTICKET_ELIGIBILITY,
         ProbationPeriod: this.OfferDtls[0].PROBATION_PERIOD,
         NoticePeriod: this.OfferDtls[0].NOTICE_PERIOD,
@@ -143,12 +150,13 @@ export class OfferDetailsComponent implements OnInit {
         updated_by:this.empcode
       };
       this.apicall.GenerateOfferLetter(data).subscribe((res)=>{
-        //alert(JSON.stringify(res));
+        //alert(JSON.stringify(res)); 
       });
       if(this.Sourcetype==0){
-      this.router.navigate(['Offer_Letter_Int', { CandidateId: this.CandidateId }]); 
+      this.router.navigate(['/Offer_Letter_Int'], { queryParams: {CandidateId:this.CandidateId } }); 
       }else{
-        this.router.navigate(['Offer_Letter_Exe', { CandidateId: this.CandidateId }]); 
+        this.router.navigate(['/Offer_Letter_Exe'], { queryParams: {CandidateId:this.CandidateId } }); 
+     //   this.router.navigate(['/take_assessment'], { queryParams: { Id: TrainingId } });
       } 
     }    
     } else{   
@@ -156,12 +164,30 @@ export class OfferDetailsComponent implements OnInit {
     }
   }
   SaveOfferDetails(){
-    const data={
+    const data = {
       candidateId: this.CandidateId,
-      ...this.OfferDetailsForm.value,       
-      updated_by:this.empcode            
+      updated_by: this.empcode,
+      passportNo: this.OfferDetailsForm.get('passportNo')?.value,
+      mobileNo: this.OfferDetailsForm.get('mobileNo')?.value,
+      address: this.OfferDetailsForm.get('address')?.value,
+      total: this.OfferDetailsForm.get('total')?.value,
+      Accommodation: this.OfferDetailsForm.get('Accommodation')?.value ?? false,
+      Transportation: this.OfferDetailsForm.get('Transportation')?.value ?? false,
+      OvertimeEligible: this.OfferDetailsForm.get('OvertimeEligible')?.value ?? false,
+      MedicalInsurance: this.OfferDetailsForm.get('MedicalInsurance')?.value ?? false,
+      LifeInsurance: this.OfferDetailsForm.get('LifeInsurance')?.value ?? false,
+      FamilyInsurance: this.OfferDetailsForm.get('FamilyInsurance')?.value ?? false,
+      FamilyAirticket: this.OfferDetailsForm.get('FamilyAirticket')?.value ?? false,
+      FamilyVisa: this.OfferDetailsForm.get('FamilyVisa')?.value ?? false,
+      shift: this.OfferDetailsForm.get('shift')?.value,
+      grade: this.OfferDetailsForm.get('grade')?.value,
+      work_schedule: this.OfferDetailsForm.get('work_schedule')?.value,
+      AirTicketEligibility: this.OfferDetailsForm.get('AirTicketEligibility')?.value,
+      ProbationPeriod: this.OfferDetailsForm.get('ProbationPeriod')?.value,
+      NoticePeriod: this.OfferDetailsForm.get('NoticePeriod')?.value,
+      Non_CompeteClause: this.OfferDetailsForm.get('Non_CompeteClause')?.value ?? false,
     };
-   console.log(JSON.stringify(data));
+  //alert(JSON.stringify(data));
    this.apicall.AddCandidateOfferDetails(data).subscribe((res) => {
     //alert(JSON.stringify(res));
     if(res.Errorid==1){

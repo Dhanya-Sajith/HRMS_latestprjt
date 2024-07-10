@@ -154,7 +154,7 @@
                                                                             </button>
                                                                         </a>
                                                                     </li>
-                                                                    <li><a class="dropdown-item" *ngIf="(item.EXITINTERVIEW_STATUS==1 && item.EXITINTERVIEW_DATE) || (item.EXITINTERVIEW_STATUS==0 && item.EOS_PROCESS_STATUS==1)" routerLink="/ExperienceLetter"><i class="ri-article-line me-2 align-bottom text-blue fs-18"></i><span class="text-blue">Experience Letter</span></a></li>
+                                                                    <li><a class="dropdown-item" *ngIf="(item.EXITINTERVIEW_STATUS==1 && item.EXITINTERVIEW_DATE) || (item.EXITINTERVIEW_STATUS==0 && item.EOS_PROCESS_STATUS==1)" routerLink="/ExperienceLetter" [queryParams]="{ REQID:item.REQUEST_ID, CODE:item.EMP_CODE}"><i class="ri-article-line me-2 align-bottom text-blue fs-18"></i><span class="text-blue">Experience Letter</span></a></li>
                                                                 </ul>
                                                             </div>
                                                         </li>

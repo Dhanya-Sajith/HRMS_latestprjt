@@ -38,6 +38,8 @@ export class EmployeedirectoryComponent implements OnInit {
   failed: any;
   desiredPage: any;
   accescompany: any;
+  activestatus: any=1;
+  completests: any=0;
 
   constructor(private session:LoginService,private apicall:ApiCallService,private route:Router,private fb: FormBuilder,private datePipe: DatePipe) { }
 
@@ -73,10 +75,10 @@ Idpassing(emp_code:any)
   
 }
 
-changecosts(comsts:any)
+changecosts()
 {
   
-  this.apicall.fetchemp_completests(comsts,this.userSession.empcode).subscribe((res)=>{
+  this.apicall.fetchemp_completests(this.activestatus,this.completests,this.userSession.empcode).subscribe((res)=>{
     this.fetchempdirectoy=res;
     const maxPageFiltered = Math.ceil(this.fetchempdirectoy.length / this.itemsPerPage);  
 
