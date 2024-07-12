@@ -140,6 +140,8 @@ import { CandidateEvaluationComponent } from './HiringManagement/candidate-evalu
 import { AccountPayableComponent } from './payroll/account-payable/account-payable.component';
 import { OfferletterExeComponent } from './HiringManagement/offerletter-exe/offerletter-exe.component';
 import { OfferletterIntComponent } from './HiringManagement/offerletter-int/offerletter-int.component';
+import { SalaryRevisionHistoryReportComponent } from './reports/salary-revision-history-report/salary-revision-history-report.component';
+import { GoalSettingNanalyticsHRComponent } from './PerformanceManagement/goal-setting-nanalytics-hr/goal-setting-nanalytics-hr.component';
 
 
 
@@ -287,9 +289,10 @@ const routes: Routes = [
   {path:'turnover-report',component:TurnoverReportComponent},
   {path:'candidate-evaluation',component:CandidateEvaluationComponent},
   {path:'account-payable',component:AccountPayableComponent},
-
+  {path:'salary_revision_history_report' ,component:SalaryRevisionHistoryReportComponent},
   {path:'Offer_Letter_Exe' , component:OfferletterExeComponent},
   {path:'Offer_Letter_Int' , component:OfferletterIntComponent},
+  {path:'GoalSettingsNAnalyticsHR' , component:GoalSettingNanalyticsHRComponent},
 
 
 

@@ -155,6 +155,9 @@ import { CandidateEvaluationComponent } from './HiringManagement/candidate-evalu
 import { AccountPayableComponent } from './payroll/account-payable/account-payable.component';
 import { OfferletterIntComponent } from './HiringManagement/offerletter-int/offerletter-int.component';
 import { OfferletterExeComponent } from './HiringManagement/offerletter-exe/offerletter-exe.component';
+import { SalaryRevisionHistoryReportComponent } from './reports/salary-revision-history-report/salary-revision-history-report.component';
+import { GoalSettingNanalyticsHRComponent } from './PerformanceManagement/goal-setting-nanalytics-hr/goal-setting-nanalytics-hr.component';
+import { PerformanceManagementComponent } from './PerformanceManagement/performance-management/performance-management.component';
 
 
 @NgModule({
@@ -307,6 +310,9 @@ import { OfferletterExeComponent } from './HiringManagement/offerletter-exe/offe
     AccountPayableComponent,
     OfferletterIntComponent,
     OfferletterExeComponent,
+    SalaryRevisionHistoryReportComponent,
+    GoalSettingNanalyticsHRComponent,
+    PerformanceManagementComponent,
     
     
   ],

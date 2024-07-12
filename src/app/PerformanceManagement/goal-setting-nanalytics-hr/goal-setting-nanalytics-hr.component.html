@@ -1,0 +1,861 @@
+ <!-- Begin page -->
+ <div id="layout-wrapper">
+    <app-header></app-header>
+
+    <!-- ========== App Menu ========== -->
+    <app-sidemenu></app-sidemenu>
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content" style="overflow-x: hidden;">
+        <div class="page-content">
+            <div class="container-fluid">
+             <!--HEADER-->
+            <div class="card mt-n4 mx-n4 mb-n5">
+                <div class="bg-info-subtle">
+                    <div class="card-body pb-3 mb-5">
+                        <div class="row">
+                            <div class="col-md">
+                                <div class="row align-items-center">
+                                    <div class="d-flex align-items-center ma-10">
+                                        <div class="flex-shrink-0">
+                                            <div class="avatar-sm">
+                                                <span class="avatar-title bg-info-subtle">
+                                                    <img src="assets\styles\img\icons8-team-goal-48.png" alt="" width="110%">
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1 ms-2 ma-5">
+                                            <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Goal Setting & Analytics</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end row-->
+                            </div>
+                        </div>
+                        <!--end row-->
+                    </div><!-- end card body -->
+                </div>
+              </div>
+              <!--END HEADER-->              
+
+            <!--TABS-->
+            <div class="row  topbar-up">
+                <div class="col-lg-12">
+                <div class="card bg-blue">
+                    <div class="card-body p-2">
+                        <div class="d-flex profile-wrapper">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-pills animation-nav profile-nav gap-2 gap-lg-3 flex-grow-1 fs-12" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link fs-14 active font-type" data-bs-toggle="tab" href="#GoalManagement" role="tab"(click)="FetchGoalSettingData(1)">
+                                        <i class="ri-focus-2-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Goal Setting</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#Assessment" role="tab"(click)="FetchGoalSettingData(2)">
+                                        <i class="ri-focus-2-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Assessment</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#PerformanceAnalytics" role="tab"(click)="FetchPerformanceAnalyticsData()">
+                                        <i class="ri-line-chart-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Performance Analytics</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!--End Tabs--> 
+
+             <!-- TAB PANES -->
+             <div class="tab-content pt-2 text-muted">
+                <!-- Goal Management -->
+                <div class="tab-pane active" id="GoalManagement" role="tabpanel"> 
+                       <!--GoalManagement TABLE-->
+                        <div class="row topbar-up">
+                        <div class="col-lg-12">
+                            <div class="card shadow-lg">
+                                <!--Table Header-->
+                                <div class="card-header border-0 bg-light-blue" style="padding:10px">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <h4 class="card-title mb-0 flex-grow-1 fs-14 font-type fw-semibold">Goal Setting List</h4>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <button type="button" class="btn btn-info font-type fs-12 h-30" data-bs-toggle="modal" data-bs-target="#AddRequestModal"><i class="ri-add-line me-1 align-middle me-1 fs-13"></i>Add New Goal Setting Request</button>
+                                                <button type="button" class="btn btn-orange font-type fs-12 h-30 text-white" data-bs-toggle="modal" data-bs-target="#BulkModal"><i class="ri-upload-2-line me-1 align-middle me-1 fs-13"></i>Bulk Upload</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End Table Header-->
+
+                                <div class="card-body border border-dashed border-end-0 border-start-0 bg-light-subtle" style="padding:10px">
+                                    <form>
+                                        <div class="row g-3">
+                                            <div class="col-lg-2 col-sm-2">
+                                                <select class="form-select font-type fs-12 textbox-15 h-30" name="YearGoalSetting"[(ngModel)]="YearGoalSetting"(change)="FetchGoalSettingData(1)">                                                    
+                                                    <option value="" disabled >Year</option>
+                                                    <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD">{{ combo.DISPLAY_FIELD }}</option>
+                                                </select> 
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-lg-3 col-sm-3">
+                                                <select class="form-select h-30 font-type textbox-15" name="CompanyGoalSetting" [(ngModel)]="CompanyGoalSetting"(change)="FetchGoalSettingData(1)">                                                    
+                                                    <option value="-1">Company</option>
+                                                    <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                </select>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-lg-3 col-sm-3">
+                                                <select class="form-select font-type fs-12 textbox-15 h-30"name="SelectedGoalSettingstatus" [(ngModel)]="SelectedGoalSettingstatus"(change)="FetchGoalSettingData(1)">
+                                                    <option value="" selected disabled >Status</option>
+                                                    <option value="-1">All</option>
+                                                    <option *ngFor="let combo of GoalSettingstatus" [value]="combo.KEY_ID"[hidden]="combo.KEY_ID>4 && combo.KEY_ID!=11 && combo.KEY_ID!=12">{{ combo.DATA_VALUE }}</option>
+                                                </select>  
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-lg-4 col-sm-4">
+                                                <div class="search-box">
+                                                    <input type="text" class="form-control font-type fs-12 textbox-15" placeholder="Search..." name="search" [(ngModel)]="searchInput">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                        </div>
+                                        <!--end row-->
+                                    </form>
+                                </div>
+                                 <!--Table Header-->
+
+                                <div class="card-body">
+                                    <div class="table-responsive table-card mb-0">
+                                    <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                        <thead class="table-light text-white font-type">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Emp Code</th>
+                                                <th>Employee</th>
+                                                <th>Reviewer</th>
+                                                <th>Target Date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11">
+                                        <tr class="font-type h-30" *ngFor="let item of GoalSettingData | search : searchInput | pagination: currentPage: itemsPerPage ;let i=index;"[ngClass]="{ 'highlighted-row': itemClicked === item }">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.EMP_CODE}}</td>
+                                            <td style="white-space: pre-wrap;">{{item.EMP_NAME}}</td>
+                                            <td style="white-space: pre-wrap;">{{item.REVIEWER}}</td>
+                                            <td>{{item.TARGET_DATE | date:"dd-MM-yyyy"}}</td>
+                                            <td class="status" *ngIf="item.REQUEST_STATUS==0"><a href="#" data-bs-toggle="modal"><span class="badge bg-info-subtle text-blue  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>
+                                            <td class="status" *ngIf="item.REQUEST_STATUS==1 || item.REQUEST_STATUS==3"><a href="#statusModal" data-bs-toggle="modal" (click)="viewStatusModel(item)" ><span class="badge bg-success-subtle text-success  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>
+                                            <td class="status" *ngIf="item.REQUEST_STATUS==2 || item.REQUEST_STATUS==4 || item.REQUEST_STATUS==11 || item.REQUEST_STATUS==12"><a href="#statusModal" data-bs-toggle="modal"(click)="viewStatusModel(item)"><span class="badge bg-danger-subtle text-danger  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>                                           
+                                         
+                                            <td>
+                                                <ul class="list-inline hstack gap-1 mb-0">
+                                                    <li class="list-inline-item edit" *ngIf="item.REQUEST_STATUS==0 || item.REQUEST_STATUS==2 || item.REQUEST_STATUS==4" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                        <a href="#editTargetDateModal" class="text-blue d-inline-block edit-item-btn" data-bs-toggle="modal"(click)="selectedItem(item)">
+                                                            <i class="ri-edit-circle-fill fs-18 text-blue text-center"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item" *ngIf="item.REQUEST_STATUS==0 || item.REQUEST_STATUS==2 || item.REQUEST_STATUS==4" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel">
+                                                        <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#CancelModal"(click)="selectedItem(item)">
+                                                            <i class="ri-close-circle-fill fs-18 text-danger text-center"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item" title="View Goal Details"*ngIf="item.REQUEST_STATUS==1 || item.REQUEST_STATUS==3">
+                                                        <a class="text-success d-inline-block" href="#targetSettingForm" data-bs-toggle="modal" (click)="ViewGoalDetails(item)">
+                                                            <i class="ri-eye-fill fs-18"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>                                        
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                    <div *ngIf="GoalSettingData">
+                                        <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
+                                            <div class="col-sm">
+                                              <div class="font-type fs-12 text-muted">
+                                                Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                              </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <div class="font-type fs-12 text-muted">
+                                                    Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-auto mt-4 mt-sm-0">
+                                                <div class="d-flex gap-1 flex-wrap">
+                                                    <div>
+                                                        <div class="input-group">
+                                                <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                
+                                               <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                          </div>
+                                        </div>
+                                             
+                                            <div class="col-sm-auto mt-3 mt-sm-0">
+                                              <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                <li class="page-item">
+                                                  <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                </li>
+                                                <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                  <li class="page-item">
+                                                    <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                  </li>
+                                                </ng-container>
+                                                <li class="page-item">
+                                                  <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                          </div>
+                                </div>
+                            </div>
+                                    </div>
+                                </div><!--end card-body-->
+                            </div>
+                        </div><!--end col-->
+                        </div>
+                        <!--end table-->   
+                </div>   
+                <!-- End Goal Management -->
+
+                   <!-- Assessment -->
+                   <div class="tab-pane" id="Assessment" role="tabpanel"> 
+                    <!--GoalManagement TABLE-->
+                     <div class="row topbar-up">
+                     <div class="col-lg-12">
+                         <div class="card shadow-lg">
+                             <!--Table Header-->
+                             <div class="card-header border-0 bg-light-blue" style="padding:10px">
+                                 <div class="row align-items-center gy-3">
+                                     <div class="col-sm">
+                                         <h4 class="card-title mb-0 flex-grow-1 fs-14 font-type fw-semibold">Assessment List</h4>
+                                     </div>
+                                     <div class="col-sm-auto">
+                                         <div class="d-flex gap-1 flex-wrap">
+                                             <button type="button" class="btn btn-orange font-type fs-12 h-30 text-white" *ngIf="showInitiateEvaluation"  data-bs-toggle="modal" (click)="clearInitiateEvaluationForm()"data-bs-target="#editReviewDateModal" id="btn_appraisal"><i class="ri-todo-line align-bottom me-1"></i>Initiate Evaluation</button>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             <!--End Table Header-->
+
+                             <div class="card-body border border-dashed border-end-0 border-start-0 bg-light-subtle" style="padding:10px">
+                                 <form>
+                                     <div class="row g-3">
+                                         <div class="col-lg-2 col-sm-2">
+                                             <select class="form-select font-type fs-12 textbox-15 h-30"name="Year" [(ngModel)]="selectedYearAssessment"(change)="FetchGoalSettingData(2)">
+                                                <option value="" disabled >Year</option>
+                                                <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD">{{ combo.DISPLAY_FIELD }}</option>
+                                             </select> 
+                                         </div>
+                                         <!--end col-->
+                                         <div class="col-lg-3 col-sm-3">
+                                             <select class="form-select h-30 font-type textbox-15" name="company"[(ngModel)]="selectedCompanyAssessment"(change)="FetchGoalSettingData(2)">
+                                                 <option value="-1" >Company</option>
+                                                 <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                             </select>
+                                         </div>
+                                         <!--end col-->
+                                         <div class="col-lg-3 col-sm-3">
+                                             <select class="form-select font-type fs-12 textbox-15 h-30"name="status"[(ngModel)]="selectedStatusAssessment"(change)="FetchGoalSettingData(2)">
+                                                <option value="" selected disabled >Status</option>
+                                                <option value="-1">All</option>
+                                                <option *ngFor="let combo of GoalSettingstatus" [value]="combo.KEY_ID"[hidden]="combo.KEY_ID <= 2 || combo.KEY_ID == 4 || combo.KEY_ID >= 11">{{ combo.DATA_VALUE }}</option>
+                                             </select>  
+                                         </div>
+                                         <!--end col-->
+                                         <div class="col-lg-4 col-sm-4">
+                                             <div class="search-box">
+                                                 <input type="text" class="form-control font-type fs-12 textbox-15" placeholder="Search..." name="searchInputAssessment" [(ngModel)]="searchInputAssessment">
+                                                 <i class="ri-search-line search-icon"></i>
+                                             </div>
+                                         </div>
+                                         <!--end col-->
+                                     </div>
+                                     <!--end row-->
+                                 </form>
+                             </div>
+                              <!--Table Header-->
+
+                             <div class="card-body">
+                                 <div class="table-responsive table-card mb-0">
+                                 <table class="table table-nowrap align-middle table-bordered border-orange table-hover" id="checkboxTable">
+                                     <thead class="table-light text-white font-type">
+                                         <tr>
+                                             <th>
+                                                 <div class="form-check form-check-info">
+                                                     <input class="form-check-input" type="checkbox" id="selectAll" [(ngModel)]="allChecked" (change)="checkAll($event)">
+                                                 </div>
+                                             </th>
+                                             <th>No</th>
+                                             <th>Emp Code</th>
+                                             <th>Employee</th>
+                                             <th>Evaluation Date</th>
+                                             <th>Status</th>
+                                             <th>Action</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody class="list form-check-all font-type fs-11">
+                                     <tr class="font-type h-30" *ngFor="let item of AssessmentData | search : searchInputAssessment | pagination: currentPageAssessment: itemsPerPageAssessment ;let i=index;"[ngClass]="{ 'highlighted-row': itemClicked === item }">
+                                        <td>
+                                            <div class="form-check form-check-info">
+                                                <input class="form-check-input" type="checkbox"*ngIf="item.REQUEST_STATUS==3"[(ngModel)]="item.checked">
+                                            </div>
+                                        </td>
+                                         <td>{{i+1}}</td>
+                                         <td>{{item.EMP_CODE}}</td>
+                                         <td style="white-space: pre-wrap;">{{item.EMP_NAME}}</td>
+                                         <td>{{item.TARGET_DATE | date:"dd-MM-yyyy" }}</td>
+                                         <td class="status"*ngIf="item.REQUEST_STATUS==3||item.REQUEST_STATUS==6||item.REQUEST_STATUS==8||item.REQUEST_STATUS==10"><a href="#statusModal" data-bs-toggle="modal"><span class="badge bg-success-subtle text-success  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>
+                                         <td class="status"*ngIf="item.REQUEST_STATUS==5"><a href="#statusModal" data-bs-toggle="modal"><span class="badge bg-info-subtle text-info  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>                                        
+                                         <td class="status"*ngIf="item.REQUEST_STATUS==7"><a href="#statusModal" data-bs-toggle="modal"><span class="badge bg-danger-subtle text-danger  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>                                         
+                                         <td class="status"*ngIf="item.REQUEST_STATUS==9"><a href="#statusModal" data-bs-toggle="modal"><span class="badge bg-warning-subtle text-warning width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>
+                                         
+                                         <td>
+                                             <ul class="list-inline hstack gap-1 mb-0">
+                                                 <li class="list-inline-item" title="View Goal Progress Details"*ngIf="item.REQUEST_STATUS==3||item.REQUEST_STATUS==5">
+                                                     <a class="text-success d-inline-block" href="targetSettingForm.html">
+                                                         <i class="ri-eye-fill fs-18"></i>
+                                                     </a>
+                                                 </li>
+                                                 <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" [title]="item.REQUEST_STATUS == 3 ? 'Initiate Evaluation' : 'Edit Evaluation Date'"*ngIf="item.REQUEST_STATUS==3||item.REQUEST_STATUS==7||item.REQUEST_STATUS==5">
+                                                     <a class="text-orange d-inline-block" data-bs-toggle="modal" href="#editReviewDateModal"(click)="selectedItem(item)">
+                                                          <i class="ri-file-edit-fill fs-18"></i>
+                                                     </a>
+                                                 </li>
+                                                 <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Evaluation Details"*ngIf="item.REQUEST_STATUS==6||item.REQUEST_STATUS==8">
+                                                    <a class="text-success d-inline-block" href="appraisalForm.html">
+                                                        <i class="ri-todo-fill fs-18"></i>
+                                                    </a>
+                                                </li>
+                                             </ul>
+                                         </td>
+                                     </tr>                               
+                                   </tbody>
+                                 </table>
+                                 </div>
+                                 <div *ngIf="AssessmentData">
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsAssessment>0">
+                                        <div class="col-sm">
+                                          <div class="font-type fs-12 text-muted">
+                                            Showing <span class="fw-semibold">{{ getEntriesStartAssessment() }}</span>
+                                            - <span class="fw-semibold">{{ getEntriesEndAssessment() }}</span>
+                                            of <span class="fw-semibold">{{ totalSearchResultsAssessment }}</span> Results
+                                          </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="font-type fs-12 text-muted">
+                                                Total Pages : <span class="fw-semibold"> {{ getTotalPagesAssessment() }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto mt-4 mt-sm-0">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div>
+                                                    <div class="input-group">
+                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPageAssessment" tabindex="1">                                                                    
+                                            
+                                           <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageAssessment()" tabindex="2">Go</button>
+                                      </div>
+                                    </div>
+                                         
+                                        <div class="col-sm-auto mt-3 mt-sm-0">
+                                          <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePageAssessment(currentPageAssessment - 1)" [class.disabled-button]="currentPageAssessment === 1">←</button>
+                                            </li>
+                                            <ng-container *ngFor="let pageNumberAssessment of getPageNumbersAssessment(currentPageAssessment)">
+                                              <li class="page-item">
+                                                <button class="page-link" (click)="changePageAssessment(pageNumberAssessment)" [class.active]="currentPageAssessment === pageNumberAssessment">{{ pageNumberAssessment }}</button>
+                                              </li>
+                                            </ng-container>
+                                            <li class="page-item">
+                                              <button class="page-link" (click)="changePageAssessment(currentPageAssessment + 1)" [class.disabled-button]="currentPageAssessment * itemsPerPageAssessment >= totalSearchResultsAssessment">→</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                            </div>
+                        </div>
+                                </div>
+                             </div><!--end card-body-->
+                         </div>
+                     </div><!--end col-->
+                     </div>
+                     <!--end table-->   
+             </div>   
+             <!-- End Assessment -->
+
+                <!-- Performance Analaytics -->
+                <div class="tab-pane" id="PerformanceAnalytics" role="tabpanel"> 
+                        <!--GoalManagement TABLE-->
+                         <div class="row topbar-up">
+                         <div class="col-lg-12">
+                             <div class="card shadow-lg">
+                                 <!--Table Header-->
+                                 <div class="card-header border-0 bg-light-subtle" style="padding:10px">
+                                     <div class="row align-items-center gy-3">
+                                         <div class="col-sm">
+                                             <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">Performance Summary</h4>
+                                         </div>
+                                         <div class="col-sm-auto">
+                                             <div class="d-flex gap-2 flex-wrap">
+                                                <div>
+                                                    <select class="form-select font-type fs-12 textbox-15 h-30"[(ngModel)]="selectedYearPerformance"(change)="FetchPerformanceAnalyticsData()">
+                                                        <option value="" disabled >Year</option>
+                                                        <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD">{{ combo.DISPLAY_FIELD }}</option>
+                                                    </select> 
+                                                </div>
+                                                <div>
+                                                    <select class="form-select h-30 font-type textbox-15"[(ngModel)]="selectedCompanyPerformance"(change)="onCompanySelected()">
+                                                        <option value="-1" selected >Company</option>
+                                                        <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <select class="form-select font-type h-30 textbox-15"[(ngModel)]="selectedDept"(change)="FetchPerformanceAnalyticsData()">                                                       
+                                                        <option value="-1" selected>Department</option>
+                                                        <option *ngFor="let combo of deptdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="search-box">
+                                                    <input type="text" class="form-control font-type fs-12 textbox-15" placeholder="Search..." [(ngModel)]="searchInputPerformance">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <!--End Table Header-->
+
+                                 <div class="card-body">
+                                    <div class="table-responsive table-card mb-0">
+                                    <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                        <thead class="table-light text-white font-type">
+                                            <tr>
+                                                <th>Sl No</th>
+                                                <th>Emp Code</th>
+                                                <th>Employee</th>
+                                                <th>Department</th>
+                                                <th>Assessment Date</th>
+                                                <th>Rating</th>
+                                                <th>Appraisal Form</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11">
+                                        <tr class="font-type h-30"*ngFor="let item of PerformanceData | search : searchInputPerformance | pagination: currentPagePerformance: itemsPerPagePerformance ;let i=index;"[ngClass]="{ 'highlighted-row': itemClicked === item }">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.EMP_CODE}}</td>
+                                            <td style="white-space: pre-wrap;">{{item.EMP_NAME}}</td>
+                                            <td style="white-space: pre-wrap;">{{item.REVIEWER}}</td>
+                                            <td>{{item.TARGET_DATE | date:"dd-MM-yyyy"}}</td>
+                                            <td>
+                                                <span class="badge bg-light text-body fs-13 fw-medium">{{item.REQUEST_STATUS}}</span>
+                                            </td>
+                                            <td>
+                                                <ul class="list-inline hstack gap-1 mb-0">
+                                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Appraisal">
+                                                        <a class="text-success d-inline-block" href="appraisalForm.html">
+                                                            <i class="ri-todo-fill fs-18"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>                                      
+                                      </tbody>
+                                    </table>
+                                    </div>
+                                    <div *ngIf="PerformanceData">
+                                        <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsPerformance>0">
+                                            <div class="col-sm">
+                                              <div class="font-type fs-12 text-muted">
+                                                Showing <span class="fw-semibold">{{ getEntriesStartPerformance() }}</span>
+                                                - <span class="fw-semibold">{{ getEntriesEndPerformance() }}</span>
+                                                of <span class="fw-semibold">{{ totalSearchResultsPerformance }}</span> Results
+                                              </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <div class="font-type fs-12 text-muted">
+                                                    Total Pages : <span class="fw-semibold"> {{ getTotalPagesPerformance() }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-auto mt-4 mt-sm-0">
+                                                <div class="d-flex gap-1 flex-wrap">
+                                                    <div>
+                                                        <div class="input-group">
+                                                <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPagePerformance" tabindex="1">                                                                    
+                                                
+                                               <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPagePerformance()" tabindex="2">Go</button>
+                                          </div>
+                                        </div>
+                                             
+                                            <div class="col-sm-auto mt-3 mt-sm-0">
+                                              <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                <li class="page-item">
+                                                  <button class="page-link" (click)="changePagePerformance(currentPagePerformance - 1)" [class.disabled-button]="currentPagePerformance === 1">←</button>
+                                                </li>
+                                                <ng-container *ngFor="let pageNumberPerformance of getPageNumbersPerformance(currentPagePerformance)">
+                                                  <li class="page-item">
+                                                    <button class="page-link" (click)="changePagePerformance(pageNumberPerformance)" [class.active]="currentPagePerformance === pageNumberPerformance">{{ pageNumberPerformance }}</button>
+                                                  </li>
+                                                </ng-container>
+                                                <li class="page-item">
+                                                  <button class="page-link" (click)="changePagePerformance(currentPagePerformance + 1)" [class.disabled-button]="currentPagePerformance * itemsPerPagePerformance >= totalSearchResultsPerformance">→</button>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                          </div>
+                                </div>
+                            </div>
+                                    </div>
+                                </div><!--end card-body-->
+                             </div>
+                         </div><!--end col-->
+                         </div>
+                         <!--end table-->   
+                </div>
+                 <!-- End Performance Analaytics-->
+             </div>
+             <!--End Pane-->
+                  
+                       <!-- MODAL BOXES -->  
+                         
+                        <!--Add Request Model-->
+                        <div class="modal fade zoomIn" id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <h5 class="fs-13 font-type text-white ma-5 fw-semibold">Goal Setting Request</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"(click)="cancelGoalSettingReqForm()"></button>
+                                    </div>
+                                    <form class="tablelist-form" autocomplete="off" [formGroup]="GoalSettingReqForm">
+                                        <div class="modal-body" style="padding-bottom: 10px;">
+                                            <input type="hidden" id="id-field" />
+                                                    <div class="row mb-3">
+                                                        <div class="col-lg-3">
+                                                            <h6 class="fs-12 font-type fw-semibold">Company</h6>
+                                                        </div>
+                                                        <div class="col-lg-9"[class.has-error]="GoalSettingReqForm.get('company_code')?.invalid && GoalSettingReqForm.get('company_code')?.touched">
+                                                            <div class="div-space">
+                                                                <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="company_code"(change)="onCompanySelectedGoalSetting()">
+                                                                    <option value="" selected disabled >Select</option>
+                                                                    <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                                </select>
+                                                                <div *ngIf="GoalSettingReqForm.get('company_code')?.invalid && GoalSettingReqForm.get('company_code')?.touched" class="text-danger">
+                                                                    *Required!
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-lg-3">
+                                                            <h6 class="fs-12 font-type fw-semibold"><span>Employee</span></h6>
+                                                        </div>
+                                                        <div class="col-lg-9"[class.has-error]="GoalSettingReqForm.get('employee')?.invalid && GoalSettingReqForm.get('employee')?.touched">
+                                                                <ng-multiselect-dropdown #dropdown
+                                                                    [settings]="dropdownSettings"
+                                                                    formControlName="employee"
+                                                                    [data]="empdata">     
+                                                                </ng-multiselect-dropdown>   
+                                                                <div *ngIf="GoalSettingReqForm.get('employee')?.invalid && GoalSettingReqForm.get('employee')?.touched" class="text-danger">
+                                                                    *Required!
+                                                                </div>         
+                                                        </div>
+                                                    </div>   
+                                                    <div class="row mb-0">
+                                                        <div class="col-lg-3">
+                                                            <h6 class="fs-12 font-type fw-semibold">Target Date</h6>
+                                                        </div>
+                                                        <div class="col-lg-4"[class.has-error]="GoalSettingReqForm.get('targetDate')?.invalid && GoalSettingReqForm.get('targetDate')?.touched">
+                                                            <input type="date" [min]="minDate" class="form-control font-type fs-11 mb-0 textbox-15 h-30" formControlName="targetDate">
+                                                            <div *ngIf="GoalSettingReqForm.get('targetDate')?.invalid && GoalSettingReqForm.get('targetDate')?.touched" class="text-danger">
+                                                                *Required!
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                           
+                                            <div class="col-lg-12 pt-2 mb-1">
+                                                    <div class="hstack gap-2 justify-content-end">
+                                                    <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" (click)="AddGoalSettingReq()"><i class="ri-add-line label-icon align-middle fs-16 ms-2"></i>Add</button>
+                                                    <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type "(click)="cancelGoalSettingReqForm()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div> 
+                        <!--End Request Model-->      
+                        
+                        <!--Bulk Modal-->
+                            <div class="modal fade zoomIn" id="BulkModal" tabindex="-1" aria-labelledby="BulkModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    
+                                    <div class="modal-content">
+                                        <form class="tablelist-form" autocomplete="off"[formGroup]="BulkUploadForm">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"(click)="Uploadfile(false)"></button>
+                                        </div>                                        
+                                            <div class="modal-body" style="padding-bottom: 10px;">
+                                                <input type="hidden" id="id-field" />
+                                            <div class="row mb-0 text-center">
+                                            <div>
+                                                <button type="button" class="btn btn-info font-type fs-12 h-30 text-white"(click)="download_to_excel()"><i class="ri-download-2-line me-1 align-middle me-1 fs-13"></i>Download Excel</button>
+                                                <button type="button" class="btn btn-success font-type fs-12 h-30 text-white ms-2"(click)="Uploadfile(true)"><i class="ri-upload-2-line me-1 align-middle me-1 fs-13"></i>Upload Excel</button>
+                                            </div>
+                                            </div>
+                                                  <div class="row justify-content-center  mb-3"*ngIf="showUploadfile">
+                                                            <div class="col-lg-12"[class.has-error]="BulkUploadForm.get('doc')?.invalid && BulkUploadForm.get('doc')?.touched">
+                                                                <h6 class="font-type fs-12 fw-semibold"><span>Upload Your Excel Document </span></h6>
+                                                                <input class="form-control font-type fs-12 textbox-15" type="file" id="formFile"formControlName="doc" accept=".xls, .xlsx">
+                                                                <div *ngIf="BulkUploadForm.get('doc')?.invalid && BulkUploadForm.get('doc')?.touched" class="text-danger">
+                                                                    *Required!
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                    <div class="col-lg-12 pt-2"*ngIf="showUploadfile">
+                                                            <div class="hstack gap-2 justify-content-end">
+                                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" (click)="BulkUpload()"><i class="ri-check-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                            <button type="reset" class="btn btn-blue btn-label right  nexttab  nexttab font-type" ><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!--End Request Model-->   
+                     
+                        <!-- Edit Target Modal Box -->    
+                        <div class="modal fade" id="editTargetDateModal" data-bs-backdrop='static' tabindex="-1" aria-labelledby="editTargetDateModal"  aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-dialog-centered modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <h5 class="fs-13 font-type text-white ma-5">Target Date Update</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="clearHighlight()"></button>
+                                    </div>
+                                    <form class="tablelist-form" autocomplete="off"[formGroup]="EditGoalSettingForm">
+                                        <div class="modal-body pa-6-8">
+                                            <div class="row mb-2 ma-10" style="justify-content: center;">
+                                                <div class="col-lg-12" [class.has-error]="EditGoalSettingForm.get('targetDate')?.invalid && EditGoalSettingForm.get('targetDate')?.touched">
+                                                    <input type="date" [min]="minDate" class="form-control font-type fs-11 mb-0 textbox-15 h-30" formControlName="targetDate">
+                                                    <div *ngIf="EditGoalSettingForm.get('targetDate')?.invalid && EditGoalSettingForm.get('targetDate')?.touched" class="text-danger">
+                                                        *Required!
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 pt-2 mb-1">
+                                                <div class="hstack gap-2">
+                                                    <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" (click)="EditGoalSettingTargetDate()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Update</button>
+                                                    <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type"(click)="cancelEditTargetDate()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Edit Target Modal Box -->        
+                         
+                        <!-- Submit Review Date Modal Box -->    
+                        <div class="modal fade" id="editReviewDateModal" tabindex="-1" data-bs-backdrop='static' aria-labelledby="editReviewDateModal"  aria-hidden="true" >
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <h5 class="fs-13 font-type text-white ma-5">{{ requestStatus === 3 ? 'Initiate Evaluation' : 'Edit Evaluation Date' }}</h5>
+                                            <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"(click)="clearHighlight()"></button>
+                                        </div>
+                                        <form class="tablelist-form" autocomplete="off"[formGroup]="InitiateEvaluationForm">
+                                            <div class="modal-body pa-6-8">
+                                                <div class="row mb-2 ma-5" style="justify-content: center;">
+                                                    <div class="col-lg-12"[class.has-error]="InitiateEvaluationForm.get('targetDate')?.invalid && InitiateEvaluationForm.get('targetDate')?.touched">
+                                                        <h6 class="fs-12 font-type fw-semibold">Evaluation Date</h6>
+                                                        <input type="date" class="form-control font-type fs-12 mb-0 textbox-15 h-30" [min]="minDate" formControlName="targetDate">
+                                                        <div *ngIf="InitiateEvaluationForm.get('targetDate')?.invalid && InitiateEvaluationForm.get('targetDate')?.touched" class="text-danger">
+                                                            *Required!
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 pt-2 mb-1">
+                                                    <div class="hstack gap-2 justify-content-end">
+                                                        <button type="button" class="btn btn-orange font-type fs-12"(click)="InitiateEvaluation()"><i class="ri-send-plane-fill align-bottom me-1"*ngIf="requestStatus === 3"></i> {{ requestStatus === 3 ? 'Send for Evaluation' : 'Update' }}</button>
+                                                        <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type fs-12"(click)="cancelInitiateEvaluationForm()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                        </div>
+                        <!-- End Submit Review Date Box -->     
+
+                        <!--Delete Entry Model-->
+                        <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true"data-bs-backdrop='static'>
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"(click)="clearHighlight()"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <div class="text-center">
+                                                <h5 class="fs-13 font-type">You are about to cancel an entry ?</h5>
+                                                <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
+                                                <div class="hstack gap-2 justify-content-center remove">   
+                                                    <button class="btn btn-success font-type"data-bs-dismiss="modal"(click)="clearHighlight()">No, Go back!</button>
+                                                    <button class="btn btn-danger font-type"(click)="cancelGoalSettingReq()">Yes, Continue</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <!--End Delete Entry Model-->
+
+                        <!-- Status Modal-->
+                        <div class="modal fade zoomIn" id="statusModal" tabindex="-1" data-bs-backdrop='static' aria-labelledby="statusModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-bottom" style="float:right">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-orange padding-up-5">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"(click)="clearHighlight()"></button>
+                                        </div>
+                                        <div class="modal-body ma-5">
+                                            <div class="mb-1">
+                                                <div class="table-responsive table-card">
+                                                    <table class="table table-nowrap mb-0 table-bordered border-dark">
+                                                        <thead class="font-type">
+                                                            <tr>
+                                                                <th>Updated by</th>
+                                                                <th>Status</th>
+                                                                <th>Date</th>
+                                                                <th>Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="fs-12 font-type">
+                                                                <td>{{updatedBy}}</td>
+                                                                <!-- <td class="status" *ngIf="reqStatus==0"><span class="badge bg-info-subtle text-blue  width-budge fs-11 fw-semibold text-uppercase">{{StatusVal}}</span></td> -->
+                                                                <td class="status" *ngIf="reqStatus==1 || reqStatus==3"><span class="badge bg-success-subtle text-success  width-budge fs-11 fw-semibold text-uppercase">{{StatusVal}}</span></td>
+                                                                <td class="status" *ngIf="reqStatus==2 || reqStatus==4 || reqStatus==11 || reqStatus==12"><span class="badge bg-danger-subtle text-danger  width-budge fs-11 fw-semibold text-uppercase">{{StatusVal}}</span></td> 
+                                                                <td>{{target_Date | date:"dd-MM-yyyy" }}</td>
+                                                                <td>{{remarks}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <!-- End Status Modal-->
+                        <div class="modal fade zoomIn" id="targetSettingForm" tabindex="-1" aria-labelledby="targetSettingForm" aria-hidden="true"  tabindex="-1" data-bs-backdrop='static' aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <h5 class="fs-13 font-type text-white ma-5 fw-semibold">Goals List</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"(click)="clearHighlight()"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="border border-dashed rounded p-2 pb-0">
+                                            <div class="mb-2 px-4 py-1 bg-light-blue ma-5">
+                                                <div class="row ma-10">
+                                                    <div class="col-md-12 col-lg-2">
+                                                        <h6 class="fs-12 font-type">Review Year<span class="ms-1">:</span></h6>
+                                                        <h6 class="fs-12 font-type fw-semibold">{{ReviewYear}}</h6>
+                                                    </div>
+                                                    <div class="col-md-12 col-lg-5">
+                                                        <h6 class="fs-12 font-type">Employee<span class="ms-1">:</span></h6>
+                                                        <h6 class="fs-12 font-type fw-semibold">{{Employee}}</h6>
+                                                    </div>
+                                                    <div class="col-md-12 col-lg-5">
+                                                        <h6 class="fs-12 font-type">Employee Title<span class="ms-1">:</span></h6>
+                                                        <h6 class="fs-12 font-type fw-semibold">{{Employee_title}}</h6>
+                                                     </div>
+                                                </div>
+                                            </div>
+                                        <!--end row-->
+                                            <div class="row pa-0">
+                                                <div class="col-md-12 col-lg-12">
+                                                <div class="table-responsive ma-10">
+                                                    <table class="table table-nowrap align-middle table-bordered border-blue">
+                                                        <thead class="text-white font-type fs-12">
+                                                        <tr class="bg-light-blue text-black border-blue">
+                                                            <th class="fs-13">No.</th>
+                                                            <th class="fs-12">Goals<span style="visibility: hidden;">Objectives are shown below</span></th>
+                                                            <th class="fs-12">Wt.Assigned (%)</th>
+                                                            <th class="fs-12">Review Period</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list form-check-all font-type fs-11">
+                                                    <tr class="font-type h-30 " *ngFor="let item of GoalDetails;let i=index;">
+                                                        <td class="fw-semibold">{{i+1}}</td>
+                                                        <td style="white-space: pre-wrap;">{{item.GOAL_DESCRIPTION}}</td>
+                                                        <td>{{item.WEIGTAGE}}</td>
+                                                        <td>{{item.REVIEW_PERIOD}}</td>
+                                                    </tr>                                                   
+                                                    </tbody>
+                                                    </table> 
+                                                </div><!-- end table responsive -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end row-->
+                                    
+                                    </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button> 
+                        <!--Modal For Success Message Start-->
+                    <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                    </div>
+                                    <div class="modal-body" *ngIf="showModal==1"> 
+                                        <div class="container">
+                                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                                    
+                                        </div>
+                                    </div>
+                                    <div class="modal-body" *ngIf="showModal==2">
+                                    <div class="container">
+                                        <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>                         
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!--Modal For Success Message End-->
+
+                    
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+        <app-footer></app-footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

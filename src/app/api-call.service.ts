@@ -21,7 +21,7 @@ public dotnetapi = 'https://localhost:5001/api';
 //Live server for Customer Cloud 
  //public dotnetapi = 'http://72.167.151.157:81/api';
   // Emisoft common Test server
- //public dotnetapi = 'http://192.168.1.55:84/api';
+ // public dotnetapi = 'http://192.168.1.42:84/api';
   // Emisoft common Test cloud server
   //public dotnetapi = 'http://13.53.118.116:81/api';
  
@@ -1507,7 +1507,7 @@ DocumentRequestDocUpload(data:any,reqid:any)
 }
 GetDocumentRequestDocs(reqId:any)
 {  
-  alert(reqId)
+ // alert(reqId)
   return this.http.get<any>(`${this.dotnetapi}/File/GetDocumentRequestDocs/${reqId}`);
 }
 //Leave settings
@@ -2747,6 +2747,73 @@ Fetch_Trainingcost(trainingid:any)
 }
 
 
+//salary revision history report
+Fetch_Salary_Revision_History_Report(user:any,company:any,fromyear:any,toyear:any)
+{
+  return this.http.get<number>(`${this.dotnetapi}/ReportDashboard/FetchSalaryRevisionHistory/${user}/${company}/${fromyear}/${toyear}`);
+}
 
+//Goal Settings and analytics-HR
+Employees_ForGoalAssign(company:any,user:any)
+{   
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/Employees_ForGoalAssign/${company}/${user}`);
+}
+GoalSetting_ListHR(user:any,reqstatus:any,year:any,company:any,mflag:any)
+{   
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/GoalSetting_ListHR/${user}/${reqstatus}/${year}/${company}/${mflag}`);
+}
+Add_GoalSetting_RequestHR(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/PerformanceManagement/Add_GoalSetting_RequestHR`,data);
+}
+Update_ReviewOrTargetDate_HR(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/PerformanceManagement/Update_ReviewOrTargetDate_HR`,data);
+}
+Goal_Status_LogDetails(empcode:any,reqid:any)
+{   
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/Goal_Status_LogDetails/${empcode}/${reqid}`);
+}
+Goal_Details_Emp(empcode:any,reqid:any)
+{   
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/Goal_Details_Emp/${empcode}/${reqid}`);
+}
+UploadGoal_BulkData(data:any,user:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/File/UploadGoal_BulkData/${user}`,data);
+}
+PerformanceAnalytics_ListHR(user:any,dept:any,year:any,company:any)
+{   
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/PerformanceAnalytics_ListHR/${user}/${dept}/${year}/${company}`);
+}
 
+//Performance Management
+Fetch_EmpGoalRequest(empcode:any,year:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Performance/Fetch_EmpGoalRequest/${empcode}/${year}`);
+}
+EmpGoalApproveReject(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Performance/EmpGoalApproveReject`,data);
+}
+Fetch_EmpGoalRequestsLM(user:any,year:any,status:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Performance/Fetch_EmpGoalRequestsLM/${user}/${year}/${status}`);
+}
+GoalSettingByLM(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Performance/GoalSettingByLM`,data);
+}
+Fetch_GoalDetails(user:any,year:any,reqid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Performance/Fetch_GoalDetails/${user}/${year}/${reqid}`);
+}
+Fetch_EmpGoalDetails(user:any,year:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Performance/Fetch_EmpGoalDetails/${user}/${year}`);
+}
+RemoveEmpGoal(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Performance/RemoveEmpGoal`,data);
+}
 }

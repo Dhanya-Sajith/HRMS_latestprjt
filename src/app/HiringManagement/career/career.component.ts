@@ -149,7 +149,7 @@ uploadCV()
      {
        const input=document.getElementById("formFile");    
        const fdata = new FormData();
-       this.onFileSelect(input);
+       this.onFileSelect(input,res.Errorid);
        this.FetchJobs();
      }
    })
@@ -158,12 +158,12 @@ uploadCV()
  }
 }
 
-onFileSelect(input:any)
+onFileSelect(input:any,id:any)
 {   
   if (input.files && input.files[0]) {
     const fdata = new FormData();
     fdata.append('filesup',input.files[0]);
-    this.apicall.Job_CV_upload(fdata,this.activereqid).subscribe((res)=>{
+    this.apicall.Job_CV_upload(fdata,id).subscribe((res)=>{
       if(res>=0)
       {
       

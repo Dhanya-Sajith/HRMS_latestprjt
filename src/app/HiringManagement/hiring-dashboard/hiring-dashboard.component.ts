@@ -76,6 +76,7 @@ export class HiringDashboardComponent implements OnInit {
   nameflag: number = 0;
   searchInput2: string='';
   TransferForm: FormGroup; 
+  selectdesig: any;
 
   constructor(private apicall:ApiCallService,private session:LoginService,private fb:FormBuilder,private datePipe: DatePipe,private renderer: Renderer2) { 
     this.PushForm = this.fb.group({
@@ -229,6 +230,7 @@ export class HiringDashboardComponent implements OnInit {
   CandidateSelection(reqid:any,desig:any)
   {
     this.activereqid = reqid
+    this.selectdesig = desig 
     this.apicall.listRegStatus(81).subscribe((res)=>{
       this.sourcetype=res;
      })
@@ -238,13 +240,14 @@ export class HiringDashboardComponent implements OnInit {
     this.apicall.listgender(5).subscribe((res)=>{
       this.listgender=res;
       })
-    this.ApplyForm.controls['designation'].setValue(desig);
+    this.ApplyForm.controls['designation'].setValue(this.selectdesig);
     this.HireRequestCandidates();
   }
 
   showEmployeeList(event: Event) 
   {
     this.selectedtypeValue = (event.target as HTMLSelectElement).value;
+    this.ApplyForm.controls['name'].setValue("");
   }
 
   validateApplyForm()
@@ -291,7 +294,7 @@ export class HiringDashboardComponent implements OnInit {
        {
          const input=document.getElementById("formFile");    
          const fdata = new FormData();
-         this.onFileSelect(input);
+         this.onFileSelect(input,res.Errorid);
          this.JobRequest_ListHR();
        }
      })
@@ -300,12 +303,12 @@ export class HiringDashboardComponent implements OnInit {
    }
   }
 
-  onFileSelect(input:any)
+  onFileSelect(input:any,id:any)
   {   
     if (input.files && input.files[0]) {
       const fdata = new FormData();
       fdata.append('filesup',input.files[0]);
-      this.apicall.HR_CandidateDocUpload(fdata,this.activereqid).subscribe((res)=>{
+      this.apicall.HR_CandidateDocUpload(fdata,id).subscribe((res)=>{
         if(res>=0)
         {   
           this.inputfield = document.getElementById("formFile");
@@ -317,7 +320,8 @@ export class HiringDashboardComponent implements OnInit {
           // this.ApplyForm.reset(); 
           this.HireRequestCandidates();    
         }
-
+        this.ApplyForm.reset(); 
+        this.ApplyForm.controls['designation'].setValue(this.selectdesig);
       })
     }
   }

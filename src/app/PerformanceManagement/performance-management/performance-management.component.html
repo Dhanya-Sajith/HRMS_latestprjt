@@ -1,0 +1,654 @@
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header>
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu>  
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content" style="overflow-x: hidden;">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card mt-n4 mx-n4 mb-n5">
+                                <div class="bg-info-subtle">
+                                    <div class="card-body pb-4 mb-5">
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <div class="row align-items-center">
+                                                    <div class="d-flex align-items-center ma-5">
+                                                        <div class="flex-shrink-0">
+                                                            <div class="avatar-sm">
+                                                                <span class="avatar-title bg-info-subtle ms-1 ma-10">
+                                                                    <img src="assets\styles\img\icons8-performance-64.png" alt="" width="100%">
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-2 ma-5">
+                                                            <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Performance Management</h2>
+                                                        </div>
+                                                        <div class="flex-shrink-0 ms-1 pr-20">
+                                                            <div class="page-title-right padding-up-5">
+                                                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                                                    <input type="radio" class="btn-check" id="btnradio1" checked="true" name="user" [(ngModel)]="user" value="personal" (change)="SelectTeamorpersonal(user)">
+                                                                    <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio1">Personal</label>
+                                                                    <input type="radio" class="btn-check" id="btnradio2" name="user" [(ngModel)]="user" value="team" (change)="SelectTeamorpersonal(user)">
+                                                                    <label class="btn btn-outline-secondary mb-0 font-type" for="btnradio2">Team</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                        </div>
+                                        <!--end row-->
+                                    </div><!-- end card body -->
+                                </div>
+                            </div><!-- end card -->
+                        </div><!-- end col -->
+                    </div>
+                        
+                    <!-- PERSONAL -->
+                    <div class="row topbar-up" id="Personal"  *ngIf="user == 'personal'">
+                        <div class="col-lg-12">
+                                <div class="d-flex flex-column h-100">
+                                    <div class="row h-100">
+                                        <div class="col-12">
+                                            <div class="card shadow-lg card-animate">
+                                                <div class="card-body p-0">
+                                                    <div class="card-header bg-blue border-0 h-40 rounded-0 m-0 d-flex align-items-center">
+                                                        <div class="flex-grow-1 text-white font-type fs-14">
+                                                            Performance Evaluation
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pb-0 p-3 pa-0">
+                                                        <div class="col-12" *ngFor="let item of Evaluationdata">
+                                                            <!--FIRST DIV-->
+                                                            <div id="goal-Approve"  *ngIf="item.REQUEST_STATUS == 1 || item.REQUEST_STATUS == 2">
+                                                            <div class="d-flex align-items-lg-center flex-lg-row flex-column mb-2">
+                                                                <div class="flex-grow-1">
+                                                                    <p class="fs-13 font-type">Kindly review your goals and confirm your <span class="text-success">'Acceptance'</span> or<span class="text-danger ms-1">'Rejection'</span> before<span class="fw-semibold text-italic ms-1 fs-13">{{item.APPROVE_CONSTRAINT_DATE | date:'dd/MM/yyyy'}}.</span></p>
+                                                                    <h6 class="fs-12 font-type fw-semibold margin-up-5">Status<span class="ms-1">:</span><span class="badge bg-info-subtle text-info fs-11 ms-1 text-uppercase">{{item.STATUS_VAL}}</span></h6>
+                                                                </div>
+                                                                <div class="mt-3 mt-lg-0">
+                                                                    <form action="javascript:void(0);">
+                                                                        <div class="row g-3 mb-0 align-items-center">
+                                                                            <!--end col-->
+                                                                            <div class="col-auto">
+                                                                                <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab font-type fs-12"  data-bs-toggle="modal" data-bs-target="#AcceptModal" (click)="ActiveRequest(item.REQUEST_ID,item.EMP_CODE,item.YEAR)"><i class="ri-checkbox-circle-line label-icon align-middle fs-16 ms-2"></i>Accept</button>
+                                                                                <button type="button" class="btn btn-danger btn-label right ms-auto nexttab nexttab font-type fs-12" data-bs-toggle="modal" data-bs-target="#RejectModal" (click)="ActiveRequest(item.REQUEST_ID,item.EMP_CODE,item.YEAR)"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Reject</button>
+                                                                            </div>
+                                                                            <!--end col-->
+                                                                        </div>
+                                                                        <!--end row-->
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <!--FIRST DIV-->
+
+                                                            <div class="row" id="review-Details" *ngIf="item.REQUEST_STATUS >= 3">  
+                                                                <div class="col-sm-9 px-4 mb-1">
+                                                                    <div class="col-lg-12">
+                                                                        <h6 class="fs-12 font-type">Review Year<span class="ms-1">:</span><span class="fs-12 font-type margin-up-5 fw-semibold ms-1">{{item.YEAR}}</span></h6>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <h6 class="fs-12 font-type">Reviewer<span class="ms-1">:</span><span class="fs-12 font-type margin-up-5 fw-semibold ms-1">{{item.REVIEWER}}</span></h6>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <h6 class="fs-12 font-type">Review Date<span class="ms-1">:</span><span class="fs-12 font-type margin-up-5 fw-semibold ms-1">{{item.TARGET_DATE | date:'dd-MM-yyyy'}}</span></h6>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <h6 class="fs-12 font-type">Review Status
+                                                                            <span class="ms-1">:</span>
+                                                                            <span class="badge bg-info-subtle text-info text-uppercase fs-11 ms-1 mb-1">{{item.STATUS_VAL}}</span>
+                                                                            <button *ngIf="item.REQUEST_STATUS == 10" type="button" class="btn btn-success btn-sm ms-1 fs-12">Appraisal Form</button>
+                                                                        </h6>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <h6 class="fs-12 font-type" style="margin-top:-2px">Rating<span class="ms-1">:</span><i class="ri-star-fill text-warning me-1 ms-1"></i><span class="fs-12 font-type fw-semibold">{{item.REVIEWER_SCORE}}</span></h6>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="px-1">
+                                                                        <img src="assets\styles\img\bgg1.png" alt="" class="img-fluid ma-10"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                           <!-- end card header -->
+
+                                                            <!--IF NO DATA-->
+                                                            <!--<div class="text-center margin-up-5">
+                                                            <div class="mb-0">
+                                                                <lord-icon src="https://cdn.lordicon.com/kbtmbyzy.json" trigger="loop" colors="primary:#54b4e4,secondary:#e9823d" style="width:60px;height:60px"></lord-icon>
+                                                            </div>
+                                                            <h6 class="fs-13 font-type text-center text-italic fw-semibold">Your goals list have not been set!</h6>
+                                                            </div>-->
+                                                            <!--IF NO DATA-->
+
+                                                            <!--REJECTION OF GOALS-->
+                                                            <!--<div class="ma-5">
+                                                                <h6 class="fs-12 font-type fw-semibold margin-up-5">Status<span class="ms-1">:<span class="badge bg-danger-subtle text-danger fs-11 ms-1 text-uppercase">GOAL LIST REJECTED</span></h6>
+                                                            </div>-->
+                                                            <!--REJECTION OF GOALS-->
+                                                        </div>
+                                                        <!--end col-->
+                                                    </div>
+                                                    </div> 
+                                                    <!--end row-->
+                                            </div> <!-- end card-body-->
+                                        </div> <!-- end col-->
+                                    </div> <!-- end row-->
+                                </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card shadow-lg">
+                                <div class="card-header bg-light-subtle" style="padding:10px">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <div class="align-items-center d-flex ">
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-14 font-type fw-semibold">Annual Goal List</h4>          
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div>
+                                                    <select class="form-select font-type fs-12 textbox-15 h-30" name = "year"  [(ngModel)]="year" (change)="Fetch_EmpGoalDetails()">
+                                                        <option value="-1" selected disabled>Year</option>
+                                                        <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD" >{{ combo.DISPLAY_FIELD }}</option>
+                                                    </select> 
+                                                </div>
+                                                <!-- <div>
+                                                    <select class="form-select font-type fs-12 textbox-15 h-30" [(ngModel)]="status">
+                                                        <option value="-1" selected>Status</option>
+                                                        <option *ngFor="let combo of statusdata" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>                                                            
+                                                    </select> 
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive table-card mb-0">
+                                        <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                            <thead class="table-light text-white font-type fs-12">
+                                            <tr>
+                                                <th class="fs-13">#</th>
+                                                <th>Goal</th>
+                                                <th class="text-center">Weightage<br/>Assigned</th>
+                                                <th class="text-center">Review<br/>Period</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all font-type fs-11" >
+                                            <tr class="font-type h-30" *ngFor="let goallist of EmpGoalList; let i = index; let isFirst = first">
+                                                <td class="fw-semibold">{{i + 1}}</td>
+                                                <td style="white-space: pre-wrap;">{{goallist.GOAL_DESCRIPTION}}</td>
+                                                <td class="text-center">{{goallist.WEIGTAGE}}</td>
+                                                <td>{{goallist.REVIEW_PERIOD}}</td>
+                                                <ng-container *ngIf="isFirst">
+                                                  <td [attr.rowspan]="EmpGoalList.length" class="align-middle">
+                                                    <ul class="list-inline hstack gap-1 mb-0">
+                                                      <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Details">
+                                                        <a href="#GoalUpdationModal" data-bs-toggle="modal" class="d-inline-block">
+                                                          <i class="ri-eye-fill fs-20 text-blue text-center"></i>
+                                                        </a>
+                                                      </li>
+                                                    </ul>
+                                                  </td>
+                                                </ng-container>
+                                              </tr>
+                                              
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                <!-- <div class="row font-type">
+                                    <div class="col-sm">
+                                        <div class="dataTables_info fs-12 text-muted" id="scroll-horizontal_info" role="status" aria-live="polite">Showing 1 to 5 of 5 entries</div>
+                                    </div>
+                                    <div class="col-sm-auto  mt-3 mt-sm-0">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="scroll-horizontal_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item previous disabled" id="scroll-horizontal_previous"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="0" tabindex="0" class="page-link fs-12">Previous</a></li>
+                                            <li class="paginate_button page-item active"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="1" tabindex="0" class="page-link fs-12">1</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="scroll-horizontal" data-dt-idx="2" tabindex="0" class="page-link fs-12">2</a></li>
+                                            <li class="paginate_button page-item next" id="scroll-horizontal_next"><a href="#" aria-controls="scroll-horizontal" data-dt-idx="3" tabindex="0" class="page-link fs-12">Next</a></li>
+                                        </ul>
+                                    </div>
+                                    </div>
+                                </div> -->
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                    </div>
+                    <!-- PERSONAL -->
+
+                    <!-- TEAM -->
+                    <div class="row topbar-up" id="Team"  *ngIf="user == 'team'">
+                        <div class="col-lg-12">
+                                <div class="card shadow-lg">
+                                    <!--Table Header-->
+                                    <div class="card-header border-0 bg-light-subtle" style="padding:10px">
+                                        <div class="row align-items-center gy-3">
+                                            <div class="col-sm">
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-14 font-type fw-semibold">Goal Setting Requests</h4>
+                                            </div>
+                                            <div class="col-sm-auto">
+                                                <div class="d-flex gap-1 flex-wrap">
+                                                   <div>
+                                                    <select class="form-select font-type fs-12 textbox-15 h-30" name = "teamyear"  [(ngModel)]="teamyear" (change)="Fetch_EmpGoalRequestsLM()">
+                                                        <option value="-1" selected disabled>Year</option>
+                                                        <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD">{{ combo.DISPLAY_FIELD }}</option>
+                                                    </select> 
+                                                   </div>
+                                                   <div>
+                                                    <select class="form-select font-type fs-12 textbox-15 h-30" name="teamstatus" [(ngModel)]="teamstatus" (change)="Fetch_EmpGoalRequestsLM()">
+                                                        <option value="-1">Status</option>
+                                                        <option *ngFor="let combo of statusdata" value="{{combo.KEY_ID}}" [selected]="combo.KEY_ID == 0">{{combo.DATA_VALUE}}</option>                                                            
+                                                    </select>
+                                                   </div>
+                                                   <div class="search-box">
+                                                        <input type="text" class="form-control font-type fs-12 textbox-15" placeholder="Search..."  [(ngModel)]="searchInput">
+                                                        <i class="ri-search-line search-icon"></i>
+                                                   </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Table Header-->
+
+                                    <div class="card-body">
+                                        <div class="table-responsive table-card mb-0">
+                                        <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                            <thead class="table-light text-white font-type">
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Emp Code</th>
+                                                    <th>Employee</th>
+                                                    <th>Target Date</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="list form-check-all font-type fs-11"> 
+                                                <!--  -->
+                                            <tr class="font-type h-30" *ngFor="let dataLM of EvaluationdataLM | search : searchInput | pagination: currentPage: itemsPerPage;let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{dataLM.EMP_CODE}}</td>
+                                                <td style="white-space: pre-wrap;">{{dataLM.EMP_NAME}}</td>
+                                                <td>{{dataLM. TARGET_DATE | date:'dd-MM-yyyy'}}</td>
+                                                <td class="status">
+                                                    <span [ngClass]="getStatusClass(dataLM.REQUEST_STATUS)" class="badge  width-budge fs-11 fw-semibold text-uppercase">{{dataLM.STATUS_VAL}}</span>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-inline hstack gap-1 mb-0">
+                                                        <li *ngIf="dataLM.REQUEST_STATUS == 0 || dataLM.REQUEST_STATUS == 2 || dataLM.REQUEST_STATUS == 4" class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Submit Target Setting Form" (click)="ActiveData(dataLM)">
+                                                            <a href="#TargetFormModal" class="text-blue d-inline-block edit-item-btn" data-bs-toggle="modal">
+                                                                <i class="ri-edit-2-fill fs-18 text-blue text-center"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li *ngIf="dataLM.REQUEST_STATUS == 1" class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Submit Target Setting Form" (click)="ActiveData(dataLM)">
+                                                            <a href="#TargetFormModal" class="text-orange d-inline-block edit-item-btn" data-bs-toggle="modal">
+                                                                <i class="ri-eye-fill fs-18"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li *ngIf="dataLM.REQUEST_STATUS == 3 || dataLM.REQUEST_STATUS == 7 || dataLM.REQUEST_STATUS == 9 || dataLM.REQUEST_STATUS == 5"  class="list-inline-item" title="Check Goal Status">
+                                                            <a href="#" class="text-blue d-inline-block edit-item-btn">
+                                                                <i class="ri-edit-box-fill fs-18"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li *ngIf="dataLM.REQUEST_STATUS == 6 || dataLM.REQUEST_STATUS == 8" class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Submit Assessment">
+                                                            <a class="text-success d-inline-block" href="appraisalForm.html">
+                                                                <i class="ri-todo-fill fs-18"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                        <div *ngIf="EvaluationdataLM">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResults }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPages() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumber of getPageNumbers(currentPage)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            </div>
+                                           </div>
+                                          </div>  
+                                    </div><!--end card-body-->
+                                </div>
+                        </div><!--end col-->
+                    </div>
+                     <!-- TEAM -->
+
+                </div>
+                <!-- container-fluid -->     
+            </div>
+            <!-- End Page-content -->
+
+            <!--MODAL BOXES-->
+
+              <!-- Acceptance Model-->
+              <div class="modal fade zoomIn" id="AcceptModal" tabindex="-1" aria-labelledby="AcceptModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <h5 class="fs-13 font-type text-white ma-5">Acceptance of Goals</h5>
+                            <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                        </div>
+                        <form class="tablelist-form" autocomplete="off" [formGroup]="AcceptanceForm" (ngSubmit)="validateAcceptanceForm()">
+                            <div class="modal-body">
+                                <input type="hidden" id="id-field" />
+                                <div class="margin-up-5">
+                                    <label class="form-label font-type fs-12">Comments</label>
+                                    <textarea class="form-control" rows="3" name="comment"  formControlName="comment" required></textarea>  
+                                    <div *ngIf="AcceptanceForm.get('comment')!.hasError('required') && AcceptanceForm.get('comment')!.touched" class="text-danger">
+                                        Please, Fill the field.
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="padding-bottom:10px;">
+                                <div class="hstack gap-2 margin-up-5">
+                                    <div *ngIf="!AcceptanceForm.valid">
+                                        <button type="button" class="btn btn-success font-type fs-12" [disabled]="AcceptanceForm.valid" id="validate-btn" (click)="validateAcceptanceForm()">Accept</button>
+                                    </div>
+                                
+                                    <div *ngIf="AcceptanceForm.valid">
+                                        <button type="button" class="btn btn-success font-type fs-12" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Acceptance()">Accept</button>
+                                    </div>
+                                    <button type="button" class="btn btn-blue font-type fs-12" (click)="clear(AcceptanceForm)" >Cancel</button> 
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>    
+            <!-- End Acceptance Model-->
+
+            <!-- Reason Model-->
+            <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <h5 class="fs-13 font-type text-white ma-5">Rejection of Goals</h5>
+                            <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                        </div>
+                        <form class="tablelist-form" autocomplete="off" [formGroup]="RejectForm" (ngSubmit)="validateRejectForm()">
+                            <div class="modal-body">
+                                <input type="hidden" id="id-field" />
+                                <div class="margin-up-5">
+                                    <label class="form-label font-type fs-12">Reason/Comments</label>
+                                    <textarea class="form-control" rows="3" name="reason"  formControlName="reason"></textarea>  
+                                    <div *ngIf="RejectForm.get('reason')!.hasError('required') && RejectForm.get('reason')!.touched" class="text-danger">
+                                        Please, Fill the field.
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="padding-bottom:10px;">
+                                <div class="hstack gap-2 margin-up-5">
+                                    <div *ngIf="!RejectForm.valid">
+                                        <button type="button" class="btn btn-danger font-type fs-12" [disabled]="RejectForm.valid" id="validate-btn" (click)="validateRejectForm()">Reject</button>
+                                    </div>
+                                
+                                    <div *ngIf="RejectForm.valid">
+                                        <button type="button" class="btn btn-danger font-type fs-12" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="Reject()">Reject</button>
+                                    </div>
+                                    <button type="button" class="btn btn-blue font-type fs-12" (click)="clear(RejectForm)">Cancel</button> 
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>    
+            <!-- End Reason Model-->
+
+            <!-- End Offer Status Modal Modal Box -->
+            <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button>
+            <!--Modal For Success Message Start-->
+            <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                        </div>
+                        <div class="modal-body" *ngIf="showModal==1"> 
+                            <div class="container">
+                                <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
+                            </div>
+                        </div>
+                        <div class="modal-body" *ngIf="showModal==2">
+                        <div class="container">
+                            <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <!--Modal For Success Message end--> 
+
+            <!-- Goal updation & View Modal-->
+            <div class="modal fade zoomIn" id="GoalUpdationModal" tabindex="-1" aria-labelledby="GoalUpdationModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <h5 class="fs-13 font-type text-white ma-5 fw-semibold">Goal Status Updation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="id-field" />
+                            <div class="row mb-2 margin-up-5">
+                                <div class="col-lg-12 font-type fs-12 text-info">
+                                    <span>1.</span><span class="ms-1">Increase productivity by 15% through improved time management and workflow optimization.</span>
+                                </div>
+                            </div>
+                            <!--end row-->
+                            <div class="col-lg-12 ma-5">
+                                <div class="table-responsive table-card p-3">
+                                    <table class="table table-nowrap align-middle table-bordered border-blue">
+                                        <thead class="text-white font-type fs-12">
+                                        <tr class="bg-light-blue text-black border-blue">
+                                            <th class="fs-13">#</th>
+                                            <th class="fs-12">Review Date</th>
+                                            <th class="fs-12">Percentage Achieved</th>
+                                            <th width="45%" class="fs-12">Answer <span style="visibility: hidden;">Enter Your Answere Here</span></th>
+                                            <th class="fs-12" width="45%">Reviwer Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list form-check-all font-type fs-11">
+                                    <tr class="font-type h-30 ">
+                                        <td class="fw-semibold">01</td>
+                                        <td>15/03/2024</td>
+                                        <td style="padding:0px;"><input type="text" class="form-control border-0 font-type textbox-15 fs-12" placeholder="Enter Wt." value="70%"/></td>
+                                        <td style="white-space: pre-wrap;padding:0px;"><textarea class="form-control border-0 font-type content-text fs-12" required rows="4"  placeholder="Enter Answer" oninput="auto_grow(this)">I've made significant progress on Project Alpha, completing the initial planning phase and now actively managing the execution. Team morale is high, and we're meeting milestones as scheduled.</textarea></td>
+                                        <td style="white-space: pre-wrap;"><span class="content-text fs-12 text-italic text-muted">Consistently demonstrated strong performance in his role as [Employee's Position]. His dedication to achieving goals and delivering results has been commendable throughout the review period.</span></td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                        <td class="fw-semibold">02</td>
+                                        <td>15/06/2024</td>
+                                        <td style="padding:0px;"><input type="text" class="form-control border-0 font-type textbox-15" placeholder="Enter Wt." Value="50%"/></td>
+                                        <td style="white-space: pre-wrap;padding:0px"><textarea class="form-control font-type border-0 content-text fs-12" required rows="4"  placeholder="Enter Answer" oninput="auto_grow(this)">I've started the first course on project management and completed 30% of the modules. It's been insightful, and I'm confident of finishing on time by the end of Q3.</textarea></td>
+                                        <td style="white-space: pre-wrap;"><span class="content-text fs-12 text-italic text-muted">Comments...</span></td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                        <td class="fw-semibold">03</td>
+                                        <td>15/09/2024</td>
+                                        <td style="padding:0px;"><input type="text" class="form-control border-0 font-type textbox-15" placeholder="Enter Wt."/></td>
+                                        <td style="white-space: pre-wrap;padding:0px;"><textarea class="form-control font-type border-0 content-text fs-12" required rows="4"  placeholder="Enter Answer" oninput="auto_grow(this)"></textarea></td>
+                                        <td style="white-space: pre-wrap;"><span class="content-text fs-12 text-italic text-muted">Comments...</span></td>
+                                    </tr>
+                                    <tr class="font-type h-30">
+                                        <td class="fw-semibold">04</td>
+                                        <td>15/12/2024</td>
+                                        <td style="padding:0px;"><input type="text" class="form-control border-0 font-type textbox-15" placeholder="Enter Wt."/></td>
+                                        <td style="white-space:pre-wrap;padding:0px;"><textarea class="form-control font-type border-0 content-text fs-12" required rows="4"  placeholder="Enter Answer" oninput="auto_grow(this)"></textarea></td>
+                                        <td style="white-space: pre-wrap;"><span class="content-text fs-12 text-italic text-muted">Comments...</span></td>
+                                    </tr>
+                                    </tbody>
+                                    </table>    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 topbar-up">
+                                <div class="hstack gap-2 justify-content-end mb-2 pr-20">
+                                    <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type " ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Update</button>
+                                    <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type "><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <!-- End Goal updation & View Modal Modal--> 
+
+
+            <!-- Target Form-->
+            <div class="modal fade zoomIn" id="TargetFormModal" tabindex="-1" aria-labelledby="TargetFormModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                  <div class="modal-content">
+                    <form [formGroup]="TargetForm" (ngSubmit)="validateTargetForm()">
+                      <div class="modal-header bg-orange padding-up-5">
+                        <h5 class="fs-13 font-type text-white ma-5 fw-semibold">Target Setting Form</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                      </div>
+                      <div class="modal-body">
+                        <input type="hidden" id="id-field" />
+                        <div class="border border-dashed rounded mb-2 p-2">
+                          <div class="mb-2 px-4 py-1 bg-light-blue">
+                            <div class="row ma-10">
+                              <div class="col-md-12 col-lg-2">
+                                <h6 class="fs-12 font-type">Review Year<span class="ms-1">:</span></h6>
+                                <h6 class="fs-12 font-type fw-semibold">{{year}}</h6>
+                              </div>
+                              <div class="col-md-12 col-lg-5">
+                                <h6 class="fs-12 font-type">Employee<span class="ms-1">:</span></h6>
+                                <h6 class="fs-12 font-type fw-semibold">{{empcode}}</h6>
+                              </div>
+                              <div class="col-md-12 col-lg-5">
+                                <h6 class="fs-12 font-type">Employee Title<span class="ms-1">:</span></h6>
+                                <h6 class="fs-12 font-type fw-semibold">{{desig}}</h6>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row mb-0">
+                            <div class="col-md-12 col-lg-12">
+                              <div class="table-responsive ma-5">
+                                <table class="table table-nowrap align-middle table-bordered border-blue">
+                                  <thead class="text-white font-type fs-12">
+                                    <tr class="bg-light-blue text-black border-blue">
+                                      <th class="fs-13">#</th>
+                                      <th class="fs-12" width="80%">Objectives<span style="visibility: hidden;">Enter Your Objectives Here</span></th>
+                                      <th class="fs-12">Wt.Assigned</th>
+                                      <th class="fs-12">Review Period</th>
+                                      <th *ngIf="viewflag == 1" class="fs-12">Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody class="list form-check-all font-type fs-11" id="tableBody" formArrayName="tableRows">
+                                    <tr class="font-type h-30" *ngFor="let row of tableRows.controls; let i = index" [formGroupName]="i">
+                                      <td class="fw-semibold">{{i + 1}}</td>
+                                      <td style="white-space: pre-wrap;padding:0px;">
+                                        <textarea class="form-control border-0 font-type content-text fs-12" required rows="2" placeholder="Enter Objectives" formControlName="description"></textarea>
+                                      </td>
+                                      <td style="padding:0px;">
+                                        <input type="number" class="form-control border-0 font-type textbox-15 fs-12" placeholder="Enter Wt." name="assigned" formControlName="weight"/>
+                                      </td>
+                                      <td style="padding:0px;">
+                                        <select class="form-select h-30 font-type textbox-15" name="reviewPeriod" id="reviewPeriod" formControlName="reviewPeriod">
+                                          <option value="" selected disabled>Select</option>
+                                          <option *ngFor="let dataperiod of period" [value]="dataperiod.KEY_ID">{{dataperiod.DATA_VALUE}}</option>
+                                        </select>
+                                      </td>
+                                      <td *ngIf="viewflag == 1">
+                                        <ul class="list-inline gap-1 mb-0">
+                                          <li class="list-inline-item" title="Remove" (click)="removeFromTable(i)">
+                                            <a class="text-danger d-inline-block remove-item-btn text-center ms-2">
+                                              <i class="ri-delete-bin-5-fill fs-18"></i>
+                                            </a>
+                                          </li>
+                                        </ul>
+                                        <input type="hidden" formControlName="id">
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <button *ngIf="viewflag == 1" id="addRowBtn" class="btn btn-info font-type fs-12" (click)="addTableRow()">
+                                  <i class="ri-add-line me-1 align-middle me-1 fs-13"></i>Add Next
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 topbar-up" *ngIf="viewflag == 1">
+                        <div class="hstack gap-2 justify-content-end mb-2 pr-20">
+                          <div *ngIf="!TargetForm.valid">
+                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" [disabled]="TargetForm.valid" id="validate-btn" (click)="validateTargetForm()">
+                              <i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit
+                            </button>
+                          </div>
+                          <div *ngIf="TargetForm.valid">
+                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="SaveGoal()">
+                              <i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit
+                            </button>
+                          </div>
+                          <!-- <button type="button" class="btn btn-blue btn-label right nexttab nexttab font-type" (click)="clearGoalList(TargetForm)">
+                            <i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel
+                          </button> -->
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              
+            <!-- End Target Form--> 
+    
+            <app-footer></app-footer>
+
+        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->

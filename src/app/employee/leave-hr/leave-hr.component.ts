@@ -344,6 +344,7 @@ export class LeaveHRComponent implements OnInit {
          if (link.download !== undefined) {
             link.setAttribute("href", fileurl);
             link.setAttribute("download", "ReportFile.xlsx");
+            link.setAttribute('target', '_blank');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

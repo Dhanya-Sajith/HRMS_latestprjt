@@ -82,6 +82,8 @@ export class TrainingPlanComponent implements OnInit {
   accomodation: any;
   allowance: any;
   totalcost: any;
+  today: any;
+  scheDuration: any;
 
 
   constructor(private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private router:Router,private fb: FormBuilder,private route: ActivatedRoute) { 
@@ -110,6 +112,8 @@ export class TrainingPlanComponent implements OnInit {
   ngOnInit(): void {
 
   this.currentYear = new Date().getFullYear();
+  const now = new Date();
+  this.today = now.toISOString().split('T')[0];
 
   this.route.queryParams
     .subscribe(params => {
@@ -813,7 +817,14 @@ editscheduledplan(trainingId:any)
 
     //alert(this.fetchScheduledDtls[0].COMPANY);
 
+    //alert(JSON.stringify(res))
+
     this.companycode= this.fetchScheduledDtls[0].COMPANY;
+    this.scheDuration = this.fetchScheduledDtls[0].CONFIRMED_QUARTER;
+    // this.scheDuration = this.fetchScheduledDtls[0]?.CONFIRMED_QUARTER || ''; // Ensure to handle undefined or null case
+    //this.durationval.setValue(this.scheDuration); 
+
+    //alert(this.scheDuration)
 
     this.apicall.FetchEmployeeList(-1,this.companycode,this.empcode).subscribe(res => {
       this.listEmployeeforEdit = res;
@@ -955,7 +966,9 @@ fetchskilledemployees()
   // const durationval = <HTMLInputElement>document.getElementById('duration');
   // const duration = durationval.value;
 
-  const duration = this.durationval.value;
+  const duration = this.scheDuration;
+
+ // alert(duration)
 
   const actual_train_dt=  (<HTMLInputElement>document.getElementById("actual_train_dt")).value;
   const assess = (document.querySelector('input[name="assess"]:checked') as HTMLInputElement)?.value;
@@ -1074,7 +1087,7 @@ fetchskilledemployees()
     if(res.Errorid!=0){
       (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
       this.showModals = 1;
-      this.successs = "Online Training Added Successfully";
+      this.successs = "Saved Successfully";
     }
     else{
       (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
@@ -1094,11 +1107,13 @@ fetchskilledemployees()
   this.apicall.Fetch_TrainingTarget_HR(type,company).subscribe((res) => {
     this.trtargetdata = res;
 
+  //  alert(JSON.stringify(res))
+
    this.existing = this.trtargetdata[0].EXISTING_EMP_DURATION;
    this.newduration = this.trtargetdata[0].NEW_EMP_DURATION;
 
   // alert(this.existing);
-  //  alert(JSON.stringify(res))
+  // alert(JSON.stringify(res))
   
   })
  }

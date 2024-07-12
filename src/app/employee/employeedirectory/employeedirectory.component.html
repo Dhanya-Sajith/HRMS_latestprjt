@@ -44,9 +44,10 @@
                                         <div class="col-lg-2" *ngIf="this.grpname.includes('HR')">
                                             <div class="text-sm-end">
                                                 <select class="form-select h-30 font-type textbox-15" name="activestatus" id="activestatus" [(ngModel)]="activestatus" (change)="changecosts()"  >
-                                                    <option value="0" >All</option>
-                                                    <option value="1" >Active</option>
-                                                    <option value="2" >Inactive</option>
+                                                    <option value="-1" >All</option>
+                                                    <option  *ngFor="let item of statusactive" value="{{item.KEY_ID}}">
+                                                        {{item.DATA_VALUE}}
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>

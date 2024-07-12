@@ -485,7 +485,7 @@
                                                         <tr>
                                                             <th scope="col">Approver</th>
                                                             <th scope="col">Date</th>
-                                                            <th scope="col">Status</th>
+                                                            <!-- <th scope="col">Status</th> -->
                                                             <th scope="col">Remarks/Reason</th>
                                                         </tr>
                                                     </thead>
@@ -493,7 +493,7 @@
                                                         <tr class="fs-12 font-type" *ngFor="let sdata of statusdata">
                                                             <td>{{sdata.APPROVER}}</td>
                                                             <td>{{sdata.VERIFIED_DATE | date:'dd-MM-yyyy'}}</td>
-                                                            <td><span class="badge bg-success width-budge fs-11 fw-medium">{{sdata.STATUS}}</span></td>
+                                                            <!-- <td><span class="badge bg-success width-budge fs-11 fw-medium">{{sdata.STATUS}}</span></td> -->
                                                             <td style="white-space: pre-wrap;">{{sdata.VERIFIED_REMARKS}}</td>
                                                         </tr>
                                                     </tbody>

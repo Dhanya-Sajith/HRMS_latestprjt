@@ -40,6 +40,7 @@ export class EmployeedirectoryComponent implements OnInit {
   accescompany: any;
   activestatus: any=1;
   completests: any=0;
+  statusactive: any;
 
   constructor(private session:LoginService,private apicall:ApiCallService,private route:Router,private fb: FormBuilder,private datePipe: DatePipe) { }
 
@@ -49,6 +50,10 @@ export class EmployeedirectoryComponent implements OnInit {
  this.currentPage =1;
 this.hostname=this.apicall.dotnetapi;
 //alert(this.hostname);
+this.apicall.listStatus(80).subscribe((res)=>{
+  this.statusactive=res;
+  })
+
  this.fetchempdirectoylist();
  this.fetchcompanyaccesslist();
 

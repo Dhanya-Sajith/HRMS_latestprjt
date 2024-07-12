@@ -146,6 +146,7 @@
                                                                             <span>Convenient Schedule</span>
                                                                             <!-- <input type="text" class="form-control search h-30 font-type" placeholder="Filter..."> -->
                                                                         </th>
+                                                                        <th>Remarks</th>
                                                                         <th>Status</th>
                                                                         <th>Action</th>
                                                                     </tr>   
@@ -167,6 +168,7 @@
                                                                 <td class="p-1">{{employee.EMP_NAME}}</td>
                                                                 <td [attr.rowspan]="trPlans.Employees.length">{{trPlans.TRAINING_TYPE}}</td>
                                                                 <td [attr.rowspan]="trPlans.Employees.length">{{trPlans.PROPOSED_QUARTER}}</td>
+                                                                <td [attr.rowspan]="trPlans.Employees.length">{{trPlans.REMARKS}}</td>
                                                                 <td class="status" [attr.rowspan]="trPlans.Employees.length"> <span [ngStyle]="getStatusStyles(trPlans.PLAN_STATUS)" class="badge text-white width-budge fs-11 fw-medium">{{trPlans.PLAN_STATUS_VAL}}</span></td>
                                                                 <td [attr.rowspan]="trPlans.Employees.length">
                                                                         <ul class="list-inline hstack gap-0 mb-0">
@@ -341,6 +343,7 @@
                                                                         <th>Provider</th>
                                                                         <th>Confirmed<br>Schedule</th>
                                                                         <th>Actual<br>Training<br>Date</th>
+                                                                        <th>Remarks</th>
                                                                         <th>Status</th>
                                                                         <th>Action</th>
                                                                     </tr>   
@@ -357,6 +360,7 @@
                                                                                 <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.TRAINING_TYPE}}</td>
                                                                                 <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.CONFIRMED_QUARTER}}</td>
                                                                                 <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.SCHEDULED_DATE | date: 'dd-MM-yyyy' }}</td>
+                                                                                <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.REMARKS}}</td>
                                                                                 <td class="status" [attr.rowspan]="schePlans.Employees.length"><span [ngStyle]="getStatusStyles(schePlans.PLAN_STATUS)" class="badge text-white width-budge fs-11 fw-medium">{{schePlans.PLAN_STATUS_VAL}}</span></td>
                                                                                 <td [attr.rowspan]="schePlans.Employees.length">
                                                                                     <ng-container [ngSwitch]="true">
@@ -367,7 +371,7 @@
                                                                                                             <i class="ri-edit-circle-fill fs-22 text-orange text-center"></i>
                                                                                                         </a>
                                                                                                     </li> 
-                                                                                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit Details">
+                                                                                                    <li *ngIf="today > schePlans.SCHEDULED_DATE" class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Add cost and mark as completed">
                                                                                                         <a href="#trainingcost" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn"  (click)="addCostdtls(schePlans.TRAINING_ID)" >
                                                                                                             <i class="fa fa-money fs-22 text-orange text-center"></i>
                                                                                                         </a>
@@ -382,8 +386,8 @@
                                                                                                             <i class="ri-more-fill"></i>
                                                                                                         </a>
                                                                                                         <ul class="dropdown-menu dropdown-menu-end text-blue" >
-                                                                                                            <li  ><a class="dropdown-item text-blue" (click)="navigateTo_attendancePage(schePlans.TRAINING_ID)"><i class="ri-booklet-fill  me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Attendance Register</span> </a></li>
-                                                                                                            <li *ngIf="schePlans.ATTENDANCE_FLAG==1"><a class="dropdown-item text-blue" (click)="navigateTo_feedbackPage(schePlans.TRAINING_ID)"><i class="ri-feedback-fill me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Course Feedback</span> </a></li>
+                                                                                                            <li ><a class="dropdown-item text-blue" (click)="navigateTo_attendancePage(schePlans.TRAINING_ID)"><i class="ri-booklet-fill  me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Attendance Register</span> </a></li>
+                                                                                                            <li ><a class="dropdown-item text-blue" (click)="navigateTo_feedbackPage(schePlans.TRAINING_ID)"><i class="ri-feedback-fill me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Course Feedback</span> </a></li>
                                                                                                             <li *ngIf="schePlans.ASSESSMENT_FLAG==1 && schePlans.ATTENDANCE_FLAG==1"><a class="dropdown-item text-blue"  (click)="navigateTo_assessPage(schePlans.TRAINING_ID)" ><i class="ri-add-circle-fill me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Add Assessment</span><span class="text-muted ms-4 fs-12"></span></a></li>
                                                                                                             <!-- <li><a class="dropdown-item text-blue" href="#"><i class="ri-file-edit-line me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Assessment Questionnaire</span></a></li> -->
                                                                                                             <li *ngIf="schePlans.EFFECTIVE_STATUS==1 && schePlans.ATTENDANCE_FLAG==1"><a class="dropdown-item text-blue" (click)="navigateTo_effectivePage(schePlans.TRAINING_ID)"><i class="ri-book-open-line me-2 align-bottom text-blue fs-16"></i><span class="text-blue">Course Effectiveness</span></a></li>
@@ -877,6 +881,7 @@
                             </div>
                             <div class="col-lg-8"> 
                                 <ngx-timepicker-field  #timePicker [format]="24"   class="editedIntime" id="oldEmpduration" name="oldEmpduration" [formControl]="oldEmpduration" [(ngModel)]="existing" ></ngx-timepicker-field>
+                                
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -970,7 +975,7 @@
                     <hr>
                     <div class="col-lg-6 pt-2 mb-2" style="float: inline-end;">
                         <div class="hstack gap-2 justify-content-end">
-                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type"  (click)="savecostdtls(this.trainingID)" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type"  (click)="savecostdtls(this.trainingID)" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Mark As Completed</button>
                         </div>
                     </div>
                 </div> 
@@ -1115,7 +1120,8 @@
                                                         <label for="leaveemails" class="form-label font-type fw-semibold">Duration</label>
                                                     </div>
                                                     <div class="col-lg-10"> 
-                                                        <ngx-timepicker-field [format]="24"   class="editedIntime" id="duration" name="duration" [formControl]="durationval" ></ngx-timepicker-field>
+                                                        <ngx-timepicker-field  #timePicker [format]="24"   class="editedIntime" id="duration" name="duration" [(ngModel)]="scheDuration" ></ngx-timepicker-field>
+                                                        <!-- <ngx-timepicker-field  #timePicker [format]="24"    id="duration" name="duration" [formControl]="durationval" [(ngModel)]="scheDuration" ></ngx-timepicker-field> -->
                                                         <!-- <input type="text" class="form-control font-type textbox-15" placeholder="Enter Duration" id="duration" name="duration" value="{{fetcdtls.CONFIRMED_QUARTER}}" > -->
                                                     </div>
                                                 </div>
