@@ -77,6 +77,7 @@ export class HiringCenterComponent implements OnInit {
   selectedStatusCandidate:any=0;
   yearCandidate=new Date().getFullYear();
   CandidateEvaluationList: any;
+  showtab2: boolean=false;
 
 
   constructor(private apicall:ApiCallService,private session:LoginService,private fb: FormBuilder) {
@@ -155,7 +156,8 @@ export class HiringCenterComponent implements OnInit {
       this.addJobPostForm.get('approver_id')?.clearValidators();
     }
     this.addJobPostForm.get('approver_id')?.updateValueAndValidity();
-    if(!this.grpname.includes('HR') && !this.grpname.includes('HOD') && !this.grpname.includes('LM')){
+    if(!this.grpname.includes('HR') && !this.grpname.includes('HOD')  && this.grpname.includes('LM-VP')){
+     this.showtab2=true;
       this.ontabSelected(2);
     }else{
       this.FetchHireRequests();
@@ -196,6 +198,7 @@ export class HiringCenterComponent implements OnInit {
       } 
       })  
     }else{ //Candidate Evaluation Process
+      this.showtab2=false;
       this.apicall.Fetch_HireRequest(this.empcode,this.selectedStatusCandidate,this.yearCandidate,3).subscribe((res)=>{
         this.CandidateEvaluationList=res;
         //alert(JSON.stringify(res))
@@ -294,7 +297,7 @@ export class HiringCenterComponent implements OnInit {
   ViewJobDetails(reqId:any){
     this.apicall.ViewJob_Description(reqId).subscribe((res)=>{
       this.JobDescription=res;
-      //alert(JSON.stringify(res));
+      console.log(JSON.stringify(res));
       this.company=res[0].COMPANY;
       this.designation=res[0].DESIGNATION;
       this.department=res[0].DEPARTMENT;

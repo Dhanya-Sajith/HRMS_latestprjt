@@ -142,6 +142,9 @@ import { OfferletterExeComponent } from './HiringManagement/offerletter-exe/offe
 import { OfferletterIntComponent } from './HiringManagement/offerletter-int/offerletter-int.component';
 import { SalaryRevisionHistoryReportComponent } from './reports/salary-revision-history-report/salary-revision-history-report.component';
 import { GoalSettingNanalyticsHRComponent } from './PerformanceManagement/goal-setting-nanalytics-hr/goal-setting-nanalytics-hr.component';
+import { OrgChartComponent } from './org-chart/org-chart.component';
+import { AssestlistComponent } from './reports/assestlist/assestlist.component';
+import { DocumentsReportComponent } from './reports/documents-report/documents-report.component';
 
 
 
@@ -293,7 +296,9 @@ const routes: Routes = [
   {path:'Offer_Letter_Exe' , component:OfferletterExeComponent},
   {path:'Offer_Letter_Int' , component:OfferletterIntComponent},
   {path:'GoalSettingsNAnalyticsHR' , component:GoalSettingNanalyticsHRComponent},
-
+  {path:'org_chart', component:OrgChartComponent},
+  {path:'assestlist',component:AssestlistComponent},
+  {path:'document-report',component:DocumentsReportComponent},
 
 
 ];

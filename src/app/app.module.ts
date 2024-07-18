@@ -158,6 +158,11 @@ import { OfferletterExeComponent } from './HiringManagement/offerletter-exe/offe
 import { SalaryRevisionHistoryReportComponent } from './reports/salary-revision-history-report/salary-revision-history-report.component';
 import { GoalSettingNanalyticsHRComponent } from './PerformanceManagement/goal-setting-nanalytics-hr/goal-setting-nanalytics-hr.component';
 import { PerformanceManagementComponent } from './PerformanceManagement/performance-management/performance-management.component';
+import { OrgChartComponent } from './org-chart/org-chart.component';
+import { NgxOrgChartModule } from 'ngx-org-chart';
+import { AssestlistComponent } from './reports/assestlist/assestlist.component';
+import { DocumentsReportComponent } from './reports/documents-report/documents-report.component';
+import { EmployeeInsuranceReportComponent } from './reports/employee-insurance-report/employee-insurance-report.component';
 
 
 @NgModule({
@@ -313,6 +318,10 @@ import { PerformanceManagementComponent } from './PerformanceManagement/performa
     SalaryRevisionHistoryReportComponent,
     GoalSettingNanalyticsHRComponent,
     PerformanceManagementComponent,
+    OrgChartComponent,
+    AssestlistComponent,
+    DocumentsReportComponent,
+    EmployeeInsuranceReportComponent,
     
     
   ],
@@ -345,7 +354,8 @@ import { PerformanceManagementComponent } from './PerformanceManagement/performa
       "clockwise": true,
       "startFromZero": false,
       "lazy": true}),
-      NgMultiSelectDropDownModule.forRoot()
+      NgMultiSelectDropDownModule.forRoot(),
+      NgxOrgChartModule
     
   ],
   providers: [DatePipe],

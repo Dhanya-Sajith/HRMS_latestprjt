@@ -56,7 +56,7 @@
 
                                 <div class="card-body pt-0">
                                     <div class="table-responsive  table-card mb-0" style="overflow-x: scroll;">
-                                        <table class="table align-middle table-bordered border-orange">
+                                        <!-- <table class="table align-middle table-bordered border-orange">
                                             <thead class="table-light text-white font-type">
                                                 <tr class="border-orange">
                                                     <tr>
@@ -107,7 +107,39 @@
                                                 </tr>
                                             </tbody>
                                            
-                                        </table>
+                                        </table> -->
+                                        <table class="table align-middle table-bordered border-orange">
+                                            <thead class="table-light text-white font-type">
+                                              <tr class="border-orange">
+                                                <th *ngFor="let column of columns"> {{ column }}</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody class="list form-check-all font-type fs-11">
+                                              <tr class="trstyle fs-12 h1-50" *ngFor="let row of data">
+                                                <ng-container *ngFor="let column of columns">
+                                                    <td>
+                                                      <ng-container *ngIf="column === 'OTHER_ADDITION'">
+                                                        <a data-target="#DetailModal" data-bs-toggle="modal" href="#DetailModal" class="textblack"
+                                                           (click)="DetailData(row['EMP_CODE'], row['PROCESS_DATE'], 1)"
+                                                           title="Other Additions" style="color:cornflowerblue">
+                                                          {{ row[column] }}
+                                                        </a>
+                                                      </ng-container>
+                                                      <ng-container *ngIf="column === 'OTHER_DEDUCTION'">
+                                                        <a data-target="#DetailModal" data-bs-toggle="modal" href="#DetailModal" class="textblack"
+                                                           (click)="DetailData(row['EMP_CODE'], row['PROCESS_DATE'], 2)"
+                                                           title="Other Deductions" style="color:cornflowerblue">
+                                                          {{ row[column] }}
+                                                        </a>
+                                                      </ng-container>
+                                                      <ng-container *ngIf="column !== 'OTHER_ADDITION' && column !== 'OTHER_DEDUCTION'">
+                                                        {{ row[column] }}
+                                                      </ng-container>
+                                                    </td>
+                                                </ng-container>
+                                              </tr>
+                                            </tbody>
+                                          </table>
                                     </div><br>
 
                                     <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="salarylist.length > 0" style="padding-left: 15px;padding-right: 15px;">

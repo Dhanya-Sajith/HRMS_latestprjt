@@ -67,6 +67,8 @@ export class TrainingRequestsComponent implements OnInit {
   viewdtl: any;
   BtnActive: any;
   statusdata: any;
+  COMPLETED_DURATION: any;
+  TARGET_DURATION: any;
 
   constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute) { 
     this.requestForm = this.fb.group({
@@ -179,7 +181,8 @@ export class TrainingRequestsComponent implements OnInit {
          this.Upcomingtraining = this.trainingdtl[0].SUBJECT_NAME;
          this.assignedhrs = this.trainingdtl[0].trainingDurationModels[0].TOTAL_DURATION;
          this.pendinghrs = this.trainingdtl[0].trainingDurationModels[0].PENDING_DURATION;
-
+         this.TARGET_DURATION  = this.trainingdtl[0].trainingDurationModels[0].TARGET_DURATION ;
+         this.COMPLETED_DURATION  = this.trainingdtl[0].trainingDurationModels[0].COMPLETED_DURATION ;
       })
     }
 

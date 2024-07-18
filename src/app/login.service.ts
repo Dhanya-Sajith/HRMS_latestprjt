@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  private timeoutMinutes: number = 30;
+  private timeoutMinutes: number = 15;
   private timeoutTimer: any;
   private timeoutSubject: Subject<void> = new Subject<void>();
 

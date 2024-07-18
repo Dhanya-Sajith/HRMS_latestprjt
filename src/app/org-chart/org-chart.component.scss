@@ -1,0 +1,82 @@
+  
+  ngx-org-chart {
+    display: block;
+  }
+
+  
+  .node-ceo, .node-cto, .node-cfo, .node-coo, .node-dev-manager, .node-qa-manager, .node-account-manager, .node-operations-manager {
+    // Add specific styles for different node types /
+  }
+  
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  .chart-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+    height: 100vh;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .org-chart-box {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    background-color: white;
+    cursor: pointer;
+  }
+  .org-chart-container {
+    // height: 30vh; 
+    overflow: auto;
+    display: flex;
+    
+   //   cursor: grab;
+  // transform: scale(1); / Adjust scale as needed /
+  // transform-origin: 0 0;
+   // flex-direction: column;
+    //flex-grow: 1;
+    // max-width: 800px;
+		// max-height: 800px;
+    // overflow: scroll !important;
+    //-------
+    height: 78vh; /// Smaller height to fit within view /
+  max-width: 100%;
+  max-height: 100%;
+  //border: 1px solid #ccc;
+  //padding: 7px;
+  box-sizing: border-box;
+  //overflow: hidden;
+
+  //cursor: grab; 
+   }
+   
+   .org-chart-container.dragging {
+  cursor: grabbing;
+}
+.scroll-container {
+  width: 100%;
+  height: 100vh;
+  overflow: auto; /// Allow scrolling /
+  cursor: grab;
+  position: relative;
+}
+
+.scroll-container:active {
+  cursor: grabbing;
+}
+ngx-org-chart {
+    width: 100%; /// Make chart responsive /
+    height: 100%; // Make chart responsive /
+  }
+.content {
+  width: 100%; // Example for large content /
+  height: 100%; // Example for large content /
+  background-color: #f0f0f0; // Optional: To visualize the content area /
+}

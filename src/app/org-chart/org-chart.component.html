@@ -1,0 +1,204 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+    <app-header></app-header>
+    <!-- ========== App Menu ========== -->   
+    <app-sidemenu></app-sidemenu>
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="main-content">
+
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="row">
+         <div class="col-lg-12">
+         <div class="card shadow-lg pb-0">                  
+         <div class="card-body border border-top-0 border-end-0 border-start-0 padding-up-5" id="teaminput">
+         <form>
+        <div class="row mb-1">
+                <div class="col-lg-3 pt-2">
+                    <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
+                    <select class="form-select font-type fs-11" aria-label="Default select example"  name="comcode" id="comcode" [(ngModel)]="comcode">
+                        <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
+                            {{CompanyList.DATA_VALUE}}
+                        </option>
+                    </select> 
+                </div>
+                <div class="col-lg-3 pt-2">
+                    <h6 class="fs-12 font-type fw-semibold"><span>Employee</span></h6>
+                    <select class="form-select font-type fs-11" aria-label="Default select example"  name="employee" id="employee" [(ngModel)]="employee">
+                        <option value="-1">Select</option>
+                        <option  *ngFor="let EmployeeList of listEmployees" value="{{EmployeeList.EMP_CODE}}">
+                            {{EmployeeList.EMP_NAME}}
+                        </option>
+                        
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <div class="pt-4">    
+                        <button type="button" class="btn btn-orange font-type fs-12 add-button text-white" (click)="viewChart()"><i class="ri-organization-chart me-1"></i>Load</button>
+                    </div>
+                </div>  
+                <div class="col-lg-2">
+                    <div class="pt-4">    
+                        <button type="button" class="btn btn-info font-type fs-12 add-button"  data-bs-toggle="modal" data-bs-target=".exampleModalFullscreen"><i class="ri-eye-fill me-1"></i>View Full Size</button>
+                    </div>
+                </div>   
+                <div class="col-lg-1">
+                    <div class="pt-4" title="Zoom In">    
+                        <button type="button" class="btn btn-outline-success font-type fs-15 ma-10" (click)="zoomIn()"><i class="ri-zoom-in-line"></i></button>
+                    </div>
+                </div>  
+                <div class="col-lg-1">
+                    <div class="pt-4" title="Zoom Out">    
+                        <button type="button" class="btn btn-outline-success font-type fs-15 ma-10" (click)="zoomOut()"><i class="ri-zoom-out-line"></i></button>
+                    </div>
+                </div>           
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>
+        </div>
+        <!--End Header-->
+
+        <!--Chart-->
+        <div class="row margin-up-10">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header border border-dashed pa-6-8">
+                        <div class="row align-items-center gy-1">
+                            <div class="col-sm">
+                                <div class="align-items-center d-flex">
+                                    <div class="col-sm-auto">
+                                        <span class="avatar-title bg-transparent">
+                                            <img src="assets\styles\img\MTC logo.png" alt="" width="120px" Height="100px">
+                                        </span>
+                                    </div>
+                                    <h4 class="card-title mb-0 flex-grow-1 text-center fs-13 font-type fw-semibold text-uppercase">Organization Chart</h4>
+                                </div>
+                            </div>
+                            <div class="col-sm-auto">
+                                <div class="d-flex gap-1 flex-wrap">
+                                    <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">09/08/2024</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pa-6-8">
+                        <div #chartContainer class="org-chart-container">
+                            <ngx-org-chart [nodes]="nodes" id="Orgcharts"  (itemClick)="toggleCollapse($event)" > 
+                             
+                            </ngx-org-chart>
+                        
+                            <!-- <div id="chartContainer" class="chart-container">
+                            
+                              
+                                <ng-template let-node>
+                                  <div class="org-chart-box" id="{{ node.ecode }}" (click)="handleExpand(node)">
+                                    <h3>{{ node.name }}</h3>
+                                    <p>dfds</p>
+                                    <p>dfs</p>
+                                  </div>
+                                </ng-template>
+                            
+                            </div> -->
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--End Chart-->
+
+
+        <!-- Fullscreen Modals -->
+      <!-- Full screen modal content -->
+      <div class="modal fade exampleModalFullscreen" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header bg-orange" style="padding-bottom: 10px;">
+                    <div class="flex-grow-1 text-truncate"></div>
+                    <div class="flex-shrink-0">
+                        <button type="button" class="btn btn-sm btn-info font-type fs-12 add-button me-2" (click)="convertToPDF()"><i class="ri-download-2-line me-1"></i>Download PDF</button>
+                    </div>
+                    <button type="button" class="btn-close ms-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row margin-up-10">
+                        <div class="col-lg-12 col-md-12 col-sm-6">
+                            <div class="card" id="htmlElementId">
+                                <div class="card-header border border-dashed pa-6-8">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <div class="align-items-center d-flex">
+                                                <div class="col-sm-auto">
+                                                    <span class="avatar-title bg-transparent">
+                                                        <img src="assets\styles\img\logo.png" alt="" width="120px" Height="100px">
+                                                    </span>
+                                                </div>
+                                                <h4 class="card-title mb-0 flex-grow-1 text-center fs-13 font-type fw-semibold text-uppercase">Organization Chart</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">09/08/2024</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body pa-6-8">
+                                    <div #chartContainer class="org-chart-container">
+                                        <ngx-org-chart [nodes]="nodes" id="Orgcharts"  (itemClick)="toggleCollapse($event)" style="transform: scale(.53)" > 
+                                         
+                                        </ngx-org-chart>
+                                    
+                                        <!-- <div id="chartContainer" class="chart-container">
+                                        
+                                          
+                                            <ng-template let-node>
+                                              <div class="org-chart-box" id="{{ node.ecode }}" (click)="handleExpand(node)">
+                                                <h3>{{ node.name
+                                                    
+                                                }}</h3>
+                                                <p>dfds</p>
+                                                <p>dfs</p>
+                                              </div>
+                                            </ng-template>
+                                        
+                                        </div> -->
+                                      </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <!--end col-->
+                    </div>
+                </div>
+                
+                <div class="modal-footer" style="justify-content: center;">
+                    <!-- <div class="hstack gap-2 justify-content-center">   
+                        <button type="button" class="btn btn-info font-type fs-12 add-button"  data-bs-toggle="modal" data-bs-target=".exampleModalFullscreen" (click)="convertToPDF()"><i class="ri-download-2-line me-1"></i>Download PDF</button>
+                        <button type="button" class="btn btn-outline-success font-type fs-15 ma-10" title="Zoom In" (click)="zoomIn1()"><i class="ri-zoom-in-line"></i></button>
+                        <button type="button" class="btn btn-outline-success font-type fs-15 ma-10" title="Zoom Out" (click)="zoomOut1()"><i class="ri-zoom-out-line"></i></button>
+                    </div> -->
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+        </div>
+        <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+     <app-footer></app-footer>
+</div>
+<!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->

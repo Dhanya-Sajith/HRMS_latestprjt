@@ -340,7 +340,8 @@
                                                                         <th>Training Name</th>
                                                                         <th class="bg-blue fs-12 font-type" width="15%">Employee</th>
                                                                         <th>Location</th>
-                                                                        <th>Provider</th>
+                                                                        <th>Provider Type</th>
+                                                                        <th>Provider Name</th>
                                                                         <th>Confirmed<br>Schedule</th>
                                                                         <th>Actual<br>Training<br>Date</th>
                                                                         <th>Remarks</th>
@@ -358,6 +359,16 @@
                                                                                 <td class="p-1">{{scheduledemp.EMP_NAME}}</td> 
                                                                                 <td style="white-space: pre-wrap;" [attr.rowspan]="schePlans.Employees.length">{{schePlans.LOCATION}}</td>
                                                                                 <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.TRAINING_TYPE}}</td>
+                                                                                <td [attr.rowspan]="schePlans.Employees.length">
+                                                                                    <ng-container [ngSwitch]="true">
+                                                                                        <div *ngSwitchCase="schePlans.PROVIDER_NAME != 'NULL' && schePlans.PROVIDER_NAME != ''">
+                                                                                            {{schePlans.PROVIDER_NAME}}
+                                                                                        </div>
+                                                                                        <div *ngSwitchCase="schePlans.PROVIDER_NAME == 'NULL' && schePlans.PROVIDER_NAME == ''">
+                                                                                            <span>NIL</span>
+                                                                                        </div>
+                                                                                    </ng-container>
+                                                                                </td>
                                                                                 <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.CONFIRMED_QUARTER}}</td>
                                                                                 <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.SCHEDULED_DATE | date: 'dd-MM-yyyy' }}</td>
                                                                                 <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.REMARKS}}</td>

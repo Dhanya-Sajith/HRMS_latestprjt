@@ -29,7 +29,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="flex-grow-1 ms-2 ma-5">
-                                                            <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Course Effectiveness</h2>
+                                                            <h2 class="fs-16 mb-1 font-type fw-semibold text-uppercase">Team Trainings</h2>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -76,6 +76,7 @@
                                                             <!-- <th>SL No</th> -->
                                                             <th>Areas</th>
                                                             <th>Training Name</th>
+                                                            <th>Training Date</th>
                                                             <th>Target Date</th>
                                                             <th width="20%">Employee</th>
                                                             <th>Status</th>
@@ -89,6 +90,7 @@
                                                                     <td [attr.rowspan]="view.EmployeeStatus.length" style="white-space: pre-wrap;">{{view.AREA}}</td>
                                                                     <td [attr.rowspan]="view.EmployeeStatus.length" style="white-space: pre-wrap;">{{view.SUBJECT_NAME}}</td>
                                                                     <td [attr.rowspan]="view.EmployeeStatus.length">{{view.TRAINING_DATE | date:"dd-MM-yyyy"}}</td>
+                                                                    <td [attr.rowspan]="view.EmployeeStatus.length">{{view.TARGET_DATE | date:"dd-MM-yyyy"}}</td>
                                                                     <td class="p-1">{{employee.EMP_NAME}}</td>
                                                                     <td class="status p-1 text-center">{{employee.FEEDBACK_STATUS_VAL}}</td>
                                                                     <td class="text-center" [hidden]="employee.FEEDBACK_STATUS == -2">

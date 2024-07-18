@@ -21,17 +21,24 @@ public dotnetapi = 'https://localhost:5001/api';
 //Live server for Customer Cloud 
  //public dotnetapi = 'http://72.167.151.157:81/api';
   // Emisoft common Test server
- // public dotnetapi = 'http://192.168.1.42:84/api';
+  //public dotnetapi = 'http://192.168.1.42:84/api';
   // Emisoft common Test cloud server
   //public dotnetapi = 'http://13.53.118.116:81/api';
  
   // common for all
-
+  GetChartData(empcode:any,company:any)
+  {
+    return this.http.get<any>(`${this.dotnetapi}/MasterManagement/generatejson/${empcode}/${company}`);
+  }
   FetchLeaveTypes()
   {
     return this.http.get<any>(`${this.dotnetapi}/MasterManagement/MasterComboData/${52}`);
   }
-
+  GetCompanyLogo(id:any)
+  {  
+  
+    return this.http.get<any>(`${this.dotnetapi}/MasterManagement/GetCompanyData/${id}`);
+  }
   listCompany(comtypeid:any)
   {
 
@@ -2616,9 +2623,9 @@ HireRequest_StatusCount(empcode:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/Hiring/HireRequest_StatusCount/${empcode}`);
 }
-FetchApplicantsList(reqId:any,designation:any)
+FetchApplicantsList(reqId:any,designation:any,user:any)
 {
-  return this.http.get<any>(`${this.dotnetapi}/Hiring/FetchApplicantsList/${reqId}/${designation}`);
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/FetchApplicantsList/${reqId}/${designation}/${user}`);
 }
 GetCandidateCV(activereqid:any,flag:any)
 {
@@ -2815,5 +2822,20 @@ Fetch_EmpGoalDetails(user:any,year:any)
 RemoveEmpGoal(data:any)
 {
   return this.http.post<any>(`${this.dotnetapi}/Performance/RemoveEmpGoal`,data);
+}
+//AssetReports
+ViewAssestReports(company:any,emp_code:any)
+{
+return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/AssestReportData/${company}/${emp_code}`);
+}
+//DocumentReports
+ViewDocumentReports(comp:any,empcode:any)
+{
+return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/DocumentReport/${comp}/${empcode}`);
+}
+//Employee Insurance Reports
+ViewInsuranceReports(comp:any,empcode:any)
+{
+return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/EmployeeInsuranceReport/${comp}/${empcode}`);
 }
 }

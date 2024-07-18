@@ -430,14 +430,14 @@ export class HiringDashboardComponent implements OnInit {
 
   FetchApplicants()
   {
-    this.apicall.FetchApplicantsList(-1,this.designation).subscribe((res) => {
+    this.apicall.FetchApplicantsList(-1,this.designation, this.empcode).subscribe((res) => {
       this.ApplicantsList=res;
     });
   }
 
   FetchApplicantsList(reqid:any)
   {
-    this.apicall.FetchApplicantsList(reqid,this.designation).subscribe((res) => {
+    this.apicall.FetchApplicantsList(reqid,this.designation, this.empcode).subscribe((res) => {
       this.ApplicantsList=res;
     });
   }

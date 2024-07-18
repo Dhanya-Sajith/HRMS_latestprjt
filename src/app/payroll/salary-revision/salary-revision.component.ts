@@ -68,6 +68,7 @@ export class SalaryRevisionComponent implements OnInit {
   submitted = false;
   inputfield: any;
   FROM_DATE: any;
+  fetchedData: any;
   
   constructor(private apicall:ApiCallService, private datePipe: DatePipe,private fb:FormBuilder,private session:LoginService,private route:Router) {
     this.EditForm = this.fb.group({
@@ -103,6 +104,7 @@ export class SalaryRevisionComponent implements OnInit {
 
   radioselection(user:any){
     this.user=user;
+    this.fetchedData = 0;
   }
 
   upload()
@@ -119,26 +121,27 @@ export class SalaryRevisionComponent implements OnInit {
   }
  
   if(this.submitted){ 
-     
+    this.fetchedData = 0;
     if (input.files && input.files[0]) {
       const fdata = new FormData();
       fdata.append('postedFile',input.files[0]);
-      alert(fdata) 
       // this.showProgressBar = true;
       this.apicall.SalaryRevisionBulkUpload(fdata,this.empcode).subscribe((res)=>{
-        alert(JSON.stringify(res))
-        if(res>=0)
+        if(res.returnVal>0)
         {
-      
-          this.showModal = 1; 
-          this.success = "Excel uploaded successfully";
+          if(res.returnVal == 1)
+            {
+              this.fetchedData = res.returntable
+              this.showModal = 3;
+              this.success = "Excel uploaded successfully";
+            }
           this.inputfield = document.getElementById("myFile");
           this.inputfield.selectedIndex = 0;
           (<HTMLInputElement>document.getElementById("myFile")).value = '';
         }
         else{          
           this.showModal = 2;
-          this.failed = "Uploading failed!";      
+          this.failed = "Uploading Failed!";      
 
         }
       })

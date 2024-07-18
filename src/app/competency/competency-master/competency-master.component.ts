@@ -72,9 +72,16 @@ export class CompetencyMasterComponent implements OnInit {
 
   onradioselected(){
     if(this.radioselected=='individual'){
+      this.selectedCompanyid=-1;
+      this.selectedDeptid=-1;  
+      this.selectedDesig=-1;      
+      this.skillcategory='';
 
     }else{
-
+      this.selectedCompanyid=-1;
+      this.selectedDeptid=-1;  
+      this.selectedDesig=-1;       
+      this.skillcategory='';
     }
   }
   onCompanySelected(selectedCompanyid: any) { 

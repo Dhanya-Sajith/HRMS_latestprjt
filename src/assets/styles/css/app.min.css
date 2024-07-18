@@ -18695,3 +18695,7 @@ text-transform: uppercase;
 .card-radio-new {
     padding: 0
 }
+.img-sizes {
+    width: 450px;
+    height: 230px;
+ }
