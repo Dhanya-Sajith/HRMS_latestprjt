@@ -145,6 +145,12 @@ import { GoalSettingNanalyticsHRComponent } from './PerformanceManagement/goal-s
 import { OrgChartComponent } from './org-chart/org-chart.component';
 import { AssestlistComponent } from './reports/assestlist/assestlist.component';
 import { DocumentsReportComponent } from './reports/documents-report/documents-report.component';
+import { GoalProgressTrackerComponent } from './PerformanceManagement/goal-progress-tracker/goal-progress-tracker.component';
+import { AppraisalFormComponent } from './PerformanceManagement/appraisal-form/appraisal-form.component';
+import { EmployeeInsuranceReportComponent } from './reports/employee-insurance-report/employee-insurance-report.component';
+import { EosReportComponent } from './reports/eos-report/eos-report.component';
+import { EmployeeTransferPromotionComponent } from './employee-transfer-promotion/employee-transfer-promotion.component';
+import { PerformanceManagementComponent } from './PerformanceManagement/performance-management/performance-management.component';
 
 
 
@@ -299,7 +305,12 @@ const routes: Routes = [
   {path:'org_chart', component:OrgChartComponent},
   {path:'assestlist',component:AssestlistComponent},
   {path:'document-report',component:DocumentsReportComponent},
-
+  {path:'employee-insurance-report',component:EmployeeInsuranceReportComponent},
+  {path:'Goalprogress_tracker' , component:GoalProgressTrackerComponent},
+  {path:'appraisal_form' , component:AppraisalFormComponent},
+  {path:'eos-report' , component:EosReportComponent},
+  {path:'employee_transfer_promotion',component:EmployeeTransferPromotionComponent},
+  {path:'performance_management',component:PerformanceManagementComponent}
 
 ];
 

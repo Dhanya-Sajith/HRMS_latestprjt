@@ -3,6 +3,7 @@ import { ApiCallService } from 'src/app/api-call.service';
 import { LoginService } from 'src/app/login.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-hiring-center',
@@ -78,9 +79,10 @@ export class HiringCenterComponent implements OnInit {
   yearCandidate=new Date().getFullYear();
   CandidateEvaluationList: any;
   showtab2: boolean=false;
+  user: any='tab1';
 
 
-  constructor(private apicall:ApiCallService,private session:LoginService,private fb: FormBuilder) {
+  constructor(private apicall:ApiCallService,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute) {
     this.addJobPostForm = this.fb.group({
       company_code: ['', Validators.required],
       desig: ['', Validators.required],
@@ -101,6 +103,11 @@ export class HiringCenterComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.route.queryParams
+    .subscribe(params => {        
+      this.user = params['user']|| 'tab1';                     
+    }
+  ); 
     this.dropdownSettings = {
       idField: 'EMP_CODE',
       textField: 'EMP_NAME',
@@ -148,19 +155,22 @@ export class HiringCenterComponent implements OnInit {
   //Employee drop down
   this.apicall.ResourceEmployeesComboData(-1,-1,this.empcode,1).subscribe((res)=>{
     this.empdata=res;
-   }) 
-    
+   })     
     if(!this.grpname.includes('HR') && !this.grpname.includes('HOD')){
       this.addJobPostForm.get('approver_id')?.setValidators(Validators.required);
     }else{
       this.addJobPostForm.get('approver_id')?.clearValidators();
     }
     this.addJobPostForm.get('approver_id')?.updateValueAndValidity();
-    if(!this.grpname.includes('HR') && !this.grpname.includes('HOD')  && this.grpname.includes('LM-VP')){
-     this.showtab2=true;
+    if(this.user=='tab3' ){
+      this.ontabSelected(3);
+    }
+    else if((!this.grpname.includes('HR') && !this.grpname.includes('HOD')  && this.grpname.includes('LM-VP'))|| this.user=='tab2'){
+      this.user=='tab2';
       this.ontabSelected(2);
     }else{
       this.FetchHireRequests();
+      this.user=='tab1';
     }
   }
    //New hire requests
@@ -178,6 +188,7 @@ export class HiringCenterComponent implements OnInit {
   ontabSelected(mflag:any){
     //Hiring Requests
     if(mflag==1){
+      this.user='tab1'; 
       this.apicall.Fetch_HireRequest(this.empcode,this.selectedStatusReq,this.yearReq,1).subscribe((res)=>{
         this.HireRequests=res;
         //alert(JSON.stringify(res))
@@ -188,6 +199,7 @@ export class HiringCenterComponent implements OnInit {
       } 
       })  
     }else if(mflag==2){ //Approval Requests
+      this.user='tab2';   
       this.apicall.Fetch_HireRequest(this.empcode,this.selectedStatusApproval,this.yearApproval,2).subscribe((res)=>{
         this.HireRequestsApproval=res;
        //alert(JSON.stringify(res))
@@ -198,7 +210,7 @@ export class HiringCenterComponent implements OnInit {
       } 
       })  
     }else{ //Candidate Evaluation Process
-      this.showtab2=false;
+      this.user='tab3'; 
       this.apicall.Fetch_HireRequest(this.empcode,this.selectedStatusCandidate,this.yearCandidate,3).subscribe((res)=>{
         this.CandidateEvaluationList=res;
         //alert(JSON.stringify(res))

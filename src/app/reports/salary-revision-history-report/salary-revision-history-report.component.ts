@@ -39,6 +39,10 @@ export class SalaryRevisionHistoryReportComponent implements OnInit {
     //Year list
     this.apicall.listYear().subscribe((res)=>{
       this.yearlist=res;
+      if (this.yearlist.length > 0) {
+        this.fromyear = this.yearlist[0].DISPLAY_FIELD;
+        this.toyear  = this.yearlist[0].DISPLAY_FIELD;
+      } 
     }); 
     //Company list
      this.apicall.FetchCompanyList(this.empcode).subscribe((res)=>{
@@ -108,9 +112,9 @@ export class SalaryRevisionHistoryReportComponent implements OnInit {
       this.displayedYears = [];
     }
 
-    if (this.displayedYears.length === 0) {
-      alert('No years found in the selected range');
-    }
+    // if (this.displayedYears.length === 0) {
+    //   alert('No years found in the selected range');
+    // }
   }
 
   getSalary(yearSalaryModels: any[], year: number): number | string {

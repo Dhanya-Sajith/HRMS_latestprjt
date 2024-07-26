@@ -14,14 +14,14 @@ export class ApiCallService {
 //Emisoft cloud for customer testing
 //public dotnetapi = 'http://3.111.100.109:81/api';
 //Local host
-public dotnetapi = 'https://localhost:5001/api';
+ public dotnetapi = 'https://localhost:5001/api';
 //Live server for Customer intranet
 //public dotnetapi = 'http://192.168.10.29:81/api';
 //public hostname='localhost:44381';
 //Live server for Customer Cloud 
  //public dotnetapi = 'http://72.167.151.157:81/api';
   // Emisoft common Test server
-  //public dotnetapi = 'http://192.168.1.42:84/api';
+//public dotnetapi = 'http://192.168.1.37:84/api';
   // Emisoft common Test cloud server
   //public dotnetapi = 'http://13.53.118.116:81/api';
  
@@ -2732,7 +2732,7 @@ FetchCompanyList_Resource(empcode:any)
 }
 
 
-Fetch_TrainingTarget_HR(type:any,company:any)
+Fetch_TrainingTarget_HR(type:any,company:any)  
 {
   return this.http.get<any>(`${this.dotnetapi}/LMS/Fetch_TrainingTarget_HR/${type}/${company}`);
 }
@@ -2797,45 +2797,105 @@ PerformanceAnalytics_ListHR(user:any,dept:any,year:any,company:any)
 //Performance Management
 Fetch_EmpGoalRequest(empcode:any,year:any)
 {
-  return this.http.get<any>(`${this.dotnetapi}/Performance/Fetch_EmpGoalRequest/${empcode}/${year}`);
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/Fetch_EmpGoalRequest/${empcode}/${year}`);
 }
 EmpGoalApproveReject(data:any)
 {
-  return this.http.post<any>(`${this.dotnetapi}/Performance/EmpGoalApproveReject`,data);
+  return this.http.post<any>(`${this.dotnetapi}/PerformanceManagement/EmpGoalApproveReject`,data);
 }
 Fetch_EmpGoalRequestsLM(user:any,year:any,status:any)
 {
-  return this.http.get<any>(`${this.dotnetapi}/Performance/Fetch_EmpGoalRequestsLM/${user}/${year}/${status}`);
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/Fetch_EmpGoalRequestsLM/${user}/${year}/${status}`);
 }
 GoalSettingByLM(data:any)
 {
-  return this.http.post<any>(`${this.dotnetapi}/Performance/GoalSettingByLM`,data);
+  return this.http.post<any>(`${this.dotnetapi}/PerformanceManagement/GoalSettingByLM`,data);
 }
 Fetch_GoalDetails(user:any,year:any,reqid:any)
 {
-  return this.http.get<any>(`${this.dotnetapi}/Performance/Fetch_GoalDetails/${user}/${year}/${reqid}`);
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/Fetch_GoalDetails/${user}/${year}/${reqid}`);
 }
 Fetch_EmpGoalDetails(user:any,year:any)
 {
-  return this.http.get<any>(`${this.dotnetapi}/Performance/Fetch_EmpGoalDetails/${user}/${year}`);
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/Fetch_EmpGoalDetails/${user}/${year}`);
 }
 RemoveEmpGoal(data:any)
 {
-  return this.http.post<any>(`${this.dotnetapi}/Performance/RemoveEmpGoal`,data);
+  return this.http.post<any>(`${this.dotnetapi}/PerformanceManagement/RemoveEmpGoal`,data);
 }
+
 //AssetReports
 ViewAssestReports(company:any,emp_code:any)
 {
 return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/AssestReportData/${company}/${emp_code}`);
 }
+
 //DocumentReports
 ViewDocumentReports(comp:any,empcode:any)
 {
 return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/DocumentReport/${comp}/${empcode}`);
 }
+
 //Employee Insurance Reports
 ViewInsuranceReports(comp:any,empcode:any)
 {
 return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/EmployeeInsuranceReport/${comp}/${empcode}`);
 }
+
+goalassessmentdetails(empcode:any,reqid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/Goal_AssessmentDetails_List/${empcode}/${reqid}`);
+}
+
+goalpogressdetails(empcode:any,reqid:any,goalid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/Goal_ProgressDetails/${empcode}/${reqid}/${goalid}`);
+}
+
+updateProgresstrack(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/PerformanceManagement/Update_GoalProgress_EmpOrLM`,data);
+}
+
+updateassessmenttrack(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/PerformanceManagement/Add_GoalAssessment_EmpOrLM`,data);
+}
+
+appraisalFormdata(empcode:any,reqid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/PerformanceManagement/ViewAppraisal_Form/${empcode}/${reqid}`);
+}
+
+appRejGoalEvaluation(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/PerformanceManagement/ApproveReject_GoalEvaluation_HR`,data);
+}
+fetch_EOS_Report(company:any,fromdate:any,todate:any,empcode:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/EOS_Report/${company}/${fromdate}/${todate}/${empcode}`);
+}
+
+//employee-transfer-promotion
+FetchLineManagers(company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/FetchLineManagers/${company}`);
+}
+Add_EmpTransferPromotion_Details(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/Hiring/Add_EmpTransferPromotion_Details`,data);
+}
+EmpTransferPromotion_Details(id:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/EmpTransferPromotion_Details/${id}`);
+}
+EmpTransferPromotion_ActionHistory(user:any,designation:any,company:any,year:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/EmpTransferPromotion_ActionHistory/${user}/${company}/${designation}/${year}`);
+}
+EmpTransferPromotion_SalDetails(id:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/EmpTransferPromotion_SalDetails/${id}`);
+}
+
 }

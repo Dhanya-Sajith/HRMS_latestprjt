@@ -330,8 +330,8 @@
                                          
                                          <td>
                                              <ul class="list-inline hstack gap-1 mb-0">
-                                                 <li class="list-inline-item" title="View Goal Progress Details"*ngIf="item.REQUEST_STATUS==3||item.REQUEST_STATUS==5">
-                                                     <a class="text-success d-inline-block" href="targetSettingForm.html">
+                                                 <li class="list-inline-item" title="View Goal Progress Details"*ngIf="item.REQUEST_STATUS==3||item.REQUEST_STATUS==5||item.REQUEST_STATUS==6||item.REQUEST_STATUS==10">
+                                                     <a class="text-success d-inline-block" [routerLink]="['/Goalprogress_tracker']" [queryParams]="{ empcode: item.EMP_CODE,reqId:item.REQUEST_ID,flag:0,view:1}">
                                                          <i class="ri-eye-fill fs-18"></i>
                                                      </a>
                                                  </li>
@@ -340,8 +340,8 @@
                                                           <i class="ri-file-edit-fill fs-18"></i>
                                                      </a>
                                                  </li>
-                                                 <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Evaluation Details"*ngIf="item.REQUEST_STATUS==6||item.REQUEST_STATUS==8">
-                                                    <a class="text-success d-inline-block" href="appraisalForm.html">
+                                                 <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit Evaluation Details"*ngIf="item.REQUEST_STATUS==8">
+                                                    <a class="text-success d-inline-block" [routerLink]="['/Goalprogress_tracker']" [queryParams]="{ empcode: item.EMP_CODE,reqId:item.REQUEST_ID,flag:0,view:0}">
                                                         <i class="ri-todo-fill fs-18"></i>
                                                     </a>
                                                 </li>
@@ -471,7 +471,7 @@
                                             <td>
                                                 <ul class="list-inline hstack gap-1 mb-0">
                                                     <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Appraisal">
-                                                        <a class="text-success d-inline-block" href="appraisalForm.html">
+                                                        <a class="text-success d-inline-block" [routerLink]="['/appraisal_form']" [queryParams]="{ empcode: item.EMP_CODE,reqId:item.REQUEST_ID}">
                                                             <i class="ri-todo-fill fs-18"></i>
                                                         </a>
                                                     </li>

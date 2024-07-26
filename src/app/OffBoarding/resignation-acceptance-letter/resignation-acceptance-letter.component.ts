@@ -97,7 +97,10 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
     }
   }
 
-  convertToPDF() {
+  async convertToPDF() {
+
+    // const base64Image = await this.getBase64ImageFromUrl('assets/styles/img/e-signature Merlin.png');
+
     const docDefinition: TDocumentDefinitions = {
       content: [
         // Centered Header Section
@@ -228,6 +231,11 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
         },
         { text: 'Wish you success in all your future endeavours.', style: 'normal',margin: [0, 10, 0, 10] },
         { text: 'Yours sincerely,', style: 'normal',margin: [0, 10, 0, 10] },
+        // {
+        //   image: base64Image,
+        //   width: 150,
+        //   height: 50 
+        // },
         { text: 'Human Resources Manager', style: 'normal', bold: true,margin: [0, 10, 0, 10] }
       ],
       styles: {

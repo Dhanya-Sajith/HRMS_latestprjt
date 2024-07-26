@@ -1,0 +1,172 @@
+
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header> 
+
+        <!-- ========== App Menu ========== -->
+       
+        <app-sidemenu></app-sidemenu>
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!--Form Letter Style-->
+                    <div class="div-middle shadow-lg mb-3">
+                        <div class="card-body p-3 pb-0">
+                            <!--Header-->
+                            <div class="row gy-3 ma-5 center">
+                                <!-- <div class="col-sm-auto "> -->
+                                    <div class="avatar-title-lg">
+                                        <img [src]="logo" alt="" class="img-size">
+                                    </div>
+                                <!-- </div> -->
+                                <div class="col-sm text-center">
+                                    <h2 class="tfont-type fs-20 text-uppercase text-black" style="font-weight: bold;">{{this.companydata[0].COMPANY_ID}}</h2>
+                                    <h5 class="font-type fs-14 text-black" >{{this.companydata[0].DESCRIPTION}}</h5>
+                                    <h5 class="font-type fs-14 text-black" >(UAE); {{this.companydata[0].PHONE_NO}}; {{this.companydata[0].EMAI_ID}}</h5> 
+                                </div>
+                            </div>
+                            <!--end Header-->                  
+                         
+                            <div class="mb-3" style="border:1px solid #54b4e4;"></div>
+                                
+                            <!--Employee Details-->   
+                            <div class="row mb-3">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table align-middle table-nowrap mb-0 table-bordered table-hover border-blue">
+                                        <tbody class="font-type">
+                                            <tr class="h-20 bg-light-blue">
+                                                <td width="50%"><span class="fs-12 font-type fw-medium">Employee Code</span></td>
+                                                <td style="white-space: pre-wrap;"><span class="fs-12 font-type fw-semibold">{{this.appraisalFormdatadtls[0].EMP_CODE}}</span></td>
+                                            </tr>
+                                            <tr class="h-20">
+                                                <td width="50%"><span class="fs-12 font-type fw-medium">Employee</span></td>
+                                                <td style="white-space: pre-wrap;"><span class="fs-12 font-type fw-semibold">{{this.appraisalFormdatadtls[0].EMP_NAME}}</span></td>
+                                            </tr>
+                                            <tr class="h-20 bg-light-blue">
+                                                <td width="50%"><span class="fs-12 font-type fw-medium">Joining Date</span></td>
+                                                <td style="white-space: pre-wrap;"><span class="fs-12 font-type fw-semibold">{{this.appraisalFormdatadtls[0].REVIEW_DATE | date:'yyyy-MM-dd'}}</span></td>
+                                            </tr>
+                                            <tr class="h-20">
+                                                <td width="50%"><span class="fs-12 font-type fw-medium">Department</span></td>
+                                                <td style="white-space: pre-wrap;"><span class="fs-12 font-type fw-semibold">{{this.appraisalFormdatadtls[0].DEPARTMENT}}</span></td>
+                                            </tr>
+                                            <tr class="h-20 bg-light-blue">
+                                                <td width="50%"><span class="fs-12 font-type fw-medium">Designation</span></td>
+                                                <td style="white-space: pre-wrap;"><span class="fs-12 font-type fw-semibold">{{this.appraisalFormdatadtls[0].DESIGNATION}}</span></td>
+                                            </tr>
+                                            <tr class="h-20">
+                                                <td width="50%"><span class="fs-12 font-type fw-medium">Appraisal Details</span></td>
+                                                <td style="white-space: pre-wrap;"><span class="fs-12 font-type fw-semibold">{{this.appraisalFormdatadtls[0].REQUEST_STATUS}} Review</span></td>
+                                            </tr>
+                                        </tbody>
+                                        <!-- end tbody -->
+                                        </table>
+                                        <!-- end table -->
+                                    </div>
+                                    <!-- end table responsive -->
+                                </div>
+                            </div>
+                            <!--End Employee Details-->      
+
+                            <!--Evaluation Details--> 
+                            <div class="row mb-3">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="bg-blue alert border-0 h-30 rounded-0 m-0 d-flex align-items-center mb-0">
+                                        <div class="flex-grow-1 text-white text-center text-uppercase font-type fw-semibold fs-12">
+                                            Evaluation
+                                        </div>
+                                    </div> 
+                                    <div class="table-responsive">
+                                        <table class="table align-middle table-nowrap mb-0 table-bordered table-hover border-blue">
+                                            <thead class="bg-info-subtle font-type border-blue">
+                                                <tr class="border-blue">
+                                                    <th>No</th>
+                                                    <th>Goal</th>
+                                                    <th>Self Assessment(10)</th>
+                                                    <th>LM Review</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="font-type">
+
+                                                <tr class="font-type h-30 fs-12" *ngFor="let appraisaldtl of appraisalFormdatadtls;">
+                                                    <td class="fw-semibold">{{appraisaldtl.GOAL_ID}}</td>
+                                                    <td style="white-space: pre-wrap;">{{appraisaldtl.GOAL_DESCRIPTION}}</td>
+                                                    <td class="text-center">{{appraisaldtl.EMP_GOAL_SCORE}}</td>
+                                                    <td class="text-center">{{appraisaldtl.LM_GOAL_SCORE}}</td>
+                                                </tr>
+                                                
+                                            </tbody><!-- end tbody -->
+                                            <tfoot class="font-type ma-10 border-white h-20 bg-blue">
+                                                <tr>
+                                                    <td colspan="3" class="fw-semibold fs-13 text-white">Total Score</td>
+                                                    <td class="fw-semibold fs-13 text-blue text-end text-white text-center">{{this.appraisalFormdatadtls[0].LM_FINAL_SCORE}}</td>
+                                                </tr>
+                                            </tfoot>
+                                        </table><!-- end table -->
+                                    </div>
+                                   <!-- end table responsive -->
+                                </div>  
+                            </div>
+                              <!--End Evaluation Details-->           
+
+                            <!--Goals Details--> 
+                            <div class="row" *ngFor="let appraisaldtl of appraisalFormdatadtls;">
+                                <div class="col-lg-12 mb-n2">
+                                    <div class="card border-bg shadow-none">
+                                        <div class="card-body bg-light-blue" style="padding:10px">
+                                            <h5 class="card-title mb-0 font-type fw-semibold">{{appraisaldtl.GOAL_DESCRIPTION}}</h5>
+                                        </div>
+                                        <div class="card-body pb-1">
+                                            <div class="mb-3 margin-up-5">
+                                                <label class="form-label font-type fw-semibold fs-12">Answer</label>
+                                                <p class="form-label font-type fs-12">{{appraisaldtl.EMP_GOAL_COMMENT}}</p>
+                                            </div>
+                                            <div>
+                                                <label class="form-label font-type fw-semibold fs-12">Line Manager Review</label>
+                                                <p class="form-label font-type fs-12">{{appraisaldtl.LM_GOAL_COMMENT}}</p>
+                                            </div>
+                                        </div>
+                                        <!-- end card body -->
+                                    </div>
+                                    <!-- end card -->
+                                </div>  
+                            </div>
+                            <!--End Goals Details-->    
+                        </div>
+                    </div>
+                    <!-- card body -->
+
+                    <div class="col-lg-12 mb-3">
+                        <div class="d-flex align-items-center flex-wrap gap-2">
+                            <div class="flex-grow-1 text-center">
+                                <button class="btn btn-success font-type" (click)="convertToPDF()"><i class="ri-file-pdf-line me-1 align-bottom"></i> Download PDF</button>
+                                <a href="javascript:history.back()"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                            </div>
+                        </div>
+                    </div>
+    
+                 </div>
+                   <!-- container-fluid --> 
+                </div>
+                  <!-- End Page-content -->
+
+                  <app-footer></app-footer>
+
+        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+
+ 

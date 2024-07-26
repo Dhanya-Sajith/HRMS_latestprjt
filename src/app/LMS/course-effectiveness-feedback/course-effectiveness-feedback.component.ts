@@ -68,19 +68,24 @@ export class CourseEffectivenessFeedbackComponent implements OnInit {
     })
 
     if(this.view == 1){
-      this.apicall.ViewEmpEffectivenessDetails(this.trainingID,this.empcd).subscribe((res)=>{
-        this.fillform = res
-        this.requestForm.controls['qus1'].setValue(this.fillform.Q1);
-        this.requestForm.controls['qus2'].setValue(this.fillform.Q6);
-        this.requestForm.controls['Radio1'].setValue(this.fillform.Q2);
-        this.requestForm.controls['Radio2'].setValue(this.fillform.Q3);
-        this.requestForm.controls['Radio3'].setValue(this.fillform.Q4);
-        this.requestForm.controls['Radio4'].setValue(this.fillform.Q5);
-      })
+      this.FetchEffectiveForm();
       this.isDisabled = true;
     }else{
       this.isDisabled = false;
     }
+  }
+
+  FetchEffectiveForm()
+  {
+    this.apicall.ViewEmpEffectivenessDetails(this.trainingID,this.empcd).subscribe((res)=>{
+      this.fillform = res
+      this.requestForm.controls['qus1'].setValue(this.fillform.Q1);
+      this.requestForm.controls['qus2'].setValue(this.fillform.Q6);
+      this.requestForm.controls['Radio1'].setValue(this.fillform.Q2);
+      this.requestForm.controls['Radio2'].setValue(this.fillform.Q3);
+      this.requestForm.controls['Radio3'].setValue(this.fillform.Q4);
+      this.requestForm.controls['Radio4'].setValue(this.fillform.Q5);
+    })
   }
 
   validateForm()
@@ -165,6 +170,8 @@ export class CourseEffectivenessFeedbackComponent implements OnInit {
               this.showModal = 1; 
               this.success = "Effectiveness Feedback Form Submitted Successfully";
               this.Clear();
+              this.FetchEffectiveForm();
+              this.isDisabled = true;
             }
             else        
             {

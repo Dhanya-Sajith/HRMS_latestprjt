@@ -55,17 +55,17 @@
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-pills animation-nav profile-nav gap-2 gap-lg-3 flex-grow-1 fs-12" role="tablist">
                                     <li class="nav-item" *ngIf="grpname.includes('HR') || grpname.includes('HOD') || grpname.includes('LM')"[hidden]="grpname.includes('LM-VP')">
-                                        <a class="nav-link fs-14 active font-type" data-bs-toggle="tab" href="#JobOpenings" role="tab"(click)="ontabSelected(1)">
+                                        <a class="nav-link fs-14  font-type" data-bs-toggle="tab" href="#JobOpenings" [ngClass]="{'active':  user=='tab1'}"role="tab"(click)="ontabSelected(1)">
                                             <i class="ri-briefcase-4-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Hiring Requests</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link fs-14  font-type" [ngClass]="{'active': showtab2}"data-bs-toggle="tab" href="#JobRequests" role="tab"(click)="ontabSelected(2)">
+                                        <a class="nav-link fs-14  font-type" [ngClass]="{'active': (!grpname.includes('HR') && !grpname.includes('HOD') && !grpname.includes('LM')) || user=='tab2'}"data-bs-toggle="tab" href="#JobRequests" role="tab"(click)="ontabSelected(2)">
                                             <i class="ri-briefcase-4-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Approval Requests</span>
                                         </a>
                                     </li>   
                                     <li class="nav-item">
-                                        <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#CandidatesEvaluation" role="tab"(click)="ontabSelected(3)">
+                                        <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#CandidatesEvaluation"[ngClass]="{'active': user=='tab3'}" role="tab"(click)="ontabSelected(3)">
                                             <i class="ri-list-unordered d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Candidate Evaluation Process
                                                 <!-- <span class="badge bg-orange align-middle ms-1 fs-12">2</span> -->
                                         </span>
@@ -81,7 +81,7 @@
                             <!-- Tab panes -->
                             <div class="tab-content pt-2 text-muted">
                                 <!-- Job openings -->
-                                <div class="tab-pane active" id="JobOpenings" role="tabpanel"*ngIf="grpname.includes('HR') || grpname.includes('HOD') || grpname.includes('LM')"[hidden]="grpname.includes('LM-VP')">
+                                <div class="tab-pane active" id="JobOpenings" role="tabpanel"*ngIf="(grpname.includes('HR') || grpname.includes('HOD') || grpname.includes('LM'))&& user=='tab1'"[hidden]="grpname.includes('LM-VP')">
                                     <div class="row topbar-up">
                                         <div class="col-lg-12">
                                             <div class="card">
@@ -208,7 +208,7 @@
                                 </div>
                                 <!-- end Job openings tab -->
                                 <!-- Job requests approvals -->
-                        <div class="tab-pane" id="JobRequests" role="tabpanel"[ngClass]="{'active': showtab2}">
+                        <div class="tab-pane" id="JobRequests" role="tabpanel"[ngClass]="{'active': user=='tab2'}">
                             <div class="row topbar-up">
                                 <div class="col-lg-12">
                                     <div class="card shadow-lg">
@@ -350,7 +350,7 @@
                         <!-- end Job requests approvals tab -->
 
                                 <!-- Candidates Evaluation tab -->
-                                <div class="tab-pane fade" id="CandidatesEvaluation" role="tabpanel">
+                                <div class="tab-pane " id="CandidatesEvaluation" role="tabpanel"[ngClass]="{'active': user=='tab3'}">
                                     <div class="row topbar-up">
                                         <div class="col-lg-12">
                                             <div class="card">
@@ -410,12 +410,12 @@
                                                             <td>
                                                                     <ul class="list-inline hstack gap-2 mb-0">
                                                                         <li class="list-inline-item edit" *ngIf="item.STATUS!=1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Submit Evaluation Form">
-                                                                            <a href="#" class="text-blue d-inline-block edit-item-btn" [routerLink]="['/candidate-evaluation']" [queryParams]="{ ID: item.NO_OF_POSITIONS,VIEW:0,REQ_ID:item.REQID}">
+                                                                            <a href="#" class="text-blue d-inline-block edit-item-btn" [routerLink]="['/candidate-evaluation']" [queryParams]="{ ID: item.NO_OF_POSITIONS,VIEW:0,REQ_ID:item.REQID,Page:1}">
                                                                                 <span class="badge bg-blue text-white  width-budge fs-11 fw-medium"><i class="ri-pencil-fill fs-16"></i></span>
                                                                             </a>
                                                                         </li>
                                                                         <li class="list-inline-item" *ngIf="item.STATUS==1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Evaluation Form">
-                                                                            <a href="#" class="text-info d-inline-block edit-item-btn" [routerLink]="['/candidate-evaluation']" [queryParams]="{ ID: item.NO_OF_POSITIONS,VIEW:1,REQ_ID:item.REQID}">
+                                                                            <a href="#" class="text-info d-inline-block edit-item-btn" [routerLink]="['/candidate-evaluation']" [queryParams]="{ ID: item.NO_OF_POSITIONS,VIEW:1,REQ_ID:item.REQID,Page:1}">
                                                                                 <span class="badge bg-orange text-white  width-budge fs-11 fw-medium"><i class="ri-eye-line fs-16"></i></span>
                                                                             </a>
                                                                         </li>

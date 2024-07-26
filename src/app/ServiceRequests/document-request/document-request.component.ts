@@ -296,7 +296,7 @@ export class DocumentRequestComponent implements OnInit {
    };
     //alert(JSON.stringify(data))
     this.apicall.ApproveRejectDocumentRequest(data).subscribe((res)=>{
-       alert(JSON.stringify(res))        
+       //alert(JSON.stringify(res))        
       if(res.Errorid==1){
         (<HTMLInputElement>document.getElementById("openModalButton")).click();
         this.showModal = 1;

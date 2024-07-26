@@ -37,13 +37,14 @@
                                                     </div>
                                                     </div>
                                                     <div class="col-sm-auto">
-                                                        <div class="flex-grow-1 ms-1 pr-20">
-                                                            <div class="page-title-right padding-up-5">
-                                                                <!-- <a href=""> -->
-                                                                 <button type="button" class="btn btn-orange btn-sm font-type fs-13 h-30 font-type text-white" (click)="download_to_excelExpenseandLoan()"><i class="ri-folder-shared-line fs-18 align-bottom me-1 text-white"></i><span class="text-white">Generate Reports</span></button>
-                                                                <!-- </a> --> 
+                                                            <div class="flex-grow-1 ms-1 pr-20">
+                                                                <div class="page-title-right padding-up-5">
+                                                                    <a href="generate_payment" class="btn btn-orange btn-sm font-type fs-13 h-30 text-white" aria-label="Generate Reports">
+                                                                        <i class="ri-folder-shared-line fs-18 align-bottom me-1"></i>
+                                                                        <span>Generate Reports</span>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 </div>
@@ -160,7 +161,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class=" font-type">
-                                                        <tr *ngFor="let ExpenseClaimList of listexpenseclaim | search : searchInput | pagination: currentPage: itemsPerPage">
+                                                        <tr *ngFor="let ExpenseClaimList of listexpenseclaim | search : searchInput | pagination: currentPage: itemsPerPage ;index as i">
                                                             <td class="fs-10" id="empcode" hidden>{{ExpenseClaimList.EMP_CODE}}</td>
                                                             <td class="fs-10" id="cmp">{{ExpenseClaimList.COMPANY_CODE}}</td>
                                                             <td class="fs-10" style="white-space: pre-wrap;" id="dept">{{ExpenseClaimList.DEPT_NAME}}</td>
@@ -173,7 +174,7 @@
                                                             <td class="fs-10" id="conv_amnt">{{ExpenseClaimList.CONVERTED_AMOUNT}}</td>
                                                             <td class="fs-10"id="paydate">{{ExpenseClaimList.PAYROLL_DATE| date: 'dd-MM-yyyy'}}</td>
                                                             <td class="text-center"id="td-ViewDocModal" > 
-                                                                <a href="#ViewDocModal" title="Effectiveness Feedback Form" data-bs-toggle="modal" class="bar-text d-inline-block edit-item-btn" (click)="ActivereqID(ExpenseClaimList.REQ_ID,ExpenseClaimList.DOCPATH)">
+                                                                <a href="#ViewDocModal" title="View" data-bs-toggle="modal" class="bar-text d-inline-block edit-item-btn" (click)="ActivereqID(ExpenseClaimList.REQ_ID,ExpenseClaimList.DOCPATH)">
                                                                     <i class="ri-eye-fill fs-15 text-info"></i>
                                                                  </a>
                                                             </td>
@@ -326,7 +327,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody class=" font-type">
-                                                            <tr *ngFor="let LoanList of listloan  | search : searchInputloan | pagination: currentPageloan: itemsPerPage">
+                                                            <tr *ngFor="let LoanList of listloan | search : searchInputloan | pagination: currentPageloan: itemsPerPage ;index as i">
                                                                 <td class="fs-10" hidden>{{LoanList.EMP_CODE}}</td>
                                                                 <td class="fs-10" hidden>{{LoanList.REQ_ID}}</td>
                                                                 <td class="fs-10">{{LoanList.COMPANY_CODE}}</td>
@@ -337,11 +338,11 @@
                                                                 <td class="fs-10">{{LoanList.Instal_Amnt}}</td>
                                                                 <td class="fs-10 text-center">{{LoanList.dSMonth}} {{LoanList.dSYear}}</td>
                                                                 <td class="fs-10 text-center">{{LoanList.dSBMonth}} {{LoanList.dSBYear}}</td>
-                                                                <td><a href="#RemarksModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;" (click)="selectRemarks(LoanList.CLOSE_REMARKS)">View</a></td>
+                                                                <td><a href="#RemarksModal" data-bs-toggle="modal" class="textblack"(click)="selectRemarks(LoanList.CLOSE_REMARKS)">{{LoanList.CLOSE_REMARKS ? LoanList.CLOSE_REMARKS.substring(0, 4) : ''}}</a></td>
                                                                 <!-- <td class="text-center"><a href="#RemarksModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;">View</a></td> -->
                                                                 <td class="fs-10">{{LoanList.APPROVED_STATUS}}</td>
                                                                 <td class="text-center">
-                                                                    <a href="#" title="Effectiveness Feedback Form">
+                                                                    <a href="#" title="View">
                                                                         <i class="ri-eye-fill fs-15 text-info" data-bs-toggle="modal" data-bs-target="#AddRequestModal" (click)="Fetchloanpayments(LoanList.EMP_CODE,LoanList.REQ_ID)"></i>
                                                                      </a>
                                                                 </td>
@@ -444,13 +445,13 @@
                             <div class="modal fade zoomIn" id="RemarksModal" tabindex="-1" aria-labelledby="RemarksModal" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                         <div class="modal-content">
-                                            <div class="modal-header bg-orange padding-up-5">
+                                            <div class="modal-header bg-orange padding-up-5"> 
                                                 <h5 class="fs-13 font-type text-white ma-5 fw-semibold">Remarks</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                             </div>
                                             <div class="modal-body pa-6-8">
                                                 <label class="form-label font-type ma-5" style="text-align: justify;">
-                                                    <span class="mb-3 fs-12">A Salary structure is the absolute details of the salary that will provide an insight into a salary range per grade that an organization or company will attempt to pay within. The OpenHRMS platform allows you to define a well-organized and effective Salary Structure that has the ideal pay structure design with a perfect balance between budget and competitiveness.</span>
+                                                    <span class="mb-3 fs-12">{{remarks}}</span>
                                                 </label>         
                                             </div>
                                         </div>

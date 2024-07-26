@@ -315,6 +315,7 @@ export class HiringDashboardComponent implements OnInit {
           this.inputfield.selectedIndex = 0;
           // this.ApplyForm.reset(); 
           this.HireRequestCandidates();
+          this.ApplyForm.reset(); 
         }
         else{          
           // this.ApplyForm.reset(); 

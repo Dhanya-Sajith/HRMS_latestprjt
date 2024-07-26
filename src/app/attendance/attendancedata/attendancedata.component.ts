@@ -78,7 +78,7 @@ export class AttendancedataComponent implements OnInit {
   editedOuttime: any;
   editedIndate: any;
   editedOutdate: any;
-    listshift: any;
+   listshift: any;
   selectedShift: any=-1;
   
 
@@ -153,7 +153,7 @@ export class AttendancedataComponent implements OnInit {
      
    }
   
-   onCompanySelected(selectedCompanyid: any) { 
+   onCompanySelected(selectedCompanyid: any) {    
     this.selectedCompanyid=selectedCompanyid;     
     this.apicall.FetchDepartmentList(selectedCompanyid,this.empcode).subscribe(res =>{
       this.deptdata=res; 

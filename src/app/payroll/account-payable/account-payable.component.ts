@@ -50,9 +50,9 @@ export class AccountPayableComponent implements OnInit {
   constructor(private session:LoginService,private apicall:ApiCallService,private router:Router) { }
 
   ngOnInit(): void {
+    this.FetchDates();
     this.ListstatusLoan();
     this.Listcompany();
-    this.FetchDates();
     this.ExpenseClaimFilter();
   };;
   radioselection(user:any){
@@ -135,9 +135,9 @@ ExpenseClaimFilter()
       emp_code: emp,
       fromdate: this.fromdate.value,
       todate: this.todate.value, 
-      authority:this.empcode,
+      user:this.empcode,
       };
-      this.apicall.AccountsExpenseClaimFilter(data).subscribe(res =>{
+     this.apicall.AccountsExpenseClaimFilter(data).subscribe(res =>{
       this.listexpenseclaim=res;
       const maxPageFiltered = Math.ceil(this.listexpenseclaim.length / this.itemsPerPage);  
 
@@ -252,13 +252,14 @@ LoanFilter()
     const data = {
       company:comp,
       emp_code: emp,
-      loan_active_status:status,
+      status:status,
       fromdate: this.lfromdate.value,
       todate: this.ltodate.value, 
-      authority:this.empcode,
+      user:this.empcode,
       };
       this.apicall.AccountsLoanFilter(data).subscribe(res =>{
       this.listloan=res;
+      alert(JSON.stringify(this.listloan));
       const maxPageFiltered = Math.ceil(this.listloan.length / this.itemsPerPage);  
       if (this.currentPageloan > maxPageFiltered) {
         this.currentPageloan = 1;     
@@ -299,8 +300,8 @@ getPageNumbersLoan(currentPageloan: number): number[] {
 
 // Function to Calculate the total number of search results
 get totalSearchResultsloan(): number {
-const totalResults = this.listloan.filter((employee: any) => {
-  return Object.values(employee).some((value: any) =>
+const totalResults = this.listloan.filter((loan: any) => {
+  return Object.values(loan).some((value: any) =>
     typeof value === 'string' && value.toLowerCase().startsWith(this.searchInputloan.toLowerCase())
   );
 }).length;
@@ -328,8 +329,8 @@ if (this.currentPageloan === 1) {
   return 1;
 }
 
-const filteredData = this.listloan.filter((employee: any) =>
-  Object.values(employee).some((value: any) =>
+const filteredData = this.listloan.filter((loan: any) =>
+  Object.values(loan).some((value: any) =>
     typeof value === 'string' &&
     value.toLowerCase().startsWith(this.searchInputloan.toLowerCase())
   )
@@ -340,8 +341,8 @@ return Math.min(start, filteredData.length);
 }
 
 getEntriesEndLoan(): number {  
-const filteredData = this.listloan.filter((employee: any) =>
-  Object.values(employee).some((value: any) =>
+const filteredData = this.listloan.filter((loan: any) =>
+  Object.values(loan).some((value: any) =>
     typeof value === 'string' &&
     value.toLowerCase().startsWith(this.searchInputloan.toLowerCase())
   )
@@ -354,7 +355,7 @@ selectRemarks(remarks:any){
 }
 Fetchloanpayments(ecd:any,reqid:any)
 {
-  this.apicall.AccountsLoanPaymentDetails(ecd,reqid).subscribe((res)=>{
+  this.apicall.LoanPaymentDetails(ecd,reqid).subscribe((res)=>{
     this.paymentdetails=res;
     this.DISBURSEMENT_DATE=this.paymentdetails[0].DISBURSEMENT_DATE;
   })
@@ -422,5 +423,4 @@ else{
 }
   
  }
-
 }

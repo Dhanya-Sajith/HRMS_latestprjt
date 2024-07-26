@@ -1,0 +1,511 @@
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header> 
+
+        <!-- ========== App Menu ========== -->
+    
+        <app-sidemenu></app-sidemenu>
+
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-0 text-uppercase font-type ma-10">Goal Progress Tracking & Assessment</h4>
+                            </div>
+                        </div>
+                    </div>
+                         <!-- card header -->      
+                         <div class="topbar-up row">
+                            <div class="col-lg-12 col-md-12">
+                               <div class="d-flex flex-column">
+                                   <div class="row">
+                                       <div class="col-lg-12 col-md-12">
+                                           <div class="card overflow-hidden shadow-lg">
+                                            <div class="position-absolute start-0" style="z-index: 0;">
+                                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+                                                    <style>
+                                                        .s0 {
+                                                            opacity: .10;
+                                                            fill: var(--vz-info)
+                                                        }
+                                                    </style>
+                                                    <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
+                                                </svg>
+                                            </div>
+                                               <div class="card-body" style="z-index:1 ;padding-bottom:5px;">
+                                                   <div class="d-flex align-items-center">
+                                                       <div class="flex-grow-1 overflow-hidden">
+                                                           <div class="row">
+                                                            <div class="col-md-6 col-lg-2">
+                                                                <h6 class="fs-12 font-type">Employee Code<span class="ms-1">:</span></h6>
+                                                                <h6 class="fs-12 font-type fw-semibold">{{this.goalassessmentdtls[0].EMP_CODE}}</h6>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-4">
+                                                                <h6 class="fs-12 font-type">Employee</h6>
+                                                                <h6 class="fs-12 font-type fw-semibold">{{this.goalassessmentdtls[0].EMP_NAME}}</h6> 
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-2" *ngIf="this.goalassessmentdtls[0].REVIEW_DATE!=null">
+                                                                <h6 class="fs-12 font-type">Review Date<span class="ms-1">:</span></h6>
+                                                                <h6 class="fs-12 font-type fw-semibold">{{this.goalassessmentdtls[0].REVIEW_DATE | date:'dd-MM-yyyy'}}</h6>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-2" *ngIf="this.goalassessmentdtls[0].REVIEW_DATE!=null">
+                                                                <h6 class="fs-12 font-type">Status<span class="ms-1">:</span></h6>
+                                                                <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13">Pending</h6>
+                                                            </div>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div><!-- end card body -->
+                                           </div><!-- end card -->
+                                       </div><!--end col-->
+                                   </div>
+                               </div>
+                            </div>
+                        </div>
+                        <!-- end card header -->
+
+                    <!--SELF EVALUATION-->
+
+                    <div id="evaluation_section mb-3" *ngIf="this.goalassessmentdtls[0].REVIEW_DATE!=null">
+                    <!-- <div id="evaluation_section mb-3"> -->
+                        <div class="row margin-up-7">
+                            <div class="col-lg-12">
+                                <div class="card shadow-lg">
+                                    <!--Table Header-->
+                                    <div class="bg-blue alert border-0 h-30 rounded-0 m-0 d-flex align-items-center mb-0">
+                                        <div class="flex-grow-1 text-white text-center text-uppercase font-type fw-semibold fs-12">
+                                            Assessment
+                                        </div>
+                                    </div> 
+                                    <!--End Table Header-->
+
+                                    <div class="card-body">
+                                        <div class="table-responsive table-card mb-0">
+                                        <table class="table table-nowrap align-middle table-bordered border-blue">
+                                            <thead class="bg-info-subtle font-type border-blue">
+                                                <tr class="border-blue">
+                                                    <th>No</th>
+                                                    <th width="35%">Goal</th>
+                                                    <th width="35%">Answer<span style="visibility:hidden;">Enter Your Answer Here</span></th>
+                                                    <th class="text-center" width="5%">Self <br/>Assessment<br/>Out of 10</th>
+                                                    <th width="35%">LM Review<span style="visibility:hidden;">Enter Your Review Here</span></th>
+                                                    <th class="font-type text-center"  width="5%">Score<br/>Out of 10</th>
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody class="list form-check-all font-type fs-11">
+                                                <tr class="font-type h-30" *ngFor="let assessdtl of goalassessmentdtls">
+                                                  <td class="fw-semibold">{{assessdtl.GOAL_ID}}</td>
+                                                  <td style="white-space: pre-wrap;">{{assessdtl.GOAL_DESCRIPTION}}</td>
+                                                  <td style="white-space: pre-wrap;padding:0px;">
+                                                    <ng-container [ngSwitch]="category">
+                                                        <div *ngSwitchCase="0">
+                                                            <textarea class="form-control border-0 font-type content-text fs-12"
+                                                              required rows="3"
+                                                              [(ngModel)]="assessdtl.EMP_GOAL_COMMENT" readonly>
+                                                            </textarea>
+                                                        </div>
+                                                        <div *ngSwitchCase="1">
+                                                            <textarea class="form-control border-0 font-type content-text fs-12"
+                                                              required rows="3"
+                                                              [(ngModel)]="assessdtl.EMP_GOAL_COMMENT">
+                                                            </textarea>
+                                                        </div>
+                                                    </ng-container>
+                                                    
+                                                  </td>
+                                                  <td style="padding:0px;">
+                                                    <ng-container [ngSwitch]="category">
+                                                        <div *ngSwitchCase="0">
+                                                            <input type="text"
+                                                            class="form-control border-0 font-type textbox-15"
+                                                            [(ngModel)]="assessdtl.EMP_GOAL_SCORE" readonly />
+                                                        </div>
+                                                        <div *ngSwitchCase="1">
+                                                            <input type="text"
+                                                            class="form-control border-0 font-type textbox-15"
+                                                            [(ngModel)]="assessdtl.EMP_GOAL_SCORE"
+                                                            (ngModelChange)="onScoreChange()" />
+                                                        </div>
+                                                    </ng-container>
+                                                  </td>
+                                                  <td style="white-space: pre-wrap;padding:0px;">
+                                                    <ng-container [ngSwitch]="category">
+                                                        <div *ngSwitchCase="0">
+                                                            <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                      required rows="3"
+                                                                      [(ngModel)]="assessdtl.LM_GOAL_COMMENT"
+                                                                      readonly> 
+                                                            </textarea>
+                                                          </div>
+                                                      <div *ngSwitchCase="1">
+                                                        <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                  required rows="3"
+                                                                  [(ngModel)]="assessdtl.LM_GOAL_COMMENT"
+                                                                  readonly> 
+                                                        </textarea>
+                                                      </div>
+                                                      <div *ngSwitchCase="2">
+                                                        <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                  required rows="3"
+                                                                  [(ngModel)]="assessdtl.LM_GOAL_COMMENT">
+                                                        </textarea>
+                                                      </div>
+                                                    </ng-container>
+                                                  </td>
+                                                  <td style="padding:0px;">
+                                                    <ng-container [ngSwitch]="category">
+                                                        <div *ngSwitchCase="0">
+                                                            <input type="text"
+                                                                   class="form-control border-0 font-type textbox-15"
+                                                                   [(ngModel)]="assessdtl.LM_GOAL_SCORE"
+                                                                   readonly />
+                                                          </div>
+                                                      <div *ngSwitchCase="1">
+                                                        <input type="text"
+                                                               class="form-control border-0 font-type textbox-15"
+                                                               [(ngModel)]="assessdtl.LM_GOAL_SCORE"
+                                                               readonly />
+                                                      </div>
+                                                      <div *ngSwitchCase="2">
+                                                        <input type="text"
+                                                               class="form-control border-0 font-type textbox-15"
+                                                               [(ngModel)]="assessdtl.LM_GOAL_SCORE"
+                                                               (ngModelChange)="onScoreChange()" />
+                                                      </div>
+                                                    </ng-container>
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+
+
+
+
+                                            <tfoot class="font-type ma-10 bg-light-blue border-blue">
+                                                <tr>
+                                                    <td colspan="2"></td>
+                                                    <td colspan="1" style="text-align: right;">Avg.</td>
+                                                    <td class="fw-semibold fs-13"><input type="text"  id="avgscoreEmp" name="avgscoreEmp" class="form-control border-0 font-type textbox-15" value="{{this.averageScore}}"  readonly/></td>
+                                                    <td colspan="1"></td>
+                                                    <td class="fw-semibold fs-13"><input type="text" id="avgscoreLm" name="avgscoreLm" class="form-control border-0 font-type textbox-15" value="{{this.averageScoreLM}}"  readonly/></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        </div>
+                                        <div class="col-lg-12 pt-1 mb-0 margin-up-5" style="display: none;">
+                                            <div class="hstack gap-2 justify-content-end">
+                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white"><i class="ri-check-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type text-white"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                            </div>
+                                        </div>
+
+                                        <!--FOR HR ONLY-->
+                                        <div class="row align-items-center gy-3">
+                                            <div class="col-sm" >
+                                                <div class="align-items-center d-flex ">
+                                                    <div class="form-check form-check-info mb-2" *ngIf="this.grpname.includes('HR')">
+                                                        <input class="form-check-input" type="checkbox" id="formCheck10" value="1">
+                                                        <label class="form-check-label fs-12 fw-semibold font-type text-uppercase text-blue">
+                                                            Mark as Assessment Complete
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-auto" >
+                                                <div class="d-flex gap-1 flex-wrap">
+                                                    <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button">
+                                                        <span class="fw-medium font-type text-white" style="font-size: 12px;" (click)="updateassessmenttrack()" >Update</span>
+                                                    </button>
+                                                    <button type="button" *ngIf="this.grpname.includes('HR')" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" data-bs-toggle="modal" data-bs-target="#RejectModal" ><i class="ri-send-plane-fill label-icon align-middle fs-16 ms-2"></i>Send for Reassessment</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--FOR HR-->
+
+                                    </div>
+                                    
+                                    <!--end card-body-->
+                                </div>
+                            </div><!--end col-->
+                        </div>
+                    </div>
+
+                    <!--END SELF EVALUATION-->
+
+
+                    <!-- Goal Tracking Details -->
+
+                    <div class="row margin-up-5" id="tracking_Section">
+                        <div class="col-md-12 col-lg-12">
+                            <h4 class="card-title card-header shadow-lg bg-blue fs-12 font-type fw-semibold p-2 text-uppercase text-center text-white">Goal Progress Tracking</h4>
+                            <!-- Accordions Fill Colored -->
+                                <div class="accordion accordion-fill-info mb-3 shadow-lg" id="accordionFill"   *ngFor="let goaldtls of goalassessmentdtls">
+                                    <div class="accordion-item material-shadow">
+                                        <h2 class="accordion-header" id="accordionFillExample1">
+                                            <button class="accordion-button font-type fs-13" type="button" data-bs-toggle="collapse"  [attr.data-bs-target]="'#' + goaldtls.GOAL_ID"  aria-expanded="false" aria-controls="accor_fill1"  (click)="goalprogressdtl(goaldtls.GOAL_ID)">
+                                                <span>{{goaldtls.GOAL_ID}}.</span><span class="ms-1">{{goaldtls.GOAL_DESCRIPTION}}<span class="badge bg-info-subtle text-info ms-2 fs-11 fw-semibold text-uppercase" *ngIf="goaldtls.ACTION_STATUS==1">Action Required</span></span>
+                                            </button>
+                                        </h2>
+                                        <div id="{{goaldtls.GOAL_ID}}" class="accordion-collapse collapse" aria-labelledby="accordionFillExample1" data-bs-parent="#accordionFill">
+                                            <div class="accordion-body">
+                                                <div class="table-responsive table-card p-2 pb-0">
+                                                    <table class="table table-nowrap align-middle border-blue table-bordered" >
+                                                        <thead class="font-type">
+                                                            <tr class="bg-light-blue fs-12 border-blue fw-semibold h-30">
+                                                                <th class="font-type">#</th>
+                                                                <th class="font-type">Review Date</th>
+                                                                <th class="font-type" width="5%">%.Achieved</th>
+                                                                <th class="font-type" width="40%">Answers <span style="visibility: hidden;">View Employee's Answere Here</span></th>
+                                                                <th class="font-type" width="40%">Comments <span style="visibility: hidden;">Enter Your Comments Here</span></th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="list form-check-all font-type">
+                                                            <tr class="fs-12 border-blue fw-medium" *ngFor="let progressdtl of goalprogressdtls; let i=index">
+                                                              <td class="font-type">{{i+1}}</td>
+                                                              <td class="font-type">{{progressdtl.REVIEW_DATE | date:'yyyy-MM-dd'}}</td>
+                                                          
+                                                              <td style="padding:0px;">
+                                                                <ng-container [ngSwitch]="category">
+                                                                    <div *ngSwitchCase="0">
+                                                                        <input type="text" class="form-control border-0 font-type textbox-15 fs-12"
+                                                                       id="weightage{{i}}" name="weightage{{i}}"
+                                                                       [(ngModel)]="progressdtl.EMP_GOAL_SCORE"
+                                                                       placeholder="Enter %."  readonly/>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="1">
+                                                                        <input type="text" class="form-control border-0 font-type textbox-15 fs-12"
+                                                                       id="weightage{{i}}" name="weightage{{i}}"
+                                                                       [(ngModel)]="progressdtl.EMP_GOAL_SCORE"
+                                                                       placeholder="Enter %." />
+                                                                    </div>
+                                                                    <div *ngSwitchCase="2">
+                                                                        <input type="text" class="form-control border-0 font-type textbox-15 fs-12"
+                                                                       id="weightage{{i}}" name="weightage{{i}}"
+                                                                       [(ngModel)]="progressdtl.EMP_GOAL_SCORE"
+                                                                       placeholder="Enter %."  />
+                                                                    </div>
+                                                                </ng-container>
+                                                                
+                                                              </td>
+
+                                                          
+                                                              <td style="white-space: pre-wrap;padding:0px;">
+
+                                                                <ng-container [ngSwitch]="category">
+                                                                    <div *ngSwitchCase="0">
+                                                                        <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                          id="emp_goal_cmt{{i}}" name="emp_goal_cmt{{i}}" required
+                                                                          rows="4" placeholder="Answer"  [(ngModel)]="progressdtl.EMP_GOAL_COMMENT" readonly>{{progressdtl.EMP_GOAL_COMMENT}}</textarea>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="1">
+                                                                        <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                          id="emp_goal_cmt{{i}}" name="emp_goal_cmt{{i}}" required
+                                                                          rows="4" placeholder="Answer"  [(ngModel)]="progressdtl.EMP_GOAL_COMMENT">{{progressdtl.EMP_GOAL_COMMENT}}</textarea>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="2">
+                                                                        <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                          id="emp_goal_cmt{{i}}" name="emp_goal_cmt{{i}}" required
+                                                                          rows="4" placeholder="Answer"  [(ngModel)]="progressdtl.EMP_GOAL_COMMENT" readonly>{{progressdtl.EMP_GOAL_COMMENT}}</textarea>
+                                                                    </div>
+                                                                </ng-container>
+                                                                
+                                                              </td>
+                                                          
+                                                              <ng-container [ngSwitch]="category">
+                                                                <div *ngSwitchCase="0">
+                                                                    <td style="white-space: pre-wrap;padding:0px;">
+                                                                      <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                                id="lm_comment{{i}}" name="lm_comment{{i}}" required
+                                                                                rows="4" placeholder="Comments" readonly >{{progressdtl.LM_GOAL_COMMENT}}</textarea>
+                                                                    </td>
+                                                                  </div>
+                                                                <div *ngSwitchCase="1">
+                                                                  <td style="white-space: pre-wrap;padding:0px;">
+                                                                    <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                              id="lm_comment{{i}}" name="lm_comment{{i}}" required
+                                                                              rows="4" placeholder="Comments" readonly >{{progressdtl.LM_GOAL_COMMENT}}</textarea>
+                                                                  </td>
+                                                                </div>
+                                                                <div *ngSwitchCase="2">
+                                                                  <td style="white-space: pre-wrap;padding:0px;">
+                                                                    <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                              id="lm_comment{{i}}" name="lm_comment{{i}}" required
+                                                                              rows="4" placeholder="Comments" [(ngModel)]="progressdtl.LM_GOAL_COMMENT">{{progressdtl.LM_GOAL_COMMENT}}</textarea>
+                                                                  </td>
+                                                                </div>
+                                                              </ng-container>
+                                                          
+                                                              <td>
+                                                                <ul class="list-inline hstack gap-1 mb-0">
+                                                                  <li class="list-inline-item">
+                                                                    <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button"
+                                                                            (click)="updateprogresstrack(progressdtl.ACTION_STATUS, progressdtl.GOAL_ID, progressdtl.EMP_GOAL_SCORE,progressdtl.EMP_GOAL_COMMENT,progressdtl.LM_GOAL_COMMENT)">
+                                                                      <span class="text-uppercase fw-medium font-type text-white" style="font-size: 8px;">Update</span>
+                                                                    </button>
+                                                                  </li>
+                                                                </ul>
+                                                              </td>
+                                                            </tr>
+                                                          </tbody>
+                                                          
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- Accordions Bordered -->
+                            <!-- 
+                            <div class="accordion accordion-flush accordion-fill-info shadow-lg mb-3" id="accordionFill2">
+                                <div class="accordion-item material-shadow">
+                                    <h2 class="accordion-header" id="accordionFill2Example1">
+                                        <button class="accordion-button font-type fs-13" type="button " data-bs-toggle="collapse" data-bs-target="#accor_fill21" aria-expanded="true" aria-controls="accor_fill21">
+                                            <span>2.</span><span class="ms-1">Reduce operational costs by 8% through process optimization initiatives within the next six months.</span>
+                                        </button>
+                                    </h2>
+                                    <div id="accor_fill21" class="accordion-collapse collapse show" aria-labelledby="accordionFill2Example1" data-bs-parent="#accordionFill2">
+                                        <div class="accordion-body">
+                                            <div class="table-responsive table-card p-2 pb-0">
+                                                <table class="table table-nowrap align-middle border-blue table-bordered" >
+                                                    <thead class="font-type">
+                                                        <tr class="bg-light-blue fs-12 border-blue fw-semibold h-30">
+                                                            <td class="font-type">#</td>
+                                                            <td class="font-type">Review Date</td>
+                                                            <td class="font-type" width="5%">%.Achieved</td>
+                                                            <td class="font-type" width="40%">Answers <span style="visibility: hidden;">View Employee's Answere Here</span></td>
+                                                            <td class="font-type" width="40%">Comments <span style="visibility: hidden;">Enter Your Comments Here</span></td>
+                                                            <td>Action</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list form-check-all font-type">
+                                                        <tr class="fs-12 border-blue fw-medium">
+                                                            <td class="font-type">01</td>
+                                                            <td class="font-type">30/06/2024</td>
+                                                            <td style="padding:0px;"><input type="text" class="form-control border-0 font-type textbox-15 fs-12" placeholder="Enter %."/></td>
+                                                            <td style="white-space: pre-wrap;padding:0px;"><textarea class="form-control border-0 font-type content-text fs-12" required rows="4"  placeholder="Answer" oninput="auto_grow(this)"></textarea></td>
+                                                            <td style="white-space: pre-wrap;padding:0px;"><textarea class="form-control border-0 font-type content-text fs-12" required rows="4"  placeholder="Comments" oninput="auto_grow(this)"></textarea></td>
+                                                            <td>
+                                                                <ul class="list-inline hstack gap-1 mb-0">
+                                                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Update Details">
+                                                                        <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button">
+                                                                            <span class="text-uppercase fw-medium font-type text-white" style="font-size: 8px;">Update</span>
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="fs-12 border-blue fw-medium">
+                                                            <td class="font-type">02</td>
+                                                            <td class="font-type">31/12/2024</td>
+                                                            <td style="padding:0px;"><input type="text" class="form-control border-0 font-type textbox-15 fs-12" placeholder="Enter %."/></td>
+                                                            <td style="white-space: pre-wrap;padding:0px;"><textarea class="form-control border-0 font-type content-text fs-12" required rows="4"  placeholder="Answer" oninput="auto_grow(this)"></textarea></td>
+                                                            <td style="white-space: pre-wrap;padding:0px;"><textarea class="form-control border-0 font-type content-text fs-12" required rows="4"  placeholder="Comments" oninput="auto_grow(this)"></textarea></td>
+                                                            <td>
+                                                                <ul class="list-inline hstack gap-1 mb-0">
+                                                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Update Details">
+                                                                        <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button">
+                                                                            <span class="text-uppercase fw-medium font-type text-white" style="font-size: 8px;">Update</span>
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                           <!-- end card -->
+                        </div>
+                    </div>
+                    
+                    <!-- end row -->
+                    <!--END Goal Tracking Details -->
+
+                    <!-- Reason Model-->
+                    <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="fs-13 font-type text-white ma-5"></h5>
+                                    <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off">
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="margin-up-5">
+                                            <label class="form-label font-type fs-12">Comments</label>
+                                            <textarea class="form-control" rows="3" id="sendremarks" name="sendremarks" required></textarea>  
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="padding-bottom:10px;">
+                                        <div class="hstack gap-2 margin-up-5">
+                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" (click)="sendForassessment()"><i class="ri-check-line label-icon align-middle fs-16 ms-2"></i>Send</button>
+                                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type text-white"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>    
+                    <!-- End Reason Model-->
+
+                    
+                 <!-- success model -->
+
+ <button id="openModalButtonForalertsuccess"  [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuRecordModals">Open Modal</button>
+  
+ <div class="modal fade zoomIn" id="SuRecordModals" tabindex="-1" aria-labelledby="SaveModal" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header bg-orange padding-up-5">
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModals==1">
+                 
+                 <div class="text-center">
+                     <h5 class="fs-13 font-type">{{successs}}</h5>
+                 </div>
+             </div>
+             <div class="modal-body text-center padding-down-5"  *ngIf="showModals==2">
+                 
+                <div class="text-center">
+                    <h5 class="fs-13 font-type">{{faileds}}</h5>
+                </div>
+            </div>
+         </div>
+     </div>
+ </div>
+ <!-- End success model -->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <app-footer></app-footer>
+            
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->

@@ -239,6 +239,7 @@
                                                 <th>Addressed to</th>
                                                 <th>Detailed Description</th>
                                                 <th>Status</th>
+                                                <th>Assigned to</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -252,6 +253,7 @@
                                             <td class="status" *ngIf="item.REQ_STATUS==0"><span class="badge bg-info-subtle text-info width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
                                             <td class="status" *ngIf="item.REQ_STATUS==2"><span class="badge bg-warning-subtle text-warning width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
                                             <td class="status" *ngIf="item.REQ_STATUS==1"><span class="badge bg-success-subtle text-success width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                            <td>{{item.ASSIGNED_TO}}</td>
                                             <td>
                                                     <ul class="list-inline hstack gap-1 mb-0">
                                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Close Request" *ngIf="item.REQ_STATUS==0 || item.REQ_STATUS==2 ">

@@ -115,7 +115,7 @@
                                               </tr>
                                             </thead>
                                             <tbody class="list form-check-all font-type fs-11">
-                                              <tr class="trstyle fs-12 h1-50" *ngFor="let row of data">
+                                              <tr class="trstyle fs-12 h1-50" *ngFor="let row of data | search : searchInput | pagination: currentPage: itemsPerPage">
                                                 <ng-container *ngFor="let column of columns">
                                                     <td>
                                                       <ng-container *ngIf="column === 'OTHER_ADDITION'">

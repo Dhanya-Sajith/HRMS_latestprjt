@@ -32,7 +32,8 @@ export class CourseFeedbackFormComponent implements OnInit {
   trainingID: any;
   triningName: any;
   triningDate: any;
-
+  viewflag: number = 0;
+  isDisabled = false;
 
   constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute,private router: Router) {
     this.requestForm = this.fb.group({
@@ -172,12 +173,16 @@ export class CourseFeedbackFormComponent implements OnInit {
               this.showModal = 1; 
               this.success = "Feedback Form Submitted Successfully";
               this.Clear();
+              this.viewflag = 1;
+              this.isDisabled = true;
             }
             else        
             {
               this.showModal = 2; 
               this.failed = "Failed";
               this.Clear();
+              this.viewflag = 0;
+              this.isDisabled = false;
             }   
           })
     }

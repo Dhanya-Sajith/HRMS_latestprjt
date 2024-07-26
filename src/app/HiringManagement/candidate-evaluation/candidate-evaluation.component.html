@@ -26,6 +26,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-12 p-3" [hidden]="view == 0" >
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-soft-success" (click)="convertToPDF()" aria-label="Convert to PDF" title="Convert to PDF">
+                                            <i class="ri-file-pdf-line"></i> Convert to PDF
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="htmlElementId">
                                 <div class="row" style="justify-content: center;">
                                     <div class="col-sm text-center">
                                         <h2 class="font-type" style="font-weight: bold;">Candidate Evaluation Form</h2>
@@ -140,8 +148,8 @@
                                                     </div>
                                                     <div *ngIf="requestForm.get('Radio1')!.hasError('required') && requestForm.get('Radio1')!.touched" class="text-danger">Please select the Options</div>
                                                 </td>
-                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..." formControlName="cmmt1" ></textarea>
-                                                <div *ngIf="requestForm.get('cmmt1')!.hasError('required') && requestForm.get('cmmt1')!.touched" class="text-danger">Please Fill the field.</div>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0"  rows="7" placeholder="Comments..." formControlName="cmmt1" ></textarea>
+                                                <!-- <div *ngIf="requestForm.get('cmmt1')!.hasError('required') && requestForm.get('cmmt1')!.touched" class="text-danger">Please Fill the field.</div> -->
                                             </td>
                                             </tr>
                                             <tr class="font-type fs-12 bg-light fw-semibold">
@@ -177,8 +185,8 @@
                                                     </div>
                                                     <div *ngIf="requestForm.get('Radio2')!.hasError('required') && requestForm.get('Radio2')!.touched" class="text-danger">Please select the Options</div>
                                                 </td>
-                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..." formControlName="cmmt2" ></textarea>
-                                                <div *ngIf="requestForm.get('cmmt2')!.hasError('required') && requestForm.get('cmmt2')!.touched" class="text-danger">Please Fill the field.</div>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0"  rows="7" placeholder="Comments..." formControlName="cmmt2" ></textarea>
+                                                <!-- <div *ngIf="requestForm.get('cmmt2')!.hasError('required') && requestForm.get('cmmt2')!.touched" class="text-danger">Please Fill the field.</div> -->
                                             </td>
                                             </tr>
                                             <tr class="font-type fs-12 bg-light fw-semibold">
@@ -214,8 +222,8 @@
                                                     </div>
                                                     <div *ngIf="requestForm.get('Radio3')!.hasError('required') && requestForm.get('Radio3')!.touched" class="text-danger">Please select the Options</div>
                                                 </td>
-                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..."formControlName="cmmt3"  ></textarea>
-                                                <div *ngIf="requestForm.get('cmmt3')!.hasError('required') && requestForm.get('cmmt3')!.touched" class="text-danger">Please Fill the field.</div>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0"  rows="7" placeholder="Comments..."formControlName="cmmt3"  ></textarea>
+                                                <!-- <div *ngIf="requestForm.get('cmmt3')!.hasError('required') && requestForm.get('cmmt3')!.touched" class="text-danger">Please Fill the field.</div> -->
                                             </td>
                                             </tr>
                                             <tr class="font-type fs-12 bg-light fw-semibold">
@@ -251,8 +259,8 @@
                                                     </div>
                                                     <div *ngIf="requestForm.get('Radio4')!.hasError('required') && requestForm.get('Radio4')!.touched" class="text-danger">Please select the Options</div>
                                                 </td>
-                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..." formControlName="cmmt4" ></textarea>
-                                                <div *ngIf="requestForm.get('cmmt4')!.hasError('required') && requestForm.get('cmmt4')!.touched" class="text-danger">Please Fill the field.</div>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0"  rows="7" placeholder="Comments..." formControlName="cmmt4" ></textarea>
+                                                <!-- <div *ngIf="requestForm.get('cmmt4')!.hasError('required') && requestForm.get('cmmt4')!.touched" class="text-danger">Please Fill the field.</div> -->
                                             </td>
                                             </tr>
                                             <tr class="font-type fs-12 bg-light fw-semibold">
@@ -288,8 +296,8 @@
                                                     </div>
                                                     <div *ngIf="requestForm.get('Radio5')!.hasError('required') && requestForm.get('Radio5')!.touched" class="text-danger">Please select the Options</div>
                                                 </td>
-                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..."  formControlName="cmmt5"></textarea>
-                                                <div *ngIf="requestForm.get('cmmt5')!.hasError('required') && requestForm.get('cmmt5')!.touched" class="text-danger">Please Fill the field.</div>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0"  rows="7" placeholder="Comments..."  formControlName="cmmt5"></textarea>
+                                                <!-- <div *ngIf="requestForm.get('cmmt5')!.hasError('required') && requestForm.get('cmmt5')!.touched" class="text-danger">Please Fill the field.</div> -->
                                             </td>
                                             </tr>
                                             <tr class="font-type fs-12 bg-light fw-semibold">
@@ -325,8 +333,8 @@
                                                     </div>
                                                     <div *ngIf="requestForm.get('Radio6')!.hasError('required') && requestForm.get('Radio6')!.touched" class="text-danger">Please select the Options</div>
                                                 </td>
-                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0" required rows="7" placeholder="Comments..." formControlName="cmmt6" ></textarea>
-                                                <div *ngIf="requestForm.get('cmmt6')!.hasError('required') && requestForm.get('cmmt6')!.touched" class="text-danger">Please Fill the field.</div>
+                                                <td style="padding: 0px;"><textarea class="form-control font-type border-0"  rows="7" placeholder="Comments..." formControlName="cmmt6" ></textarea>
+                                                <!-- <div *ngIf="requestForm.get('cmmt6')!.hasError('required') && requestForm.get('cmmt6')!.touched" class="text-danger">Please Fill the field.</div> -->
                                             </td>
                                             </tr>
                                             <tr class="font-type fs-12 bg-light fw-semibold">
@@ -381,6 +389,7 @@
                                 
                                 </div>
                             </form>
+                        </div>
                                 <!--End Details-->  
 
                                 </div>
@@ -393,7 +402,7 @@
                     
                     <div class="col-lg-12" >
                         <div class="hstack gap-1 justify-content-end">
-                            <a href="javascript:history.back()">
+                            <a [routerLink]="Page == 1 ? ['/HiringRequestDashboard'] : ['/hiring_dashboard']" [queryParams]="{ user:'tab3' }">
                             <button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button>
                             </a>
                         </div>

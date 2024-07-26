@@ -18,7 +18,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                        <h4 class="mb-sm-0">Employee Insurance Report</h4>
+                                        <h4 class="mb-sm-0">EOS Report</h4>
                                     </div>
                                 </div>
                             </div>
@@ -31,46 +31,37 @@
                                      
                                         <div class="card-body border-bottom-dashed border-bottom">
                                             <form>
-                                                <div class="row g-3">
+                                                <div class="row col-md-12">
                                                   <div class="alert alert-danger alert-dismissible" *ngIf="message">                                
                                                         <strong><i class="fa fa-times-circle text-danger" style="font-size: 25px;"></i> {{message}}</strong>
                                                          
                                                      </div>  
-                                                    
-                                                    <!--end col-->
-                                                    <div class="col-lg-3 col-sm-6">
-                                                        <h3 class="font-type fs-12"><span>Company</span></h3>
+
+                                                     <div class="col-md-3">
+                                                        <h3 class="fw-semibold"><span>Company</span></h3>
                                                         <div>
-                                                            <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="companycode"  name="comcode" id="comcode" (change)="FetchEmployeeList()">
-                                                                <option value="-1" [defaultSelected]>All</option>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="companycode"  name="comcode" id="comcode" (change)="fetch_eos_reportfilter()">
+                                                                <option value="-1">All</option>
                                                                 <option  *ngFor="let item of company" value="{{item.KEY_ID}}">
                                                                     {{item.DATA_VALUE}}
                                                                 </option>
                                                             </select>
                                                         </div>
-                                                    </div>
+                                                    </div>                                                
+                                                    
                                                     <div class="col-lg-3 col-sm-6">
-                                                        <h3 class="font-type fs-12"><span>Employee</span></h3>
-                                                        <div>
-                                                            <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="employee"  name="employee" id="employee">
-                                                                <option value="-1" [defaultSelected]>All</option>
-                                                                <option  *ngFor="let item of listemployee" value="{{item.EMP_CODE}}">
-                                                                    {{item.EMP_NAME}}
-                                                                </option>
-                                                            </select>
-                                                        </div>
+                                                        <h3 class="fw-semibold"><span>From Date</span></h3>
+                                                        <input type="date" class="form-control" id="fromdt" name="fromdt"   [formControl]="fromdt" (change)="fetch_eos_reportfilter()" >
                                                     </div>
-                                                    <div class="col-lg-2 col-sm-6" >
-                                                        <label></label>
+                                                    <!--end col-->
+                                                    <div class="col-lg-3 col-sm-6">
                                                         <div>
-                                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="InsuranceReport()"> <i class="ri-file-text-line"></i>
-                                                                View Report
-                                                            </button>
+                                                            <h3 class="fw-semibold"><span>To Date</span></h3>
+                                                            <input type="date" class="form-control" id="todt" name="todt"  [formControl]="todt"  (change)="fetch_eos_reportfilter()" >
                                                         </div>
                                                     </div>
                                                     <!--end col-->
-                                                  
-                                                    <!--end col-->
+
                                                 </div>
         
                                               
@@ -90,10 +81,9 @@
                                         <div class="card-header border-bottom" style="padding-bottom: 10px;padding-top: 10px;">
                                             <div class="row align-items-center gy-3">
                                                 <div class="col-sm">
-                                                    <h6 class="card-title">Employee Insurance Report</h6>
+                                                    <!-- <h6 class="card-title">Monthly Salary Review Report</h6> -->
                                                 </div>
-                                                <div class="col-sm-auto">
-                                                 
+                                                <div class="col-sm-auto">                                                
         
                                                         <div class="search-box" >
                                                             <input type="text" class="form-control searchInput"  id="searchInput" [(ngModel)]="searchInput" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
@@ -105,7 +95,7 @@
                                                  <div class="col-sm-auto">
                                                     <div class="d-flex flex-wrap">
         
-                                                     <button type="button" class="btn btn-soft-success" (click)="download_to_excel()" ><i class="ri-file-excel-2-line" ></i>Download</button>
+                                                     <button type="button" class="btn btn-soft-success" (click)="download_to_excel()"><i class="ri-file-excel-2-line" ></i>Download</button>
                                                         
                                                     </div>
                                                 </div> 
@@ -123,50 +113,36 @@
                                                 <div class="card-body">
                                                     <div class="table-responsive">
                                                         <table class="table table-bordered table-nowrap align-middle mb-0"  style="padding-top:0px" >
-                                                            <thead>                                                               
+                                                            <thead>   
+                                                                <!-- Grievence Id, Reported date, Emp Name , EMp id , Issue,  Resolution, status, Resolved date, Resolved by (empid)                                                             -->
                                                                 <tr class="table-light text-white font-type">
-                                                                    <th scope="col" style="text-align: center;">REF ID</th>                                                                    
-                                                                    <th scope="col" style="text-align: center;">Company</th>
-                                                                    <th scope="col" style="text-align: center;">Insurancer Name</th>
-                                                                    <th scope="col" style="text-align: center;">Department</th>
-                                                                    <th scope="col" style="text-align: center;">Designation</th>
-                                                                    <th scope="col" style="text-align: center;">Date of Birth</th>
-                                                                    <th scope="col" style="text-align: center;">Nationality</th>
-                                                                    <th scope="col" style="text-align: center;">Gender</th>
-                                                                    <th scope="col" style="text-align: center;">Marital <br>Status</th>
-                                                                    <th scope="col" style="text-align: center;">Employment <br>Status</th>
-                                                                    <th scope="col" style="text-align: center;">Family of</th>
-                                                                    <th scope="col" style="text-align: center;">Emirates <br>ID No</th>
-                                                                    <th scope="col" style="text-align: center;">Passport No</th>
-                                                                    <th scope="col" style="text-align: center;">Residence <br>Permit No</th>
-                                                                    <th scope="col" style="text-align: center;">Residence <br>Permit Issue<br> Date</th>
-                                                                    <th scope="col" style="text-align: center;">Personal Mobile</th>
-                                                                    <th scope="col" style="text-align: center;">Personal<br> Email</th>
-                                                                    
+                                                                    <!-- <th scope="col" style="text-align: center;">Grievence Id </th>   -->
+                                                                    <th scope="col" style="text-align: center;">EmpCode </th>  
+                                                                    <th scope="col" style="text-align: center;">Emp Name</th>                                                                   
+                                                                    <th scope="col" style="text-align: center;">Department </th>
+                                                                    <th scope="col" style="text-align: center;">Designation </th>
+                                                                    <th scope="col" style="text-align: center;">Date of Joining</th>
+                                                                    <th scope="col" style="text-align: center;">Date of Leaving </th>
+                                                                    <th scope="col" style="text-align: center;">Resignation date </th>
+                                                                    <th scope="col" style="text-align: center;">EOS Amount</th>
+                                                                    <th scope="col" style="text-align: center;">Status</th>
                                                                 </tr>
                                                             </thead>
                 
                                                             <tbody class="list form-check-all font-type fs-11">
-                                                                <tr class="trstyle fs-11" *ngFor="let data of insurancedata | search : searchInput  | pagination: currentPage: itemsPerPage;index as i" >
-                                                                    <td>{{data.EMP_CODE}}</td>                                                                    
-                                                                    <td>{{data.COMPANY}}</td>
-                                                                    <td>{{data.NAME}}</td>
+                                                                <tr class="trstyle fs-11" *ngFor="let data of report | search : searchInput  | pagination: currentPage: itemsPerPage;index as i">
+                                                                    <!-- REQUEST_ID,EMP_CODE,EMP_NAME,REQUEST_DATE,DESCRIPTION,CLOSURE_COMMENT,CLOSURE_DATE,CLOSURE_BY,REQ_STATUS,STATUS_VAL -->
+                                                                    <!-- <td>{{data.REQUEST_ID}}</td>  -->
+                                                                    <td>{{data.EMP_CODE}}</td>                                                                   
+                                                                    <td>{{data.EMP_NAME}}</td>
                                                                     <td>{{data.DEPARTMENT}}</td>
-                                                                    <td>{{data.DESIGNATION}}</td>
-                                                                    <td>{{data.DOB| date: 'dd-MM-yyyy'}}</td>
-                                                                    <td>{{data.NATIONALITY}}</td> 
-                                                                    <td>{{data.GENDER}}</td> 
-                                                                    <td>{{data.MARITAL_STATUS}}</td>                                                                    
-                                                                    <td>{{data.EMPLOYMENT_STATUS}}</td>
-                                                                    <td>{{data.FAMILY}}</td>
-                                                                    <td>{{data.EMIRATES_ID}}</td>
-                                                                    <td>{{data.PASSPORT_NO}}</td>
-                                                                    <td>{{data.RESID_NO}}</td>
-                                                                    <td>{{data.RES_DATE| date: 'dd-MM-yyyy'}}</td>
-                                                                    <td>{{data.MOBILE_NO}}</td> 
-                                                                    <td>{{data.EMAIL}}</td> 
-                                                                    
-                                                                </tr>                                                                
+                                                                    <td>{{data.DESIGNATION}}</td>                                                                 
+                                                                    <td>{{data.DATE_OF_JOINING| date: 'dd-MM-yyyy'}}</td> 
+                                                                    <td>{{data.LEAVING_DATE| date: 'dd-MM-yyyy'}}</td>
+                                                                    <td>{{data.RESIGNATION_DATE| date: 'dd-MM-yyyy'}}</td>                                                                  
+                                                                    <td>{{data.EOS_AMOUNT}}</td>
+                                                                    <td>{{data.STATUS_VALUE}}</td>                                                                  
+                                                                    </tr>                                                                
                                  
                                                             </tbody>                                   
                                                                
@@ -174,7 +150,8 @@
                                                        
                                                      
                                                     </div><!-- end table responsive -->
-                                                     <div *ngIf="insurancedata">                                            
+                                                   
+                                                    <div *ngIf="report">                                            
                                 
                                                         <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
                                                             <div class="col-sm">
@@ -217,10 +194,10 @@
                                                           </div>
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button>
                                                 <!--Modal For Success Message Start-->
-                                                <!-- <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
+                                                <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
                                                             <div class="modal-header bg-orange padding-up-5">
@@ -236,7 +213,7 @@
                                                         </div>
                                                         </div>
                                                     </div>
-                                                </div> -->
+                                                </div>
                                             <!--Modal For Success Message End--> 
                                                    
                                                 </div><!-- end card body -->

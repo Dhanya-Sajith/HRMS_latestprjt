@@ -163,6 +163,10 @@ import { NgxOrgChartModule } from 'ngx-org-chart';
 import { AssestlistComponent } from './reports/assestlist/assestlist.component';
 import { DocumentsReportComponent } from './reports/documents-report/documents-report.component';
 import { EmployeeInsuranceReportComponent } from './reports/employee-insurance-report/employee-insurance-report.component';
+import { GoalProgressTrackerComponent } from './PerformanceManagement/goal-progress-tracker/goal-progress-tracker.component';
+import { AppraisalFormComponent } from './PerformanceManagement/appraisal-form/appraisal-form.component';
+import { EosReportComponent } from './reports/eos-report/eos-report.component';
+import { EmployeeTransferPromotionComponent } from './employee-transfer-promotion/employee-transfer-promotion.component';
 
 
 @NgModule({
@@ -322,6 +326,10 @@ import { EmployeeInsuranceReportComponent } from './reports/employee-insurance-r
     AssestlistComponent,
     DocumentsReportComponent,
     EmployeeInsuranceReportComponent,
+    GoalProgressTrackerComponent,
+    AppraisalFormComponent,
+    EosReportComponent,
+    EmployeeTransferPromotionComponent,
     
     
   ],

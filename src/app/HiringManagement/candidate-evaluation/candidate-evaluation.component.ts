@@ -4,6 +4,8 @@ import { LoginService } from 'src/app/login.service';
 import { DatePipe} from '@angular/common';
 import { FormControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router  } from '@angular/router';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-candidate-evaluation',
@@ -53,6 +55,8 @@ export class CandidateEvaluationComponent implements OnInit {
   com9: any;
   tempreqid:number=1;
   requst_Id: any;
+  Page: any;
+
 
   constructor(private apicall:ApiCallService,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute,private router: Router) { 
     this.requestForm = this.fb.group({
@@ -63,18 +67,18 @@ export class CandidateEvaluationComponent implements OnInit {
       Radio4: ['', Validators.required],
       Radio5: ['', Validators.required],
       Radio6: ['', Validators.required],
-      cmmt1: ['', Validators.required],
-      cmmt2: ['', Validators.required],
-      cmmt3: ['', Validators.required],
-      cmmt4: ['', Validators.required],
-      cmmt5: ['', Validators.required],
-      cmmt6: ['', Validators.required],
+      cmmt1: [''],
+      cmmt2: [''],
+      cmmt3: [''],
+      cmmt4: [''],
+      cmmt5: [''],
+      cmmt6: [''],
       cmmt7: ['', Validators.required],
       cmmt8: ['', Validators.required],
       cmmt9: ['', Validators.required],
       resultt:['', Validators.required]
 
-    });
+    });    
   }
 
   ngOnInit(): void {
@@ -83,7 +87,7 @@ export class CandidateEvaluationComponent implements OnInit {
         this.cand_id= params['ID'];
         this.requst_Id= params['REQ_ID'];
         this.view = params['VIEW']; 
-       
+        this.Page = params['Page'];
       }
     );
     this.apicall.FetchCandidateDetails(this.cand_id).subscribe((res)=>{
@@ -151,12 +155,12 @@ export class CandidateEvaluationComponent implements OnInit {
   }
   
   validateForm()
-  {
+  {   
     if (this.requestForm.valid){
-      this.isFormValid = true;
+      this.isFormValid = true;      
       (<HTMLInputElement>document.getElementById("cancelModalButton")).click();
       }
-      else{
+      else{        
         this.markFormGroupTouched(this.requestForm);
       }
   }
@@ -263,7 +267,7 @@ export class CandidateEvaluationComponent implements OnInit {
       {
         (<HTMLInputElement>document.getElementById("openModalButton")).click();
         this.showModal = 1;
-        this.success = "Effectiveness Feedback Form Submitted Successfully";
+        this.success = "Evaluation Form Submitted Successfully";
         this.ViewCandidateDetails();
         this.isDisabled = true;
         this.view=1;
@@ -286,5 +290,40 @@ export class CandidateEvaluationComponent implements OnInit {
   {
     this.requestForm.reset();
   }
-
+  convertToPDF() {
+    const element = document.getElementById('htmlElementId'); 
+    
+    if (element) {
+      html2canvas(element).then((canvas) => {
+        const contentDataURL = canvas.toDataURL('image/jpeg');
+        const pdf = new jsPDF('portrait', 'mm', 'a4'); 
+  
+        const imgWidth = 208;
+        const pageHeight = 295;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+  
+        let position = 10;
+  
+        pdf.rect(0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height);
+  
+        pdf.addImage(contentDataURL, 'JPEG', (pdf.internal.pageSize.width - imgWidth) / 2, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight - position;
+  
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.rect(0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height);
+          pdf.addImage(contentDataURL, 'JPEG', (pdf.internal.pageSize.width - imgWidth) / 2, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+  
+        pdf.save('CandidateEvaluation.pdf');
+      }).catch((error) => {
+        console.error('Error during html2canvas conversion:', error);
+      });
+    } else {
+      console.error("Element with ID 'htmlElementId' not found");
+    }
+  }
 }
