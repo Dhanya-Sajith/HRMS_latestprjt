@@ -14,6 +14,7 @@ export class EmployeeTransferPromotionComponent implements OnInit {
 
   userSession:any = this.session.getUserSession();
   empcode: any=this.userSession.empcode;
+  grpname:any=this.userSession.grpname;
 
   companydata: any;
   listDepartment: any;
@@ -177,7 +178,7 @@ export class EmployeeTransferPromotionComponent implements OnInit {
   Fetch_Employees()
   {
     //Employee list
-    this.apicall.FetchEmployeeList(-1,this.SelectCompany,this.empcode).subscribe(res =>{
+    this.apicall.FetchEmployees(-1,this.SelectCompany,this.empcode).subscribe(res =>{
       this.listEmployee=res;
     })
   }

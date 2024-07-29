@@ -151,6 +151,7 @@ import { EmployeeInsuranceReportComponent } from './reports/employee-insurance-r
 import { EosReportComponent } from './reports/eos-report/eos-report.component';
 import { EmployeeTransferPromotionComponent } from './employee-transfer-promotion/employee-transfer-promotion.component';
 import { PerformanceManagementComponent } from './PerformanceManagement/performance-management/performance-management.component';
+import { TrainingCostReportComponent } from './reports/training-cost-report/training-cost-report.component';
 
 
 
@@ -310,7 +311,9 @@ const routes: Routes = [
   {path:'appraisal_form' , component:AppraisalFormComponent},
   {path:'eos-report' , component:EosReportComponent},
   {path:'employee_transfer_promotion',component:EmployeeTransferPromotionComponent},
-  {path:'performance_management',component:PerformanceManagementComponent}
+  {path:'performance_management',component:PerformanceManagementComponent},
+  {path:'training_cost_report' , component:TrainingCostReportComponent},
+  
 
 ];
 

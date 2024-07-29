@@ -49,6 +49,7 @@ export class PerformanceManagementComponent implements OnInit {
   currentPage=1;
   desiredPage: any;
   viewflag: number = 0;
+  vstatus: any;
 
   constructor(private apicall:ApiCallService, private datePipe: DatePipe,private fb:FormBuilder,private session:LoginService,private router:Router,private route: ActivatedRoute) { 
     this.AcceptanceForm = this.fb.group({
@@ -63,6 +64,20 @@ export class PerformanceManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.route.queryParams
+      .subscribe(params => {
+        this.user = params['user']; 
+      }
+    );
+
+    if( this.user == 'personal' || this.user == undefined){
+      this.user = 'personal';
+      this.Fetch_EmpGoalRequest();
+    }else{
+      this.user = 'team';
+      this.Fetch_EmpGoalRequestsLM();
+    }
 
     //company combo box
     this.apicall.FetchCompanyList(this.empcode).subscribe((res) => {
@@ -188,6 +203,7 @@ export class PerformanceManagementComponent implements OnInit {
   Fetch_EmpGoalRequest(){
     this.apicall.Fetch_EmpGoalRequest(this.empcode,this.year).subscribe((res) => {
       this.Evaluationdata = res;    
+      this.vstatus = this.Evaluationdata[0].REQUEST_STATUS;
     });
     this.Fetch_EmpGoalDetails();
   }

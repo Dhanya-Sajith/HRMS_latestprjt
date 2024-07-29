@@ -14,14 +14,14 @@ export class ApiCallService {
 //Emisoft cloud for customer testing
 //public dotnetapi = 'http://3.111.100.109:81/api';
 //Local host
- public dotnetapi = 'https://localhost:5001/api';
+// public dotnetapi = 'https://localhost:5001/api';
 //Live server for Customer intranet
 //public dotnetapi = 'http://192.168.10.29:81/api';
 //public hostname='localhost:44381';
 //Live server for Customer Cloud 
  //public dotnetapi = 'http://72.167.151.157:81/api';
   // Emisoft common Test server
-//public dotnetapi = 'http://192.168.1.37:84/api';
+public dotnetapi = 'http://192.168.1.37:84/api';
   // Emisoft common Test cloud server
   //public dotnetapi = 'http://13.53.118.116:81/api';
  
@@ -2897,5 +2897,18 @@ EmpTransferPromotion_SalDetails(id:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/Hiring/EmpTransferPromotion_SalDetails/${id}`);
 }
+FetchEmployees(department:any,company:any,empcode:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/MasterManagement/EmployeefilterComboData_User_Grade/${department}/${company}/${empcode}`);
+}
+
+
+fetchtraining_cost_rpt(empcode:any,company:any,year:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Training_Cost_Report/${empcode}/${company}/${year}`);
+}
+
+
+
 
 }

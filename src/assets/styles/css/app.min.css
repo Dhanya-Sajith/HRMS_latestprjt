@@ -18568,6 +18568,10 @@ text-transform: uppercase;
     width:250px;
     height:130px;
 }
+.img-size-sign{
+    width:150px;
+    height:60px;
+}
 .header-bg{
     background-color: #fafafc;
 }

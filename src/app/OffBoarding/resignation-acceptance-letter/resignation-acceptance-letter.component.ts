@@ -31,6 +31,7 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
   EmpDetail: any;
   empcode:any
   logo: any;
+  sign: any;
 
   constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService,private route: ActivatedRoute,private http: HttpClient) { }
 
@@ -59,6 +60,7 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
         this.companyData=res; 
         this.logo = this.hostname + this.companyData[0].DATA_VALUE
         this.logo = await this.getBase64ImageFromUrl(this.hostname + this.companyData[0].DATA_VALUE);
+        this.sign = await this.getBase64ImageFromUrl('assets/styles/img/e-signature Merlin.png');
       })
     })
   }
@@ -97,9 +99,7 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
     }
   }
 
-  async convertToPDF() {
-
-    // const base64Image = await this.getBase64ImageFromUrl('assets/styles/img/e-signature Merlin.png');
+  convertToPDF() {
 
     const docDefinition: TDocumentDefinitions = {
       content: [
@@ -231,11 +231,12 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
         },
         { text: 'Wish you success in all your future endeavours.', style: 'normal',margin: [0, 10, 0, 10] },
         { text: 'Yours sincerely,', style: 'normal',margin: [0, 10, 0, 10] },
-        // {
-        //   image: base64Image,
-        //   width: 150,
-        //   height: 50 
-        // },
+        {
+          image: this.sign,
+          width: 150,
+          height: 50 
+        },
+        { text: 'MERLIN VATHANA', style: 'normal', bold: true, margin: [0, 10, 0, 0] },
         { text: 'Human Resources Manager', style: 'normal', bold: true,margin: [0, 10, 0, 10] }
       ],
       styles: {

@@ -196,8 +196,8 @@
                                                 <ng-container *ngIf="isFirst">
                                                   <td [attr.rowspan]="EmpGoalList.length" class="align-middle">
                                                     <ul class="list-inline hstack gap-1 mb-0">
-                                                      <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Details">
-                                                        <a [routerLink]="['/Goalprogress_tracker']" [queryParams]="{ empcode:goallist.EMP_CODE,reqId:goallist.REQUEST_ID,flag:1 }" data-bs-toggle="modal" class="d-inline-block">
+                                                      <li *ngIf="vstatus >= 3" class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Details">
+                                                        <a [routerLink]="['/Goalprogress_tracker']" [queryParams]="{ empcode:goallist.EMP_CODE,reqId:goallist.REQUEST_ID,flag:1,view:1 }" data-bs-toggle="modal" class="d-inline-block">
                                                           <i class="ri-eye-fill fs-20 text-blue text-center"></i>
                                                         </a>
                                                       </li>
@@ -300,12 +300,12 @@
                                                             </a>
                                                         </li>
                                                         <li *ngIf="dataLM.REQUEST_STATUS == 3 || dataLM.REQUEST_STATUS == 7 || dataLM.REQUEST_STATUS == 9 || dataLM.REQUEST_STATUS == 5"  class="list-inline-item" title="Check Goal Status">
-                                                            <a [routerLink]="['/Goalprogress_tracker']" [queryParams]="{ empcode:dataLM.EMP_CODE,reqId:dataLM.REQUEST_ID,flag:2 }" class="text-blue d-inline-block edit-item-btn">
+                                                            <a [routerLink]="['/Goalprogress_tracker']" [queryParams]="{ empcode:dataLM.EMP_CODE,reqId:dataLM.REQUEST_ID,flag:2,view:2 }" class="text-blue d-inline-block edit-item-btn">
                                                                 <i class="ri-edit-box-fill fs-18"></i>
                                                             </a>
                                                         </li>
                                                         <li *ngIf="dataLM.REQUEST_STATUS == 6 || dataLM.REQUEST_STATUS == 8" class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Submit Assessment">
-                                                            <a class="text-success d-inline-block" [routerLink]="['/Goalprogress_tracker']" [queryParams]="{ empcode:dataLM.EMP_CODE,reqId:dataLM.REQUEST_ID,flag:2 }">
+                                                            <a class="text-success d-inline-block" [routerLink]="['/Goalprogress_tracker']" [queryParams]="{ empcode:dataLM.EMP_CODE,reqId:dataLM.REQUEST_ID,flag:2,view:2 }">
                                                                 <i class="ri-todo-fill fs-18"></i>
                                                             </a>
                                                         </li>

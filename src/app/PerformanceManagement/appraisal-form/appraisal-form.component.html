@@ -152,7 +152,7 @@
                         <div class="d-flex align-items-center flex-wrap gap-2">
                             <div class="flex-grow-1 text-center">
                                 <button class="btn btn-success font-type" (click)="convertToPDF()"><i class="ri-file-pdf-line me-1 align-bottom"></i> Download PDF</button>
-                                <a href="javascript:history.back()"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                <a [routerLink]="['/GoalSettingsNAnalyticsHR']" [queryParams]="{ user:'tab3' }"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
                             </div>
                         </div>
                     </div>

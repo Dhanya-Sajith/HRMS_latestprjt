@@ -469,14 +469,14 @@
                                                 <!--end col-->
                                                 <div class="col-lg-3 col-sm-3">
                                                     <select class="form-select font-type fs-12 textbox-15 h-30" name = "teamCompany"  [(ngModel)]="teamCompany" (change)="FetchDepartments()">
-                                                        <option value="-1" selected>Select</option>
+                                                        <option value="-1" selected>Select Company</option>
                                                         <option *ngFor="let cdata of companydata" [value]="cdata.KEY_ID">{{ cdata.DATA_VALUE }}</option>
                                                     </select> 
                                                 </div>
                                                 <!--end col-->
                                                 <div class="col-lg-4 col-md-6">
                                                     <select class="form-select font-type fs-12 textbox-15 h-30" name = "teamDesignation"  [(ngModel)]="teamDesignation" (change)="FetchActionHistory()">
-                                                        <option value="-1" selected>Select</option>
+                                                        <option value="-1" selected>Select Designation</option>
                                                         <option *ngFor="let desdata of listDepartment" [value]="desdata.KEY_ID">{{ desdata.DATA_VALUE }}</option>
                                                     </select>  
                                             </div> 
@@ -516,7 +516,14 @@
                                                         <td>{{datalist.REASON}}</td>
                                                         <td style="white-space: pre-wrap;">{{datalist.DESIGNATION}}</td>
                                                         <td>{{datalist.REQUEST_DATE | date:'dd-MM-yyyy'}}</td>
-                                                        <td><a href="#DetailedDescriptionModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;" (click)="Activedescription(datalist.REQUEST_ID,datalist.EMP_NAME)">View Details</a></td>
+                                                        <td>
+                                                            <ng-container *ngIf="grpname == 'LM-HR'" >
+                                                                <a href="#DetailedDescriptionModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;" (click)="Activedescription(datalist.REQUEST_ID,datalist.EMP_NAME)">View Details1</a>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="grpname != 'LM-HR' && datalist.APPROVED_STATUS < 10"  >
+                                                                <a href="#DetailedDescriptionModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;" (click)="Activedescription(datalist.REQUEST_ID,datalist.EMP_NAME)">View Details2</a>
+                                                            </ng-container>
+                                                        </td>                                                     
                                                     </tr>
                                                 </tbody>
                                             </table>

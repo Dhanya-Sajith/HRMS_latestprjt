@@ -36,6 +36,9 @@ export class GoalProgressTrackerComponent implements OnInit {
   averageScore: number = 0;
   averageScoreLM: number = 0;
   currentDate: any;
+  today: any;
+  isButtonDisabled: boolean = false;
+  backcate: any;
   
 
 
@@ -48,11 +51,16 @@ export class GoalProgressTrackerComponent implements OnInit {
        this.empcodes = params['empcode'];
        this.reqId = params['reqId'];
        this.category = params['flag'];
+       this.backcate = params['view'];
     }); 
+
 
   this.listassessmentDetails();
 
   this.currentDate = new Date();
+
+  const now = new Date();
+  this.today = now.toISOString().split('T')[0];
 
   // if(this.roleids==15 ||  this.roleids==11 ||  this.roleids==3 || this.roleids==6 || this.roleids==5 || this.roleids==2 || this.roleids==1 || this.roleids==12|| this.roleids==13)
   //   {
@@ -294,6 +302,13 @@ export class GoalProgressTrackerComponent implements OnInit {
 
   }
 
+  markcheck() {
+    const checkbox = document.getElementById('formCheck10') as HTMLInputElement;
+    if (checkbox) {
+      const markasvalue = checkbox.checked ? checkbox.value : '0';
+      this.isButtonDisabled = markasvalue == '1'; // Enable button if value is '1'
+    } 
+  }
 
 
 }

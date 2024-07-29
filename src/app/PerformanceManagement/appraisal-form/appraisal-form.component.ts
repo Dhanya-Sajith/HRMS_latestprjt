@@ -26,6 +26,8 @@ export class AppraisalFormComponent implements OnInit {
   hostname = this.apicall.dotnetapi;  
   logo: any;
   appraisalFormdatadtls: any;
+  empcodes: any;
+  reqId: any;
 
 
   constructor(private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private route: ActivatedRoute,private http: HttpClient) { }
@@ -33,11 +35,19 @@ export class AppraisalFormComponent implements OnInit {
   ngOnInit(): void {
     this.hostname=this.apicall.dotnetapi; 
     this.fetchAppraisalFormData();
+
+    this.route.queryParams.subscribe(params => {
+      this.empcodes = params['empcode'];
+      this.reqId = params['reqId'];
+   }); 
+
+
+
   }
 
   fetchAppraisalFormData()
   {
-    this.apicall.appraisalFormdata('MH00127',1).subscribe((res) => {
+    this.apicall.appraisalFormdata(this.empcodes,this.reqId).subscribe((res) => {
       this.appraisalFormdatadtls = res;
 
       this.apicall.genCompanyData(this.appraisalFormdatadtls[0].COMPANY_CODE).subscribe(async (res)=>{

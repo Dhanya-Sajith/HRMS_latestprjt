@@ -300,8 +300,8 @@ saveEditings(Employeeleave:any)
 
     };
   }else{
-    this.currentbalnce = (Number(Employeeleave.CURRENTBALANCE) + Number(this.hafzaleave) +  Number(this.hafzayearlyleave) + Number(Employeeleave.carryleave)) - Number(Employeeleave.CARRY_FORWARDED);
-    // this.currentbalnce =  (Number(Employeeleave.yearlyleave) + Number(Employeeleave.carryleave)+Number(Employeeleave.advncelve))-Number(Employeeleave.AVAILED_LEAVES);
+    //this.currentbalnce = (Number(Employeeleave.CURRENTBALANCE) + Number(this.hafzaleave) +  Number(this.hafzayearlyleave) + Number(Employeeleave.carryleave)) - Number(Employeeleave.CARRY_FORWARDED);
+     this.currentbalnce =  (Number(Employeeleave.yearlyleave) + Number(Employeeleave.carryleave)+Number(Employeeleave.advncelve))-Number(Employeeleave.AVAILED_LEAVES);
     this.data={ 
       leavetype :Employeeleave.LEAVE_TYPE,
       empcode:Employeeleave.KEY_ID,

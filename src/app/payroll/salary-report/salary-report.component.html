@@ -142,12 +142,12 @@
                                           </table>
                                     </div><br>
 
-                                    <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="salarylist.length > 0" style="padding-left: 15px;padding-right: 15px;">
+                                    <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="data.length > 0" style="padding-left: 15px;padding-right: 15px;">
                                         <div class="col-sm">
                                           <div class="font-type fs-11 text-muted">
                                              Showing <span class="fw-semibold">{{ getEntriesStart() }}</span>
                                             - <span class="fw-semibold">{{ getEntriesEnd() }}</span>
-                                            of <span class="fw-semibold">{{ salarylist.length }}</span> Results
+                                            of <span class="fw-semibold">{{ data.length }}</span> Results
                                         </div>
                                         </div>
                                         <div class="col-sm-auto  mt-3 mt-sm-0" >
@@ -159,7 +159,7 @@
                                                     <span class="page-link" [class.active]="currentPage">{{ currentPage }}</span> 
                                                 </li>
                                                 <li class="page-item">
-                                                  <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= salarylist.length">→</button>
+                                                  <button class="page-link" (click)="changePage(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= data.length">→</button>
                                                 </li>
                                             </ul>
                                         </div>

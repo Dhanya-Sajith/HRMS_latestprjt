@@ -167,6 +167,7 @@ import { GoalProgressTrackerComponent } from './PerformanceManagement/goal-progr
 import { AppraisalFormComponent } from './PerformanceManagement/appraisal-form/appraisal-form.component';
 import { EosReportComponent } from './reports/eos-report/eos-report.component';
 import { EmployeeTransferPromotionComponent } from './employee-transfer-promotion/employee-transfer-promotion.component';
+import { TrainingCostReportComponent } from './reports/training-cost-report/training-cost-report.component';
 
 
 @NgModule({
@@ -330,6 +331,7 @@ import { EmployeeTransferPromotionComponent } from './employee-transfer-promotio
     AppraisalFormComponent,
     EosReportComponent,
     EmployeeTransferPromotionComponent,
+    TrainingCostReportComponent,
     
     
   ],
