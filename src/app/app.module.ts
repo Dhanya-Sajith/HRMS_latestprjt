@@ -168,6 +168,9 @@ import { AppraisalFormComponent } from './PerformanceManagement/appraisal-form/a
 import { EosReportComponent } from './reports/eos-report/eos-report.component';
 import { EmployeeTransferPromotionComponent } from './employee-transfer-promotion/employee-transfer-promotion.component';
 import { TrainingCostReportComponent } from './reports/training-cost-report/training-cost-report.component';
+import { TrainingPlanReportComponent } from './reports/training-plan-report/training-plan-report.component';
+import { TrainingExpiryReportComponent } from './reports/training-expiry-report/training-expiry-report.component';
+import { UsergroupAccessSettingComponent } from './master-data-management/usergroup-access-setting/usergroup-access-setting.component';
 
 
 @NgModule({
@@ -332,6 +335,9 @@ import { TrainingCostReportComponent } from './reports/training-cost-report/trai
     EosReportComponent,
     EmployeeTransferPromotionComponent,
     TrainingCostReportComponent,
+    TrainingPlanReportComponent,
+    TrainingExpiryReportComponent,
+    UsergroupAccessSettingComponent,
     
     
   ],

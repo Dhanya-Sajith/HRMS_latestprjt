@@ -299,7 +299,7 @@
                                             <div class="row mb-3">
                                             <div class="input-group">
                                                 <div class="form-check form-check-inline form-check-info" *ngFor="let type of careerstatus">
-                                                    <div *ngIf="type.KEY_ID !== '2'">
+                                                    <div *ngIf="type.KEY_ID == '0' || type.KEY_ID == '1'">
                                                     <input
                                                       class="form-check-input"
                                                       type="radio"

@@ -4,18 +4,17 @@ import { DatePipe } from '@angular/common';
 import { LoginService } from 'src/app/login.service';
 
 @Component({
-  selector: 'app-training-master-report',
-  templateUrl: './training-master-report.component.html',
-  styleUrls: ['./training-master-report.component.scss']
+  selector: 'app-training-plan-report',
+  templateUrl: './training-plan-report.component.html',
+  styleUrls: ['./training-plan-report.component.scss']
 })
-export class TrainingMasterReportComponent implements OnInit {
+export class TrainingPlanReportComponent implements OnInit {
 
   userSession:any = this.session.getUserSession();
   empcode: any=this.userSession.empcode;
   companycode:any=this.userSession.companycode; 
     
-    listCompany:any;
-    comtypeid=12;
+    listCompany:any;    
     listYear:any;    
     year:any;
     reportdata: any;
@@ -25,21 +24,47 @@ export class TrainingMasterReportComponent implements OnInit {
     desiredPage: any;
     failed: any;
     showModal: any;
+    listQuarter: any;
+    Quarter:any=-1;
+    listStatus: any;
+    Status:any=-1;
     constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService) { }
     ngOnInit(): void {  
       //Current year
-      this.year=this.datePipe.transform(new Date(), 'Y');       
+      this.year=this.datePipe.transform(new Date(), 'Y');
+      //Company       
       this.apicall.FetchCompanyList(this.empcode).subscribe((res)=>{
         this.listCompany=res;
-      })  
+      })
+      //Year  
       this.apicall.listYear().subscribe((res)=>{
       this.listYear=res;
-      })     
+      }) 
+      //Quarter  
+      this.apicall.listCompanyList(16).subscribe((res)=>{
+        this.listQuarter=res;
+      }) 
+      //Status  
+      this.apicall.listCompanyList(67).subscribe((res)=>{
+        this.listStatus=res;
+      })   
      this.viewReport();
-    }  
+    }
+
+    // Calculate rowspan for the area name
+    getAreaRowSpan(trainings: any[]): number {
+    // Sum of employees across all trainings in the area
+        return trainings.reduce((count, training) => count + training.Employees.length, 0);
+    }
+    // Calculate rowspan for the training subject
+    getTrainingRowSpan(training: any): number {
+    // Return the number of employees for the training subject
+    return training.Employees.length;
+    }   
+
     viewReport()
     {     
-      this.apicall.FetchTrainingMasterReportData(this.companycode,this.year).subscribe((res)=>{
+      this.apicall.TainingPlan_Report(this.empcode,this.companycode,this.Status,this.year,this.Quarter).subscribe((res)=>{
         this.reportdata=res;       
         console.log(JSON.stringify(res)) 
         const maxPageFiltered = Math.ceil(this.reportdata.length / this.itemsPerPage);  
@@ -51,18 +76,9 @@ export class TrainingMasterReportComponent implements OnInit {
       })  
     }   
     download_to_excel()
-    { 
-      this.reportdata = this.reportdata.map((item: { TRAINING_DATE:any; EXPIRY_DATE: any; }) => {
-        if (item.TRAINING_DATE) {
-          item.TRAINING_DATE = this.datePipe.transform(item.TRAINING_DATE, 'dd-MM-yyyy');
-        }
-        if (item.EXPIRY_DATE) {
-          item.EXPIRY_DATE = this.datePipe.transform(item.EXPIRY_DATE, 'dd-MM-yyyy');
-        }
-        return item;
-      });     
+    {      
      let Excelname:any;
-     this.apicall.ExportToExcel(this.reportdata).subscribe((res)=>{
+     this.apicall.TrainingPlan_Report_Excel(this.reportdata).subscribe((res)=>{
       Excelname=res.Errormsg;      
       let fileurl=this.apicall.GetExcelFile(Excelname);
       let link = document.createElement("a");

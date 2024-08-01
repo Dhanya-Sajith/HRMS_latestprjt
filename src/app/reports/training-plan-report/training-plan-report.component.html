@@ -1,9 +1,9 @@
+    
     <!-- Begin page -->
     <div id="layout-wrapper">
         <app-header></app-header>
-                <!-- ========== App Menu ========== -->
-                <app-sidemenu></app-sidemenu>
-                <!-- Left Sidebar End -->
+                <!-- ========== App Menu ========== -->   
+                <app-sidemenu></app-sidemenu>            
                 <!-- Vertical Overlay-->
                 <div class="vertical-overlay"></div>
                 <!-- ============================================================== -->
@@ -17,62 +17,70 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                        <h4 class="mb-sm-0">Salary Revision History Report</h4>
+                                        <h4 class="mb-sm-0">Training Plan Report</h4>
+                                        
                                     </div>
                                 </div>
                             </div>
                             <!-- end page title -->
                             
                       
-                            <div class="row">
+                            <div class="row ">
                                 <div class="col-lg-12">
                                     <div class="card" id="searchInput">
                                      
                                         <div class="card-body border-bottom-dashed border-bottom">
                                             <form>
-                                                <div class="row g-3">
-                                                    <!--end col-->
+                                                <div class="row g-3 justify-content-center">
                                                     <div class="col-lg-3 col-sm-6">
+                                                        <h3 class="font-type fs-12"><span>Company</span></h3>                                               
                                                         <div>
-                                                            <h3 class="font-type fs-12"><span>Company</span></h3>
-                                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="comcode"  [(ngModel)]="comcode">
-                                                                <option value="-1">All</option>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="comcode" id="comcode" [(ngModel)]="companycode" (change)="viewReport();">
+                                                                <option value="-1" selected disabled>Select</option>
                                                                 <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
                                                                     {{CompanyList.DATA_VALUE}}
                                                                 </option>
                                                             </select>
                                                         </div>
-                                                    </div>
+                                                    </div>                                                   
+
                                                     <div class="col-lg-3 col-sm-6">
                                                         <div>
-                                                            <h3 class="font-type fs-12"><span>From Year</span></h3>
-                                                            <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="fromyear"  name="fromyear" id="fromyear">                                                           
+                                                            <h3 class="font-type fs-12"><span>Year</span></h3>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="year" id="year" [(ngModel)]="year" (change)="viewReport();">
                                                                 <option value="-1" selected disabled>Select</option>
-                                                                    <option *ngFor="let item of yearlist" value="{{item.DISPLAY_FIELD}}">
-                                                                        {{item.DISPLAY_FIELD}}
-                                                                    </option>
+                                                                <option  *ngFor="let YearList of listYear" value="{{YearList.DISPLAY_FIELD}}">
+                                                                    {{YearList.DISPLAY_FIELD}}
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
+                                                  
                                                     <!--end col-->
                                                     <div class="col-lg-3 col-sm-6">
-                                                        <h3 class="font-type fs-12"><span>To Year</span></h3>
-                                                        <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="toyear"  name="toyear" id="toyear">                                                           
-                                                            <option value="-1" selected disabled>Select</option>
-                                                                <option *ngFor="let item of yearlist" value="{{item.DISPLAY_FIELD}}">
-                                                                    {{item.DISPLAY_FIELD}}
-                                                                </option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-lg-2 col-sm-6" >
-                                                        <label></label>
                                                         <div>
-                                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="viewReport()"> <i class="ri-file-text-line"></i>
-                                                                View Report
-                                                            </button>
+                                                            <h3 class="font-type fs-12"><span>Quarter</span></h3>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="Quarter" id="Quarter" [(ngModel)]="Quarter" (change)="viewReport();">
+                                                                <option value="-1">All</option>
+                                                                <option  *ngFor="let combo of listQuarter" value="{{combo.KEY_ID}}">
+                                                                    {{combo.DATA_VALUE}}
+                                                                </option>
+                                                            </select>
                                                         </div>
                                                     </div>
+                                                  
                                                     <!--end col-->
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <div>
+                                                            <h3 class="font-type fs-12"><span>Status</span></h3>
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example"  name="Status" id="Status" [(ngModel)]="Status" (change)="viewReport();">
+                                                                <option value="-1">All</option>
+                                                                <option  *ngFor="let combo of listStatus" value="{{combo.KEY_ID}}"[hidden]="combo.KEY_ID==6 || combo.KEY_ID==7">
+                                                                    {{combo.DATA_VALUE}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                   
                                                     <!--end col-->
                                                 </div>
@@ -94,22 +102,23 @@
                                         <div class="card-header border-bottom" style="padding-bottom: 10px;padding-top: 10px;">
                                             <div class="row align-items-center gy-3">
                                                 <div class="col-sm">
-                                                    <h6 class="card-title">Salary Revision History Report</h6>
+                                                    <h6 class="card-title">Training Plan Report</h6>
                                                 </div>
                                                 <div class="col-sm-auto">
                                                  
-        
+                                                    <div class="d-flex gap-1 flex-wrap">
                                                         <div class="search-box">
-                                                            <input type="text" class="form-control searchInput"  id="searchInput" [(ngModel)]="searchInput" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type"id="searchInput" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon"[(ngModel)]="searchInput">
                                                             <i class="ri-search-line search-icon"></i>
                                                         </div>
+                                                    </div>
         
                                                 
                                                 </div>
                                                 <div class="col-sm-auto">
                                                     <div class="d-flex flex-wrap">
         
-                                                        <button type="button" class="btn btn-soft-success"  (click)="download_to_excel()"><i class="ri-file-excel-2-line"></i>Download</button>
+                                                        <button type="button" class="btn btn-soft-success"(click)="download_to_excel();"><i class="ri-file-excel-2-line" ></i>Download</button>
         
                                                     </div>
                                                 </div>
@@ -126,49 +135,71 @@
                                              
                                                 <div class="card-body">
                                                     <div class="table-responsive">
-                                                        <table class="table table-bordered table-nowrap align-middle mb-0"  style="padding-top:0px" id="excel-table" >
-                                                            <thead  class="table-light text-white font-type">
-                                                                <tr>
-                                                                    <th rowspan="2" scope="col" style="text-align: center;">Empcode</th>
-                                                                    <th rowspan="2"scope="col" style="text-align: center;width: 50px;">Name</th>
-                                                                    <th rowspan="2"scope="col" style="text-align: center;">DOJ</th>
-                                                                    <th rowspan="2"scope="col" style="text-align: center;">Joining Salary</th>
-                                                                    <th rowspan="2"scope="col" style="text-align: center;">Joining Title</th>
-                                                                    <ng-container *ngFor="let year of displayedYears">
-                                                                        <th colspan="2" style="text-align: center;">{{ year }}</th>
-                                                                      </ng-container>
-                                                                    </tr>
-                                                                    <tr>
-                                                                      <ng-container *ngFor="let year of displayedYears">
-                                                                        <td style="text-align: center;">Salary</td>
-                                                                        <td style="text-align: center;">Title</td>
-                                                                      </ng-container>
-                                                                    </tr>
-                                                                  </thead>
-                
+                                                        <table class="table table-bordered table-nowrap align-middle mb-0" style="padding-top:0px">
+                                                            <thead class="table-light text-white font-type">
+                                                              <tr>
+                                                                <th>Areas</th>
+                                                                <th>Training Subject</th>
+                                                                <th>EmpCode</th>
+                                                                <th>Employee</th>
+                                                                <th>Location</th>
+                                                                <th>Provider</th>
+                                                                <th>Quarter</th>
+                                                                <th>Actual Training Date</th>
+                                                                <th>Status</th>
+                                                                <th>Remarks</th>
+                                                              </tr>
+                                                            </thead>
+                                                            
                                                             <tbody class="list form-check-all font-type fs-11">
-                                                                <tr *ngFor="let employee of revisiondata  | search : searchInput ;index as i">
-                                                                    <td>{{ employee.EMP_CODE }}</td>
-                                                                    <td>{{ employee.EMP_NAME }}</td>
-                                                                    <td>{{ employee.DATE_OF_JOINING | date:"dd-MM-yyyy" }}</td>
-                                                                    <td>{{ employee.JOINING_SALARY }}</td>
-                                                                    <td>{{ employee.JOINING_DESIGNATION }}</td>
-                                                                    <ng-container *ngFor="let year of displayedYears">
-                                                                      <td style="text-align: center;">
-                                                                        {{ getSalary(employee.yearSalaryModels, year) }}
+                                                              <!-- Loop through each area -->
+                                                              <ng-container *ngFor="let area of reportdata  | search : searchInput  | pagination: currentPage: itemsPerPage ;">
+                                                                <!-- Loop through each training within the area -->
+                                                                <ng-container *ngFor="let training of area.Trainings">
+                                                                  <!-- Loop through each employee within the training -->
+                                                                  <ng-container *ngFor="let employee of training.Employees; let isFirstEmployee = first">
+                                                                    <tr class="trstyle fs-11">
+                                                                      <!-- Display area name only for the first employee of the first training of the area -->
+                                                                      <td *ngIf="isFirstEmployee && training === area.Trainings[0]" [attr.rowspan]="getAreaRowSpan(area.Trainings)">
+                                                                        {{area.AREA_NAME}}
                                                                       </td>
-                                                                      <td style="text-align: center;">
-                                                                        {{ getDesignation(employee.yearSalaryModels, year) }}
+                                                                      <!-- Display training subject only for the first employee of each training -->
+                                                                      <td *ngIf="isFirstEmployee" [attr.rowspan]="getTrainingRowSpan(training)">
+                                                                        {{training.SUBJECT_NAME }}
                                                                       </td>
-                                                                    </ng-container>
-                                                                  </tr>
+                                                                      <!-- Display employee details -->
+                                                                      <td>{{employee.EMP_CODE}}</td>
+                                                                      <td>{{employee.EMP_NAME}}</td>
+                                                                      <!-- Display training-specific details only for the first employee of each training -->
+                                                                      <td *ngIf="isFirstEmployee" [attr.rowspan]="training.Employees.length">
+                                                                        {{training.LOCATION}}
+                                                                      </td>
+                                                                      <td *ngIf="isFirstEmployee" [attr.rowspan]="training.Employees.length">
+                                                                        {{training.PROVIDER_NAME}}
+                                                                      </td>
+                                                                      <td *ngIf="isFirstEmployee" [attr.rowspan]="training.Employees.length">
+                                                                        {{training.CONFIRMED_QUARTER}}
+                                                                      </td>
+                                                                      <td *ngIf="isFirstEmployee" [attr.rowspan]="training.Employees.length">
+                                                                        {{training.SCHEDULED_DATE | date: 'dd-MM-yyyy'}}
+                                                                      </td>
+                                                                      <td *ngIf="isFirstEmployee" [attr.rowspan]="training.Employees.length">
+                                                                        {{training.STATUS_VALUE}}
+                                                                      </td>
+                                                                      <td *ngIf="isFirstEmployee" [attr.rowspan]="training.Employees.length">
+                                                                        {{training.REMARKS }}
+                                                                      </td>
+                                                                    </tr>
+                                                                  </ng-container>
+                                                                </ng-container>
+                                                              </ng-container>
                                                             </tbody>
-                                                        </table>
-                                                       
-                                                     
+                                                          </table>
+                                                          
+                                                          
                                                     </div><!-- end table responsive -->
                                                     <br>
-                                                    <!-- <div *ngIf="revisiondata">
+                                                    <div *ngIf="reportdata">
                                                         <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults>0">
                                                             <div class="col-sm">
                                                               <div class="font-type fs-12 text-muted">
@@ -210,7 +241,7 @@
                                                           </div>
                                                         </div>
                                                     </div>
-                                                </div> -->
+                                                </div>
                                                 <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal">Open Modal</button>
                                                 <!--Modal For Success Message Start-->
                                                 <div class="modal fade zoomIn" id="SuccessRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true" >
@@ -220,12 +251,7 @@
                                                                 <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                                             </div>
-                                                            <div class="modal-body" *ngIf="showModal==1"> 
-                                                                <div class="container">
-                                                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
-                                                            
-                                                                </div>
-                                                            </div>
+                                                           
                                                             <div class="modal-body" *ngIf="showModal==2">
                                                             <div class="container">
                                                                 <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
@@ -260,5 +286,6 @@
             </div>
             <!-- END layout-wrapper -->
         
+
 
 

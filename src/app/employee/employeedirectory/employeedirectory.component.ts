@@ -52,6 +52,7 @@ this.hostname=this.apicall.dotnetapi;
 //alert(this.hostname);
 this.apicall.listStatus(80).subscribe((res)=>{
   this.statusactive=res;
+  //alert(JSON.stringify(this.statusactive))
   })
 
  this.fetchempdirectoylist();

@@ -4,6 +4,7 @@ import { ApiCallService } from 'src/app/api-call.service';
 import { LoginService } from 'src/app/login.service';
 import { DatePipe } from '@angular/common';
 import { Renderer2 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-hiring-dashboard',
@@ -77,8 +78,9 @@ export class HiringDashboardComponent implements OnInit {
   searchInput2: string='';
   TransferForm: FormGroup; 
   selectdesig: any;
+  user: any = 'tab1';
 
-  constructor(private apicall:ApiCallService,private session:LoginService,private fb:FormBuilder,private datePipe: DatePipe,private renderer: Renderer2) { 
+  constructor(private apicall:ApiCallService,private session:LoginService,private fb:FormBuilder,private datePipe: DatePipe,private renderer: Renderer2,private route: ActivatedRoute) { 
     this.PushForm = this.fb.group({
       comments: ['', Validators.required],
     });
@@ -88,7 +90,8 @@ export class HiringDashboardComponent implements OnInit {
       interviewer: ['', Validators.required],
       designation: [''],
       cv: ['', Validators.required],
-      gender: ['', Validators.required]
+      gender: ['', Validators.required],
+      SourceDetail: ['']
     });
     this.EvaluatorForm = this.fb.group({
       Evaluator: ['', Validators.required],
@@ -108,6 +111,24 @@ export class HiringDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.route.queryParams.subscribe(params => {
+      this.user = params['user'];
+    });
+
+    if(this.user == 'tab1')
+    {
+      this.JobRequests();
+    }
+    else if(this.user == 'tab2')
+    {
+      this.ApplicationInfo();
+    }
+    else if(this.user == 'tab3')
+    {
+      this.CandidateDashboard();
+    }
+
     //company combo box
     this.apicall.FetchCompanyList(this.empcode).subscribe((res) => {
       this.companydata=res;      
@@ -121,10 +142,39 @@ export class HiringDashboardComponent implements OnInit {
      this.statusdata=res;
     })
     this.JobRequests();
+    // Subscribe to changes in 'type' to handle conditional validation
+    this.ApplyForm.get('type')?.valueChanges.subscribe((value) => {
+      this.selectedtypeValue = value;
+      this.setConditionalValidationForSourceDetail();
+    });
+  }
+
+  setTab(tab: string) {
+    this.user = tab;
+    if(this.user == 'tab1')
+    {
+      this.JobRequests();
+    }else if(this.user == 'tab2')
+    {
+      this.ApplicationInfo();
+    }else{
+      this.CandidateDashboard();
+    }
+  }
+
+  setConditionalValidationForSourceDetail() {
+    const sourceDetailControl = this.ApplyForm.get('SourceDetail');
+    if (this.selectedtypeValue === '2' || this.selectedtypeValue === '3') {
+      sourceDetailControl?.setValidators(Validators.required);
+    } else {
+      sourceDetailControl?.clearValidators();
+    }
+    sourceDetailControl?.updateValueAndValidity();
   }
 
   JobRequests()
   {
+    this.user = 'tab1';
     this.apicall.HireRequest_StatusCount(this.empcode).subscribe((res) => {
       this.countlist=res;
       this.IN_PROCESS  = this.countlist[0].IN_PROCESS;
@@ -136,6 +186,7 @@ export class HiringDashboardComponent implements OnInit {
 
   ApplicationInfo()
   {
+    this.user = 'tab2';
     this.apicall.listRegStatus(2).subscribe((res)=>{
       this.designationdata=res;
      })
@@ -144,6 +195,7 @@ export class HiringDashboardComponent implements OnInit {
 
   CandidateDashboard()
   {
+    this.user = 'tab3';
     //Status 
     this.apicall.listRegStatus(78).subscribe((res)=>{
       this.candstatusdata=res;
@@ -269,6 +321,7 @@ export class HiringDashboardComponent implements OnInit {
       const name = this.ApplyForm.get('name')?.value;
       const type = this.ApplyForm.get('type')?.value;
       const gender = this.ApplyForm.get('gender')?.value;
+      const SourceDetail = this.ApplyForm.get('SourceDetail')?.value;
 
       if( type == 0){
         this.internal_empcode = name;
@@ -287,6 +340,7 @@ export class HiringDashboardComponent implements OnInit {
         cv_fileName : docname,
         interviewers:interviewer,
         updated_by:this.empcode,
+        source_detail:SourceDetail
       };
       
       this.apicall.HR_AddCandidateDetails(data).subscribe(res=>{
@@ -446,6 +500,7 @@ export class HiringDashboardComponent implements OnInit {
   activateSecondTab(reqid:any) {
     const tabElement = this.applicationInfoTab.nativeElement.querySelector('a');
     tabElement.click();
+    this.user = 'tab2';
     this.FetchApplicantsList(reqid);
   }
 

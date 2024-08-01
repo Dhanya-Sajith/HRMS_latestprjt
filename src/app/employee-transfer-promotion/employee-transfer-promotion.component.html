@@ -154,7 +154,10 @@
                                     </select>
                                     <div *ngIf="TransferForm.get('designation')?.invalid && TransferForm.get('designation')?.touched" class="text-danger">
                                         *Required!                                        
-                                    </div>   
+                                    </div>  
+                                    <div *ngIf="TransferForm.get('designation')?.errors?.['match']" class="text-danger">
+                                        {{errorMessage}}
+                                    </div>  
                                 </div> 
                                 <div class="col-lg-4 col-md-6 pt-2 mb-1">  
                                     <h6 class="font-type fs-12 fw-semibold"><span>Line Manager</span></h6>

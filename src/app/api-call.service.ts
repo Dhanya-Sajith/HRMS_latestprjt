@@ -14,14 +14,14 @@ export class ApiCallService {
 //Emisoft cloud for customer testing
 //public dotnetapi = 'http://3.111.100.109:81/api';
 //Local host
-// public dotnetapi = 'https://localhost:5001/api';
+ public dotnetapi = 'https://localhost:5001/api';
 //Live server for Customer intranet
 //public dotnetapi = 'http://192.168.10.29:81/api';
 //public hostname='localhost:44381';
 //Live server for Customer Cloud 
  //public dotnetapi = 'http://72.167.151.157:81/api';
   // Emisoft common Test server
-public dotnetapi = 'http://192.168.1.37:84/api';
+ // public dotnetapi = 'http://192.168.1.33:84/api';
   // Emisoft common Test cloud server
   //public dotnetapi = 'http://13.53.118.116:81/api';
  
@@ -2568,6 +2568,11 @@ ApproveReject_HiringRequest(data:any)
 {
   return this.http.post<any>(`${this.dotnetapi}/Hiring/ApproveReject_HiringRequest`,data);
 }
+SendEMail_IT_HSC(type:any,reqId:any)
+{
+  
+  return this.http.get<any>(`${this.dotnetapi}/Hiring/SendEMail_IT_HSC/${type}/${reqId}`);
+}
 //Offer Details
 AddSalaryDtlsOfferLetter(data:any)
 {
@@ -2901,14 +2906,54 @@ FetchEmployees(department:any,company:any,empcode:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/MasterManagement/EmployeefilterComboData_User_Grade/${department}/${company}/${empcode}`);
 }
-
+FetchEmployeeDetails(empcode:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Attendance/Fetchcurrentemployeedetails/${empcode}`);
+}
 
 fetchtraining_cost_rpt(empcode:any,company:any,year:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Training_Cost_Report/${empcode}/${company}/${year}`);
 }
 
+//Training plan report
+TainingPlan_Report(empcode:any,company:any,reqstatus:any,year:any,quarter:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/TainingPlan_Report/${empcode}/${company}/${reqstatus}/${year}/${quarter}`);
+}
+TrainingPlan_Report_Excel(data:any)
+{  
+  return this.http.post<any>(`${this.dotnetapi}/File/TrainingPlan_Report_Excel`,data);
+}
+//usergroup Access Setting
+listComboBox(id:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/MasterManagement/MasterComboData/${id}`);
+}
+ListMenuNames()
+{
+  return this.http.get<any>(`${this.dotnetapi}/MasterManagement/FetchMenuNames`);
+}
+UserAccessSetting(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/MasterManagement/UserAccessSetting`,data);
+}
+listUserGroups(tid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/MasterManagement/MasterComboData/${tid}`);
+}
+UserAccessSettingList(menuid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/MasterManagement/UserAccessSettingList/${menuid}`);
+}
+AddNewUserGroup(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/MasterManagement/Add_NewUserGroup`,data)
+}
 
-
-
+//Training Expiry Report
+FetchTrainingExpiryData(empcode:any,company:any,reqstatus:any,year:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Training_Expiry_Report/${empcode}/${company}/${reqstatus}/${year}`);
+}
 }

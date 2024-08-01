@@ -225,7 +225,11 @@ convertToPDF() {
               table: {
                   body: [
                       ...salaryDetails,
-                      [{ text: 'Total', style: 'boldText' }, { text: ':', style: 'boldText' }, { text: `AED 00.00 / month`, style: 'boldText' }]
+                      [
+                        { text: 'Total', style: 'boldText' }, 
+                        { text: ':', style: 'boldText' }, 
+                        { text: `AED ${this.salarydtls[0].GROSS_SALARY} / month`, style: 'boldText' }
+                    ]
                   ]
               },
               layout: 'noBorders',

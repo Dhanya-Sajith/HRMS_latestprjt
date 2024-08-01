@@ -111,20 +111,20 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
                     image: this.logo,
                     width: 150,
                     alignment: 'center',
-                    margin: [0, 0, 0, 0] // margin [left, top, right, bottom]
+                    margin: [0, 0, 0, 0] 
                 },
                 {
                     // Company Information
                     text: this.companyData[0].COMPANY_ID,
                     style: 'header',
                     alignment: 'center',
-                    margin: [0, 0, 0, 0] // margin [left, top, right, bottom]
+                    margin: [0, 0, 0, 0] 
                 },
                 {
                     text: this.companyData[0].DESCRIPTION,
                     style: 'subheader',
                     alignment: 'center',
-                    margin: [0, 0, 0, 0] // margin [left, top, right, bottom]
+                    margin: [0, 0, 0, 0] 
                 },
                 {
                     text: `(UAE); ${this.companyData[0].PHONE_NO}; ${this.companyData[0].EMAI_ID}`,
@@ -132,7 +132,7 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
                     alignment: 'center'
                 }
             ],
-            margin: [0, 0, 0, 10] // Adding bottom margin to create space below the header
+            margin: [0, 0, 0, 5] // Adding bottom margin to create space below the header
           },
           {
             canvas: [
@@ -140,7 +140,7 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
             ],
             margin: [0, 5, 0, 10] 
           },
-          { text: 'Private & Confidential', style: 'title', alignment: 'center', decoration: 'underline',margin: [0, 10, 0, 10] },
+          { text: 'Private & Confidential', style: 'title', alignment: 'center', decoration: 'underline',margin: [0, 5, 0, 5] },
           // { text: `Date: ${this.formatDate(this.EmpDetail[0].LAST_WORKING_DATE)}`, style: 'normal',margin: [0, 5, 0, 5] },
           {
             text: [
@@ -170,7 +170,7 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
             text: 'Re: Resignation Acceptance and Exit Interview Requirements',
             style: 'subheader',
             decoration: 'underline',
-            margin: [0, 10, 0, 10]
+            margin: [0, 5, 0, 5]
           },
           {
               text: [
@@ -178,7 +178,7 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
                   { text: `${this.formatDate(this.EmpDetail[0].REQUEST_DATE)}`, style: 'boldText' },
                   { text: ', of which we accept.', style: 'normal' }
               ],
-              margin: [0, 10, 0, 10]
+              margin: [0, 5, 0, 5]
           },
           {
               text: [
@@ -186,7 +186,7 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
                   { text: `${this.formatDate(this.EmpDetail[0].LAST_WORKING_DATE)}`, style: 'boldText' },
                   { text: ' and your EOSB (final settlement) will be prepared as below. Your EOSB will be paid within 14 days from your agreed last working day.', style: 'normal' }
               ],
-              margin: [0, 10, 0, 10]
+              margin: [0, 5, 0, 5]
           },
           {
             ol: [
@@ -210,7 +210,7 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
               }
           ],
           style: 'normal',
-          margin: [0, 10, 0, 10]
+          margin: [0, 5, 0, 5]
         },
         {
           text: `The exit interview form will be available in HRZone under your login, one week prior to your last working day. Please note that the completion of an Exit Interview is part of your Final clearance process and requires to be done prior to the cancellation of your visa, i.e. your last day of work.`,
@@ -227,17 +227,17 @@ export class ResignationAcceptanceLetterComponent implements OnInit {
             { text: 'We would like to take this opportunity to thank you for the contribution you have made within your role at the ', style: 'normal' },
             { text: `${this.EmpDetail[0].COMPANY}.`, style: 'boldText' },
           ],
-          margin: [0, 10, 0, 10]
+          margin: [0, 5, 0, 5]
         },
-        { text: 'Wish you success in all your future endeavours.', style: 'normal',margin: [0, 10, 0, 10] },
+        { text: 'Wish you success in all your future endeavours.', style: 'normal',margin: [0, 5, 0, 5] },
         { text: 'Yours sincerely,', style: 'normal',margin: [0, 10, 0, 10] },
         {
           image: this.sign,
-          width: 150,
-          height: 50 
+          width: 100,
+          height: 96 
         },
-        { text: 'MERLIN VATHANA', style: 'normal', bold: true, margin: [0, 10, 0, 0] },
-        { text: 'Human Resources Manager', style: 'normal', bold: true,margin: [0, 10, 0, 10] }
+        { text: 'MERLIN VATHANA', style: 'normal', bold: true, margin: [0, 5, 0, 0] },
+        { text: 'Human Resources Manager', style: 'normal', bold: true,margin: [0, 5, 0, 0] }
       ],
       styles: {
         header: { fontSize: 14, bold: true },

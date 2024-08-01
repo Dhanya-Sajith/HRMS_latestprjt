@@ -33,7 +33,7 @@
                             <div class="card"  style="overflow: scroll;">
                                 <div class="card-body">
                                     <div class="row mb-2 col-lg-12">
-                                        <div class="col-lg-8">
+                                        <div class="col-lg-6">
                                             <div class="search-box me-2 mb-2 d-inline-block">
                                                 <div class="position-relative">
                                                     <input type="text" class="form-control searchInput"  id="searchInput" style="border-radius: 20px;width: 245px;" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search by employee name / code" aria-label="search" aria-describedby="search_icon">
@@ -53,7 +53,7 @@
                                         </div>
                                         <div class="col-lg-2" *ngIf="this.grpname.includes('HR')">
                                                 <div class="text-sm-end">
-                                                    <select class="form-select h-30 font-type textbox-15" name="completests" id="completests" #completests (change)="changecosts()" >
+                                                    <select class="form-select h-30 font-type textbox-15" name="completests" id="completests" [(ngModel)]="completests" (change)="changecosts()" >
                                                         <option value="0" >All</option>
                                                         <option value="1" >Complete</option>
                                                         <option value="2" >Incomplete</option>

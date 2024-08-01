@@ -222,11 +222,11 @@ export class PerformanceManagementComponent implements OnInit {
   }
 
   getStatusClass(status: number) {
-    if ([0, 5].includes(status)) {
+    if ([0, 5, 13].includes(status)) {
       return 'bg-info-subtle text-blue';
     } else if ([1, 3, 6, 10, 8].includes(status)) {
       return 'bg-success-subtle text-success';
-    } else if ([2, 4, 7, 11].includes(status)) {
+    } else if ([2, 4, 7, 11,12].includes(status)) {
       return 'bg-danger-subtle text-danger';
     } else if (status === 9) {
       return 'bg-warning-subtle text-warning';

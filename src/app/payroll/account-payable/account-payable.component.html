@@ -91,7 +91,7 @@
                                                     <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
                                                     <select class="form-select font-type fs-12 textbox-15" id =exp_company (change)="FetchEmployeeList()">
                                                     <option  value="-1">All</option>
-                                                    <option *ngFor="let CompanyaccList of listCompanyacc" value="{{CompanyaccList.KEY_ID}}">
+                                                    <option *ngFor="let CompanyaccList of listCompanyacc" value="{{CompanyaccList.EMP_CODE}}">
                                                     {{CompanyaccList.DATA_VALUE}}
                                                     </option>
                                                     </select>       
@@ -258,7 +258,7 @@
                                                         <h6 class="font-type fs-12 fw-semibold"><span>Employee</span></h6>
                                                         <select class="form-select font-type fs-11 textbox-15" id="ln_employee" (change)="LoanFilter()">
                                                             <option  value="-1">All</option>
-                                                            <option *ngFor="let Listemployee of listemployee" value="{{Listemployee.EMP_ID}}">
+                                                            <option *ngFor="let Listemployee of listemployee" value="{{Listemployee.EMP_CODE}}">
                                                             {{Listemployee.EMP_NAME}}
                                                     </option>  
                                                         </select>                      

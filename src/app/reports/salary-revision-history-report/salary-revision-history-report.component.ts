@@ -84,15 +84,22 @@ export class SalaryRevisionHistoryReportComponent implements OnInit {
 
   viewReport()
   {
-    this.apicall.Fetch_Salary_Revision_History_Report(this.empcode,this.comcode,this.fromyear,this.toyear).subscribe((res)=>{
-      this.revisiondata=res;  
-      this.extractAndFilterYears();
-      const maxPageFiltered = Math.ceil(this.revisiondata.length / this.itemsPerPage);  
+    if( this.fromyear > this.toyear){
+      (<HTMLInputElement>document.getElementById("openModalButton")).click();
+      this.showModal = 2;
+      this.failed = "Please Correct the Dates";
+    }else{
 
-      if (this.currentPage > maxPageFiltered) {
-        this.currentPage = 1;     
-      }  
-     })
+      this.apicall.Fetch_Salary_Revision_History_Report(this.empcode,this.comcode,this.fromyear,this.toyear).subscribe((res)=>{
+        this.revisiondata=res;  
+        this.extractAndFilterYears();
+        const maxPageFiltered = Math.ceil(this.revisiondata.length / this.itemsPerPage);  
+
+        if (this.currentPage > maxPageFiltered) {
+          this.currentPage = 1;     
+        }  
+      })
+    }
   }
 
   extractAndFilterYears() {

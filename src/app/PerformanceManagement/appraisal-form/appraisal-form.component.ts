@@ -33,16 +33,13 @@ export class AppraisalFormComponent implements OnInit {
   constructor(private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private route: ActivatedRoute,private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.hostname=this.apicall.dotnetapi; 
-    this.fetchAppraisalFormData();
-
     this.route.queryParams.subscribe(params => {
       this.empcodes = params['empcode'];
       this.reqId = params['reqId'];
-   }); 
+    }); 
 
-
-
+    this.hostname=this.apicall.dotnetapi; 
+    this.fetchAppraisalFormData();
   }
 
   fetchAppraisalFormData()
@@ -174,7 +171,7 @@ export class AppraisalFormComponent implements OnInit {
                 ],
                 [
                   { text: 'Joining Date', style: 'normal' },
-                  { text: this.datePipe.transform(this.appraisalFormdatadtls[0].REVIEW_DATE,"ddd-MM-yyyy"), style: 'boldText' }
+                  { text: this.datePipe.transform(this.appraisalFormdatadtls[0].REVIEW_DATE,"dd-MM-yyyy"), style: 'boldText' }
                 ],
                 [
                   { text: 'Department', style: 'normal' },

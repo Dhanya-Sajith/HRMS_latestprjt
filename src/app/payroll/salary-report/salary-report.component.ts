@@ -40,6 +40,7 @@
 
     columns: string[] = [];
     data: Array<{ [key: string]: any }> = [];
+    hiddenColumns: string[] = ['PROCESS_DATE', 'PAYROLL_ID'];
   
     constructor(private session:LoginService,private apicall:ApiCallService,private datePipe: DatePipe) { }
   
@@ -92,23 +93,39 @@
         });
     }
   
-     download_to_excel()
-    { 
-     let Excelname:any;
-     this.apicall.ExportToExcel(this.salarylist).subscribe((res)=>{
-      Excelname=res.Errormsg;
-      let fileurl=this.apicall.GetExcelFile(Excelname);
-      let link = document.createElement("a");
+    download_to_excel()
+      {
         
-          if (link.download !== undefined) {
-            link.setAttribute("href", fileurl);
-            link.setAttribute("download", "ReportFile.xlsx");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+        // Filter columns based on visibility and non-zero values
+        let filteredData = this.data.map(item => {
+          let filteredItem: { [key: string]: any } = {}; // Define type for filteredItem
+          for (let key in item) {
+            if (this.columns.includes(key) && !this.isHidden(key)) {
+              filteredItem[key] = item[key];
+            }
           }
-      });
-    }
+          return filteredItem;
+        });
+
+      let Excelname:any;
+      this.apicall.ExportToExcel(filteredData).subscribe((res)=>{
+        Excelname=res.Errormsg;
+        let fileurl=this.apicall.GetExcelFile(Excelname);
+        let link = document.createElement("a");
+          
+            if (link.download !== undefined) {
+              link.setAttribute("href", fileurl);
+              link.setAttribute("download", "ReportFile.xlsx");
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }
+        });
+      }
+
+      isHidden(column: string): boolean {
+        return this.hiddenColumns.includes(column);
+      }
   
      // Function to Calculate the total number of search results
     get totalSearchResults(): number {

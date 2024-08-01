@@ -325,15 +325,20 @@ export class SalaryRevisionComponent implements OnInit {
         AllowanceDetails: SalaryData
       };
       this.apicall.SaveSalaryRevision(Data).subscribe((res) => {
-        if(res.Errorid==1){
-                this.showModal = 1;
-                this.success='Salary Revision Saved Succesfully!'; 
-                this.FetchAllowanceDtl(this.emp_code);    
-                this.newgross = 0; 
-              }else{
-                  this.showModal = 2; 
-                  this.failed='Failed!';   
-              }              
+        if(res.Errorid == 1){
+            this.showModal = 1;
+            this.success='Salary Revision Saved Succesfully!'; 
+            this.FetchAllowanceDtl(this.emp_code);    
+            this.newgross = 0; 
+          }
+          else if(res.Errorid == 5){
+              this.showModal = 2; 
+              this.failed='Salary revision for a forward date already exists.';
+          }
+          else{
+              this.showModal = 2; 
+              this.failed='Failed!';   
+          }              
       });
     }
   }

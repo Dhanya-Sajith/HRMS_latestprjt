@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./hiring-center.component.scss']
 })
 export class HiringCenterComponent implements OnInit {
-
   userSession:any = this.session.getUserSession();
   empcode: any=this.userSession.empcode;
   level: any=this.userSession.level;
@@ -19,6 +18,7 @@ export class HiringCenterComponent implements OnInit {
   grpname:any=this.userSession.grpname; 
   desig:any=this.userSession.desig.split('#', 2);   
   desigid:any= this.desig[0]; 
+  dept:any =this.userSession.dept;
 
   addJobPostForm: FormGroup;
   dropdownSettings:IDropdownSettings={};
@@ -80,7 +80,15 @@ export class HiringCenterComponent implements OnInit {
   CandidateEvaluationList: any;
   showtab2: boolean=false;
   user: any='tab1';
-
+  HiringList: any;
+  companyHiringList: any=-1;
+  yearHiringList: any=new Date().getFullYear();
+  selectedStatusHiringList: any=1;
+  currentPageHiringList: any=1;
+  itemsPerPageHiringList: any=10;
+  companydata: any;
+  searchInputHiringList:string='';
+  desiredPageHiringList: any; 
 
   constructor(private apicall:ApiCallService,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute) {
     this.addJobPostForm = this.fb.group({
@@ -155,7 +163,11 @@ export class HiringCenterComponent implements OnInit {
   //Employee drop down
   this.apicall.ResourceEmployeesComboData(-1,-1,this.empcode,1).subscribe((res)=>{
     this.empdata=res;
-   })     
+   }) 
+   //Company-Based on company access
+   this.apicall.FetchCompanyList(this.empcode).subscribe((res) => {
+    this.companydata=res;      
+  });    
     if(!this.grpname.includes('HR') && !this.grpname.includes('HOD')){
       this.addJobPostForm.get('approver_id')?.setValidators(Validators.required);
     }else{
@@ -168,9 +180,12 @@ export class HiringCenterComponent implements OnInit {
     else if((!this.grpname.includes('HR') && !this.grpname.includes('HOD')  && this.grpname.includes('LM-VP'))|| this.user=='tab2'){
       this.user=='tab2';
       this.ontabSelected(2);
-    }else{
+    }else if(this.user=='tab1'){
       this.FetchHireRequests();
       this.user=='tab1';
+    }else{
+      this.ontabSelected(4);
+      this.user=='tab4';       
     }
   }
    //New hire requests
@@ -209,7 +224,7 @@ export class HiringCenterComponent implements OnInit {
         this.currentPageApproval = 1;     
       } 
       })  
-    }else{ //Candidate Evaluation Process
+    }else if(mflag==3){ //Candidate Evaluation Process
       this.user='tab3'; 
       this.apicall.Fetch_HireRequest(this.empcode,this.selectedStatusCandidate,this.yearCandidate,3).subscribe((res)=>{
         this.CandidateEvaluationList=res;
@@ -220,7 +235,18 @@ export class HiringCenterComponent implements OnInit {
           this.currentPageCandidate = 1;     
         } 
       }) 
-    }   
+    } else{ //Approved requests for IT/HSE
+      this.user='tab4'; 
+      this.apicall.JobRequest_ListHR(this.empcode,this.selectedStatusHiringList,this.yearHiringList,this.companyHiringList).subscribe((res)=>{
+        this.HiringList = res.filter((item: { STATUS: number; }) => item.STATUS !== 6 && item.STATUS !== 0 && item.STATUS !== 7);
+        //alert(JSON.stringify(res))
+        const maxPageFiltered = Math.ceil(this.HiringList.length / this.itemsPerPageHiringList);  
+
+        if (this.currentPageHiringList > maxPageFiltered) {
+          this.currentPageHiringList = 1;     
+        } 
+      }) 
+    }     
 
   }
   onDesigSelected() {
@@ -357,7 +383,26 @@ export class HiringCenterComponent implements OnInit {
       if (res.Errorid == 1) {
         (<HTMLInputElement>document.getElementById("openModalButton")).click();
           this.showModal = 1;
-          this.success = "Request "+ messaage +" successfully!";                
+          this.success = "Request "+ messaage +" successfully!"; 
+          if(status==1 && this.grpname.includes('VP')){
+           this.apicall.SendEMail_IT_HSC(1,item.REQID).subscribe((res)=>{           
+            if (res.Errorid == 1) {
+            (<HTMLInputElement>document.getElementById("openModalButton")).click();
+            this.showModal = 1;
+            this.success = "Mail sent successfully!"; 
+            }else if (res.Errorid == 2){
+              (<HTMLInputElement>document.getElementById("openModalButton")).click();
+              this.showModal = 2;
+              this.failed = "Unable to send the email due to an invalid or unavailable recipient address!"; 
+            }else{              
+                (<HTMLInputElement>document.getElementById("openModalButton")).click();
+                this.showModal = 2;
+                this.failed = "Mail generation failed!"; 
+              }        
+
+           })
+
+          }               
       } else{
         (<HTMLInputElement>document.getElementById("openModalButton")).click();
           this.showModal = 2;
@@ -619,6 +664,90 @@ export class HiringCenterComponent implements OnInit {
       )
       );
       const end = this.currentPageCandidate * this.itemsPerPageCandidate;
+      return Math.min(end, filteredData.length);
+      }
+    //Hiring List Page
+     getTotalPagesHiringList(): number {
+      return Math.ceil(this.totalSearchResultsHiringList / this.itemsPerPageHiringList);
+      }
+      
+      goToPageHiringList() {
+      const totalPages = Math.ceil(this.totalSearchResultsHiringList / this.itemsPerPageHiringList);
+      if (this.desiredPageHiringList >= 1 && this.desiredPageHiringList <= totalPages) {
+        this.currentPageHiringList = this.desiredPageHiringList;
+      } else {  
+        
+        (<HTMLInputElement>document.getElementById("openModalButton")).click();
+        this.showModal = 2; 
+        this.failed='Invalid page number!'; 
+        this.desiredPageHiringList=''; 
+      }   
+      
+      }
+      getPageNumbersHiringList(currentPage: number): number[] {
+      const totalPages = Math.ceil(this.totalSearchResultsHiringList / this.itemsPerPageHiringList);
+      const maxPageNumbers = 5; // Number of page numbers to show
+      const middlePage = Math.ceil(maxPageNumbers / 2);
+      let startPage = Math.max(currentPage - middlePage, 1);
+      let endPage = Math.min(startPage + maxPageNumbers - 1, totalPages);
+      
+      if (endPage - startPage + 1 < maxPageNumbers) {
+        startPage = Math.max(endPage - maxPageNumbers + 1, 1);
+      }
+      
+      return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+      }
+      
+      // Function to Calculate the total number of search results
+      get totalSearchResultsHiringList(): number {
+      const totalResults = this.HiringList.filter((employee: any) => {
+      return Object.values(employee).some((value: any) =>
+        typeof value === 'string' && value.toLowerCase().startsWith(this.searchInputHiringList.toLowerCase())
+      );
+      }).length;
+      
+      const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPageHiringList);  
+      
+      if (this.currentPageHiringList > maxPageFiltered) {
+      this.currentPageHiringList = 1; 
+      }
+      
+      return totalResults;
+      }
+      
+      // Function to change the current page
+      changePageHiringList(page: number): void { 
+      this.desiredPageHiringList = '';   
+      this.currentPageHiringList = page;
+      const maxPage = Math.ceil(this.totalSearchResultsHiringList / this.itemsPerPageHiringList);
+      if (this.currentPageHiringList > maxPage) {
+        this.currentPageHiringList = 1;
+      }        
+      }
+      getEntriesStartHiringList(): number {
+      if (this.currentPageHiringList === 1) {
+      return 1;
+      }
+      
+      const filteredData = this.HiringList.filter((employee: any) =>
+      Object.values(employee).some((value: any) =>
+        typeof value === 'string' &&
+        value.toLowerCase().startsWith(this.searchInputHiringList.toLowerCase())
+      )
+      );
+      
+      const start = (this.currentPageHiringList - 1) * this.itemsPerPageHiringList + 1;
+      return Math.min(start, filteredData.length);
+      }  
+      
+      getEntriesEndHiringList(): number {  
+      const filteredData = this.HiringList.filter((employee: any) =>
+      Object.values(employee).some((value: any) =>
+        typeof value === 'string' &&
+        value.toLowerCase().startsWith(this.searchInputHiringList.toLowerCase())
+      )
+      );
+      const end = this.currentPageHiringList * this.itemsPerPageHiringList;
       return Math.min(end, filteredData.length);
       }
     

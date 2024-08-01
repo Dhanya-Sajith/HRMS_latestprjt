@@ -105,22 +105,27 @@ FetchDates()
     })
   
   }
-FetchEmployeeList()
-{
-  const company_code= (<HTMLInputElement>document.getElementById("exp_company")).value;
-  this.apicall.FetchEmployeeList(0,company_code,this.empcode).subscribe((res)=>{
-    this.listemployee=res;
-  })
-  if(this.user==='Loan')
+  FetchEmployeeList()
+  {
+    if(this.user==='Loan')
     {
-    this.ListstatusLoan();
-    this.LoanFilter();
+    const company_code= (<HTMLInputElement>document.getElementById("ln_cmpny")).value;
+    this.apicall.FetchEmployeeList(0,company_code,this.empcode).subscribe((res)=>{
+      this.listemployee=res;
+      this.ListstatusLoan();
+      this.LoanFilter();
+    })
     }
-    else{
-  this.ExpenseClaimFilter();
+    else
+    {
+      const company_code= (<HTMLInputElement>document.getElementById("exp_company")).value;
+      this.apicall.FetchEmployeeList(0,company_code,this.empcode).subscribe((res)=>{
+        this.listemployee=res;
+        this.ExpenseClaimFilter();
+      })
     }
-}
-
+    
+  }
 ExpenseClaimFilter()
   {
     const comp= (<HTMLInputElement>document.getElementById("exp_company")).value;
@@ -259,7 +264,6 @@ LoanFilter()
       };
       this.apicall.AccountsLoanFilter(data).subscribe(res =>{
       this.listloan=res;
-      alert(JSON.stringify(this.listloan));
       const maxPageFiltered = Math.ceil(this.listloan.length / this.itemsPerPage);  
       if (this.currentPageloan > maxPageFiltered) {
         this.currentPageloan = 1;     

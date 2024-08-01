@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallService } from 'src/app/api-call.service';
 import { LoginService } from 'src/app/login.service';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-offer-details',
@@ -93,25 +93,26 @@ export class OfferDetailsComponent implements OnInit {
     //Salary Component
     this.apicall.listCompany(44).subscribe((res)=>{
       this.SalaryComponent=res;
+      console.log(JSON.stringify(this.SalaryComponent));
     })
     this.Fetch_CandidateOfferDtls();
     this.Fetch_hiring_salarydtl();
   }
-  calculateTotal(): any {
-    if (!this.SalaryDtls) {
+  calculateTotal(): number {
+    if (!this.SalaryDtls || this.SalaryDtls.length === 0) {
         return 0; // Return 0 if SalaryDtls is not initialized or empty
     }
 
-    return this.SalaryDtls.reduce((acc: any, item: { AMOUNT: any; }) => acc + item.AMOUNT, 0);
+    return this.SalaryDtls.reduce((acc: any, item: { AMOUNT: any; }) => acc + (item.AMOUNT || 0), 0);
 }
+
   Fetch_CandidateOfferDtls() {
     this.apicall.Fetch_CandidateOfferDtls(this.CandidateId).subscribe((res) => {
       this.OfferDtls = res;      
       this.OfferDetailsForm.patchValue({
         passportNo: this.OfferDtls[0].PASSPORT_NO,
         mobileNo: this.OfferDtls[0].MOBILE_NO,
-        address: this.OfferDtls[0].CANDIDATE_ADDRESS,
-        total: this.calculateTotal(), 
+        address: this.OfferDtls[0].CANDIDATE_ADDRESS,       
         Accommodation: this.OfferDtls[0].ACCOMMODATION,
         Transportation: this.OfferDtls[0].TRANSPORTATION,
         OvertimeEligible: this.OfferDtls[0].OVERTIME,
@@ -169,8 +170,7 @@ export class OfferDetailsComponent implements OnInit {
       updated_by: this.empcode,
       passportNo: this.OfferDetailsForm.get('passportNo')?.value,
       mobileNo: this.OfferDetailsForm.get('mobileNo')?.value,
-      address: this.OfferDetailsForm.get('address')?.value,
-      total: this.OfferDetailsForm.get('total')?.value,
+      address: this.OfferDetailsForm.get('address')?.value,      
       Accommodation: this.OfferDetailsForm.get('Accommodation')?.value ?? false,
       Transportation: this.OfferDetailsForm.get('Transportation')?.value ?? false,
       OvertimeEligible: this.OfferDetailsForm.get('OvertimeEligible')?.value ?? false,
@@ -186,6 +186,7 @@ export class OfferDetailsComponent implements OnInit {
       ProbationPeriod: this.OfferDetailsForm.get('ProbationPeriod')?.value,
       NoticePeriod: this.OfferDetailsForm.get('NoticePeriod')?.value,
       Non_CompeteClause: this.OfferDetailsForm.get('Non_CompeteClause')?.value ?? false,
+      SalaryDtls:this.SalaryDtls,
     };
   //alert(JSON.stringify(data));
    this.apicall.AddCandidateOfferDetails(data).subscribe((res) => {
@@ -200,7 +201,8 @@ export class OfferDetailsComponent implements OnInit {
       this.showModal = 2;
       this.failed = "Failed!";
     }
-    this.Fetch_CandidateOfferDtls();           
+    this.Fetch_CandidateOfferDtls(); 
+    this.Fetch_hiring_salarydtl();          
     }); 
   }
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -223,19 +225,24 @@ export class OfferDetailsComponent implements OnInit {
         this.failed = "Component already exists!";
         this.clearSalaryDetailsForm(); 
       }
-      else{   
-      const data={
-        candidateId: this.CandidateId,
-        ...this.SalaryDetailsForm.value,
-        actionFlag:1,
-        updated_by:this.empcode            
-      };
-     console.log(JSON.stringify(data));
-     this.apicall.AddSalaryDtlsOfferLetter(data).subscribe((res) => {
-      //alert(JSON.stringify(res));
-      this.Fetch_hiring_salarydtl();
-       this.clearSalaryDetailsForm();       
-      });
+      else{ 
+        const allowanceMap = this.SalaryComponent.reduce((map: { [key: number]: string }, item: { KEY_ID: string, DATA_VALUE: string }) => {
+          map[Number(item.KEY_ID)] = item.DATA_VALUE;
+          return map;
+        }, {});
+        const allowanceName = allowanceMap[allowanceId] || 'Unknown';
+        this.SalaryDtls.push({        
+          ALLOWANCE_ID: allowanceId,
+          ALLOWANCE_NAME: allowanceName, 
+          AMOUNT:this.SalaryDetailsForm.get('amount')?.value,
+          GROSS_SALARY:this.calculateTotal()          
+        }); 
+        this.SalaryDtls.forEach((item: { GROSS_SALARY: number; }) => {
+          item.GROSS_SALARY = this.calculateTotal();
+      });    
+     console.log(JSON.stringify(this.SalaryDtls));    
+       this.clearSalaryDetailsForm();     
+      
     }
     } else{   
       this.markFormGroupTouched(this.SalaryDetailsForm);
@@ -283,3 +290,4 @@ export class OfferDetailsComponent implements OnInit {
     item.isEditing = false;
   }
 }
+ 

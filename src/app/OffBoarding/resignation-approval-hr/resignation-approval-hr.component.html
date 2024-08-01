@@ -142,8 +142,8 @@
                                                 <td>{{data.RELIEVING_TYPE}}</td>
                                                 <td>{{data.REQUEST_DATE | date:"dd-MM-yyyy"}}</td>
                                                 <td>{{data.NOTICE_PERIOD}}</td>
-                                                <td *ngIf="data.APPROVED_STATUS!=0">{{data.LAST_WORK_DATE | date:'dd-MM-yyyy'}}</td>
-                                                <td *ngIf="data.APPROVED_STATUS==0"><input type="date" class="form-control font-type fs-11 mb-0 textbox-15 h-30" [ngModel]="data.LAST_WORK_DATE | date:'yyyy-MM-dd'" (ngModelChange)="editlastWorkDate($event, data)"></td>
+                                                <td *ngIf="data.APPROVED_STATUS!=0 || data.HR_FLAG==0">{{data.LAST_WORK_DATE | date:'dd-MM-yyyy'}}</td>
+                                                <td *ngIf="data.APPROVED_STATUS==0 && data.HR_FLAG==1"><input type="date" class="form-control font-type fs-11 mb-0 textbox-15 h-30" [ngModel]="data.LAST_WORK_DATE | date:'yyyy-MM-dd'" (ngModelChange)="editlastWorkDate($event, data)"></td>
                                                 <td class="status" *ngIf="data.APPROVED_STATUS==1"><span class="badge bg-success-subtle text-success width-budge fs-11 fw-semibold text-uppercase">{{data.STATUS_VAL}}</span></td>
                                                 <td class="status" *ngIf="data.APPROVED_STATUS==0"><span class="badge bg-info-subtle text-info  width-budge fs-11 fw-semibold text-uppercase">{{data.STATUS_VAL}}</span></td>
                                                 <td class="status" *ngIf="data.APPROVED_STATUS==7"><span class="badge bg-danger-subtle text-danger width-budge fs-11 fw-semibold text-uppercase">{{data.STATUS_VAL}}</span></td>
@@ -184,7 +184,7 @@
                                                             </a>
                                                         </li>
                                                     </ul>
-                                                    <ul class="list-inline hstack gap-2 mb-0"*ngIf="data.APPROVED_STATUS==0">
+                                                    <ul class="list-inline hstack gap-2 mb-0"*ngIf="data.APPROVED_STATUS==0 && data.HR_FLAG==1">
                                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve">
                                                          <a href="" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn text-success"(click)="Approve(data)">
                                                             <i class="ri-checkbox-circle-fill fs-20"></i>

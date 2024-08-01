@@ -222,10 +222,14 @@ convertToPDF() {
           { text: 'You will be entitled to the following remuneration:', style: 'normal', margin: [0, 10, 0, 10] },
           {
               table: {
-                  body: [
-                      ...salaryDetails,
-                      [{ text: 'Total', style: 'boldText' }, { text: ':', style: 'boldText' }, { text: `AED 00.00 / month`, style: 'boldText' }]
+                body: [
+                    ...salaryDetails,
+                    [
+                      { text: 'Total', style: 'boldText' }, 
+                      { text: ':', style: 'boldText' }, 
+                      { text: `AED ${this.salarydtls[0].GROSS_SALARY} / month`, style: 'boldText' }
                   ]
+                ]
               },
               layout: 'noBorders',
               style: 'tableExample',

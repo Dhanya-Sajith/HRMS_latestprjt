@@ -131,7 +131,7 @@
                                             </div>                                        
                                         </div>
                                     </form>
-                                        <div class="row ma-10 mb-1" style="justify-content:center;" id="GrossSalaryTable"*ngIf="calculateTotal()!=''">
+                                        <div class="row ma-10 mb-1" style="justify-content:center;" id="GrossSalaryTable"*ngIf="SalaryDtls!=''">
                                             <div class="col-md-10 col-lg-10">
                                             <div class="live-preview" id="grosssalary">
                                                 <h6 class="font-type fw-semibold fs-12 text-italic">Salary breakdown is as follows: </h6>
@@ -185,7 +185,7 @@
                                                     <tfoot class="font-type">
                                                         <tr class="bg-light">
                                                             <td class="fw-semibold fs-12 text-blue" colspan="1">Total</td>
-                                                            <td class="fw-semibold fs-12 text-blue" colspan="2"formControlName="total"ngDefaultControl>{{ calculateTotal() }}</td>
+                                                            <td class="fw-semibold fs-12 text-blue" colspan="2"formControlName="total"ngDefaultControl>{{SalaryDtls[0]?.GROSS_SALARY}}</td>
                                                         </tr>
                                                     </tfoot>
                                                     </table>
@@ -382,7 +382,7 @@
                             </div>
                             <div class="flex-shrink-0">
                                 <div class="hstack text-nowrap gap-2">
-                                    <a routerLink="/hiring_dashboard"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                    <a routerLink="/hiring_dashboard"[queryParams]="{ user:'tab2' }"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
                                 </div>
                             </div>
                         </div>

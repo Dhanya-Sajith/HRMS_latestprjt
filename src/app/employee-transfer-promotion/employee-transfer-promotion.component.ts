@@ -63,6 +63,8 @@ export class EmployeeTransferPromotionComponent implements OnInit {
   desiredPage: any;
   viewflag: number = 0;
   Ename: any;
+  empdetails: any;
+  errorMessage: any;
 
   constructor(private apicall:ApiCallService, private datePipe: DatePipe,private fb:FormBuilder,private session:LoginService) { 
     this.TransferForm = this.fb.group({
@@ -218,6 +220,25 @@ export class EmployeeTransferPromotionComponent implements OnInit {
     );
   }
 
+  CheckValidations()
+  {
+    if(this.SelectAction == 2)
+    {
+      this.apicall.FetchEmployeeDetails(this.SelectEmployee).subscribe(res =>{
+        this.empdetails=res;      
+        const selectedDepartment = this.TransferForm.get('department')?.value;
+        const selectedDesignation = this.TransferForm.get('designation')?.value;
+        if (this.empdetails[0].DEPARTMENT_ID == selectedDepartment && this.empdetails[0].DESIGNATION_ID == selectedDesignation) {
+          this.TransferForm.get('designation')?.setErrors({ match: true });
+          this.errorMessage = "Selected department and designation are the same as the employee's current records.";
+      } else {
+          this.TransferForm.get('designation')?.setErrors(null);
+          this.errorMessage = null;
+      }
+      })
+    }
+  }
+  
   onAmountChange(i: number) {
     const control = this.tableRows.at(i) as FormGroup;
   

@@ -24,6 +24,7 @@ export class ExperienceLetterComponent implements OnInit {
   reqid: any;
   empcd: any;
   logo: any;
+  sign: any;
 
   constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService,private http: HttpClient,private route: ActivatedRoute) { }
 
@@ -44,7 +45,8 @@ export class ExperienceLetterComponent implements OnInit {
       this.apicall.genCompanyData(this.experiencedata[0].EMP_WPS_COMPANY).subscribe(async (res)=>{
         this.companydata=res;   
         this.logo = this.hostname + this.companydata[0].DATA_VALUE
-        this.logo = await this.getBase64ImageFromUrl(this.hostname + this.companydata[0].DATA_VALUE);   
+        this.logo = await this.getBase64ImageFromUrl(this.hostname + this.companydata[0].DATA_VALUE);  
+        this.sign = await this.getBase64ImageFromUrl('assets/styles/img/e-signature Merlin.png'); 
       })
     })
     
@@ -170,7 +172,12 @@ export class ExperienceLetterComponent implements OnInit {
           ],
           margin: [0, 10, 0, 20]
         },
-        { text: 'MERLIN VATHANA',  style: 'normal', bold: true,margin: [0, 20, 0, 5]},
+        {
+          image: this.sign,
+          width: 100,
+          height: 96 
+        },
+        { text: 'MERLIN VATHANA',  style: 'normal', bold: true,margin: [0, 10, 0, 5]},
         { text: 'HR Manager', style: 'normal' }
       ],
       styles: {

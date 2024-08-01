@@ -54,18 +54,18 @@
                         <div class="d-flex profile-wrapper">
                             <!-- Nav tabs -->
                             <ul class="nav nav-pills animation-nav profile-nav gap-2 gap-lg-3 flex-grow-1 fs-12" role="tablist">
-                                <li class="nav-item" #jobRequestsTab (click)="JobRequests()">
-                                    <a class="nav-link fs-14 active font-type" data-bs-toggle="tab" href="#JobRequests" role="tab">
+                                <li class="nav-item" #jobRequestsTab (click)="setTab('tab1')">
+                                    <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#JobRequests" role="tab" [ngClass]="{'active':  user=='tab1'}">
                                         <i class="ri-briefcase-4-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Hiring Request</span>
                                     </a>
                                 </li>
-                                <li class="nav-item" #applicationInfoTab (click)="ApplicationInfo()">
-                                    <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#ApplicationInfo" role="tab">
+                                <li class="nav-item" #applicationInfoTab (click)="setTab('tab2')">
+                                    <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#ApplicationInfo" role="tab" [ngClass]="{'active':  user=='tab2'}">
                                         <i class="ri-list-unordered d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Internal Applicants</span>
                                     </a>
                                 </li>
-                                <li class="nav-item" (click)="CandidateDashboard()">
-                                    <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#CandidateDashboard" role="tab">
+                                <li class="nav-item" (click)="setTab('tab3')">
+                                    <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#CandidateDashboard" role="tab" [ngClass]="{'active':  user=='tab3'}">
                                         <i class="ri-list-unordered d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Candidate Dashboard</span>
                                     </a>
                                 </li>
@@ -80,7 +80,7 @@
                    <!-- Tab panes -->
                    <div class="tab-content pt-2 text-muted">
                     <!-- Job openings -->
-                    <div class="tab-pane active" id="JobRequests" role="tabpanel">
+                    <div class="tab-pane active" id="JobRequests" role="tabpanel" [ngClass]="{'active': user=='tab1'}">
                         <!--Count Status-->
                         <div class="row topbar-up mb-3">
                             <div class="col-lg-12 col-md-12">
@@ -188,30 +188,30 @@
                                                 <td class="status"><span class="badge bg-info-subtle text-blue  width-budge fs-11 fw-semibold text-uppercase">{{jobdata.STATUS_VAL}}</span></td>
                                                 <td>
                                                     <ul class="list-inline hstack gap-0 mb-0">
-                                                        <li *ngIf="jobdata.STATUS == 1" class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Hold Hiring" (click)="Hold(jobdata.REQID)">
+                                                        <li *ngIf="jobdata.STATUS == 1||jobdata.STATUS == 4" class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Hold Hiring" (click)="Hold(jobdata.REQID)">
                                                             <a href="#SuccessRecordModal" data-bs-toggle="modal" class="text-warning d-inline-block">
                                                                 <i class="ri-pause-circle-fill fs-22"></i>
                                                             </a>
                                                         </li>
-                                                        <li *ngIf="jobdata.STATUS == 1" class="list-inline-item edit" [hidden]="jobdata.STATUS == 5">
+                                                        <li *ngIf="jobdata.STATUS == 1||jobdata.STATUS == 4" class="list-inline-item edit" [hidden]="jobdata.STATUS == 5">
                                                             <div class="dropdown" style="overflow:visible;position: static;">
                                                                 <a href="javascript:void(0);" class="btn btn-soft-info btn-sm " data-bs-toggle="dropdown" aria-expanded="true">
                                                                         <i class="ri-more-fill"></i>
                                                                 </a>
                                                                 <ul class="dropdown-menu dropdown-menu-end text-blue">
-                                                                    <li *ngIf="jobdata.STATUS == 1" [hidden]="jobdata.EMP_CODE == 1">
+                                                                    <li *ngIf="jobdata.STATUS == 1||jobdata.STATUS == 4" [hidden]="jobdata.EMP_CODE == 1">
                                                                         <a class="dropdown-item"  href="#AddExperienceModal" data-bs-toggle="modal" (click) = "Pushtocareer(jobdata.REQID,jobdata.WORK_LOCATION,jobdata.POSITION_FLAG)">
                                                                             <i class="ri-file-transfer-line me-1 align-middle text-blue fs-18"></i>
                                                                             <span class="text-blue align-middle">Push to Career</span>
                                                                         </a>
                                                                     </li>
-                                                                    <li *ngIf="jobdata.STATUS == 1" (click)="CandidateSelection(jobdata.REQID,jobdata.DESIGNATION)">
+                                                                    <li *ngIf="jobdata.STATUS == 1||jobdata.STATUS == 4" (click)="CandidateSelection(jobdata.REQID,jobdata.DESIGNATION)">
                                                                         <a class="dropdown-item"  href="#CandidateSelectionModal" data-bs-toggle="modal">
                                                                             <i class="ri-user-2-fill me-1 align-middle text-blue fs-18"></i>
                                                                             <span class="text-blue align-middle">Candidate Selection Board</span>
                                                                         </a>
                                                                     </li>
-                                                                    <li *ngIf="jobdata.STATUS == 1 || jobdata.COMPANY_CODE == 0">
+                                                                    <li *ngIf="jobdata.STATUS == 1 || jobdata.COMPANY_CODE == 0||jobdata.STATUS == 4">
                                                                         <a class="dropdown-item"  href="#RemoveModal" data-bs-toggle="modal" (click) = "Activerequest(jobdata.REQID)">
                                                                             <i class="ri-file-transfer-line me-1 align-middle text-blue fs-18"></i>
                                                                             <span class="text-blue align-middle">Discontinued Job Position</span>
@@ -220,7 +220,7 @@
                                                                 </ul>
                                                             </div>
                                                         </li>
-                                                        <li *ngIf="jobdata.EMP_CODE == 1 && jobdata.STATUS == 1" class="list-inline-item edit">
+                                                        <li *ngIf="jobdata.EMP_CODE == 1 && (jobdata.STATUS == 1||jobdata.STATUS == 4)" class="list-inline-item edit">
                                                             <button type="button" class="btn bg-info-subtle position-relative avatar-xs rounded h-30" title="Internal Applicants"  (click)="activateSecondTab(jobdata.REQID)">
                                                                 <span class="avatar-title bg-transparent">
                                                                     <i class="ri-user-received-line text-info fs-16"></i>
@@ -290,7 +290,7 @@
                     <!-- end Job openings tab -->
 
                     <!-- Job Application Tab -->
-                    <div class="tab-pane fade" id="ApplicationInfo" role="tabpanel">
+                    <div class="tab-pane fade" id="ApplicationInfo" role="tabpanel" [ngClass]="{'active': user=='tab2'}">
                         <!-- TABLE DETAILS -->
                         <div class="row topbar-up">
                                 <div class="col-md-12 col-lg-12">
@@ -406,7 +406,7 @@
 
 
                     <!-- CandidateDashboard Tab -->
-                    <div class="tab-pane fade" id="CandidateDashboard" role="tabpanel">
+                    <div class="tab-pane fade" id="CandidateDashboard" role="tabpanel" [ngClass]="{'active': user=='tab3'}">
                         <div class="row topbar-up">
                             <div class="col-lg-12">
                                 <div class="card shadow-lg">
@@ -949,7 +949,14 @@
                                                         <h3 class="fw-semibold fs-12 font-type"><span>Designation</span></h3>
                                                         <input type="text" class="form-control font-type textbox-15 " placeholder="Designation" name="designation"   formControlName="designation" readonly/>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-3" *ngIf="selectedtypeValue == '2' || selectedtypeValue == '3'">
+                                                        <h3 class="fw-semibold fs-12 font-type"><span>Source Detail</span></h3>
+                                                        <input type="text" class="form-control font-type textbox-15 fs-12 h-30" placeholder="Source Detail"  formControlName="SourceDetail"/>
+                                                        <div *ngIf="ApplyForm.get('SourceDetail')!.hasError('required') && ApplyForm.get('SourceDetail')!.touched" class="text-danger">
+                                                            Please, Fill the field.
+                                                        </div> 
+                                                    </div>
+                                                    <div class="col-lg-3">
                                                         <h3 class="fw-semibold fs-12 font-type"><span>Upload CV</span></h3>
                                                         <input class="form-control font-type fs-12 textbox-15" type="file" id="formFile" name="cv" formControlName="cv">
                                                         <span class="fs-11 font-type ma-10 text-muted">* Maximum Size - 500KB</span>

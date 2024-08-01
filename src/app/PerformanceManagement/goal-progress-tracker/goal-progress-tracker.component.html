@@ -255,20 +255,6 @@
                                                     <button type="button" id="reassessmnt" [disabled]="isButtonDisabled" *ngIf="this.category==0" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" data-bs-toggle="modal" data-bs-target="#RejectModal" style="height: 24px;" ><i class="ri-send-plane-fill label-icon align-middle fs-16 ms-2"></i>Send for Reassessment</button>
 
 
-                                                    <ng-container [ngSwitch]="backcate">
-                                                        <div *ngSwitchCase="0">
-                                                            <a [routerLink]="['/GoalSettingsNAnalyticsHR']" [queryParams]="{ user:'tab2' }"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white" style="height: 24px;"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
-                                                          </div>
-                                                      <div *ngSwitchCase="1">
-                                                        <a [routerLink]="['/performance_management']" [queryParams]="{ user:'personal' }"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white" style="height: 24px;"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
-                                                      </div>
-                                                      <div *ngSwitchCase="2">
-                                                        <a [routerLink]="['/performance_management']" [queryParams]="{ user:'team' }"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white" style="height: 24px;"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
-                                                      </div>
-                                                    </ng-container>
-
-                                                    
-
                                                 </div>
                                             </div>
                                         </div>
@@ -497,6 +483,20 @@
                     
                     <!-- end row -->
                     <!--END Goal Tracking Details -->
+
+
+                    <ng-container [ngSwitch]="backcate">
+                        <div *ngSwitchCase="0">
+                            <a [routerLink]="['/GoalSettingsNAnalyticsHR']" [queryParams]="{ user:'tab2' }"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white" style="height: 24px;float: right;"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                          </div>
+                      <div *ngSwitchCase="1">
+                        <a [routerLink]="['/performance_management']" [queryParams]="{ user:'personal' }"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white" style="height: 24px;float: right;"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                      </div>
+                      <div *ngSwitchCase="2">
+                        <a [routerLink]="['/performance_management']" [queryParams]="{ user:'team' }"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white" style="height: 24px;float: right;"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                      </div>
+                    </ng-container>
+
 
                     <!-- Reason Model-->
                     <div class="modal fade zoomIn" id="RejectModal" tabindex="-1" aria-labelledby="RejectModal" aria-hidden="true">

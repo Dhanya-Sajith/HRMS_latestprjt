@@ -70,7 +70,14 @@
                                                 <!-- <span class="badge bg-orange align-middle ms-1 fs-12">2</span> -->
                                         </span>
                                         </a>
-                                    </li>                                   
+                                    </li>     
+                                    <li class="nav-item">
+                                        <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#ApprovedRequests"[ngClass]="{'active': user=='tab4'}" role="tab" *ngIf="dept==6||dept==7"(click)="ontabSelected(4)">
+                                            <i class="ri-list-unordered d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Hiring List
+                                                <!-- <span class="badge bg-orange align-middle ms-1 fs-12">2</span> -->
+                                        </span>
+                                        </a>
+                                    </li>                                 
                                 </ul>
                             </div>
                             </div>
@@ -228,7 +235,7 @@
                                                         <div>
                                                             <select class="form-select font-type fs-11 textbox-15"[(ngModel)]="selectedStatusApproval"(change)="ontabSelected(2)">
                                                                 <option value="-1">All</option>
-                                                                        <option *ngFor="let combo of Statusreq" value="{{combo.KEY_ID}}"[hidden]="combo.KEY_ID==6">{{combo.DATA_VALUE}}</option>  
+                                                                <option *ngFor="let combo of Statusreq" value="{{combo.KEY_ID}}"[hidden]="combo.KEY_ID==6">{{combo.DATA_VALUE}}</option>  
                                                               </select>  
                                                         </div>
                                                         <div>
@@ -283,7 +290,7 @@
                                                     <td>
                                                         <ul class="list-inline hstack gap-2 mb-0"*ngIf="item.STATUS==0">
                                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve">
-                                                                <a href="#approvedModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn">
+                                                                <a href="#" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn">
                                                                 <button type="button" class="btn btn-success btn-sm" id="buttonApprove" (click)="ApproveReject(item,1,'Approved')"><i class="ri-task-fill fs-22"></i></button>
                                                                 </a>
                                                              </li>
@@ -370,7 +377,7 @@
                                                                 <div>                                                                     
                                                                       <select class="form-select font-type fs-11 textbox-15"[(ngModel)]="selectedStatusCandidate"(change)="ontabSelected(3)">
                                                                         <option value="-1">All</option>
-                                                                        <option *ngFor="let combo of StatusCandidate" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>  
+                                                                        <option *ngFor="let combo of StatusCandidate" value="{{combo.KEY_ID}}"[hidden]="combo.KEY_ID==2">{{combo.DATA_VALUE}}</option>  
                                                                       </select> 
                                                                 </div>
                                                                 <div>                                                                  
@@ -476,6 +483,139 @@
                                     <!--end card-->
                                 </div>
                                  <!-- end Candidates Evaluation tab -->
+                                    <!-- Approved requests for IT/HSE -->
+                        <div class="tab-pane" id="ApprovedRequests" role="tabpanel"[ngClass]="{'active': user=='tab4'&&(dept==6||dept==7)}">
+                            <div class="row topbar-up">
+                                <div class="col-lg-12">
+                                    <div class="card shadow-lg">
+                                        <div class="card-header" style="padding:10px">
+                                            <div class="row align-items-center gy-3">
+                                                <div class="col-sm">
+                                                    <div class="align-items-center d-flex ">
+                                                        <h4 class="card-title mb-0 flex-grow-1 fs-15 font-type fw-semibold">Hiring List</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div class="search-box">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInputHiringList">
+                                                            <i class="ri-search-line search-icon"></i>
+                                                        </div>
+                                                        <div>
+                                                            <select class="form-select font-type fs-11 textbox-15"[(ngModel)]="companyHiringList"(change)="ontabSelected(4)">
+                                                                <option value="0" selected disabled>Company</option>
+                                                                <option value="-1">All</option>
+                                                                <option *ngFor="let combo of companydata" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>  
+                                                              </select>  
+                                                        </div>
+                                                        <div>
+                                                            <select class="form-select font-type fs-11 textbox-15"[(ngModel)]="selectedStatusHiringList"(change)="ontabSelected(4)">
+                                                                <option value="-1">All</option>
+                                                                 <option *ngFor="let combo of Statusreq" value="{{combo.KEY_ID}}"[hidden]="combo.KEY_ID==6||combo.KEY_ID==0||combo.KEY_ID==7">{{combo.DATA_VALUE}}</option>  
+                                                              </select>  
+                                                        </div>
+                                                        <div>
+                                                            <select class="form-select font-type fs-12 textbox-15 h-30"[(ngModel)]="yearHiringList" (change)="ontabSelected(4)">
+                                                                <option *ngFor="let combo of yeardata" [value]="combo.DISPLAY_FIELD">{{ combo.DISPLAY_FIELD }}</option>
+                                                              </select>   
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive table-card mb-0">
+                                                <table class="table table-nowrap align-middle table-bordered border-orange table-hover">
+                                                <thead class="table-light text-white font-type">
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Job Details</th>
+                                                        <th>Requested by</th>
+                                                        <th>Status</th>                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all font-type fs-11">
+                                                <tr class="font-type" *ngFor="let item of HiringList | search : searchInputHiringList | pagination: currentPageHiringList: itemsPerPageHiringList" >
+                                                    <td>{{item.JOB_ID}}</td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div class="flex-grow-1">
+                                                                <h5 class="fs-15 font-type ma-5" style="white-space: pre-wrap;"><a href="#" class="text-orange text-italic" style="text-decoration: underline;">{{item.DESIGNATION}}</a></h5>
+                                                                <p class="text-muted mb-1 fs-12" style="white-space: pre-wrap;">Company: <span class="fw-medium text-black">{{item.COMPANY}}</span></p>
+                                                                <p class="text-muted mb-1 fs-12" style="white-space: pre-wrap;">Department: <span class="fw-medium text-black">{{item.DEPARTMENT}}</span></p>
+                                                                <p class="text-muted mb-1 fs-12" style="white-space: pre-wrap;">Work Location: <span class="fw-medium text-black">{{item.REQ_EXPERIENCE}}</span></p>
+                                                                <p class="text-muted mb-1 fs-12">No of Openings : <span class="fw-medium text-black">{{item.COUNT}}</span></p>
+                                                                <p class="text-muted mb-0 fs-12"><a href="#JobDescriptionModal" data-bs-toggle="modal" class="text-blue d-inline-block edit-item-btn ms-1 fs-12" (click)="ViewJobDetails(item.REQID)"  style="text-decoration: underline;">View More Details</a></p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div class="flex-grow-1">
+                                                                <p class="mb-1 fs-12" style="white-space: pre-wrap;">{{item.EMP_NAME}}</p>
+                                                                <p class="text-muted mb-1 fs-12" style="white-space: pre-wrap;">Requested Date: <span class="fw-medium text-black">{{item.REQUESTED_DATE | date:"dd-MM-yyyy"}}</span></p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="status" *ngIf="item.STATUS==0 || item.STATUS==4"><span class="badge bg-info-subtle text-blue  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                    <td class="status" *ngIf="item.STATUS==2"><span class="badge badge-height bg-warning-subtle text-warning  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                    <td class="status" *ngIf="item.STATUS==1"><span class="badge bg-success-subtle text-success  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                    <td class="status" *ngIf="item.STATUS==6 || item.STATUS==7 || item.STATUS==3"><span class="badge bg-danger-subtle text-danger  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                    
+                                                </tr>                                              
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+                                        <div *ngIf="HiringList">
+                                            <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResultsHiringList>0">
+                                                <div class="col-sm">
+                                                  <div class="font-type fs-12 text-muted">
+                                                    Showing <span class="fw-semibold">{{ getEntriesStartHiringList() }}</span>
+                                                    - <span class="fw-semibold">{{ getEntriesEndHiringList() }}</span>
+                                                    of <span class="fw-semibold">{{ totalSearchResultsHiringList }}</span> Results
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="font-type fs-12 text-muted">
+                                                        Total Pages : <span class="fw-semibold"> {{ getTotalPagesHiringList() }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-auto mt-4 mt-sm-0">
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        <div>
+                                                            <div class="input-group">
+                                                    <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPageHiringList" tabindex="1">                                                                    
+                                                    
+                                                   <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageHiringList()" tabindex="2">Go</button>
+                                              </div>
+                                            </div>
+                                                 
+                                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                                  <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePageHiringList(currentPageHiringList - 1)" [class.disabled-button]="currentPageHiringList === 1">←</button>
+                                                    </li>
+                                                    <ng-container *ngFor="let pageNumberHiringList of getPageNumbersHiringList(currentPageHiringList)">
+                                                      <li class="page-item">
+                                                        <button class="page-link" (click)="changePageHiringList(pageNumberHiringList)" [class.active]="currentPageHiringList === pageNumberHiringList">{{ pageNumberHiringList }}</button>
+                                                      </li>
+                                                    </ng-container>
+                                                    <li class="page-item">
+                                                      <button class="page-link" (click)="changePageHiringList(currentPageHiringList + 1)" [class.disabled-button]="currentPageHiringList * itemsPerPageHiringList >= totalSearchResultsHiringList">→</button>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                    </div>
+                                </div>
+                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                            </div>
+                        </div>
+                        <!-- end Approved requests for IT/HSE tab -->
                                 <!--end tab-pane-->
                             </div>
                             <!--end tab-content-->
@@ -761,6 +901,7 @@
                                                     </h6>
                                                 </div>
                                             </div>
+                                            <div [hidden]="user == 'tab4'">
                                             <div class="row mb-2">
                                                 <div class="col-lg-3">
                                                     <h3 class="fw-semibold fs-12 font-type"><span>Work Schedule</span></h3>
@@ -835,6 +976,7 @@
                                                 </div>
                                             </div>
                                             </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
