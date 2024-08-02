@@ -155,6 +155,7 @@ import { TrainingCostReportComponent } from './reports/training-cost-report/trai
 import { TrainingPlanReportComponent } from './reports/training-plan-report/training-plan-report.component';
 import { UsergroupAccessSettingComponent } from './master-data-management/usergroup-access-setting/usergroup-access-setting.component';
 import { TrainingExpiryReportComponent } from './reports/training-expiry-report/training-expiry-report.component';
+import { RecruitmentReportComponent } from './reports/recruitment-report/recruitment-report.component';
 
 
 
@@ -318,7 +319,8 @@ const routes: Routes = [
   {path:'training_cost_report' , component:TrainingCostReportComponent},
   {path:'TrainingPlanReport' , component:TrainingPlanReportComponent},
   {path:'UsergroupAccessSetting',component:UsergroupAccessSettingComponent},
-  {path:'training-expiry-report',component:TrainingExpiryReportComponent}
+  {path:'training-expiry-report',component:TrainingExpiryReportComponent},
+  {path:'recruitment-report',component:RecruitmentReportComponent}
   
 
 ];

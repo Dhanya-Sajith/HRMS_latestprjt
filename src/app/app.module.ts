@@ -171,6 +171,7 @@ import { TrainingCostReportComponent } from './reports/training-cost-report/trai
 import { TrainingPlanReportComponent } from './reports/training-plan-report/training-plan-report.component';
 import { TrainingExpiryReportComponent } from './reports/training-expiry-report/training-expiry-report.component';
 import { UsergroupAccessSettingComponent } from './master-data-management/usergroup-access-setting/usergroup-access-setting.component';
+import { RecruitmentReportComponent } from './reports/recruitment-report/recruitment-report.component';
 
 
 @NgModule({
@@ -338,6 +339,7 @@ import { UsergroupAccessSettingComponent } from './master-data-management/usergr
     TrainingPlanReportComponent,
     TrainingExpiryReportComponent,
     UsergroupAccessSettingComponent,
+    RecruitmentReportComponent,
     
     
   ],

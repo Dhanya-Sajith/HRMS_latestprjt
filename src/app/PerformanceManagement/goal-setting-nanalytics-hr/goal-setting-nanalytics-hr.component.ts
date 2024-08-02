@@ -128,8 +128,15 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
     //Goal Setting Status
     this.apicall.listCompany(84).subscribe((res) => {
       this.GoalSettingstatus=res;      
-    });  
-    this.FetchGoalSettingData(1);    
+    }); 
+    if(this.user=='tab1'){
+      this.FetchGoalSettingData(1);
+    }else if(this.user=='tab2'){
+      this.FetchGoalSettingData(2);
+    }else{
+      this.FetchPerformanceAnalyticsData();
+    } 
+        
   }
   onCompanySelected() {
     this.apicall.FetchDepartmentList(this.selectedCompanyPerformance,this.empcode).subscribe((res) => {
@@ -149,6 +156,7 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
    }
    FetchGoalSettingData(mflag:any){
     if(mflag==1){
+    this.user=='tab1'
    this.apicall.GoalSetting_ListHR(this.empcode,this.SelectedGoalSettingstatus,this.YearGoalSetting,this.CompanyGoalSetting,1).subscribe((res)=>{
     this.GoalSettingData=res;
     //alert(JSON.stringify(this.GoalSettingData));
@@ -159,6 +167,7 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
       } 
     }); 
    }else{
+    this.user=='tab2'
     this.apicall.GoalSetting_ListHR(this.empcode,this.selectedStatusAssessment,this.selectedYearAssessment,this.selectedCompanyAssessment,2).subscribe((res)=>{
       this.AssessmentData=res;
       //alert(JSON.stringify(this.GoalSettingData));
@@ -411,6 +420,7 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
 
   //Performance Analytics
   FetchPerformanceAnalyticsData(){
+    this.user=='tab3'
     this.apicall.PerformanceAnalytics_ListHR(this.empcode,this.selectedDept,this.selectedYearPerformance,this.selectedCompanyPerformance).subscribe((res)=>{
       this.PerformanceData=res;
       //alert(JSON.stringify(this.GoalSettingData));

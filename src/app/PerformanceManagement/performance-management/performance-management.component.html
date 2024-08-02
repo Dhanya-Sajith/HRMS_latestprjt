@@ -109,7 +109,7 @@
                                                                         <h6 class="fs-12 font-type">Review Status
                                                                             <span class="ms-1">:</span>
                                                                             <span class="badge bg-info-subtle text-info text-uppercase fs-11 ms-1 mb-1">{{item.STATUS_VAL}}</span>
-                                                                            <a *ngIf="item.REQUEST_STATUS == 10" class="btn btn-success btn-sm ms-1 fs-12" [routerLink]="['/appraisal_form']" [queryParams]="{ empcode:item.EMP_CODE,reqId:item.REQUEST_ID }">Appraisal Form</a>
+                                                                            <a *ngIf="item.REQUEST_STATUS == 10" class="btn btn-success btn-sm ms-1 fs-12" [routerLink]="['/appraisal_form']" [queryParams]="{ empcode:item.EMP_CODE,reqId:item.REQUEST_ID,view:1 }">Appraisal Form</a>
                                                                         </h6>
                                                                     </div>
                                                                     <div class="col-lg-12">

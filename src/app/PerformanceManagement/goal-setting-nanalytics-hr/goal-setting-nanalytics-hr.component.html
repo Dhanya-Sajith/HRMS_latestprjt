@@ -52,17 +52,17 @@
                             <!-- Nav tabs -->
                             <ul class="nav nav-pills animation-nav profile-nav gap-2 gap-lg-3 flex-grow-1 fs-12" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link fs-14 active font-type" data-bs-toggle="tab" href="#GoalManagement" role="tab"(click)="FetchGoalSettingData(1)">
+                                    <a class="nav-link fs-14  font-type" data-bs-toggle="tab" href="#GoalManagement"[ngClass]="{'active': user=='tab1'}" role="tab"(click)="FetchGoalSettingData(1)">
                                         <i class="ri-focus-2-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Goal Setting</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#Assessment" role="tab"(click)="FetchGoalSettingData(2)">
+                                    <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#Assessment"[ngClass]="{'active': user=='tab2'}" role="tab"(click)="FetchGoalSettingData(2)">
                                         <i class="ri-focus-2-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Assessment</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#PerformanceAnalytics" role="tab"(click)="FetchPerformanceAnalyticsData()">
+                                    <a class="nav-link fs-14 font-type" data-bs-toggle="tab" href="#PerformanceAnalytics"[ngClass]="{'active': user=='tab3'}" role="tab"(click)="FetchPerformanceAnalyticsData()">
                                         <i class="ri-line-chart-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Performance Analytics</span>
                                     </a>
                                 </li>
@@ -77,7 +77,7 @@
              <!-- TAB PANES -->
              <div class="tab-content pt-2 text-muted">
                 <!-- Goal Management -->
-                <div class="tab-pane active" id="GoalManagement" role="tabpanel"> 
+                <div class="tab-pane " id="GoalManagement" role="tabpanel"[ngClass]="{'active': user=='tab1'}"> 
                        <!--GoalManagement TABLE-->
                         <div class="row topbar-up">
                         <div class="col-lg-12">
@@ -236,7 +236,7 @@
                 <!-- End Goal Management -->
 
                    <!-- Assessment -->
-                   <div class="tab-pane" id="Assessment" role="tabpanel"> 
+                   <div class="tab-pane" id="Assessment" role="tabpanel"[ngClass]="{'active': user=='tab2'}"> 
                     <!--GoalManagement TABLE-->
                      <div class="row topbar-up">
                      <div class="col-lg-12">
@@ -403,7 +403,7 @@
              <!-- End Assessment -->
 
                 <!-- Performance Analaytics -->
-                <div class="tab-pane" id="PerformanceAnalytics" role="tabpanel"> 
+                <div class="tab-pane" id="PerformanceAnalytics" role="tabpanel"[ngClass]="{'active': user=='tab3'}"> 
                         <!--GoalManagement TABLE-->
                          <div class="row topbar-up">
                          <div class="col-lg-12">
@@ -471,7 +471,7 @@
                                             <td>
                                                 <ul class="list-inline hstack gap-1 mb-0">
                                                     <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Appraisal">
-                                                        <a class="text-success d-inline-block" [routerLink]="['/appraisal_form']" [queryParams]="{ empcode: item.EMP_CODE,reqId:item.REQUEST_ID}">
+                                                        <a class="text-success d-inline-block" [routerLink]="['/appraisal_form']" [queryParams]="{ empcode: item.EMP_CODE,reqId:item.REQUEST_ID,view:0}">
                                                             <i class="ri-todo-fill fs-18"></i>
                                                         </a>
                                                     </li>

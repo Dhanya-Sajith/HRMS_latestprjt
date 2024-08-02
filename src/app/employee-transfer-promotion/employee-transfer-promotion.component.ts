@@ -52,7 +52,7 @@ export class EmployeeTransferPromotionComponent implements OnInit {
   teamyear: any = -1;
   teamDesignation:any = -1;
   teamCompany:any = -1;
-  searchInput: string = '';
+  searchInput: string='';
   Historydata: any;
   descdata: any;
   salarydata: any;
@@ -65,6 +65,7 @@ export class EmployeeTransferPromotionComponent implements OnInit {
   Ename: any;
   empdetails: any;
   errorMessage: any;
+  reason: any;
 
   constructor(private apicall:ApiCallService, private datePipe: DatePipe,private fb:FormBuilder,private session:LoginService) { 
     this.TransferForm = this.fb.group({
@@ -174,7 +175,6 @@ export class EmployeeTransferPromotionComponent implements OnInit {
      this.apicall.FetchDepartmentList(this.teamCompany,this.empcode).subscribe(res =>{
       this.listDepartment=res;
     })
-    this.FetchActionHistory();
   }
 
   Fetch_Employees()
@@ -405,8 +405,9 @@ export class EmployeeTransferPromotionComponent implements OnInit {
     })
   }
 
-  Activedescription(id:any,name:any)
+  Activedescription(id:any,name:any,reason:any)
   {
+    this.reason = reason;
     this.Ename = name;
     this.apicall.EmpTransferPromotion_Details(id).subscribe(res =>{
       this.descdata=res;

@@ -671,7 +671,7 @@
                                                 <label class="form-check-label font-type fs-12">
                                                     {{detaildata.EMPLOYMENT_TYPE}}
                                                 </label>
-                                                <h6 class="font-type fs-12 ma-5 text-muted">
+                                                <h6 class="font-type fs-12 ma-5 text-muted" *ngIf="detaildata.EMPLOYMENT_TYPE_ID != 1">
                                                     No of Days/Months : <span class="fw-medium"> {{detaildata.CONTRACT_WORKDAYS}}</span>
                                                 </h6>
                                             </div>
@@ -697,45 +697,47 @@
                                             </div>
                                         </div>
                                         <div>
-                                        <h3 class="fw-semibold fs-13 mb-3 font-type margin-up-5" style="text-decoration: underline;"><span>Job Description</span></h3>
-                                        <div class="row mb-1">
-                                            <div class="col-lg-3">
-                                                <h3 class="fw-semibold fs-12 font-type"><span>Primary Responsibilities</span></h3>
+                                        <div *ngIf="detaildata.POSITION_FLAG == 1">
+                                            <h3 class="fw-semibold fs-13 mb-3 font-type margin-up-5" style="text-decoration: underline;"><span>Job Description</span></h3>
+                                            <div class="row mb-1">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Primary Responsibilities</span></h3>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <label class="form-label font-type fs-12" style="text-align: justify;">
+                                                        <p class="p-space">{{detaildata.PRIM_RESP}}</p>
+                                                    </label>  
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <label class="form-label font-type fs-12" style="text-align: justify;">
-                                                    <p class="p-space">{{detaildata.PRIM_RESP}}</p>
-                                                </label>  
+                                            <div class="row mb-2">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Required Education</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-check-label font-type fs-12">
+                                                        {{detaildata.REQD_EDUC}}
+                                                    </label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-lg-3">
-                                                <h3 class="fw-semibold fs-12 font-type"><span>Required Education</span></h3>
+                                            <div class="row mb-1">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Required Experience</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-label font-type fs-12" style="text-align: justify;">
+                                                        <p class="p-space">{{detaildata.REQD_EXPER}}</p>
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-9">
-                                                <label class="form-check-label font-type fs-12">
-                                                    {{detaildata.REQD_EDUC}}
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-1">
-                                            <div class="col-lg-3">
-                                                <h3 class="fw-semibold fs-12 font-type"><span>Required Experience</span></h3>
-                                            </div>
-                                            <div class="col-lg-9">
-                                                <label class="form-label font-type fs-12" style="text-align: justify;">
-                                                    <p class="p-space">{{detaildata.REQD_EXPER}}</p>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-3">
-                                                <h3 class="fw-semibold fs-12 font-type"><span>Required Key Skills</span></h3>
-                                            </div>
-                                            <div class="col-lg-9">
-                                                <label class="form-label font-type fs-12" style="text-align: justify;">
-                                                    <p class="p-space">{{detaildata.REQD_SKILLS}}</p>
-                                                </label>
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold fs-12 font-type"><span>Required Key Skills</span></h3>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <label class="form-label font-type fs-12" style="text-align: justify;">
+                                                        <p class="p-space">{{detaildata.REQD_SKILLS}}</p>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                         </div>

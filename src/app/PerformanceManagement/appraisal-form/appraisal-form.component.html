@@ -148,12 +148,19 @@
                     </div>
                     <!-- card body -->
 
-                    <div class="col-lg-12 mb-3">
-                        <div class="d-flex align-items-center flex-wrap gap-2">
-                            <div class="flex-grow-1 text-center">
-                                <button class="btn btn-success font-type" (click)="convertToPDF()"><i class="ri-file-pdf-line me-1 align-bottom"></i> Download PDF</button>
-                                <a [routerLink]="['/GoalSettingsNAnalyticsHR']" [queryParams]="{ user:'tab3' }"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
-                            </div>
+                    <div class="col-md-12 mb-3 row">
+                        <div class="col-md-6" >
+                            <button class="btn btn-success font-type" (click)="convertToPDF()" style="float: right;"><i class="ri-file-pdf-line me-1 align-bottom"></i> Download PDF</button>
+                        </div>
+                        <div class="col-md-6" style="float: left;">
+                            <ng-container [ngSwitch]="true">
+                                <div *ngSwitchCase="backcate==0">
+                                    <a [routerLink]="['/GoalSettingsNAnalyticsHR']" [queryParams]="{ user:'tab3' }"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                </div>
+                                <div *ngSwitchCase="backcate==1">
+                                    <a [routerLink]="['/performance_management']" [queryParams]="{ user:'personal' }"><button type="button" class="btn btn-orange btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                </div>
+                            </ng-container>  
                         </div>
                     </div>
     

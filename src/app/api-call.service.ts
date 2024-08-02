@@ -2894,7 +2894,7 @@ EmpTransferPromotion_Details(id:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/Hiring/EmpTransferPromotion_Details/${id}`);
 }
-EmpTransferPromotion_ActionHistory(user:any,designation:any,company:any,year:any)
+EmpTransferPromotion_ActionHistory(user:any,company:any,designation:any,year:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/Hiring/EmpTransferPromotion_ActionHistory/${user}/${company}/${designation}/${year}`);
 }
@@ -2955,5 +2955,10 @@ AddNewUserGroup(data:any)
 FetchTrainingExpiryData(empcode:any,company:any,reqstatus:any,year:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Training_Expiry_Report/${empcode}/${company}/${reqstatus}/${year}`);
+}
+//Recruitment Report
+FetchRecruitmentData(empcode:any,company:any,fromdate:any,todate:any,reqstatus:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Hiring_Master_Report/${empcode}/${company}/${fromdate}/${todate}/${reqstatus}`);
 }
 }

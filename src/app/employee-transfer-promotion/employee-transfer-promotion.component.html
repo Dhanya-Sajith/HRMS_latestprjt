@@ -138,7 +138,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 pt-2 mb-2">
                                     <h6 class="font-type fs-12 fw-semibold"><span>Department </span></h6>
-                                    <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="department">
+                                    <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="department" (change)="CheckValidations()">
                                         <option  value=""selected disabled>Select</option>                                            
                                         <option  *ngFor="let listdep of departmentlist" value="{{listdep.KEY_ID}}">{{listdep.DATA_VALUE}}</option>
                                     </select>
@@ -148,7 +148,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 pt-2 mb-2">
                                     <h6 class="font-type fs-12 fw-semibold"><span>Designation</span></h6>
-                                    <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="designation">
+                                    <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="designation" (change)="CheckValidations()">
                                         <option  value=""selected disabled>Select</option>                                            
                                         <option  *ngFor="let listdesig of designationlist" value="{{listdesig.KEY_ID}}">{{listdesig.DATA_VALUE}}</option>
                                     </select>
@@ -471,7 +471,7 @@
                                                 </div>
                                                 <!--end col-->
                                                 <div class="col-lg-3 col-sm-3">
-                                                    <select class="form-select font-type fs-12 textbox-15 h-30" name = "teamCompany"  [(ngModel)]="teamCompany" (change)="FetchDepartments()">
+                                                    <select class="form-select font-type fs-12 textbox-15 h-30" name = "teamCompany"  [(ngModel)]="teamCompany" (change)="FetchActionHistory()">
                                                         <option value="-1" selected>Select Company</option>
                                                         <option *ngFor="let cdata of companydata" [value]="cdata.KEY_ID">{{ cdata.DATA_VALUE }}</option>
                                                     </select> 
@@ -480,13 +480,13 @@
                                                 <div class="col-lg-4 col-md-6">
                                                     <select class="form-select font-type fs-12 textbox-15 h-30" name = "teamDesignation"  [(ngModel)]="teamDesignation" (change)="FetchActionHistory()">
                                                         <option value="-1" selected>Select Designation</option>
-                                                        <option *ngFor="let desdata of listDepartment" [value]="desdata.KEY_ID">{{ desdata.DATA_VALUE }}</option>
+                                                        <option *ngFor="let desdata of designationlist" [value]="desdata.KEY_ID">{{ desdata.DATA_VALUE }}</option>
                                                     </select>  
-                                            </div> 
+                                                </div> 
                                                 <!--end col-->
                                                 <div class="col-lg-3 col-sm-4">
                                                     <div class="search-box">
-                                                        <input type="text" class="form-control font-type fs-12 textbox-15" placeholder="Search..."   [(ngModel)]="searchInput">
+                                                        <input type="text" class="form-control font-type fs-12 textbox-15" placeholder="Search..." [(ngModel)]="searchInput">
                                                         <i class="ri-search-line search-icon"></i>
                                                     </div>
                                                 </div>
@@ -521,10 +521,10 @@
                                                         <td>{{datalist.REQUEST_DATE | date:'dd-MM-yyyy'}}</td>
                                                         <td>
                                                             <ng-container *ngIf="grpname == 'LM-HR'" >
-                                                                <a href="#DetailedDescriptionModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;" (click)="Activedescription(datalist.REQUEST_ID,datalist.EMP_NAME)">View Details1</a>
+                                                                <a href="#DetailedDescriptionModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;" (click)="Activedescription(datalist.REQUEST_ID,datalist.EMP_NAME,datalist.REASON)">View Details</a>
                                                             </ng-container>
                                                             <ng-container *ngIf="grpname != 'LM-HR' && datalist.APPROVED_STATUS < 10"  >
-                                                                <a href="#DetailedDescriptionModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;" (click)="Activedescription(datalist.REQUEST_ID,datalist.EMP_NAME)">View Details2</a>
+                                                                <a href="#DetailedDescriptionModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;" (click)="Activedescription(datalist.REQUEST_ID,datalist.EMP_NAME,datalist.REASON)">View Details</a>
                                                             </ng-container>
                                                         </td>                                                     
                                                     </tr>
@@ -616,7 +616,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-xl">
                         <div class="modal-content">
                             <div class="modal-header bg-orange padding-up-5">
-                                <h5 class="fs-13 font-type text-white ma-5"><span class="me-1">Transfer Details:</span><span class="fw-semibold fs-13">{{Ename}}</span></h5>
+                                <h5 class="fs-13 font-type text-white ma-5"><span class="me-1">{{reason}} Details:</span><span class="fw-semibold fs-13">{{Ename}}</span></h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                             </div>
                             <form class="tablelist-form" autocomplete="off">
@@ -625,7 +625,7 @@
                                     <div class="card-body px-3">
                                         <div class="row mb-1">
     
-                                            <div class="col-lg-4 mb-2" *ngIf="SelectAction == 1">
+                                            <div class="col-lg-4 mb-2" *ngIf="reason == 'Transfer'">
                                                 <h6 class="font-type fw-semibold fs-12">Transfer to</h6>
                                                 <h6 class="font-type fw-medium fs-12"><span>{{transferdata.COMPANY}}</span></h6>
                                             </div>

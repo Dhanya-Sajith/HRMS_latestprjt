@@ -28,6 +28,7 @@ export class AppraisalFormComponent implements OnInit {
   appraisalFormdatadtls: any;
   empcodes: any;
   reqId: any;
+  backcate: any;
 
 
   constructor(private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private route: ActivatedRoute,private http: HttpClient) { }
@@ -36,6 +37,7 @@ export class AppraisalFormComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.empcodes = params['empcode'];
       this.reqId = params['reqId'];
+      this.backcate = params['view'];
     }); 
 
     this.hostname=this.apicall.dotnetapi; 
