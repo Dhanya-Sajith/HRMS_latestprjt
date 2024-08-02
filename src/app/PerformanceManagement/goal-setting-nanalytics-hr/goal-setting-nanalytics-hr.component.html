@@ -277,7 +277,7 @@
                                              <select class="form-select font-type fs-12 textbox-15 h-30"name="status"[(ngModel)]="selectedStatusAssessment"(change)="FetchGoalSettingData(2)">
                                                 <option value="" selected disabled >Status</option>
                                                 <option value="-1">All</option>
-                                                <option *ngFor="let combo of GoalSettingstatus" [value]="combo.KEY_ID"[hidden]="combo.KEY_ID <= 2 || combo.KEY_ID == 4 || combo.KEY_ID >= 11">{{ combo.DATA_VALUE }}</option>
+                                                <option *ngFor="let combo of GoalSettingstatus" [value]="combo.KEY_ID"[hidden]="combo.KEY_ID <= 2 || combo.KEY_ID == 4 || combo.KEY_ID == 11|| combo.KEY_ID == 12">{{ combo.DATA_VALUE }}</option>
                                              </select>  
                                          </div>
                                          <!--end col-->
@@ -323,10 +323,10 @@
                                          <td>{{item.EMP_CODE}}</td>
                                          <td style="white-space: pre-wrap;">{{item.EMP_NAME}}</td>
                                          <td>{{item.TARGET_DATE | date:"dd-MM-yyyy" }}</td>
-                                         <td class="status"*ngIf="item.REQUEST_STATUS==3||item.REQUEST_STATUS==6||item.REQUEST_STATUS==8||item.REQUEST_STATUS==10"><a href="#statusModal" data-bs-toggle="modal"><span class="badge bg-success-subtle text-success  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>
-                                         <td class="status"*ngIf="item.REQUEST_STATUS==5"><a href="#statusModal" data-bs-toggle="modal"><span class="badge bg-info-subtle text-info  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>                                        
-                                         <td class="status"*ngIf="item.REQUEST_STATUS==7"><a href="#statusModal" data-bs-toggle="modal"><span class="badge bg-danger-subtle text-danger  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>                                         
-                                         <td class="status"*ngIf="item.REQUEST_STATUS==9"><a href="#statusModal" data-bs-toggle="modal"><span class="badge bg-warning-subtle text-warning width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>
+                                         <td class="status"*ngIf="item.REQUEST_STATUS==3||item.REQUEST_STATUS==6||item.REQUEST_STATUS==8||item.REQUEST_STATUS==10||item.REQUEST_STATUS==13"><a href="#statusModal" data-bs-toggle="modal"(click)="viewStatusModel(item)"><span class="badge bg-success-subtle text-success  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>
+                                         <td class="status"*ngIf="item.REQUEST_STATUS==5"><a href="#statusModal" data-bs-toggle="modal"(click)="viewStatusModel(item)"><span class="badge bg-info-subtle text-info  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>                                        
+                                         <td class="status"*ngIf="item.REQUEST_STATUS==7"><a href="#statusModal" data-bs-toggle="modal"(click)="viewStatusModel(item)"><span class="badge bg-danger-subtle text-danger  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>                                         
+                                         <td class="status"*ngIf="item.REQUEST_STATUS==9"><a href="#statusModal" data-bs-toggle="modal"(click)="viewStatusModel(item)"><span class="badge bg-warning-subtle text-warning width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></a></td>
                                          
                                          <td>
                                              <ul class="list-inline hstack gap-1 mb-0">
@@ -747,13 +747,14 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr class="fs-12 font-type">
-                                                                <td>{{updatedBy}}</td>
-                                                                <!-- <td class="status" *ngIf="reqStatus==0"><span class="badge bg-info-subtle text-blue  width-budge fs-11 fw-semibold text-uppercase">{{StatusVal}}</span></td> -->
-                                                                <td class="status" *ngIf="reqStatus==1 || reqStatus==3"><span class="badge bg-success-subtle text-success  width-budge fs-11 fw-semibold text-uppercase">{{StatusVal}}</span></td>
-                                                                <td class="status" *ngIf="reqStatus==2 || reqStatus==4 || reqStatus==11 || reqStatus==12"><span class="badge bg-danger-subtle text-danger  width-budge fs-11 fw-semibold text-uppercase">{{StatusVal}}</span></td> 
-                                                                <td>{{target_Date | date:"dd-MM-yyyy" }}</td>
-                                                                <td>{{remarks}}</td>
+                                                            <tr class="fs-12 font-type" *ngFor="let item of statusdata">
+                                                                <td>{{item.EMP_NAME}}</td>
+                                                                <td class="status" *ngIf="item.REQUEST_STATUS==5"><span class="badge bg-info-subtle text-blue  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                                <td class="status" *ngIf="item.REQUEST_STATUS==1 || item.REQUEST_STATUS==3 ||item.REQUEST_STATUS==6||item.REQUEST_STATUS==8||item.REQUEST_STATUS==10||item.REQUEST_STATUS==13"><span class="badge bg-success-subtle text-success  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                                <td class="status" *ngIf="item.REQUEST_STATUS==2 || item.REQUEST_STATUS==4 || item.REQUEST_STATUS==7 || item.REQUEST_STATUS==11 || item.REQUEST_STATUS==12"><span class="badge bg-danger-subtle text-danger  width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td>
+                                                                <td class="status" *ngIf="item.REQUEST_STATUS==9"><span class="badge bg-warning-subtle text-warning width-budge fs-11 fw-semibold text-uppercase">{{item.STATUS_VAL}}</span></td> 
+                                                                <td>{{item.TARGET_DATE | date:"dd-MM-yyyy" }}</td>
+                                                                <td>{{item.REMARKS}}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>

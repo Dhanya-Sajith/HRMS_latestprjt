@@ -80,6 +80,8 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
   searchInputPerformance:string='';
   desiredPagePerformance: any;
   allChecked: boolean = false; 
+  statusdata: any;
+  user: any='tab1';
  
 
   constructor(private apicall:ApiCallService,private session:LoginService,private fb: FormBuilder,private datePipe: DatePipe,private route: ActivatedRoute,private router: Router) { 
@@ -99,6 +101,11 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.route.queryParams
+    .subscribe(params => {        
+      this.user = params['user']|| 'tab1';                     
+    }
+  ); 
     const today = new Date();   
     today.setDate(today.getDate() + 1); // Tomorrow's date
     this.minDate = today.toISOString().split('T')[0];
@@ -312,15 +319,11 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
        }
   }
   viewStatusModel(item:any){
-    //alert(JSON.stringify(item))
-    this.apicall.Goal_Status_LogDetails(item.EMP_CODE,item.REQUEST_ID).subscribe((res)=>{      
-      this.updatedBy=res[0].EMP_NAME;
-      this.reqStatus=res[0].REQUEST_STATUS;
-      this.StatusVal=res[0].STATUS_VAL;
-      this.target_Date=res[0].TARGET_DATE;
-      this.remarks=res[0].REMARKS;
-      this.itemClicked = item;
-      //alert(this.updatedBy)
+    // alert(JSON.stringify(item))
+    this.apicall.Goal_Status_LogDetails(item.EMP_CODE,item.REQUEST_ID).subscribe((res)=>{ 
+       console.log(JSON.stringify(res))   
+       this.statusdata=res;      
+       this.itemClicked = item;      
     })
   }
   clearHighlight() {

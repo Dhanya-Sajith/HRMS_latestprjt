@@ -4,7 +4,7 @@ import { LoginService } from 'src/app/login.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -122,7 +122,7 @@ userSession:any = this.session.getUserSession();
     this.empdata=res;
    })
 
-   this.fetchcomplaints();
+   //this.fetchcomplaints();
   }
   ontabSelected(){
   if(this.selectedTab=='team'){
@@ -135,6 +135,7 @@ userSession:any = this.session.getUserSession();
    this.CloseReqForm.get('dateofclosure')?.setValue(this.formattedDate);
   }else{
     this.viewflag=0; 
+    this.fetchcomplaints();
     this.apicall.ResourceEmployeesComboData(-1,-1,this.empcode,0).subscribe((res)=>{
       this.empdata=res;
      })  
@@ -146,6 +147,7 @@ userSession:any = this.session.getUserSession();
      })
   }
   fetchcomplaints(){
+    this.viewflag=0;  
   this.apicall.FetchGrievance_RequestsList(this.empcode,this.selectedStatus,this.viewflag,this.year,this.grpname).subscribe((res)=>{
     this.tabledata=res;
     console.log(JSON.stringify(this.tabledata))
@@ -157,6 +159,7 @@ userSession:any = this.session.getUserSession();
   })
  }  
  fetchcomplaintsTeam(){
+  this.viewflag=1;  
   this.apicall.FetchGrievance_RequestsList(this.empcode,this.selectedStatusTeam,this.viewflag,this.year,this.grpname).subscribe((res)=>{
     this.tabledataTeam=res;
     //alert(JSON.stringify(this.tabledataTeam))

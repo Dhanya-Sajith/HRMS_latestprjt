@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiCallService } from 'src/app/api-call.service';
 import { LoginService } from 'src/app/login.service';
@@ -80,7 +80,7 @@ export class HiringDashboardComponent implements OnInit {
   selectdesig: any;
   user: any = 'tab1';
 
-  constructor(private apicall:ApiCallService,private session:LoginService,private fb:FormBuilder,private datePipe: DatePipe,private renderer: Renderer2,private route: ActivatedRoute) { 
+  constructor(private apicall:ApiCallService,private session:LoginService,private fb:FormBuilder,private datePipe: DatePipe,private renderer: Renderer2,private route: ActivatedRoute, private cdr: ChangeDetectorRef) { 
     this.PushForm = this.fb.group({
       comments: ['', Validators.required],
     });
@@ -112,22 +112,25 @@ export class HiringDashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.queryParams.subscribe(params => {
-      this.user = params['user'];
-    });
-
-    if(this.user == 'tab1')
-    {
-      this.JobRequests();
-    }
-    else if(this.user == 'tab2')
-    {
-      this.ApplicationInfo();
-    }
-    else if(this.user == 'tab3')
-    {
-      this.CandidateDashboard();
-    }
+    this.route.queryParams
+      .subscribe(params => {        
+        this.user = params['user'] || 'tab1';    
+        this.cdr.detectChanges();                 
+      }
+    );
+    this.setTab(this.user);
+    // if(this.user == 'tab1')
+    // {
+    //   this.JobRequests();
+    // }
+    // else if(this.user == 'tab2')
+    // {
+    //   this.ApplicationInfo();
+    // }
+    // else if(this.user == 'tab3')
+    // {
+    //   this.CandidateDashboard();
+    // }
 
     //company combo box
     this.apicall.FetchCompanyList(this.empcode).subscribe((res) => {
@@ -157,7 +160,8 @@ export class HiringDashboardComponent implements OnInit {
     }else if(this.user == 'tab2')
     {
       this.ApplicationInfo();
-    }else{
+    }else if(this.user == 'tab3')
+    {
       this.CandidateDashboard();
     }
   }
