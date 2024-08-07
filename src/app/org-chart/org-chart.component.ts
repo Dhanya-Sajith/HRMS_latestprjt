@@ -27,8 +27,9 @@ export class OrgChartComponent implements OnInit {
   comcode:any;
   logopath:any;
   //Orgchart:any;
+  company:any;
   hostname: any;
-
+ currdate:any;
   private scale: number = .80;
   private readonly scaleStep: number = 0.1;
   private readonly minScale: number = 0.5;
@@ -42,14 +43,21 @@ ngOnInit(): void {
   this.hostname=this.apicall.dotnetapi;
   this.apicall.FetchCompanyList(this.empcode).subscribe((res)=>{
     this.listCompany=res;
+    //alert(JSON.stringify(this.listCompany));
     if (this.listCompany.length > 0) {
       this.comcode = this.listCompany[0].KEY_ID;
+      this.company=this.listCompany[0].DATA_VALUE;
     }
-    this.apicall.GetCompanyLogo(this.comcode).subscribe(async (res)=>{
-      this.listcompany=res;
-      this.logopath=res[0].DATA_VALUE;
-      this.logo = this.hostname + this.listcompany[0].DATA_VALUE;
-      this.logo = await this.getBase64ImageFromUrl(this.hostname + this.listcompany[0].DATA_VALUE);
+  //  alert(this.company)
+    // this.apicall.GetCompanyLogo(this.comcode).subscribe(async (res)=>{
+    //   this.listcompany=res;
+    //   this.logopath=res[0].DATA_VALUE;
+    //   this.logo = this.hostname + this.listcompany[0].DATA_VALUE;
+    //   this.logo = await this.getBase64ImageFromUrl(this.hostname + this.listcompany[0].DATA_VALUE);
+    // });
+    this.apicall.GetCurrentDate().subscribe(async (res)=>{
+      this.currdate=res[0].FROM_DATE;
+    //  alert(this.currdate)
     });
   })
 
@@ -58,30 +66,38 @@ ngOnInit(): void {
          
   })
 
-  //this.pushTree(this.mainjson,this.nodes)
-  //alert('fgf')
-  //alert(JSON.stringify(this.nodes));
-  //alert(JSON.stringify(this.mainjson));
-  // this.apicall.GetChartData(this.comcode,this.employee).subscribe((res)=>{
-  //   this.nodes=res;
-  //   //alert('op')
-  //  // this.mainjson=this.deepCloneTree(this.nodes);
-  //   alert(JSON.stringify(res));
-  // });
+  }
+customizenodes(nd:INode[],pid:any)
+{ //alert("FHh")
+  //alert(this.nodes.length);
+  for(let nds of nd)
+  {
+   // alert(this.employee);
+   //if((nds.ParentId=='0'|| nds.ecode=='0') && this.employee=='-1')
+   //{
+    nds.title=nds.title=nds.title.replace('⮟','⮝');
+   //}
+    if(nds.ParentId==pid)
+    {//alert(this.nodes[l].name);
+      nds.hidden=false;
+    //nds.title='hhj';
+      this.toggleCollapse(nds);
+      //nds.hidden=true;
+    }
+    this.customizenodes(nds.childs,pid);
+  }
   
-  //alert(JSON.stringify(this.mainjson));
 }
 toggleNode(node: INode): void {
   node.hidden = !node.hidden;
   //alert('fd')
 }
 toggleCollapse(nod:INode) {
- // alert(nod.hidden)
-  // Example: Toggle collapse state of Manager B node
-  //this.nodes[0].childs[1].expanded = !this.nodes[0].childs[1].expanded;
-//  this.nodes[0].childs = this.nodes[0].childs.filter(child => child.name !== 'CTO');
+
 if(nod.hidden==false)
   {
+  nod.title=nod.title.replace('⮝','⮟');
+ // nod.title=nod.title.replace('⮟','⮝');
 let childlen=nod.childs.length;
 //alert(childlen)
 if(childlen>0)//ie there
@@ -89,22 +105,19 @@ if(childlen>0)//ie there
   for(var k=childlen;k>0;)
   {
         nod.childs = nod.childs.filter(child => child.ecode !== nod.childs[k-1].ecode);
-   // alert(JSON.stringify(this.mainjson))
-   // nod.childs = nod.childs.push(child => child.ecode !== nod.childs[k-1].ecode);
-    // nod.childs.push(nod.childs[k-1]);
     k=nod.childs.length;
   }
-  nod.hidden=true;
+ 
+  nod.title=nod.title.replace('⮝','⮟');
+ nod.hidden=true;
  // nod.image='path_to_image';
-  nod.addtext='jhj';
-//this.nodes[0].childs = this.nodes[0].childs.filter(child => child.ecode !== nod.ecode);
-}
+ }
 else
   { //alert('condition')
-    this.apicall.GetChartData(this.comcode,this.employee).subscribe((res)=>{
+    this.apicall.GetChartData(this.employee,this.comcode).subscribe((res)=>{
       
       this.mainjson=res;
-     // alert(JSON.stringify(this.nodes));
+      //alert(JSON.stringify(this.mainjson));
     });
 let mainchildlen=this.mainjson.length;
 
@@ -112,15 +125,19 @@ let mainchildlen=this.mainjson.length;
 if(mainchildlen>0)//ie there
  {
  const node = this.searchFilter(nod.ecode,this.mainjson)
-//alert(node.childs.length)
- //node.childs.push(child => child.ecode !== nod.childs[k-1].ecode);
  const node1 = this.searchFilter(nod.ecode,this.nodes)
+ //alert(node.childs.length)
    for(var j=0; j<node.childs.length;j++)
   {
+    //alert(JSON.stringify(node.childs[j]));
+    
     node1.childs.push(node.childs[j]);
+    this.customizenodes(node1.childs,nod.ecode);
+    //this.toggleCollapse(node1.childs);
   }
-
+  
   nod.hidden=false;
+  nod.title=nod.title.replace('⮟','⮝');
 //this.nodes[0].childs = this.nodes[0].childs.filter(child => child.ecode !== nod.ecode);
 }
 }
@@ -158,7 +175,7 @@ return nodes.map(node => ({
 }));
 }
 handleExpand(node: INode) {
-alert("fdf")
+//alert("fdf")
 const element = document.getElementById(node.ecode);
 if (element) {
   const chartContainer = document.getElementById('chartContainer');
@@ -171,50 +188,53 @@ if (element) {
 viewChart()
 {
 
-  this.apicall.GetChartData(this.comcode,this.employee).subscribe((res)=>{
+  this.apicall.GetChartData(this.employee,this.comcode).subscribe((res)=>{
     this.nodes=res;
-    
-    //alert('op')
-   // this.mainjson=this.deepCloneTree(this.nodes);
-   // alert(JSON.stringify(res));
+    //this.company=this.comcode;
+    if(this.employee=='-1')
+    {this.customizenodes(this.nodes,'MJ00022');}
+     else{
+    this.customizenodes(this.nodes,this.employee);
+   }
   });
   //alert(this.comcode)
   this.apicall.GetCompanyLogo(this.comcode).subscribe((res)=>{
     this.listcompany=res;
+    alert(JSON.stringify(res));
     this.logopath=res[0].DATA_VALUE;
-   // alert(this.logopath)
+    alert(this.logopath)
    let kk=(<HTMLInputElement>document.getElementById("Orgcharts")); 
    this.renderer.setStyle(kk, 'transform', `scale(${this.scale})`);
   })
+ 
+}
+changeValue(event: any): void {
+  let text = event.target.options[event.target.options.selectedIndex].text;
+  this.company=text;
+  alert(text);
 }
 zoomIn() {
   let kk=(<HTMLInputElement>document.getElementById("Orgcharts")); 
   
      if (this.scale < this.maxScale) {
-    //alert(this.scale)
-    //alert(this.maxScale)
-    //alert(kk)
-    this.scale += this.scaleStep;
+     this.scale += this.scaleStep;
     //alert(this.scale)
     this.renderer.setStyle(kk, 'transform', `scale(${this.scale})`);
-  //   alert(this.scale)
-   // this.applyScale();
-  //  alert(this.username);
-  }
-  //let org=HTMLElement<document.getElementById("Orgchart")>;
-  //org?.style.transform=this.scale(.6);
- // org.setAttribute('style', 'background: red');
+   }
+  
 }
 zoomOut() {
   let kk=(<HTMLInputElement>document.getElementById("Orgcharts")); 
-  //alert(this.scale)
-    //alert(this.minScale)
-    //alert(kk)
+  
   if (this.scale > this.minScale) {
     this.scale -= this.scaleStep;
     //alert(this.scale)
     this.renderer.setStyle(kk, 'transform', `scale(${this.scale})`);
   }
+}
+setscale()
+{
+  //alert(this.scale)
 }
 private applyScale() {
   //alert(this.Orgcharts.nativeElement);
@@ -250,7 +270,6 @@ async getBase64ImageFromUrl(imageUrl: string): Promise<string | undefined> {
   }
 }
 
-
 convertToPDF() {
   const element: HTMLElement = <HTMLDivElement>document.getElementById('htmlElementId'); // Replace with your HTML element's ID
   const logoImg = new Image();
@@ -280,19 +299,6 @@ convertToPDF() {
      // pdf.addImage(contentDataURL, 'JPG', xPosition, yPosition, imgWidth, imgHeight);
       pdf.addImage(contentDataURL, '', xPosition, yPosition, imgWidth, imgHeight);
 
-
-    //   logoImg.onload = function() {
-    //     const logoWidth = 30; // Adjust the logo width
-    //     const logoHeight = (logoImg.height * logoWidth) / logoImg.width; // Maintain aspect ratio
-    //     const logoXPosition = 10; // X position for logo
-    //     const logoYPosition = 10; // Y position for logo
-
-    //    // Add the logo to the PDF
-    //    pdf.addImage(logoImg.src, 'PNG', logoXPosition, logoYPosition, logoWidth, logoHeight);
-
-
-
-    // }
       pdf.save('Org Chart.pdf');
       
     }).catch((error) => {
@@ -317,9 +323,7 @@ zoomIn1() {
    // this.applyScale();
   //  alert(this.username);
   }
-  //let org=HTMLElement<document.getElementById("Orgchart")>;
-  //org?.style.transform=this.scale(.6);
- // org.setAttribute('style', 'background: red');
+
 }
 zoomOut1() {
   let kk=(<HTMLInputElement>document.getElementById("Orgcharts")); 
@@ -334,49 +338,6 @@ zoomOut1() {
 }
 
 
-// convertToPDF() {
-//   console.log('Button clicked. Generating PDF...');
-
-//   const htmlContent = `
-//       <div>
-//           <h1>Organization Chart</h1>
-//           <p>Date: 05-09-2024</p>
-//           <div style="border: 1px solid black; padding: 10px;">
-//               <h3>Example Org Chart</h3>
-//               <ul>
-//                   ${this.nodes.map(node => `<li>${node.name}</li>`).join('')}
-//               </ul>
-//           </div>
-//       </div>
-//   `;
-
-  // const docDefinition: TDocumentDefinitions = {
-  //     content: [
-  //         {
-  //             layout: 'noBorders',
-  //             table: {
-  //                 widths: ['*'],
-  //                 body: [
-  //                     [
-  //                         {
-  //                             canvas: [
-  //                                 {
-  //                                     type: 'html',
-  //                                     html: htmlContent
-  //                                 }
-  //                             ]
-  //                         }
-  //                     ]
-  //                 ]
-  //             }
-  //         }
-  //     ]
-  // };
-
-  // Generate PDF and open in a new tab for testing
- // const pdfDoc = pdfMake.createPdf(docDefinition);
- // pdfDoc.open(); // Open in a new tab for testing
-//}
 
 
 

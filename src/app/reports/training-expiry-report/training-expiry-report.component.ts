@@ -29,7 +29,6 @@ export class TrainingExpiryReportComponent implements OnInit {
   itemsPerPage=10;
   currentPage=1;
   desiredPage: any;
-  hiddenValues: string[] = ['Cancelled', 'Rejected'];
   constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService) { }
 
   ngOnInit(): void {
@@ -38,25 +37,19 @@ export class TrainingExpiryReportComponent implements OnInit {
     this.apicall.FetchCompanyList(this.empcode).subscribe((res)=>{
       this.listCompany=res;
     })
-    this.apicall.listStatus(this.statustypeid).subscribe((res)=>{
-      this.liststatus=res;
-      })
-    this.apicall.listYear().subscribe((res)=>{
+    // this.apicall.listStatus(this.statustypeid).subscribe((res)=>{
+    //   this.liststatus=res;
+    //   })
+    this.apicall.FetchExpiryYears().subscribe((res)=>{
     this.listYear=res;
     })
-    this.FetchExpiryData();
-  }
-  isHidden(value: string): boolean {
-    return this.hiddenValues.includes(value);
   }
 FetchExpiryData()
 {
-
   const compny= (<HTMLInputElement>document.getElementById("comcode")).value;
-  const status= (<HTMLInputElement>document.getElementById("reqstatus")).value;
+  // const status= (<HTMLInputElement>document.getElementById("reqstatus")).value;
   const year= (<HTMLInputElement>document.getElementById("year")).value;
-
-  this.apicall.FetchTrainingExpiryData(this.empcode,compny,status,year).subscribe((res)=>{
+  this.apicall.FetchTrainingExpiryData(this.empcode,compny,year).subscribe((res)=>{
     this.listexpiry=res;
     const maxPageFiltered = Math.ceil(this.listexpiry.length / this.itemsPerPage);  
   
@@ -153,6 +146,7 @@ getTotalPages(): number {
   }  
   download_to_excel()
 { 
+  alert('download_to_excel')
  let Excelname:any;
  this.apicall.ExportToExcel(this.listexpiry).subscribe((res)=>{
   Excelname=res.Errormsg;

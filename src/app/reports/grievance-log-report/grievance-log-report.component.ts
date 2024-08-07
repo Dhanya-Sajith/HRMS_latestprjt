@@ -40,7 +40,7 @@ export class GrievanceLogReportComponent implements OnInit {
   company: any;
   salarydata: any;
   companycode: any=-1;
-  statusval: any=-1; 
+  statusval: any = 0; 
   message: any;
   failed: any;
   desiredPage: any;
@@ -82,7 +82,7 @@ export class GrievanceLogReportComponent implements OnInit {
 
   fetch_griev_report(){  
     
-    this.apicall.fetch_Grievance_Report(this.empcode,this.statusval,this.year,this.companycode).subscribe((res)=>{
+    this.apicall.fetch_Grievance_Report(this.empcode,0,this.year,this.companycode).subscribe((res)=>{
       this.griev_report=res;
       const maxPageFiltered = Math.ceil(this.griev_report.length / this.itemsPerPage);  
 

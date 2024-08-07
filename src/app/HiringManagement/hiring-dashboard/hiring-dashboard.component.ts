@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl,FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ApiCallService } from 'src/app/api-call.service';
 import { LoginService } from 'src/app/login.service';
 import { DatePipe } from '@angular/common';
-import { Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-hiring-dashboard',
@@ -12,8 +12,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./hiring-dashboard.component.scss']
 })
 export class HiringDashboardComponent implements OnInit {
-
-  @ViewChild('applicationInfoTab', { static: false }) applicationInfoTab!: ElementRef;
 
   userSession:any = this.session.getUserSession();
   empcode: any=this.userSession.empcode;
@@ -78,9 +76,10 @@ export class HiringDashboardComponent implements OnInit {
   searchInput2: string='';
   TransferForm: FormGroup; 
   selectdesig: any;
-  user: any = 'tab1';
+  user: any;
+  offerstatus: any;
 
-  constructor(private apicall:ApiCallService,private session:LoginService,private fb:FormBuilder,private datePipe: DatePipe,private renderer: Renderer2,private route: ActivatedRoute, private cdr: ChangeDetectorRef) { 
+  constructor(private apicall:ApiCallService,private session:LoginService,private fb:FormBuilder,private datePipe: DatePipe,private route: ActivatedRoute, private cdr: ChangeDetectorRef) { 
     this.PushForm = this.fb.group({
       comments: ['', Validators.required],
     });
@@ -114,24 +113,14 @@ export class HiringDashboardComponent implements OnInit {
 
     this.route.queryParams
       .subscribe(params => {        
-        this.user = params['user'] || 'tab1';    
-        this.cdr.detectChanges();                 
+        this.user = params['user'] || 'tab1';   
+        this.setTab(this.user); 
       }
     );
-    this.setTab(this.user);
-    // if(this.user == 'tab1')
-    // {
-    //   this.JobRequests();
-    // }
-    // else if(this.user == 'tab2')
-    // {
-    //   this.ApplicationInfo();
-    // }
-    // else if(this.user == 'tab3')
-    // {
-    //   this.CandidateDashboard();
-    // }
-
+    //Replacement/New Status 
+    this.apicall.listRegStatus(83).subscribe((res)=>{
+      this.offerstatus=res;
+    })
     //company combo box
     this.apicall.FetchCompanyList(this.empcode).subscribe((res) => {
       this.companydata=res;      
@@ -150,6 +139,10 @@ export class HiringDashboardComponent implements OnInit {
       this.selectedtypeValue = value;
       this.setConditionalValidationForSourceDetail();
     });
+    this.OfferForm.get('status')?.valueChanges.subscribe((value) => {
+      this.nameflag = value;
+      this.Statuschange();
+    });
   }
 
   setTab(tab: string) {
@@ -164,6 +157,7 @@ export class HiringDashboardComponent implements OnInit {
     {
       this.CandidateDashboard();
     }
+    this.cdr.detectChanges();
   }
 
   setConditionalValidationForSourceDetail() {
@@ -178,7 +172,6 @@ export class HiringDashboardComponent implements OnInit {
 
   JobRequests()
   {
-    this.user = 'tab1';
     this.apicall.HireRequest_StatusCount(this.empcode).subscribe((res) => {
       this.countlist=res;
       this.IN_PROCESS  = this.countlist[0].IN_PROCESS;
@@ -190,7 +183,6 @@ export class HiringDashboardComponent implements OnInit {
 
   ApplicationInfo()
   {
-    this.user = 'tab2';
     this.apicall.listRegStatus(2).subscribe((res)=>{
       this.designationdata=res;
      })
@@ -199,7 +191,6 @@ export class HiringDashboardComponent implements OnInit {
 
   CandidateDashboard()
   {
-    this.user = 'tab3';
     //Status 
     this.apicall.listRegStatus(78).subscribe((res)=>{
       this.candstatusdata=res;
@@ -502,8 +493,6 @@ export class HiringDashboardComponent implements OnInit {
   }
 
   activateSecondTab(reqid:any) {
-    const tabElement = this.applicationInfoTab.nativeElement.querySelector('a');
-    tabElement.click();
     this.user = 'tab2';
     this.FetchApplicantsList(reqid);
   }
@@ -704,14 +693,15 @@ export class HiringDashboardComponent implements OnInit {
     })
   }
 
-  Statuschange(status:any)
+  Statuschange()
   {
-    if(status == 1)
-      {
-        this.nameflag = 1;
-      }else{
-        this.nameflag = 0;
-      }
+    const sourceDetailControl = this.OfferForm.get('empname');
+    if (this.selectedtypeValue === '1') {
+      sourceDetailControl?.setValidators(Validators.required);
+    } else {
+      sourceDetailControl?.clearValidators();
+    }
+    sourceDetailControl?.updateValueAndValidity();
   }
 
   EmployeeDetails(data:any)

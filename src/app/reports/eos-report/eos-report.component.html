@@ -40,7 +40,7 @@
                                                      <div class="col-md-3">
                                                         <h3 class="fw-semibold"><span>Company</span></h3>
                                                         <div>
-                                                            <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="companycode"  name="comcode" id="comcode" (change)="fetch_eos_reportfilter()">
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="companycode"  name="comcode" id="comcode" >
                                                                 <option value="-1">All</option>
                                                                 <option  *ngFor="let item of company" value="{{item.KEY_ID}}">
                                                                     {{item.DATA_VALUE}}
@@ -51,13 +51,21 @@
                                                     
                                                     <div class="col-lg-3 col-sm-6">
                                                         <h3 class="fw-semibold"><span>From Date</span></h3>
-                                                        <input type="date" class="form-control" id="fromdt" name="fromdt"   [formControl]="fromdt" (change)="fetch_eos_reportfilter()" >
+                                                        <input type="date" class="form-control" id="fromdt" name="fromdt"   [formControl]="fromdt" >
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-lg-3 col-sm-6">
                                                         <div>
                                                             <h3 class="fw-semibold"><span>To Date</span></h3>
-                                                            <input type="date" class="form-control" id="todt" name="todt"  [formControl]="todt"  (change)="fetch_eos_reportfilter()" >
+                                                            <input type="date" class="form-control" id="todt" name="todt"  [formControl]="todt" >
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <label></label>
+                                                        <div>
+                                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="fetch_eos_reportfilter()"> <i class="ri-file-text-line"></i>
+                                                                View Report
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     <!--end col-->

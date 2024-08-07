@@ -1,3 +1,5 @@
+                        
+                        
 <!-- Begin page -->
 <div id="layout-wrapper">
 
@@ -22,7 +24,7 @@
         <div class="row mb-1">
                 <div class="col-lg-3 pt-2">
                     <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
-                    <select class="form-select font-type fs-11" aria-label="Default select example"  name="comcode" id="comcode" [(ngModel)]="comcode">
+                    <select class="form-select font-type fs-11" aria-label="Default select example"  name="comcode" id="comcode" [(ngModel)]="comcode" (change)="changeValue($event)">
                         <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
                             {{CompanyList.DATA_VALUE}}
                         </option>
@@ -45,7 +47,7 @@
                 </div>  
                 <div class="col-lg-2">
                     <div class="pt-4">    
-                        <button type="button" class="btn btn-info font-type fs-12 add-button"  data-bs-toggle="modal" data-bs-target=".exampleModalFullscreen"><i class="ri-eye-fill me-1"></i>View Full Size</button>
+                        <button type="button" class="btn btn-info font-type fs-12 add-button"  data-bs-toggle="modal" data-bs-target=".exampleModalFullscreen" (click)="setscale()"><i class="ri-eye-fill me-1"></i>View Full Size</button>
                     </div>
                 </div>   
                 <div class="col-lg-1">
@@ -75,8 +77,14 @@
                             <div class="col-sm">
                                 <div class="align-items-center d-flex">
                                     <div class="col-sm-auto">
-                                        <span class="avatar-title bg-transparent">
-                                            <img src="assets\styles\img\MTC logo.png" alt="" width="120px" Height="100px">
+                                        <span class="avatar-title bg-transparent" *ngIf="this.company=='Worldwide Oilfield Machine Middle East' || this.company=='Worldwide Oilfield Machine Sales and Marketing Ltd' ">
+                                            <img src="assets\styles\img\WOM Logo - 2024.png" alt="" alt="" class="img-size">
+                                        </span>
+                                        <span class="avatar-title bg-transparent" *ngIf="this.company=='WOM Valves and Controls International FZE'">
+                                            <img src="assets\styles\img\WVC-LOGO-2024.png" alt="" alt="" width="150px" Height="100px">
+                                        </span>
+                                        <span class="avatar-title bg-transparent" *ngIf="this.company=='Magnum Technology Center FZE - JAFZA'">
+                                            <img src="assets\styles\img\MTC logo.png" alt="" width="150px" Height="100px">
                                         </span>
                                     </div>
                                     <h4 class="card-title mb-0 flex-grow-1 text-center fs-13 font-type fw-semibold text-uppercase">Organization Chart</h4>
@@ -84,7 +92,7 @@
                             </div>
                             <div class="col-sm-auto">
                                 <div class="d-flex gap-1 flex-wrap">
-                                    <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">09/08/2024</h4>
+                                    <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">{{currdate| date: 'dd-MM-yyyy'}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +100,11 @@
                     <div class="card-body pa-6-8">
                         <div #chartContainer class="org-chart-container">
                             <ngx-org-chart [nodes]="nodes" id="Orgcharts"  (itemClick)="toggleCollapse($event)" > 
-                             
+                                
+                                    <div class="node-content">
+                                      <span>hjhj</span>
+                                    </div>
+                                  
                             </ngx-org-chart>
                         
                             <!-- <div id="chartContainer" class="chart-container">
@@ -137,24 +149,35 @@
                                         <div class="col-sm">
                                             <div class="align-items-center d-flex">
                                                 <div class="col-sm-auto">
-                                                    <span class="avatar-title bg-transparent">
-                                                        <img src="assets\styles\img\logo.png" alt="" width="120px" Height="100px">
+                                                    <span class="avatar-title bg-transparent" *ngIf="this.company=='Worldwide Oilfield Machine Middle East' || this.company=='Worldwide Oilfield Machine Sales and Marketing Ltd' ">
+                                                        <img src="assets\styles\img\WOM Logo - 2024.png" alt="" alt="" width="150px" Height="100px">
                                                     </span>
+                                                    <span class="avatar-title bg-transparent" *ngIf="this.company=='WOM Valves and Controls International FZE'">
+                                                        <img src="assets\styles\img\WVC-LOGO-2024.png" alt="" alt="" width="150px" Height="100px">
+                                                    </span>
+                                                    <span class="avatar-title bg-transparent" *ngIf="this.company=='Magnum Technology Center FZE - JAFZA'">
+                                                        <img src="assets\styles\img\MTC logo.png" alt="" width="150px" Height="100px">
+                                                    </span>
+
                                                 </div>
                                                 <h4 class="card-title mb-0 flex-grow-1 text-center fs-13 font-type fw-semibold text-uppercase">Organization Chart</h4>
                                             </div>
                                         </div>
                                         <div class="col-sm-auto">
                                             <div class="d-flex gap-1 flex-wrap">
-                                                <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">09/08/2024</h4>
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">{{currdate| date: 'dd-MM-yyyy'}}</h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body pa-6-8">
                                     <div #chartContainer class="org-chart-container">
-                                        <ngx-org-chart [nodes]="nodes" id="Orgcharts"  (itemClick)="toggleCollapse($event)" style="transform: scale(.53)" > 
-                                         
+                                        <ngx-org-chart [nodes]="nodes" id="Orgcharts"  (itemClick)="toggleCollapse($event)"  style="transform: scale(.6)" > 
+                                            <ng-template #nodeTemplate let-node="nodes">
+                                                <div class="node-content">
+                                                  <span>hjhj</span>
+                                                </div>
+                                              </ng-template>
                                         </ngx-org-chart>
                                     
                                         <!-- <div id="chartContainer" class="chart-container">

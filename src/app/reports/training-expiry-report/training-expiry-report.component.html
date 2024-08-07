@@ -34,32 +34,23 @@
                                                 <select class="form-select font-type fs-12 textbox-15" name="comcode" id="comcode" (change)="FetchExpiryData()">
                                                     <option value="-1">All</option>
                                                     <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
-                                                        {{CompanyList.DATA_VALUE}}
-()                                                          </option>
+                                                        {{CompanyList.DATA_VALUE}}                                                        </option>
                                                 </select>       
                                         </div>
-                                        <div class="col-lg-2 col-sm-6 col-md-6 pt-2">  
-                                                <h6 class="font-type fs-12 fw-semibold"><span>Status</span></h6>
-                                                <select class="form-select font-type fs-12 textbox-15" name="reqstatus" id="reqstatus" (change)="FetchExpiryData()" >
-                                                    <option value="-1">All</option>
-                                                    <option  *ngFor="let RegStatusList of liststatus" value="{{RegStatusList.KEY_ID}}" [hidden]="RegStatusList.DATA_VALUE == 'Cancelled'" >
-                                                        {{RegStatusList.DATA_VALUE}}
-                                                    </option>
-                                                </select>                      
-                                        </div>
+                                        
                                         <div class="col-lg-2 col-sm-6 col-md-6 pt-2">  
                                             <h6 class="font-type fs-12 fw-semibold"><span>Year</span></h6>
                                             <select class="form-select font-type fs-11" aria-label="Default select example"  name="year" id="year" (change)="FetchExpiryData()">
                                                 <option value="-1">All</option>
-                                                <option *ngFor="let YearList of listYear" value="{{YearList.DISPLAY_FIELD}}">
-                                                    {{YearList.DISPLAY_FIELD}}</option>
+                                                <option *ngFor="let YearList of listYear" value="{{YearList.TYPE_ID}}">
+                                                    {{YearList.TYPE_ID}}</option>
                                             </select>                     
                                     </div>
                                         
                                         
                                         
                                         <div class="col-lg-2 col-sm-6 col-md-6 pt-4">
-                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="FetchExpiryData()" hidden> <i class="ri-file-text-line"></i>
+                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="FetchExpiryData()"> <i class="ri-file-text-line"></i>
                                                 View Report
                                             </button>
                                         </div>  
@@ -84,7 +75,7 @@
                                         
                                         <div class="d-flex gap-1 flex-wrap">
                                             <div class="search-box">
-                                                <input type="text" class="form-control search h-30 textbox-15 font-type"id="searchInput" [(ngModel)]="searchInput"  name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
+                                                <input type="text" class="form-control search h-30 textbox-15 font-type" id="searchInput" [(ngModel)]="searchInput"  name="searchInput" placeholder="Search" aria-label="search" aria-describedby="search_icon">
                                                 <i class="ri-search-line search-icon"></i>
                                             </div>
                                         </div>
@@ -128,8 +119,8 @@
                                                     <tr class="trstyle fs-11" *ngFor="let expiryList of listexpiry | search : searchInput  | pagination: currentPage: itemsPerPage;index as i">
                                                         <td>{{expiryList.COMPANY}}</td>
                                                         <td>{{expiryList.REMARKS}}</td>
-                                                        <td>{{expiryList.EMP_CODE}}</td>
                                                         <td>{{expiryList.SUBJECT_NAME}}</td>
+                                                        <td>{{expiryList.EMP_NAME}}</td>
                                                         <td>{{expiryList.LOCATION}}</td>
                                                         <td>{{expiryList.SCHEDULED_DATE| date: 'dd-MM-yyyy'}}</td>
                                                         <td>{{expiryList.EXPIRY_DATE| date: 'dd-MM-yyyy'}}</td>
@@ -226,3 +217,7 @@
     <!-- end main content-->
 </div>
 <!-- END layout-wrapper -->
+        
+
+
+

@@ -466,7 +466,7 @@
                                                     <!-- <a href="{{todo.url}}"> -->
                                                     <a [routerLink]="['/' + todo.url]" [queryParams]="{ user: todo.scope}">
                                                     <div>
-                                                        <div class="d-flex align-items-start">
+                                                        <div class="d-flex align-items-start" *ngIf="todo.duedate">
                                                             <ng-container *ngIf="todo.duedate <= today">
                                                                 <div class="flex-grow-1" >
                                                                     <div class="badge bg-danger bg-gradient mb-2 font-type fs-11">Over Due</div>

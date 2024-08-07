@@ -127,13 +127,13 @@ SetAccess()
           this.useraccess=res;
           if(res.Errorid==1){
             this.showModal = 1; 
-            this.success='Access Setting Succeeded';    
+            this.success='Access Setting Succeeded';  
           }
           else{
             this.showModal = 2; 
             this.failed='Failed!';      
           } 
-       
+          this.Cancel()
       })
       
   }
@@ -224,11 +224,7 @@ Object.values(policy).some((value: any) =>
 const end = this.currentPage * this.itemsPerPage;
 return Math.min(end, filteredData.length);
 } 
-clear()
-{
-(<HTMLInputElement>document.getElementById("dropdown")).value='';
-(<HTMLInputElement>document.getElementById("menuname")).value='';
-}
+
 UserGroups()
 {
   this.apicall.listUserGroups(31).subscribe((res)=>{
@@ -344,9 +340,12 @@ Cancel()
   }
   UserAccessSavingList(menuid:any)
   {
+    // alert(menuid)
     this.apicall.UserAccessSettingList(menuid).subscribe((res)=>{
       this.accesslist=res;
+      // alert(JSON.stringify(this.accesslist))
       this.menunamelistvalue = this.accesslist[0].MenuName;
+      // alert(this.menunamelistvalue)
       this.listAccess = this.accesslist[0].userGroupAccess;
       this.length=this.listAccess.length;
     })
@@ -388,7 +387,7 @@ Cancel()
         this.showModal = 3; 
         this.warning='cannot combine with ESS'; 
       } 
-      this.Cancel();
+      this. selectedItemUserGroup = [];
       this.ListGroups();
     })
     
@@ -408,6 +407,7 @@ Cancel()
       menu: menuname,
       userFlag: viewflag ? 1 : 0
     };
+    // alert(JSON.stringify(data))
     this.apicall.UserAccessSetting(data).subscribe(res => {
       this.useraccess = res;
       if (res.Errorid === 1) {

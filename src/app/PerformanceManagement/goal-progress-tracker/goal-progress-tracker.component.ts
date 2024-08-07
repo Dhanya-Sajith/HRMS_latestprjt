@@ -38,6 +38,7 @@ export class GoalProgressTrackerComponent implements OnInit {
   currentDate: any;
   today: any;
   isButtonDisabled: boolean = false;
+  isButtonDisabledSub: boolean = true;
   backcate: any;
   
 
@@ -248,7 +249,7 @@ export class GoalProgressTrackerComponent implements OnInit {
         ScoreDetails: ScoreDtls
     };
 
-    alert(JSON.stringify(data)); // For testing purposes
+   // alert(JSON.stringify(data)); // For testing purposes
 
     // Make API call to update assessment track
     this.apicall.updateassessmenttrack(data).subscribe(res => {
@@ -282,7 +283,7 @@ export class GoalProgressTrackerComponent implements OnInit {
       mflag:markasvalue,
   };
 
-  alert(JSON.stringify(data));
+ // alert(JSON.stringify(data));
 
   this.apicall.appRejGoalEvaluation(data).subscribe(res =>{
     //  alert(res.Errorid);
@@ -302,12 +303,19 @@ export class GoalProgressTrackerComponent implements OnInit {
 
   }
 
-  markcheck() {
-    const checkbox = document.getElementById('formCheck10') as HTMLInputElement;
+  markcheck() 
+  {
+    let checkbox = document.getElementById('formCheck10') as HTMLInputElement;
+    const markasvalue = checkbox.checked ? checkbox.value : '0';
     if (checkbox) {
-      const markasvalue = checkbox.checked ? checkbox.value : '0';
       this.isButtonDisabled = markasvalue == '1'; // Enable button if value is '1'
+      this.isButtonDisabledSub = markasvalue == '0'; // Disable button if value is '1'
     } 
+    else
+    {
+      this.isButtonDisabled = markasvalue == '0';
+      this.isButtonDisabledSub = markasvalue == '1';
+    }
   }
 
 

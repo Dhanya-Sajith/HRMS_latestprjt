@@ -207,22 +207,16 @@ export class VPApprovalTrainingsComponent implements OnInit {
     this.item=item;
     this.training_id=item.TRAINING_ID;  
     this.EditForm.get('training_type')?.setValue(item.TRAINING_TYPEID); 
-    this.EditForm.get('proposed_quarter')?.setValue(item.PROPOSED_QUARTER_ID); 
-    
+    this.EditForm.get('proposed_quarter')?.setValue(item.PROPOSED_QUARTER_ID);
+     
   }
-  validateEditForm (mflag:any) {
-    if (this.EditForm.valid) {
-        this.submitEditForm(mflag);
-    } else {        
-        this.markFormGroupTouched(this.EditForm);
-    }
-  }
-  submitEditForm(mflag:any) {   
+  
+  submitEditForm() {  
+    if (this.EditForm.valid) { 
       const data = {
           ...this.EditForm.value,
           updated_by: this.empcode,         
-          training_id:this.training_id,
-          mflag:mflag
+          training_id:this.training_id          
       };
   
      console.log(JSON.stringify(data))
@@ -241,12 +235,15 @@ export class VPApprovalTrainingsComponent implements OnInit {
       }   
       this.cancelEditForm();
       this.filter();          
-    })     
+    }) 
+  } else {        
+    this.markFormGroupTouched(this.EditForm);
+}    
   } 
   cancelEditForm(){
     this.EditForm.reset();    
-    this.EditForm.get('training_type')?.setValue('');
-    this.EditForm.get('proposed_quarter')?.setValue('');
+    this.EditForm.get('training_type')?.setValue(this.item.TRAINING_TYPEID);
+    this.EditForm.get('proposed_quarter')?.setValue(this.item.PROPOSED_QUARTER_ID);
   }
   hold(item:any){
     const data = {      

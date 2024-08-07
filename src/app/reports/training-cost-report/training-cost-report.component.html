@@ -40,7 +40,7 @@
                                                      <div class="col-md-3">
                                                         <h3 class="font-type fs-12"><span>Company</span></h3>
                                                         <div>
-                                                            <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="companycode"  name="comcode" id="comcode" (change)="fetch_tr_sts_reportfilter()">
+                                                            <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="companycode"  name="comcode" id="comcode" >
                                                                 <option value="-1" selected disabled>Select</option>
                                                                 <option  *ngFor="let item of company" value="{{item.KEY_ID}}">
                                                                     {{item.DATA_VALUE}}
@@ -51,13 +51,21 @@
                                                       
                                                     <div class="col-md-3">
                                                         <h3 class="font-type fs-12"><span>Year</span></h3>
-                                                        <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="year" (change)="onYearSelected()" name="year" id="year" (change)="fetch_tr_sts_reportfilter()">                                                            
+                                                        <select class="form-select font-type fs-11" aria-label="Default select example" [(ngModel)]="year" (change)="onYearSelected()" name="year" id="year" >                                                            
                                                             <option value="-1" selected disabled>Select</option>
                                                             <option  *ngFor="let item of yearlist" value="{{item.DISPLAY_FIELD}}">
                                                                 {{item.DISPLAY_FIELD}}
                                                             </option>
                                                         </select>
-                                                    </div>                                             
+                                                    </div>  
+                                                    <div class="col-md-3" >
+                                                        <label></label>
+                                                        <div>
+                                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="fetch_tr_sts_reportfilter()"> <i class="ri-file-text-line"></i>
+                                                                View Report
+                                                            </button>
+                                                        </div>
+                                                    </div>                                           
                                                     
                                                 </div>
         

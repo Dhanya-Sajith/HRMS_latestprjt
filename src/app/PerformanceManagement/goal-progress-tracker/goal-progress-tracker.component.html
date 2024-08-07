@@ -64,7 +64,18 @@
                                                             </div>
                                                             <div class="col-md-6 col-lg-2" *ngIf="this.goalassessmentdtls[0].REVIEW_DATE!=null">
                                                                 <h6 class="fs-12 font-type">Status<span class="ms-1">:</span></h6>
-                                                                <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13">Pending</h6>
+                                                                <ng-container [ngSwitch]="true">
+                                                                    <div *ngSwitchCase="today < this.goalassessmentdtls[0].REVIEW_DATE">
+                                                                        <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13">Overdue</h6>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="today >= this.goalassessmentdtls[0].REVIEW_DATE">
+                                                                        <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13" *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==13">Pending</h6>
+                                                                        <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13" *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==6">Evaluation Submitted</h6>
+                                                                        <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13" *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==8">Assessment Completed</h6>
+                                                                        <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13" *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==9">Reassessment</h6>
+                                                                        <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13" *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==10">Completed</h6>
+                                                                    </div>
+                                                                </ng-container>
                                                             </div>
                                                            </div>
                                                        </div>
@@ -115,7 +126,7 @@
                                                   <td style="white-space: pre-wrap;padding:0px;">
                                                     <ng-container [ngSwitch]="category">
                                                         <div *ngSwitchCase="0">
-                                                            <textarea class="form-control border-0 font-type content-text fs-12"
+                                                            <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
                                                               required rows="3"
                                                               [(ngModel)]="assessdtl.EMP_GOAL_COMMENT" readonly>
                                                             </textarea>
@@ -127,7 +138,7 @@
                                                             </textarea>
                                                         </div>
                                                         <div *ngSwitchCase="2">
-                                                            <textarea class="form-control border-0 font-type content-text fs-12"
+                                                            <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
                                                               required rows="3"
                                                               [(ngModel)]="assessdtl.EMP_GOAL_COMMENT" readonly>
                                                             </textarea>
@@ -139,7 +150,7 @@
                                                     <ng-container [ngSwitch]="category">
                                                         <div *ngSwitchCase="0">
                                                             <input type="text"
-                                                            class="form-control border-0 font-type textbox-15"
+                                                            class="form-control border-0 font-type textbox-15 bg-light"
                                                             [(ngModel)]="assessdtl.EMP_GOAL_SCORE" readonly />
                                                         </div>
                                                         <div *ngSwitchCase="1">
@@ -150,7 +161,7 @@
                                                         </div>
                                                         <div *ngSwitchCase="2">
                                                             <input type="text"
-                                                            class="form-control border-0 font-type textbox-15"
+                                                            class="form-control border-0 font-type textbox-15 bg-light"
                                                             [(ngModel)]="assessdtl.EMP_GOAL_SCORE"
                                                             (ngModelChange)="onScoreChange()" readonly />
                                                         </div>
@@ -159,14 +170,14 @@
                                                   <td style="white-space: pre-wrap;padding:0px;">
                                                     <ng-container [ngSwitch]="category">
                                                         <div *ngSwitchCase="0">
-                                                            <textarea class="form-control border-0 font-type content-text fs-12"
+                                                            <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
                                                                       required rows="3"
                                                                       [(ngModel)]="assessdtl.LM_GOAL_COMMENT"
                                                                       readonly> 
                                                             </textarea>
                                                           </div>
                                                       <div *ngSwitchCase="1">
-                                                        <textarea class="form-control border-0 font-type content-text fs-12"
+                                                        <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
                                                                   required rows="3"
                                                                   [(ngModel)]="assessdtl.LM_GOAL_COMMENT"
                                                                   readonly> 
@@ -184,13 +195,13 @@
                                                     <ng-container [ngSwitch]="category">
                                                         <div *ngSwitchCase="0">
                                                             <input type="text"
-                                                                   class="form-control border-0 font-type textbox-15"
+                                                                   class="form-control border-0 font-type textbox-15 bg-light"
                                                                    [(ngModel)]="assessdtl.LM_GOAL_SCORE"
                                                                    readonly />
                                                           </div>
                                                       <div *ngSwitchCase="1">
                                                         <input type="text"
-                                                               class="form-control border-0 font-type textbox-15"
+                                                               class="form-control border-0 font-type textbox-15 bg-light"
                                                                [(ngModel)]="assessdtl.LM_GOAL_SCORE"
                                                                readonly />
                                                       </div>
@@ -212,9 +223,9 @@
                                                 <tr>
                                                     <td colspan="2"></td>
                                                     <td colspan="1" style="text-align: right;">Avg.</td>
-                                                    <td class="fw-semibold fs-13"><input type="text"  id="avgscoreEmp" name="avgscoreEmp" class="form-control border-0 font-type textbox-15" value="{{this.averageScore}}"  readonly/></td>
+                                                    <td class="fw-semibold fs-13"><input type="text"  id="avgscoreEmp" name="avgscoreEmp" class="form-control border-0 font-type textbox-15 bg-light" value="{{this.averageScore}}"  readonly/></td>
                                                     <td colspan="1"></td>
-                                                    <td class="fw-semibold fs-13"><input type="text" id="avgscoreLm" name="avgscoreLm" class="form-control border-0 font-type textbox-15" value="{{this.averageScoreLM}}"  readonly/></td>
+                                                    <td class="fw-semibold fs-13"><input type="text" id="avgscoreLm" name="avgscoreLm" class="form-control border-0 font-type textbox-15 bg-light" value="{{this.averageScoreLM}}"  readonly/></td>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -227,37 +238,42 @@
                                         </div>
 
                                         <!--FOR HR ONLY-->
-                                        <div class="row align-items-center gy-3">
-                                            <div class="col-sm">
-                                                <div class="align-items-center d-flex ">
-                                                    <div class="form-check form-check-info mb-2" *ngIf="this.category==0">
-                                                        <input class="form-check-input" type="checkbox" id="formCheck10" value="1" (click)="markcheck()">
-                                                        <label class="form-check-label fs-12 fw-semibold font-type text-uppercase text-blue">
-                                                            Mark as Assessment Complete
-                                                        </label>
+                                   
+                                        <ng-container [ngSwitch]="true">
+                                            <div *ngSwitchCase="this.category==0 && this.backcate==1">
+                                            </div>
+                                            <div *ngSwitchCase="this.category==0 && this.backcate==0">
+                                                <div class="row align-items-center gy-3">
+                                                    <div class="col-sm">
+                                                        <div class="align-items-center d-flex ">
+                                                            <div class="form-check form-check-info mb-2" *ngIf="this.category==0">
+                                                                <input class="form-check-input" type="checkbox" id="formCheck10" value="1" (click)="markcheck()">
+                                                                <label class="form-check-label fs-12 fw-semibold font-type text-uppercase text-blue">
+                                                                    Mark as Assessment Complete
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-auto" >
+                                                        <div class="d-flex gap-1 flex-wrap">
+                                                            <ng-container *ngIf="category == 1 || category == 2; else elseBlock">
+                                                                <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button">
+                                                                    <span class="fw-medium font-type text-white" style="font-size: 12px;" (click)="updateassessmenttrack()" >Update</span>
+                                                                </button>
+                                                            </ng-container>
+                                                            <ng-template #elseBlock>
+                                                                <p><button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button" [disabled]="isButtonDisabledSub">
+                                                                    <span class="fw-medium font-type text-white" style="font-size: 12px;" data-bs-toggle="modal" data-bs-target="#RejectModal" >Submit</span>
+                                                                </button></p>
+                                                            </ng-template>
+                                                            <button type="button" id="reassessmnt" [disabled]="isButtonDisabled" *ngIf="this.category==0" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" data-bs-toggle="modal" data-bs-target="#RejectModal" style="height: 24px;" ><i class="ri-send-plane-fill label-icon align-middle fs-16 ms-2"></i>Send for Reassessment</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-auto" >
-                                                <div class="d-flex gap-1 flex-wrap">
-
-                                                      <ng-container *ngIf="category == 1 || category == 2; else elseBlock">
-                                                        <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button">
-                                                            <span class="fw-medium font-type text-white" style="font-size: 12px;" (click)="updateassessmenttrack()" >Update</span>
-                                                        </button>
-                                                      </ng-container>
-                                                      <ng-template #elseBlock>
-                                                        <p><button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button">
-                                                            <span class="fw-medium font-type text-white" style="font-size: 12px;" data-bs-toggle="modal" data-bs-target="#RejectModal" >Submit</span>
-                                                        </button></p>
-                                                      </ng-template>
-
-                                                    <button type="button" id="reassessmnt" [disabled]="isButtonDisabled" *ngIf="this.category==0" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" data-bs-toggle="modal" data-bs-target="#RejectModal" style="height: 24px;" ><i class="ri-send-plane-fill label-icon align-middle fs-16 ms-2"></i>Send for Reassessment</button>
+                                        </ng-container>
 
 
-                                                </div>
-                                            </div>
-                                        </div>
                                         <!--FOR HR-->
 
                                     </div>
@@ -295,7 +311,7 @@
                                                                 <th class="font-type" width="5%">%.Achieved</th>
                                                                 <th class="font-type" width="40%">Answers <span style="visibility: hidden;">View Employee's Answere Here</span></th>
                                                                 <th class="font-type" width="40%">Comments <span style="visibility: hidden;">Enter Your Comments Here</span></th>
-                                                                <th>Action</th>
+                                                                <th *ngIf="category == 1 || category == 2">Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody class="list form-check-all font-type">
@@ -306,7 +322,7 @@
                                                               <td style="padding:0px;">
                                                                 <ng-container [ngSwitch]="category">
                                                                     <div *ngSwitchCase="0">
-                                                                        <input type="text" class="form-control border-0 font-type textbox-15 fs-12"
+                                                                        <input type="text" class="form-control border-0 font-type textbox-15 fs-12 bg-light"
                                                                        id="weightage{{i}}" name="weightage{{i}}"
                                                                        [(ngModel)]="progressdtl.EMP_GOAL_SCORE"
                                                                        placeholder="Enter %."  readonly/>
@@ -332,7 +348,7 @@
 
                                                                 <ng-container [ngSwitch]="category">
                                                                     <div *ngSwitchCase="0">
-                                                                        <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                        <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
                                                                           id="emp_goal_cmt{{i}}" name="emp_goal_cmt{{i}}" required
                                                                           rows="4" placeholder="Answer"  [(ngModel)]="progressdtl.EMP_GOAL_COMMENT" readonly>{{progressdtl.EMP_GOAL_COMMENT}}</textarea>
                                                                     </div>
@@ -351,7 +367,7 @@
                                                                       </ng-container>
                                                                       <ng-template #elseBlock>
                                                                         <!-- Content to display when condition is false -->
-                                                                        <p><textarea class="form-control border-0 font-type content-text fs-12"
+                                                                        <p><textarea class="form-control border-0 font-type content-text fs-12 bg-light"
                                                                             id="emp_goal_cmt{{i}}"
                                                                             name="emp_goal_cmt{{i}}"
                                                                             required
@@ -363,39 +379,40 @@
                                                                       </ng-template>
                                                                     </div>
                                                                     <div *ngSwitchCase="2">
-                                                                        <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                        <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
                                                                           id="emp_goal_cmt{{i}}" name="emp_goal_cmt{{i}}" required
                                                                           rows="4" placeholder="Answer"  [(ngModel)]="progressdtl.EMP_GOAL_COMMENT" readonly>{{progressdtl.EMP_GOAL_COMMENT}}</textarea>
                                                                     </div>
                                                                 </ng-container>
                                                                 
                                                               </td>
-                                                          
-                                                              <ng-container [ngSwitch]="category">
-                                                                <div *ngSwitchCase="0">
-                                                                    <td style="white-space: pre-wrap;padding:0px;">
-                                                                      <textarea class="form-control border-0 font-type content-text fs-12"
+                                                              <td style="white-space: pre-wrap;padding:0px;">
+                                                                <ng-container [ngSwitch]="category">
+                                                                    <div *ngSwitchCase="0">
+                                                                        
+                                                                        <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
+                                                                                    id="lm_comment{{i}}" name="lm_comment{{i}}" required
+                                                                                    rows="4" placeholder="Comments" readonly >{{progressdtl.LM_GOAL_COMMENT}}</textarea>
+                                                                    
+                                                                    </div>
+                                                                    <div *ngSwitchCase="1">
+                                                                    
+                                                                        <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
                                                                                 id="lm_comment{{i}}" name="lm_comment{{i}}" required
                                                                                 rows="4" placeholder="Comments" readonly >{{progressdtl.LM_GOAL_COMMENT}}</textarea>
-                                                                    </td>
-                                                                  </div>
-                                                                <div *ngSwitchCase="1">
-                                                                  <td style="white-space: pre-wrap;padding:0px;">
-                                                                    <textarea class="form-control border-0 font-type content-text fs-12"
-                                                                              id="lm_comment{{i}}" name="lm_comment{{i}}" required
-                                                                              rows="4" placeholder="Comments" readonly >{{progressdtl.LM_GOAL_COMMENT}}</textarea>
-                                                                  </td>
-                                                                </div>
-                                                                <div *ngSwitchCase="2">
-                                                                  <td style="white-space: pre-wrap;padding:0px;">
-                                                                    <textarea class="form-control border-0 font-type content-text fs-12"
-                                                                              id="lm_comment{{i}}" name="lm_comment{{i}}" required
-                                                                              rows="4" placeholder="Comments" [(ngModel)]="progressdtl.LM_GOAL_COMMENT">{{progressdtl.LM_GOAL_COMMENT}}</textarea>
-                                                                  </td>
-                                                                </div>
-                                                              </ng-container>
+                                                                    
+                                                                    </div>
+                                                                    <div *ngSwitchCase="2">
+                                                                    
+                                                                        <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                                id="lm_comment{{i}}" name="lm_comment{{i}}" required
+                                                                                rows="4" placeholder="Comments" [(ngModel)]="progressdtl.LM_GOAL_COMMENT">{{progressdtl.LM_GOAL_COMMENT}}</textarea>
+                                                                    
+                                                                    </div>
+                                                                </ng-container>
+                                                              </td>
                                                           
-                                                              <td>
+                                                              <td *ngIf="category == 1 || category == 2">
                                                                 <ul class="list-inline hstack gap-1 mb-0">
                                                                   <li class="list-inline-item">
                                                                     <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button"

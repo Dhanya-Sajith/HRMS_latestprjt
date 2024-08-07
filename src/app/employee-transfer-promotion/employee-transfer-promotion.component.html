@@ -446,7 +446,7 @@
                                 <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="SubmitForm()">
                                     <i class="ri-check-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
                               </div>
-                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type text-white"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type text-white" (click)="clear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
                         </div>
                     </div>
                     </div>
@@ -486,7 +486,7 @@
                                                 <!--end col-->
                                                 <div class="col-lg-3 col-sm-4">
                                                     <div class="search-box">
-                                                        <input type="text" class="form-control font-type fs-12 textbox-15" placeholder="Search..." [(ngModel)]="searchInput">
+                                                        <input type="text" class="form-control font-type fs-12 textbox-15" placeholder="Search..." name="searchInput1" [(ngModel)]="searchInput1">
                                                         <i class="ri-search-line search-icon"></i>
                                                     </div>
                                                 </div>
@@ -512,7 +512,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody >
-                                                    <tr class="font-type h-30" *ngFor="let datalist of Historydata | search : searchInput | pagination: currentPage: itemsPerPage">
+                                                    <tr class="font-type h-30" *ngFor="let datalist of Historydata | search : searchInput1 | pagination: currentPage: itemsPerPage;let i=index">
                                                         <td class="fw-semibold">{{datalist.REQUEST_ID}}</td>
                                                         <td>{{datalist.COMPANY_NAME}}</td>
                                                         <td style="white-space: pre-wrap;">{{datalist.EMP_NAME}}</td>

@@ -52,12 +52,12 @@ export class EmployeeTransferPromotionComponent implements OnInit {
   teamyear: any = -1;
   teamDesignation:any = -1;
   teamCompany:any = -1;
-  searchInput: string='';
   Historydata: any;
   descdata: any;
   salarydata: any;
   grosstotal: any;
 
+  searchInput1: string='';
   itemsPerPage=10;
   currentPage=1;
   desiredPage: any;
@@ -385,6 +385,11 @@ export class EmployeeTransferPromotionComponent implements OnInit {
      this.markFormGroupTouched(this.SalaryForm);
    }
   }
+
+  clear()
+  {
+    this.TransferForm.reset(); 
+  }
   
   markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
@@ -419,89 +424,87 @@ export class EmployeeTransferPromotionComponent implements OnInit {
   }
 
     //PaginationTeam
- getTotalPages(): number {
-  return Math.ceil(this.totalSearchResults / this.itemsPerPage);
-}
-
-goToPage() {
-  const totalPages = Math.ceil(this.totalSearchResults / this.itemsPerPage);
-  if (this.desiredPage >= 1 && this.desiredPage <= totalPages) {
-    this.currentPage = this.desiredPage;
-  } else {  
+    getTotalPages(): number {
+      return Math.ceil(this.totalSearchResults / this.itemsPerPage);
+    }
     
-    (<HTMLInputElement>document.getElementById("openModalButton")).click();
-    this.showModal = 2; 
-    this.failed='Invalid page number!'; 
-    this.desiredPage=''; 
-  }   
- 
-}
-getPageNumbers(currentPage: number): number[] {
-  const totalPages = Math.ceil(this.totalSearchResults / this.itemsPerPage);
-  const maxPageNumbers = 5; // Number of page numbers to show
-  const middlePage = Math.ceil(maxPageNumbers / 2);
-  let startPage = Math.max(currentPage - middlePage, 1);
-  let endPage = Math.min(startPage + maxPageNumbers - 1, totalPages);
-
-  if (endPage - startPage + 1 < maxPageNumbers) {
-    startPage = Math.max(endPage - maxPageNumbers + 1, 1);
-  }
-
-  return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
-}
-
-// Function to Calculate the total number of search results
-get totalSearchResults(): number {
-const totalResults = this.Historydata.filter((employee: any) => {
-  return Object.values(employee).some((value: any) =>
-    typeof value === 'string' && value.toLowerCase().startsWith(this.searchInput.toLowerCase())
-  );
-}).length;
-
-const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage);  
-
-if (this.currentPage > maxPageFiltered) {
-  this.currentPage = 1; 
-}
-
-return totalResults;
-}
-
-// Function to change the current page
-changePage(page: number): void { 
-  this.desiredPage = '';   
-  this.currentPage = page;
-  const maxPage = Math.ceil(this.totalSearchResults / this.itemsPerPage);
-  if (this.currentPage > maxPage) {
-    this.currentPage = 1;
-  }        
-}
-getEntriesStart(): number {
-if (this.currentPage === 1) {
-  return 1;
-}
-
-const filteredData = this.Historydata.filter((employee: any) =>
-  Object.values(employee).some((value: any) =>
-    typeof value === 'string' &&
-    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
-  )
-);
-
-const start = (this.currentPage - 1) * this.itemsPerPage + 1;
-return Math.min(start, filteredData.length);
-}
-
-
-getEntriesEnd(): number {  
-const filteredData = this.Historydata.filter((employee: any) =>
-  Object.values(employee).some((value: any) =>
-    typeof value === 'string' &&
-    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
-  )
-);
-const end = this.currentPage * this.itemsPerPage;
-return Math.min(end, filteredData.length);
-}
+    goToPage() {
+      const totalPages = Math.ceil(this.totalSearchResults / this.itemsPerPage);
+      if (this.desiredPage >= 1 && this.desiredPage <= totalPages) {
+        this.currentPage = this.desiredPage;
+      } else {  
+        
+        (<HTMLInputElement>document.getElementById("openModalButton")).click();
+        this.showModal = 2; 
+        this.failed='Invalid page number!'; 
+        this.desiredPage=''; 
+      }   
+     
+    }
+    getPageNumbers(currentPage: number): number[] {
+      const totalPages = Math.ceil(this.totalSearchResults / this.itemsPerPage);
+      const maxPageNumbers = 5; 
+      const middlePage = Math.ceil(maxPageNumbers / 2);
+      let startPage = Math.max(currentPage - middlePage, 1);
+      let endPage = Math.min(startPage + maxPageNumbers - 1, totalPages);
+    
+      if (endPage - startPage + 1 < maxPageNumbers) {
+        startPage = Math.max(endPage - maxPageNumbers + 1, 1);
+      }
+    
+      return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+    }
+    
+    get totalSearchResults(): number {
+        const totalResults = this.Historydata.filter((employee: any) => {
+          return Object.values(employee).some((value: any) =>
+            typeof value === 'string' && value.toLowerCase().startsWith(this.searchInput1.toLowerCase())
+          );
+        }).length;
+    
+        const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage);  
+    
+        if (this.currentPage > maxPageFiltered) {
+          this.currentPage = 1; 
+        }
+    
+        return totalResults;
+    }
+    
+    changePage(page: number): void { 
+      this.desiredPage = '';   
+      this.currentPage = page;
+      const maxPage = Math.ceil(this.totalSearchResults / this.itemsPerPage);
+      if (this.currentPage > maxPage) {
+        this.currentPage = 1;
+      }        
+    }
+    getEntriesStart(): number {
+    if (this.currentPage === 1) {
+      return 1;
+    }
+    
+    const filteredData = this.Historydata.filter((employee: any) =>
+      Object.values(employee).some((value: any) =>
+        typeof value === 'string' &&
+        value.toLowerCase().startsWith(this.searchInput1.toLowerCase())
+      )
+    );
+    
+    const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+    return Math.min(start, filteredData.length);
+    }
+    
+    
+    getEntriesEnd(): number {  
+    const filteredData = this.Historydata.filter((employee: any) =>
+      Object.values(employee).some((value: any) =>
+        typeof value === 'string' &&
+        value.toLowerCase().startsWith(this.searchInput1.toLowerCase())
+      )
+    );
+    const end = this.currentPage * this.itemsPerPage;
+    return Math.min(end, filteredData.length);
+    }
 
 }

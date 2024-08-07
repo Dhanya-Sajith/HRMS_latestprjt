@@ -365,7 +365,7 @@
                                                         title="Update Details"
                                                     >
                                                         <button 
-                                                            class="btn btn-sm btn-success focus-ring focus-ring-info" 
+                                                            class="btn btn-sm btn-success focus-ring focus-ring-info" data-bs-target="#SuccessRecordModal" data-bs-toggle="modal"
                                                             type="button"  
                                                             (click)="SaveUserGroupFlag(menunamelistvalue, userGroup.VIEW_FLAG === 1, userGroup.USER_GRP)"
                                                             [disabled]="!userGroup.changed"

@@ -14,9 +14,9 @@ export class ApiCallService {
 //Emisoft cloud for customer testing
 //public dotnetapi = 'http://3.111.100.109:81/api';
 //Local host
- public dotnetapi = 'https://localhost:5001/api';
+//public dotnetapi = 'https://localhost:5001/api';
 //Live server for Customer intranet
-//public dotnetapi = 'http://192.168.10.29:81/api';
+  public dotnetapi = 'http://192.168.10.29:81/api';
 //public hostname='localhost:44381';
 //Live server for Customer Cloud 
  //public dotnetapi = 'http://72.167.151.157:81/api';
@@ -29,6 +29,10 @@ export class ApiCallService {
   GetChartData(empcode:any,company:any)
   {
     return this.http.get<any>(`${this.dotnetapi}/MasterManagement/generatejson/${empcode}/${company}`);
+  }
+  GetCurrentDate()
+  {
+    return this.http.get<any>(`${this.dotnetapi}/Attendance/GetCurrentDates`);
   }
   FetchLeaveTypes()
   {
@@ -2951,14 +2955,20 @@ AddNewUserGroup(data:any)
   return this.http.post<any>(`${this.dotnetapi}/MasterManagement/Add_NewUserGroup`,data)
 }
 
-//Training Expiry Report
-FetchTrainingExpiryData(empcode:any,company:any,reqstatus:any,year:any)
-{
-  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Training_Expiry_Report/${empcode}/${company}/${reqstatus}/${year}`);
-}
+
+
 //Recruitment Report
 FetchRecruitmentData(empcode:any,company:any,fromdate:any,todate:any,reqstatus:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Hiring_Master_Report/${empcode}/${company}/${fromdate}/${todate}/${reqstatus}`);
+}
+//Training Expiry Report
+FetchExpiryYears()
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/YearList_TrainingExpiryReport`);
+}
+FetchTrainingExpiryData(empcode:any,company:any,year:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Training_Expiry_Report/${empcode}/${company}/${year}`);
 }
 }

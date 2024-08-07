@@ -79,7 +79,7 @@
                    <!-- Tab panes -->
                    <div class="tab-content pt-2 text-muted">
                     <!-- Job openings -->
-                    <div class="tab-pane active" id="JobRequests" role="tabpanel" [ngClass]="{'active': user=='tab1'}">
+                    <div class="tab-pane fade" id="JobRequests" role="tabpanel" [ngClass]="{'active show': user=='tab1'}">
                         <!--Count Status-->
                         <div class="row topbar-up mb-3">
                             <div class="col-lg-12 col-md-12">
@@ -126,7 +126,7 @@
                                                     </div>
                                                     <div>
                                                         <select class="form-select font-type h-30 textbox-15 " [(ngModel)]="company" (change)="JobRequest_ListHR()">
-                                                            <option value="-1" selected disabled >Company</option>
+                                                            <option value="-1" selected>All Company</option>
                                                             <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
                                                         </select> 
                                                     </div>
@@ -135,7 +135,7 @@
                                                     </div>
                                                     <div>
                                                         <select class="form-select font-type fs-12 textbox-15 h-30" [(ngModel)]="status" (change)="JobRequest_ListHR()">
-                                                            <option value="-1">Status</option>
+                                                            <option value="-1">All Status</option>
                                                             <option *ngFor="let combo of statusdata" value="{{combo.KEY_ID}}" [hidden]="combo.KEY_ID==6">{{combo.DATA_VALUE}}</option>                                                            
                                                         </select>
                                                     </div>
@@ -204,13 +204,13 @@
                                                                             <span class="text-blue align-middle">Push to Career</span>
                                                                         </a>
                                                                     </li>
-                                                                    <li *ngIf="jobdata.STATUS == 1||jobdata.STATUS == 4" (click)="CandidateSelection(jobdata.REQID,jobdata.DESIGNATION)">
+                                                                    <li *ngIf="jobdata.STATUS == 1 || jobdata.STATUS == 4" (click)="CandidateSelection(jobdata.REQID,jobdata.DESIGNATION)">
                                                                         <a class="dropdown-item"  href="#CandidateSelectionModal" data-bs-toggle="modal">
                                                                             <i class="ri-user-2-fill me-1 align-middle text-blue fs-18"></i>
                                                                             <span class="text-blue align-middle">Candidate Selection Board</span>
                                                                         </a>
                                                                     </li>
-                                                                    <li *ngIf="jobdata.STATUS == 1 || jobdata.COMPANY_CODE == 0||jobdata.STATUS == 4">
+                                                                    <li *ngIf="(jobdata.STATUS == 1 || jobdata.STATUS == 4) && jobdata.COMPANY_CODE == 0">
                                                                         <a class="dropdown-item"  href="#RemoveModal" data-bs-toggle="modal" (click) = "Activerequest(jobdata.REQID)">
                                                                             <i class="ri-file-transfer-line me-1 align-middle text-blue fs-18"></i>
                                                                             <span class="text-blue align-middle">Discontinued Job Position</span>
@@ -289,7 +289,7 @@
                     <!-- end Job openings tab -->
 
                     <!-- Job Application Tab -->
-                    <div class="tab-pane fade" id="ApplicationInfo" role="tabpanel" [ngClass]="{'active': user=='tab2'}">
+                    <div class="tab-pane fade" id="ApplicationInfo" role="tabpanel" [ngClass]="{'active show': user=='tab2'}">
                         <!-- TABLE DETAILS -->
                         <div class="row topbar-up">
                                 <div class="col-md-12 col-lg-12">
@@ -309,7 +309,7 @@
                                                             </div>
                                                             <div>
                                                                 <select class="form-select h-30 font-type textbox-15" name="designation" [(ngModel)]="designation" (change)="FetchApplicants()">
-                                                                    <option value="-1" selected disabled>Designation</option>
+                                                                    <option value="-1" selected>All Designation</option>
                                                                     <option *ngFor="let combo of designationdata" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>                                                            
                                                                 </select>
                                                             </div>
@@ -405,7 +405,7 @@
 
 
                     <!-- CandidateDashboard Tab -->
-                    <div class="tab-pane fade" id="CandidateDashboard" role="tabpanel" [ngClass]="{'active': user=='tab3'}">
+                    <div class="tab-pane fade" id="CandidateDashboard" role="tabpanel" [ngClass]="{'active show': user=='tab3'}">
                         <div class="row topbar-up">
                             <div class="col-lg-12">
                                 <div class="card shadow-lg">
@@ -424,13 +424,13 @@
                                                     </div>
                                                     <div>
                                                         <select class="form-select font-type h-30 textbox-15 " [(ngModel)]="candcompany" (change)="Candidate_ListHR()">
-                                                            <option value="-1" selected disabled >Company</option>
+                                                            <option value="-1" selected>All Company</option>
                                                             <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
                                                         </select>
                                                     </div>
                                                     <div>
                                                         <select class="form-select font-type fs-12 textbox-15 h-30" [(ngModel)]="candstatus" (change)="Candidate_ListHR()">
-                                                            <option value="-1" selected disabled>Status</option>
+                                                            <option value="-1" selected>All Status</option>
                                                             <option *ngFor="let candcombo of candstatusdata" value="{{candcombo.KEY_ID}}" >{{candcombo.DATA_VALUE}}</option>                                                            
                                                         </select>  
                                                     </div>
@@ -1140,11 +1140,10 @@
                                                 <div class="row mb-1 p-1">
                                                     <div class="col-lg-6">
                                                         <h3 class="fw-semibold fs-12 font-type"><span>Replacement/New </span></h3>
-                                                        <select class="form-select h-30 font-type textbox-15" name="status" #status formControlName="status" (change)="Statuschange(status.value)">
+                                                        <select class="form-select h-30 font-type textbox-15" name="status" #status formControlName="status">
                                                             <option value="" selected disabled>Select</option>
-                                                            <option value="1">Replacement</option>
-                                                            <option value="2">New</option>
-                                                        </select>
+                                                            <option *ngFor="let offerstat of offerstatus" value="{{offerstat.KEY_ID}}">{{offerstat.DATA_VALUE}}</option> 
+                                                        </select> 
                                                         <div *ngIf="OfferForm.get('status')!.hasError('required') && OfferForm.get('status')!.touched" class="text-danger">
                                                             Please, Fill the field.
                                                         </div> 
@@ -1152,6 +1151,9 @@
                                                     <div class="col-lg-6" *ngIf="nameflag == 1">
                                                         <h3 class="fw-semibold fs-12 font-type"><span>Name</span></h3>
                                                         <input type="text" class="form-control font-type textbox-15 fs-12 h-30" name="empname" formControlName="empname" />
+                                                        <div *ngIf="OfferForm.get('empname')!.hasError('required') && OfferForm.get('empname')!.touched" class="text-danger">
+                                                            Please, Fill the field.
+                                                        </div> 
                                                     </div>
                                                 </div>
                                                 </div>

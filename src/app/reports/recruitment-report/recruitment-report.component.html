@@ -31,16 +31,15 @@
                                     <div class="row mb-1 margin-up-10">
                                         <div class="col-lg-4 col-sm-6 col-md-6 pt-2">
                                                 <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
-                                                <select class="form-select font-type fs-12 textbox-15" name="comcode" id="comcode" (change)="FetchRecruitmentData()">
+                                                <select class="form-select font-type fs-12 textbox-15" name="comcode" id="comcode" >
                                                     <option value="-1">All</option>
                                                     <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
-                                                        {{CompanyList.DATA_VALUE}}
-()                                                          </option>
+                                                        {{CompanyList.DATA_VALUE}}                                                       </option>
                                                 </select>       
                                         </div>
                                         <div class="col-lg-2 col-sm-6 col-md-6 pt-2">  
                                                 <h6 class="font-type fs-12 fw-semibold"><span>Status</span></h6>
-                                                <select class="form-select font-type fs-12 textbox-15" name="reqstatus" id="reqstatus"(change)="FetchRecruitmentData()" >
+                                                <select class="form-select font-type fs-12 textbox-15" name="reqstatus" id="reqstatus">
                                                     <option value="-1">All</option>
                                                     <option  *ngFor="let RegStatusList of liststatus" value="{{RegStatusList.KEY_ID}}" >
                                                         {{RegStatusList.DATA_VALUE}}
@@ -49,18 +48,18 @@
                                         </div>   
                                         <div class="col-lg-2 col-sm-6 col-md-6 pt-2">
                                             <h3 class="fw-semibold"><span>From Date</span></h3>
-                                            <input type="date" class="form-control" id="fromdt" name="fromdt" [formControl]="fromdt" (change)="FetchRecruitmentData()" >
+                                            <input type="date" class="form-control" id="fromdt" name="fromdt" [formControl]="fromdt"  >
                                         </div>
                                         <!--end col-->
                                         <div class="col-lg-2 col-sm-6 col-md-6 pt-2">
                                             <div>
                                                 <h3 class="fw-semibold"><span>To Date</span></h3>
-                                                <input type="date" class="form-control" id="todt" name="todt" [formControl]="todt"  (change)="FetchRecruitmentData()" >
+                                                <input type="date" class="form-control" id="todt" name="todt" [formControl]="todt"   >
                                             </div>
                                         </div>
                                         
                                         <div class="col-lg-2 col-sm-6 col-md-6 pt-4">
-                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="FetchRecruitmentData()" hidden> <i class="ri-file-text-line"></i>
+                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white" (click)="FetchRecruitmentData()" > <i class="ri-file-text-line"></i>
                                                 View Report
                                             </button>
                                         </div>  

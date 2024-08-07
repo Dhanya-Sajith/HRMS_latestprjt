@@ -46,6 +46,7 @@ export class AccountPayableComponent implements OnInit {
   DISBURSEMENT_DATE: any;
   activereqid: any;
   docName: any;
+  exp_company: any
 
   constructor(private session:LoginService,private apicall:ApiCallService,private router:Router) { }
 
@@ -107,6 +108,7 @@ FetchDates()
   }
   FetchEmployeeList()
   {
+
     if(this.user==='Loan')
     {
     const company_code= (<HTMLInputElement>document.getElementById("ln_cmpny")).value;
@@ -118,8 +120,8 @@ FetchDates()
     }
     else
     {
-      const company_code= (<HTMLInputElement>document.getElementById("exp_company")).value;
-      this.apicall.FetchEmployeeList(0,company_code,this.empcode).subscribe((res)=>{
+       const companyID= (<HTMLInputElement>document.getElementById("exp_company")).value;
+      this.apicall.FetchEmployeeList(0,companyID,this.empcode).subscribe((res)=>{
         this.listemployee=res;
         this.ExpenseClaimFilter();
       })
@@ -240,7 +242,7 @@ getEntriesEnd(): number {
 }
 ListstatusLoan()
 {
-  this.apicall.listStatus(67).subscribe((res)=>{
+  this.apicall.listStatus(68).subscribe((res)=>{
     this.liststatusloan=res;
   })
 }
