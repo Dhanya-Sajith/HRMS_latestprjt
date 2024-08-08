@@ -560,14 +560,15 @@ export class ApprovelevelsettingComponent implements OnInit {
      //if(this.valid){
     this.apicall.AddApproveLevel(requestData).subscribe((res) => {
       if(res.Errorid==1){      
-       
-              this.showModal = 1;
-              this.success='Changes saved successfully!';               
-            }
-            else{
-                this.showModal = 2; 
-                this.failed='Failed!';     
-            }    
+        (<HTMLInputElement>document.getElementById("openModalButton")).click();
+        this.showModal = 1;
+        this.success='Changes saved successfully!';               
+      }
+      else{
+        (<HTMLInputElement>document.getElementById("openModalButton")).click();
+         this.showModal = 2; 
+         this.failed='Failed!';     
+      }    
                   
     });  
   
