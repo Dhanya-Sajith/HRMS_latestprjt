@@ -121,6 +121,7 @@ export class ExitinterviewformComponent implements OnInit {
       this.FetchQuestions(this.empcd);
       this.isDisabled = true;
     }else{
+      this.FetchQuestions(this.empcd);
       this.isDisabled = false;
     }
     
@@ -244,6 +245,8 @@ export class ExitinterviewformComponent implements OnInit {
               this.success = "Exit Interview Qustionnaire Submitted Successfully";
               this.Clear();
               this.action = 1;
+              this.FetchQuestions(this.empcd);
+              this.isDisabled = true;
             }
             else        
             {
