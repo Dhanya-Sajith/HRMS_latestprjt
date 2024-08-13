@@ -335,7 +335,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody >
-                                                            <tr class="font-type h-30" *ngFor="let applicantsdata of ApplicantsList | search : searchInput1 | pagination: currentPage: itemsPerPage;let i=index">
+                                                            <tr class="font-type h-30" *ngFor="let applicantsdata of ApplicantsList | search : searchInput1 | pagination: currentPage1: itemsPerPage1;let i=index">
                                                                 <td>{{applicantsdata.JOB_CODE}}</td>
                                                                 <td>{{applicantsdata.EMP_CODE}}</td>
                                                                 <td style="white-space: pre-wrap;">{{applicantsdata.CANDIDATE_NAME}}</td>
@@ -350,7 +350,7 @@
                                                 </div>
                                                 <!-- end  content -->
                                                 <div *ngIf="ApplicantsList">
-                                                    <div class="align-items-center justify-content-between row text-center text-sm-start"*ngIf="totalSearchResults2>0">
+                                                    <div class="align-items-center justify-content-between row text-center text-sm-start" *ngIf="totalSearchResults2>0">
                                                         <div class="col-sm">
                                                           <div class="font-type fs-12 text-muted">
                                                             Showing <span class="fw-semibold">{{ getEntriesStart2() }}</span>
@@ -367,7 +367,7 @@
                                                             <div class="d-flex gap-1 flex-wrap">
                                                                 <div>
                                                                     <div class="input-group">
-                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage1" tabindex="1">                                                                    
                                                             
                                                            <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage2()" tabindex="2">Go</button>
                                                       </div>
@@ -376,15 +376,15 @@
                                                         <div class="col-sm-auto mt-3 mt-sm-0">
                                                           <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
                                                             <li class="page-item">
-                                                              <button class="page-link" (click)="changePage2(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                              <button class="page-link" (click)="changePage2(currentPage1 - 1)" [class.disabled-button]="currentPage1 === 1">←</button>
                                                             </li>
-                                                            <ng-container *ngFor="let pageNumber of getPageNumbers2(currentPage)">
+                                                            <ng-container *ngFor="let pageNumber2 of getPageNumbers2(currentPage1)">
                                                               <li class="page-item">
-                                                                <button class="page-link" (click)="changePage2(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                                <button class="page-link" (click)="changePage2(pageNumber2)" [class.active]="currentPage1 === pageNumber2">{{ pageNumber2 }}</button>
                                                               </li>
                                                             </ng-container>
                                                             <li class="page-item">
-                                                              <button class="page-link" (click)="changePage2(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults2">→</button>
+                                                              <button class="page-link" (click)="changePage2(currentPage1 + 1)" [class.disabled-button]="currentPage1 * itemsPerPage1 >= totalSearchResults2">→</button>
                                                             </li>
                                                           </ul>
                                                         </div>
@@ -453,7 +453,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="list form-check-all font-type fs-11">
-                                            <tr class="font-type h-32" *ngFor="let cdata of candlist | search : searchInput2 | pagination: currentPage: itemsPerPage;let i=index">
+                                            <tr class="font-type h-32" *ngFor="let cdata of candlist | search : searchInput2 | pagination: currentPage2: itemsPerPage2;let i=index">
                                                 <td>{{cdata.JOB_ID}}</td>
                                                 <td>{{cdata.COMPANY_CODE}}</td>
                                                 <td style="white-space: pre-wrap;"><span class="text-orange fs-13">{{cdata.EMP_NAME}}</span></td>
@@ -563,7 +563,7 @@
                                                 <div class="d-flex gap-1 flex-wrap">
                                                     <div>
                                                         <div class="input-group">
-                                                <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage2" tabindex="1">                                                                    
                                                 
                                                <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPage3()" tabindex="2">Go</button>
                                           </div>
@@ -572,15 +572,15 @@
                                             <div class="col-sm-auto mt-3 mt-sm-0">
                                               <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
                                                 <li class="page-item">
-                                                  <button class="page-link" (click)="changePage3(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                  <button class="page-link" (click)="changePage3(currentPage2 - 1)" [class.disabled-button]="currentPage2 === 1">←</button>
                                                 </li>
-                                                <ng-container *ngFor="let pageNumber of getPageNumbers3(currentPage)">
+                                                <ng-container *ngFor="let pageNumber3 of getPageNumbers3(currentPage2)">
                                                   <li class="page-item">
-                                                    <button class="page-link" (click)="changePage3(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+                                                    <button class="page-link" (click)="changePage3(pageNumber3)" [class.active]="currentPage2 === pageNumber3">{{ pageNumber3 }}</button>
                                                   </li>
                                                 </ng-container>
                                                 <li class="page-item">
-                                                  <button class="page-link" (click)="changePage3(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResults">→</button>
+                                                  <button class="page-link" (click)="changePage3(currentPage2 + 1)" [class.disabled-button]="currentPage2 * itemsPerPage2 >= totalSearchResults3">→</button>
                                                 </li>
                                               </ul>
                                             </div>
@@ -914,9 +914,9 @@
                                                     </div>
                                                     <div class="col-lg-3">
                                                         <h3 class="fw-semibold fs-12 font-type"><span>Candidate Name</span></h3>
-                                                        <select  *ngIf="selectedtypeValue == '0'" class="form-select font-type fs-12 textbox-15 mb-1 h-30" name="name"  formControlName="name">
+                                                        <select  *ngIf="selectedtypeValue == '0'" class="form-select font-type fs-12 textbox-15 mb-1 h-30" name="name"  formControlName="name" (change)="Fillempgender($event)">
                                                             <option value="-1" selected disabled>Select</option>
-                                                            <option *ngFor="let cands of canddata" value="{{cands.EMP_CODE}}">{{cands.EMP_NAME}}</option>     
+                                                            <option *ngFor="let cands of canddata" value="{{cands.EMP_CODE}},{{cands.EMP_ID}}">{{cands.EMP_NAME}}</option>     
                                                         </select>  
                                                         <input  *ngIf="selectedtypeValue != '0'" type="text" class="form-control font-type textbox-15 fs-12 h-30" placeholder="Candidate Name" name="name"  formControlName="name"/>
                                                         <div *ngIf="ApplyForm.get('name')!.hasError('required') && ApplyForm.get('name')!.touched" class="text-danger">
@@ -927,11 +927,12 @@
                                                         <div class="mb-3">
                                                             <h3 class="fw-semibold fs-12 font-type"><span>Gender</span></h3>
                                                             <select class="form-select h-30 font-type textbox-15" name="gender" id="gender" formControlName="gender">
-                                                                <option value="" selected disabled>Select</option>
+                                                                <option value="" disabled>Select</option>
                                                                 <option  *ngFor="let GenderList of listgender" value="{{GenderList.KEY_ID}}">
                                                                         {{GenderList.DATA_VALUE}}
                                                                 </option>
                                                             </select>
+                                                            <!-- <input *ngIf="selectedtypeValue == '0'" type="text" class="form-control font-type textbox-15 fs-12 h-30" name="gender"  formControlName="gender"/> -->
                                                             <div *ngIf="ApplyForm.get('gender')!.hasError('required') && ApplyForm.get('gender')!.touched" class="text-danger">
                                                                 Please, Fill the field.
                                                             </div> 

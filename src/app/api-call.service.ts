@@ -21,7 +21,7 @@ public dotnetapi = 'https://localhost:5001/api';
 //Live server for Customer Cloud 
 //public dotnetapi = 'http://72.167.151.157:81/api';
   // Emisoft common Test server
- //public dotnetapi = 'http://192.168.1.38:84/api';
+ //public dotnetapi = 'http://192.168.1.37:84/api';
   // Emisoft common Test cloud server
   //public dotnetapi = 'http://13.53.118.116:81/api';
  

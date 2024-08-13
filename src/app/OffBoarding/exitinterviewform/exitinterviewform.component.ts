@@ -47,6 +47,7 @@ export class ExitinterviewformComponent implements OnInit {
   view: any;
   reqid: any;
   action: number = 0;
+  interviewdt: any;
 
   constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute,private router: Router) {
     this.requestForm = this.fb.group({
@@ -112,6 +113,12 @@ export class ExitinterviewformComponent implements OnInit {
 
     this.apicall.Fetch_EmpDetails_ExitInterview(this.empcd,this.reqid).subscribe((res)=>{
       this.empdtl = res;
+      this.interviewdt = this.empdtl[0].REQUEST_DATE
+      if(this.interviewdt == null){
+        this.isDisabled = false;
+      }else{
+        this.isDisabled = true;
+      }
     })
     this.apicall.genCompanyData(this.company).subscribe((res)=>{
       this.companyData=res; 

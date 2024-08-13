@@ -106,12 +106,17 @@ export class CandidateEvaluationComponent implements OnInit {
       
       this.isDisabled = true;
     }else{
-      this.isDisabled = false;
+      this.ViewCandidateDetails();
     }
   }
   ViewCandidateDetails(){
   this.apicall.ViewCandidateDetails(this.cand_id).subscribe((res)=>{
-    this.fillform = res       
+    this.fillform = res   
+    if(this.fillform.length==0){
+      this.isDisabled = false;     
+      }else{
+        this.isDisabled = true;        
+      }    
     this.questionnaireAnswers = this.fillform[0].EvaluationDetails;
     
     this.qus1 = this.questionnaireAnswers[0].ANSW_ID;

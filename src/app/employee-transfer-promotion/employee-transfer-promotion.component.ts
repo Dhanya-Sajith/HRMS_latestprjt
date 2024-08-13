@@ -379,6 +379,10 @@ export class EmployeeTransferPromotionComponent implements OnInit {
             this.failed = "Failed!";      
           }
         this.TransferForm.reset(); 
+        this.SalaryForm.reset();
+        this.SelectCompany = -1;
+        this.SelectEmployee = -1;
+        this.SelectAction = -1;
      })
    } else {    
      this.markFormGroupTouched(this.TransferForm);   
@@ -389,6 +393,10 @@ export class EmployeeTransferPromotionComponent implements OnInit {
   clear()
   {
     this.TransferForm.reset(); 
+    this.SalaryForm.reset();
+    this.SelectCompany = -1;
+    this.SelectEmployee = -1;
+    this.SelectAction = -1;
   }
   
   markFormGroupTouched(formGroup: FormGroup) {

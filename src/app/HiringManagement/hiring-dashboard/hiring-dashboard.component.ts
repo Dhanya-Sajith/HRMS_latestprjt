@@ -26,9 +26,15 @@ export class HiringDashboardComponent implements OnInit {
   company: any = -1;
 
   desiredPage: any;
+  desiredPage1: any;
+  desiredPage2: any;
   searchInput: string='';
-  itemsPerPage=10;
+  itemsPerPage=5;
   currentPage=1;
+  itemsPerPage1=10;
+  currentPage1=1;
+  itemsPerPage2=10;
+  currentPage2=1;
   countlist: any;
   TOTAL: any;
   PENDING: any;
@@ -204,6 +210,11 @@ export class HiringDashboardComponent implements OnInit {
   {
     this.apicall.JobRequest_ListHR(this.empcode,this.status,this.year,this.company).subscribe((res) => {
       this.joblist=res;
+      const maxPageFiltered = Math.ceil(this.joblist.length / this.itemsPerPage);  
+
+      if (this.currentPage > maxPageFiltered) {
+        this.currentPage = 1;     
+      }
     });
   }
 
@@ -291,10 +302,21 @@ export class HiringDashboardComponent implements OnInit {
     this.HireRequestCandidates();
   }
 
+  Fillempgender(event: any) {
+    const selectedValue = event.target.value;
+    const [empCode, empId] = selectedValue.split(',');
+
+    const selectedCandidate = this.canddata.find((candidate: { EMP_CODE: any; }) => candidate.EMP_CODE === empCode);
+    if (selectedCandidate) {
+      this.ApplyForm.get('gender')?.setValue(selectedCandidate.EMP_ID);
+    }
+  }
+
   showEmployeeList(event: Event) 
   {
     this.selectedtypeValue = (event.target as HTMLSelectElement).value;
     this.ApplyForm.controls['name'].setValue("");
+    this.ApplyForm.controls['gender'].setValue("");
   }
 
   validateApplyForm()
@@ -482,6 +504,11 @@ export class HiringDashboardComponent implements OnInit {
   {
     this.apicall.FetchApplicantsList(-1,this.designation, this.empcode).subscribe((res) => {
       this.ApplicantsList=res;
+      const maxPageFiltered = Math.ceil(this.ApplicantsList.length / this.itemsPerPage1);  
+
+      if (this.currentPage1 > maxPageFiltered) {
+        this.currentPage1 = 1;     
+      }
     });
   }
 
@@ -489,6 +516,12 @@ export class HiringDashboardComponent implements OnInit {
   {
     this.apicall.FetchApplicantsList(reqid,this.designation, this.empcode).subscribe((res) => {
       this.ApplicantsList=res;
+
+      const maxPageFiltered = Math.ceil(this.ApplicantsList.length / this.itemsPerPage1);  
+
+      if (this.currentPage1 > maxPageFiltered) {
+        this.currentPage1 = 1;     
+      }
     });
   }
 
@@ -521,6 +554,11 @@ export class HiringDashboardComponent implements OnInit {
   {
     this.apicall.Candidate_ListHR(this.empcode,this.candstatus,this.candcompany).subscribe((res) => {
       this.candlist=res;
+      const maxPageFiltered = Math.ceil(this.candlist.length / this.itemsPerPage2);  
+
+      if (this.currentPage2 > maxPageFiltered) {
+        this.currentPage2 = 1;     
+      }
     });
   }
 
@@ -696,7 +734,7 @@ export class HiringDashboardComponent implements OnInit {
   Statuschange()
   {
     const sourceDetailControl = this.OfferForm.get('empname');
-    if (this.selectedtypeValue === '1') {
+    if (this.nameflag == 1) {
       sourceDetailControl?.setValidators(Validators.required);
     } else {
       sourceDetailControl?.clearValidators();
@@ -751,27 +789,27 @@ export class HiringDashboardComponent implements OnInit {
 
 //Pagination - tab3
 getTotalPages3(): number {
-  return Math.ceil(this.totalSearchResults3 / this.itemsPerPage);
+  return Math.ceil(this.totalSearchResults3 / this.itemsPerPage2);
 }
 
 goToPage3() {
-  const totalPages = Math.ceil(this.totalSearchResults3 / this.itemsPerPage);
-  if (this.desiredPage >= 1 && this.desiredPage <= totalPages) {
-    this.currentPage = this.desiredPage;
+  const totalPages = Math.ceil(this.totalSearchResults3 / this.itemsPerPage2);
+  if (this.desiredPage2 >= 1 && this.desiredPage2 <= totalPages) {
+    this.currentPage2 = this.desiredPage2;
   } else {  
     
     (<HTMLInputElement>document.getElementById("openModalButton")).click();
     this.showModal = 2; 
     this.failed='Invalid page number!'; 
-    this.desiredPage=''; 
+    this.desiredPage2=''; 
   }   
  
 }
-getPageNumbers3(currentPage: number): number[] {
-  const totalPages = Math.ceil(this.totalSearchResults3 / this.itemsPerPage);
+getPageNumbers3(currentPage2: number): number[] {
+  const totalPages = Math.ceil(this.totalSearchResults3 / this.itemsPerPage2);
   const maxPageNumbers = 5; 
   const middlePage = Math.ceil(maxPageNumbers / 2);
-  let startPage = Math.max(currentPage - middlePage, 1);
+  let startPage = Math.max(currentPage2 - middlePage, 1);
   let endPage = Math.min(startPage + maxPageNumbers - 1, totalPages);
 
   if (endPage - startPage + 1 < maxPageNumbers) {
@@ -789,10 +827,10 @@ get totalSearchResults3(): number {
       );
     }).length;
 
-    const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage);  
+    const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage2);  
 
-    if (this.currentPage > maxPageFiltered) {
-      this.currentPage = 1; 
+    if (this.currentPage2 > maxPageFiltered) {
+      this.currentPage2 = 1; 
     }
 
     return totalResults;
@@ -800,15 +838,15 @@ get totalSearchResults3(): number {
 
 // Function to change the current page
 changePage3(page: number): void { 
-  this.desiredPage = '';   
-  this.currentPage = page;
-  const maxPage = Math.ceil(this.totalSearchResults3 / this.itemsPerPage);
-  if (this.currentPage > maxPage) {
-    this.currentPage = 1;
+  this.desiredPage2 = '';   
+  this.currentPage2 = page;
+  const maxPage = Math.ceil(this.totalSearchResults3 / this.itemsPerPage2);
+  if (this.currentPage2 > maxPage) {
+    this.currentPage2 = 1;
   }        
 }
 getEntriesStart3(): number {
-if (this.currentPage === 1) {
+if (this.currentPage2 === 1) {
   return 1;
 }
 
@@ -819,7 +857,7 @@ const filteredData = this.candlist.filter((employee: any) =>
   )
 );
 
-const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+const start = (this.currentPage2 - 1) * this.itemsPerPage2 + 1;
 return Math.min(start, filteredData.length);
 }
 
@@ -831,33 +869,33 @@ const filteredData = this.candlist.filter((employee: any) =>
     value.toLowerCase().startsWith(this.searchInput2.toLowerCase())
   )
 );
-const end = this.currentPage * this.itemsPerPage;
+const end = this.currentPage2 * this.itemsPerPage2;
 return Math.min(end, filteredData.length);
 }
 
 //Pagination - tab2
 getTotalPages2(): number {
-  return Math.ceil(this.totalSearchResults2 / this.itemsPerPage);
+  return Math.ceil(this.totalSearchResults2 / this.itemsPerPage1);
 }
 
 goToPage2() {
-  const totalPages = Math.ceil(this.totalSearchResults2 / this.itemsPerPage);
-  if (this.desiredPage >= 1 && this.desiredPage <= totalPages) {
-    this.currentPage = this.desiredPage;
+  const totalPages = Math.ceil(this.totalSearchResults2 / this.itemsPerPage1);
+  if (this.desiredPage1 >= 1 && this.desiredPage1 <= totalPages) {
+    this.currentPage1 = this.desiredPage1;
   } else {  
     
     (<HTMLInputElement>document.getElementById("openModalButton")).click();
     this.showModal = 2; 
     this.failed='Invalid page number!'; 
-    this.desiredPage=''; 
+    this.desiredPage1=''; 
   }   
  
 }
-getPageNumbers2(currentPage: number): number[] {
-  const totalPages = Math.ceil(this.totalSearchResults2 / this.itemsPerPage);
+getPageNumbers2(currentPage1: number): number[] {
+  const totalPages = Math.ceil(this.totalSearchResults2 / this.itemsPerPage1);
   const maxPageNumbers = 5; 
   const middlePage = Math.ceil(maxPageNumbers / 2);
-  let startPage = Math.max(currentPage - middlePage, 1);
+  let startPage = Math.max(currentPage1 - middlePage, 1);
   let endPage = Math.min(startPage + maxPageNumbers - 1, totalPages);
 
   if (endPage - startPage + 1 < maxPageNumbers) {
@@ -875,10 +913,10 @@ get totalSearchResults2(): number {
       );
     }).length;
 
-    const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage);  
+    const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage1);  
 
-    if (this.currentPage > maxPageFiltered) {
-      this.currentPage = 1; 
+    if (this.currentPage1 > maxPageFiltered) {
+      this.currentPage1 = 1; 
     }
 
     return totalResults;
@@ -886,15 +924,15 @@ get totalSearchResults2(): number {
 
 // Function to change the current page
 changePage2(page: number): void { 
-  this.desiredPage = '';   
-  this.currentPage = page;
-  const maxPage = Math.ceil(this.totalSearchResults2 / this.itemsPerPage);
-  if (this.currentPage > maxPage) {
-    this.currentPage = 1;
+  this.desiredPage1 = '';   
+  this.currentPage1 = page;
+  const maxPage = Math.ceil(this.totalSearchResults2 / this.itemsPerPage1);
+  if (this.currentPage1 > maxPage) {
+    this.currentPage1 = 1;
   }        
 }
 getEntriesStart2(): number {
-if (this.currentPage === 1) {
+if (this.currentPage1 === 1) {
   return 1;
 }
 
@@ -905,7 +943,7 @@ const filteredData = this.ApplicantsList.filter((employee: any) =>
   )
 );
 
-const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+const start = (this.currentPage1 - 1) * this.itemsPerPage1 + 1;
 return Math.min(start, filteredData.length);
 }
 
@@ -917,7 +955,7 @@ const filteredData = this.ApplicantsList.filter((employee: any) =>
     value.toLowerCase().startsWith(this.searchInput1.toLowerCase())
   )
 );
-const end = this.currentPage * this.itemsPerPage;
+const end = this.currentPage1 * this.itemsPerPage1;
 return Math.min(end, filteredData.length);
 }
 

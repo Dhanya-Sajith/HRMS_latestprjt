@@ -281,10 +281,11 @@ ListCompany()
   
    fdata.append('filesup',input.files[0]);
    //alert(JSON.stringify(fdata))
-  // alert("before")
+   alert("before")
    this.apicall.UploadExpenseDoc(fdata,reqid).subscribe((res)=>{
      const result=res;
-     if(res==0)
+    // alert(res)
+     if(res!=1)
      { 
        this.showModal = 2;
       this.failed = "Document uploading failed";
