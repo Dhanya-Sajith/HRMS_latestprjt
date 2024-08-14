@@ -127,12 +127,9 @@
                                         <td  class="linehtsty"> <span>:</span><span class="ms-2">{{data.AMOUNT}} /per month</span></td>
                                         <td></td>
                                     </tr>
-                                    <!-- <tr> <td></td> <td></td></tr>
-                                    <tr> <td></td> <td></td></tr>
-                                    <tr> <td></td> <td></td></tr> -->
-                                    <tr>
+                                    <tr class="mb-3" style="padding-top: 60;">
                                         <td></td>
-                                        <td class="fw-semibold fs-13 text-blue">Total  </td>
+                                        <td class="fw-semibold fs-13 text-blue"><h6 class="fs-13 font-type fw-medium fw-semibold">Total </h6> </td>
                                         <td class="fw-semibold fs-13 text-blue"> <span>:</span><span class="ms-2 text-italic"*ngIf="salarytransferdata?.length > 0">{{salarytransferdata[0].GROSS_SALARY }}  /per month</span></td>
                                     </tr>
                                 </tbody>
@@ -141,7 +138,7 @@
                             </div>
                            
 
-                            <div class="row mb-3">
+                            <div class="row mb-5">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="px-5">
                                         <h6 class="fs-13 font-type fw-medium">Should you require further clarifications, please contact the undersigned.</h6><br><br>
@@ -150,12 +147,12 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="row mb-3 mt-2">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="px-5">
                                         <hr style="width:30%;text-align:left;margin-left:0">
                                         <!-- <h6 class="fs-13 font-type fw-semibold"*ngIf="salarytransferdata?.length > 0">{{salarytransferdata[0].HR_NAME}}</h6> -->
-                                        <h6 class="fs-13 font-type fw-semibold">MERLIN VATHANA</h6>
+                                        <h6 class="fs-13 font-type fw-semibold mt-3">MERLIN VATHANA</h6>
                                         <h6 class="fs-13 font-type">HR Manager</h6>
                                         <h6 class="fs-13 font-type fw-medium"*ngIf="salarytransferdata?.length > 0">For  <span class=" fs-13 text-italic fw-semibold">{{salarytransferdata[0].EMP_WPS_COMPANY}} </span></h6>
                                     </div>

@@ -87,8 +87,8 @@ export class SalaryCertificateComponent implements OnInit {
     const pdfContent = this.salarytransferdata.map((item: { AllowanceDetails: any[]; GROSS_SALARY: any; }) => {
       const allowanceDetails = item.AllowanceDetails.map(data => [
           {}, // First empty cell
-          { text: data.ALLOWANCE, style: 'allowance' }, // Allowance description
-          { text: `: ${data.AMOUNT} /per month`, style: 'amount' }, // Allowance amount
+          { text: data.ALLOWANCE, style: 'boldText' }, // Allowance description
+          { text: `: ${data.AMOUNT} /per month`, style: 'boldText' }, // Allowance amount
           {} // Last empty cell
       ]);
   
@@ -96,13 +96,15 @@ export class SalaryCertificateComponent implements OnInit {
           table: {
               widths: ['*', 'auto', '*', '*'], // Define column widths
               body: [
-                  [{}, { text: 'Currency: AED', style: 'currency', colSpan: 2 }, {}, {}], // Currency row
+                  [{}, { text: 'Currency: AED', style: 'boldText', colSpan: 2 }, {}, {}], // Currency row
+                  [{ text: '', colSpan: 4, margin: [0, 5] }] ,
                   ...allowanceDetails, // Allowance details
-                  [{}, { text: 'Total', style: 'total' }, { text: `: ${item.GROSS_SALARY}`, style: 'totalAmount' }, {}] // Total row
+                  [{ text: '', colSpan: 4, margin: [0, 5] }] ,
+                  [{}, { text: 'Total', style: 'boldText' }, { text: `: ${item.GROSS_SALARY} /per month`, style: 'boldText' }, {}] // Total row
               ]
           },
           layout: 'noBorders',
-          margin: [0, 5, 0, 15] // Margin around the table
+          margin: [0, 0, 0, 0] // Margin around the table
       };
   });
 
@@ -194,8 +196,21 @@ export class SalaryCertificateComponent implements OnInit {
           },
           ...pdfContent,
         { text: 'Should you require further clarifications, please contact the undersigned.', style: 'normal',margin: [0, 5, 0, 5] },
-        { text: 'Sincerely Yours,', style: 'normal',margin: [0, 10, 0, 10] },
-        { text: 'MERLIN VATHANA', style: 'normal', bold: true,margin: [0, 10, 0, 0] },
+        { text: 'Sincerely Yours,', style: 'normal',margin: [0, 10, 0, 30] },
+        {
+          canvas: [
+              {
+                  type: 'line',
+                  x1: 0,
+                  y1: 0,
+                  x2: 200, // Adjust width as needed
+                  y2: 0,
+                  lineWidth: 1
+              }
+          ],
+          margin: [0, 30, 0, 20] // Adjust margin as needed
+        },
+        { text: 'MERLIN VATHANA', style: 'normal', bold: true,margin: [0, 0, 0, 0] },
         { text: 'HR Manager', style: 'normal'},
         {
           text: [

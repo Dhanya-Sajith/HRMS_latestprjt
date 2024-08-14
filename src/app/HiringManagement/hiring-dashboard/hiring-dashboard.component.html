@@ -528,7 +528,7 @@
                                                                                 <span class="text-blue align-middle fs-12">Confirm Employee Transfer</span> 
                                                                             </a>
                                                                         </ng-container>
-                                                                        <ng-container *ngIf="cdata.POSITION_FLAG == 1 || cdata.POSITION_FLAG == 2">
+                                                                        <ng-container *ngIf="cdata.POSITION_FLAG == 1 || cdata.POSITION_FLAG == 2 || cdata.POSITION_FLAG == 3">
                                                                             <a class="dropdown-item"  href="#SuccessRecordModal" data-bs-toggle="modal" (click)="ConvertEmployee(cdata.EMP_CODE,cdata.REQID,cdata.POSITION_FLAG)">
                                                                                 <i class="ri-user-shared-line me-1 align-middle text-blue fs-17"></i>
                                                                                 <span class="text-blue align-middle fs-12">Convert to Employee</span>

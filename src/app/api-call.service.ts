@@ -14,14 +14,14 @@ export class ApiCallService {
 //Emisoft cloud for customer testing
 //public dotnetapi = 'http://3.111.100.109:81/api';
 //Local host
-public dotnetapi = 'https://localhost:5001/api';
+//public dotnetapi = 'https://localhost:5001/api';
 //Live server for Customer intranet
  // public dotnetapi = 'http://192.168.10.29:81/api';
 //public hostname='localhost:44381';
 //Live server for Customer Cloud 
 //public dotnetapi = 'http://72.167.151.157:81/api';
   // Emisoft common Test server
- //public dotnetapi = 'http://192.168.1.37:84/api';
+ public dotnetapi = 'http://192.168.1.38:84/api';
   // Emisoft common Test cloud server
   //public dotnetapi = 'http://13.53.118.116:81/api';
  
