@@ -70,7 +70,6 @@ export class PerformanceManagementComponent implements OnInit {
         this.user = params['user']; 
       }
     );
-
     if( this.user == 'personal' || this.user == undefined){
       this.user = 'personal';
       this.Fetch_EmpGoalRequest();

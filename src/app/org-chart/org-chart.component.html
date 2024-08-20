@@ -1,5 +1,3 @@
-                        
-                        
 <!-- Begin page -->
 <div id="layout-wrapper">
 
@@ -78,7 +76,7 @@
                                 <div class="align-items-center d-flex">
                                     <div class="col-sm-auto">
                                         <span class="avatar-title bg-transparent" *ngIf="this.company=='Worldwide Oilfield Machine Middle East' || this.company=='Worldwide Oilfield Machine Sales and Marketing Ltd' ">
-                                            <img src="assets\styles\img\WOM Logo - 2024.png" alt="" alt="" class="img-size">
+                                            <img src="assets\styles\img\WOM Logo - 2024.png" alt="" alt="" width="150px" Height="100px">
                                         </span>
                                         <span class="avatar-title bg-transparent" *ngIf="this.company=='WOM Valves and Controls International FZE'">
                                             <img src="assets\styles\img\WVC-LOGO-2024.png" alt="" alt="" width="150px" Height="100px">
@@ -101,10 +99,7 @@
                         <div #chartContainer class="org-chart-container">
                             <ngx-org-chart [nodes]="nodes" id="Orgcharts"  (itemClick)="toggleCollapse($event)" > 
                                 
-                                    <div class="node-content">
-                                      <span>hjhj</span>
-                                    </div>
-                                  
+                                                                   
                             </ngx-org-chart>
                         
                             <!-- <div id="chartContainer" class="chart-container">
@@ -172,7 +167,7 @@
                                 </div>
                                 <div class="card-body pa-6-8">
                                     <div #chartContainer class="org-chart-container">
-                                        <ngx-org-chart [nodes]="nodes" id="Orgcharts"  (itemClick)="toggleCollapse($event)"  style="transform: scale(.6)" > 
+                                        <ngx-org-chart [nodes]="nodes" id="Orgcharts"  (itemClick)="toggleCollapse($event)"  style="transform: scale(.6)"  > 
                                             <ng-template #nodeTemplate let-node="nodes">
                                                 <div class="node-content">
                                                   <span>hjhj</span>
@@ -202,8 +197,7 @@
                         <!--end col-->
                     </div>
                 </div>
-                
-                <div class="modal-footer" style="justify-content: center;">
+                          <div class="modal-footer" style="justify-content: center;">
                     <!-- <div class="hstack gap-2 justify-content-center">   
                         <button type="button" class="btn btn-info font-type fs-12 add-button"  data-bs-toggle="modal" data-bs-target=".exampleModalFullscreen" (click)="convertToPDF()"><i class="ri-download-2-line me-1"></i>Download PDF</button>
                         <button type="button" class="btn btn-outline-success font-type fs-15 ma-10" title="Zoom In" (click)="zoomIn1()"><i class="ri-zoom-in-line"></i></button>

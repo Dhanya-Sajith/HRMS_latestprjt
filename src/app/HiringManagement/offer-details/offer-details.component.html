@@ -315,9 +315,12 @@
                                 </div>
                             </div>
                             <div class="row p-2 topbar-up">
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                   <label class="form-label font-type fs-12 fw-semibold text-blue text-italic mb-3" style="text-decoration: underline;">Grade :</label>
                                 </div>
+                                <div class="col-lg-6">
+                                    <label class="form-label font-type fs-12 fw-semibold text-blue text-italic mb-3" style="text-decoration: underline;">WPS Company :</label>
+                                  </div>
                                 <div class="col-lg-12">
                                 <div class="row">
                                     <div class="col-lg-6 mb-3"[class.has-error]="OfferDetailsForm.get('grade')?.invalid && OfferDetailsForm.get('grade')?.touched">
@@ -326,6 +329,15 @@
                                             <option  *ngFor="let grades of listgrade" value="{{grades.KEY_ID}}">{{grades.DATA_VALUE}}</option>
                                         </select>
                                         <div *ngIf="OfferDetailsForm.get('grade')?.invalid && OfferDetailsForm.get('grade')?.touched" class="text-danger">
+                                            *Required!
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3"[class.has-error]="OfferDetailsForm.get('WPSCompany')?.invalid && OfferDetailsForm.get('WPSCompany')?.touched">
+                                        <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="WPSCompany">
+                                            <option  value="null"selected disabled>WPS Company</option>                                            
+                                            <option  *ngFor="let combo of WPSCompany" value="{{combo.KEY_ID}}">{{combo.DATA_VALUE}}</option>
+                                        </select>
+                                        <div *ngIf="OfferDetailsForm.get('WPSCompany')?.invalid && OfferDetailsForm.get('WPSCompany')?.touched" class="text-danger">
                                             *Required!
                                         </div>
                                     </div>
@@ -376,8 +388,8 @@
                     <div class="col-lg-12 mb-3">
                         <div class="d-flex align-items-center flex-wrap">
                             <div class="flex-grow-1 text-center">
-                                <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type mb-1"(click)="SaveOfferDetails()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Save</button>
-                                <button type="button" class="btn btn-info btn-label right nexttab nexttab font-type mb-1"(click)="GenerateOfferLetter()"><i class="ri-file-ppt-2-line label-icon align-middle fs-16 ms-2"></i>Generate Offer Letter</button>
+                                <button type="button" class="btn btn-orange btn-label right ms-auto me-1 nexttab nexttab font-type mb-1"(click)="SaveOfferDetails()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Save</button>
+                                <button type="button" class="btn btn-info btn-label right nexttab  me-1 nexttab font-type mb-1"(click)="GenerateOfferLetter()"><i class="ri-file-ppt-2-line label-icon align-middle fs-16 ms-2"></i>Generate Offer Letter</button>
                                 <button type="button" class="btn btn-danger btn-label right nexttab nexttab font-type mb-1"(click)="Fetch_CandidateOfferDtls()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
                             </div>
                             <div class="flex-shrink-0">

@@ -48,7 +48,7 @@ ngOnInit(): void {
       this.comcode = this.listCompany[0].KEY_ID;
       this.company=this.listCompany[0].DATA_VALUE;
     }
-  //  alert(this.company)
+   // alert(this.company)
     // this.apicall.GetCompanyLogo(this.comcode).subscribe(async (res)=>{
     //   this.listcompany=res;
     //   this.logopath=res[0].DATA_VALUE;
@@ -71,11 +71,18 @@ customizenodes(nd:INode[],pid:any)
 { //alert("FHh")
   //alert(this.nodes.length);
   for(let nds of nd)
-  {
+  { let imgs=nds.image;
    // alert(this.employee);
    //if((nds.ParentId=='0'|| nds.ecode=='0') && this.employee=='-1')
    //{
     nds.title=nds.title=nds.title.replace('⮟','⮝');
+   // nds.image="https://localhost:44381/api/File/GetEmployeeDocs/1/MH00048/2/PIC.JPG";
+   imgs=this.hostname+"/File/GetEmployeeDocs/1/"+nds.ecode+"/2/"+nds.image;
+    nds.image=imgs;
+    imgs='';
+  //  alert(nds.image);
+   // nds.image="assets/styles/img/Admin 2.png";
+  // nds.cssClass="node-content";
    //}
     if(nds.ParentId==pid)
     {//alert(this.nodes[l].name);
@@ -125,6 +132,8 @@ let mainchildlen=this.mainjson.length;
 if(mainchildlen>0)//ie there
  {
  const node = this.searchFilter(nod.ecode,this.mainjson)
+//alert(node.childs.length)
+ //node.childs.push(child => child.ecode !== nod.childs[k-1].ecode);
  const node1 = this.searchFilter(nod.ecode,this.nodes)
  //alert(node.childs.length)
    for(var j=0; j<node.childs.length;j++)
@@ -184,34 +193,36 @@ if (element) {
   }
 }
 }
-
+changeValue(event: any): void {
+  let text = event.target.options[event.target.options.selectedIndex].text;
+  this.company=text;
+  this.viewChart();
+  //alert(text);
+}
 viewChart()
 {
 
   this.apicall.GetChartData(this.employee,this.comcode).subscribe((res)=>{
     this.nodes=res;
-    //this.company=this.comcode;
+   
     if(this.employee=='-1')
     {this.customizenodes(this.nodes,'MJ00022');}
-     else{
+    //alert('op')
+   // this.mainjson=this.deepCloneTree(this.nodes);
+   // alert(JSON.stringify(res));
+   else{
     this.customizenodes(this.nodes,this.employee);
    }
   });
   //alert(this.comcode)
   this.apicall.GetCompanyLogo(this.comcode).subscribe((res)=>{
     this.listcompany=res;
-    alert(JSON.stringify(res));
     this.logopath=res[0].DATA_VALUE;
-    alert(this.logopath)
+   // alert(this.logopath)
    let kk=(<HTMLInputElement>document.getElementById("Orgcharts")); 
    this.renderer.setStyle(kk, 'transform', `scale(${this.scale})`);
   })
  
-}
-changeValue(event: any): void {
-  let text = event.target.options[event.target.options.selectedIndex].text;
-  this.company=text;
-  alert(text);
 }
 zoomIn() {
   let kk=(<HTMLInputElement>document.getElementById("Orgcharts")); 

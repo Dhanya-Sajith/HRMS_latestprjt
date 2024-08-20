@@ -9,21 +9,22 @@ export class ApiCallService {
   _HttpClient: any;
 
   constructor(private http:HttpClient) { }
- //Emisoft test cloud
-//public dotnetapi = 'http://15.206.239.91:83/api';
-//Emisoft cloud for customer testing
-//public dotnetapi = 'http://3.111.100.109:81/api';
-//Local host
-//public dotnetapi = 'https://localhost:5001/api';
-//Live server for Customer intranet
- // public dotnetapi = 'http://192.168.10.29:81/api';
-//public hostname='localhost:44381';
-//Live server for Customer Cloud 
-//public dotnetapi = 'http://72.167.151.157:81/api';
+  
+  //Emisoft test cloud
+  //public dotnetapi = 'http://15.206.239.91:83/api';
+  //Emisoft cloud for customer testing
+  //public dotnetapi = 'http://3.111.100.109:81/api';
+  //Local host
+  public dotnetapi = 'https://localhost:5001/api';
+  //Live server for Customer intranet
+  // public dotnetapi = 'http://192.168.10.29:81/api';
+  //public hostname='localhost:44381';
+  //Live server for Customer Cloud 
+  //public dotnetapi = 'http://72.167.151.157:81/api';
   // Emisoft common Test server
- public dotnetapi = 'http://192.168.1.38:84/api';
+  //public dotnetapi = 'http://192.168.1.37:84/api';
   // Emisoft common Test cloud server
-  //public dotnetapi = 'http://13.53.118.116:81/api';
+  //public dotnetapi = 'http://13.53.118.116:81/api';//
  
   // common for all
   GetChartData(empcode:any,company:any)
@@ -2970,5 +2971,16 @@ FetchExpiryYears()
 FetchTrainingExpiryData(empcode:any,company:any,year:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Training_Expiry_Report/${empcode}/${company}/${year}`);
+}
+//Document Exists
+CheckDocExists(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/File/CheckDocExists`,data);
+}
+//Expense Claim
+updateExpenseClaimDoc(data:any)
+{
+  alert('X')
+  return this.http.post<any>(`${this.dotnetapi}/Payroll/UpdateExpenseClaimDoc`,data);
 }
 }

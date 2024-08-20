@@ -292,6 +292,9 @@
 
  
                                                         </li>
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reupload">
+                                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonApprove" href="#UploadModal" (click)="SetSelectedReqId(ExpenseClaimListPersonal.REQ_ID)" [disabled]="ExpenseClaimListPersonal.REQUEST_STATUS!=0" ><i class="fa fas fa-upload fs-16"></i></button>
+                                                         </li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -435,7 +438,49 @@
                     </div>
                     <!--End cancel Request Model-->
     
-    
+     <!--start Upload Model-->     
+     <div class="modal fade" id="UploadModal" tabindex="-1" aria-labelledby="UploadModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-orange padding-up-5">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" ></button>
+                </div>
+                <form class="tablelist-form" autocomplete="off" [formGroup]="ReuploadForm" (click)="validateuploadForm()">
+                <!-- <form class="tablelist-form" autocomplete="off" [formGroup]="requestForm" (ngSubmit)="validateEditForm()" > -->
+                    <div class="modal-body">
+                        <input type="hidden" id="id-field" />
+                        
+                        <div class="row">
+                            
+                            <div class="col-lg-6">
+                                <div class="mb-2">
+                                <h3 class="font-type fs-12 fw-semibold"><span>Upload Document</span></h3>
+                                <input class="form-control font-type fs-12" type="file" id="DocControl" formControlName="DocControl">          
+                                <div *ngIf="ReuploadForm.get('DocControl')!.hasError('required') && ReuploadForm.get('DocControl')!.touched" class="text-danger">
+                                    Please, upload the Document..
+                                </div>  
+                                </div>
+                            </div>
+                        </div>                                       
+                        
+                    <div class="modal-footer" style="padding-bottom: 0px;">
+                        <div class="hstack gap-2" *ngIf="!ReuploadForm.valid">
+                            <button type="submit" class="btn btn-soft-success" [disabled]="ReuploadForm.valid" id="validate-btn" (click)="validateuploadForm()">Upload</button>
+                            <!-- <button type="submit" class="btn btn-soft-success" [disabled]="requestForm.valid" id="validate-btn" (click)="validateEditForm()">Upload</button> -->
+                        </div>
+                    
+                        <div class="hstack gap-2" *ngIf="ReuploadForm.valid">
+                            <button type="button" class="btn btn-soft-success" id="add-btn" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="ReuploadDoc()">Upload</button>
+                        </div>
+                    </div>
+                    </div>
+                </form>
+
+                
+            </div>
+        </div> 
+    </div>   
+    <!--End Upload Model--> 
                     <!--Add Request Model-->
                     <div class="modal fade" id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">

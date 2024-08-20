@@ -98,7 +98,7 @@
                                     </div> 
                                     <div class="col-lg-3 col-md-6 pt-2 mb-1">  
                                         <h6 class="font-type fs-12 fw-semibold"><span>Action</span></h6>
-                                        <select class="form-select font-type fs-12 textbox-15 h-30" name = "SelectAction"  [(ngModel)]="SelectAction">
+                                        <select class="form-select font-type fs-12 textbox-15 h-30" name = "SelectAction"  [(ngModel)]="SelectAction" (change)="onSelectActionChange()">
                                             <option value="-1" selected>Select</option>
                                             <option *ngFor="let Adata of Action" [value]="Adata.KEY_ID">{{ Adata.DATA_VALUE }}</option>
                                         </select>                       
@@ -126,7 +126,7 @@
                         <!--HEADER-->
                         <div class="card-header pa-0 p-2 border-bottom mb-4">
                             <div class="row px-2">
-                                <div class="col-lg-4 col-md-6 pt-2 mb-2"  *ngIf="SelectAction == 1">
+                                <div class="col-lg-3 col-md-6 pt-2 mb-2"  *ngIf="SelectAction == 1">
                                     <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
                                     <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="company" (change)="FetchLineManagers(company.value)">
                                         <option  value=""selected disabled>Select</option>                                            
@@ -136,7 +136,7 @@
                                         *Required!                                        
                                     </div>   
                                 </div>
-                                <div class="col-lg-4 col-md-6 pt-2 mb-2">
+                                <div class="col-lg-3 col-md-6 pt-2 mb-2">
                                     <h6 class="font-type fs-12 fw-semibold"><span>Department </span></h6>
                                     <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="department" (change)="CheckValidations()">
                                         <option  value=""selected disabled>Select</option>                                            
@@ -146,7 +146,7 @@
                                         *Required!                                        
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 pt-2 mb-2">
+                                <div class="col-lg-3 col-md-6 pt-2 mb-2">
                                     <h6 class="font-type fs-12 fw-semibold"><span>Designation</span></h6>
                                     <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="designation" (change)="CheckValidations()">
                                         <option  value=""selected disabled>Select</option>                                            
@@ -159,7 +159,17 @@
                                         {{errorMessage}}
                                     </div>  
                                 </div> 
-                                <div class="col-lg-4 col-md-6 pt-2 mb-1">  
+                                <div class="col-lg-3 col-md-6 pt-2 mb-2"  *ngIf="SelectAction == 1">
+                                    <h6 class="fs-12 font-type fw-semibold"><span>WPS Company</span></h6>
+                                    <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="wps">
+                                        <option  value=""selected disabled>Select</option>                                            
+                                        <option  *ngFor="let listcomp of companylist" value="{{listcomp.KEY_ID}}" [hidden]="listcomp.KEY_ID == SelectCompany">{{listcomp.DATA_VALUE}}</option>
+                                    </select>
+                                    <div *ngIf="TransferForm.get('wps')?.invalid && TransferForm.get('wps')?.touched" class="text-danger">
+                                        *Required!                                        
+                                    </div>   
+                                </div>
+                                <div class="col-lg-3 col-md-6 pt-2 mb-1">  
                                     <h6 class="font-type fs-12 fw-semibold"><span>Line Manager</span></h6>
                                     <select class="form-select font-type fs-12 textbox-15 h-30"  formControlName="Manager">
                                         <option  value="" selected disabled>Select</option>                                            
@@ -169,7 +179,7 @@
                                         *Required!                                        
                                     </div>                   
                                 </div>
-                                <div class="col-lg-4 col-md-6 pt-2 mb-2">
+                                <div class="col-lg-3 col-md-6 pt-2 mb-2">
                                     <h6 class="font-type fs-12 fw-semibold"><span>Grade</span></h6>
                                     <select class="form-select h-30 font-type textbox-15 fs-12" formControlName="grade">
                                         <option  value="null" selected disabled>Select</option>                                            
@@ -179,7 +189,7 @@
                                         *Required!                                        
                                     </div>
                                 </div>      
-                                <div class="col-lg-4 col-md-6 pt-2 mb-2">
+                                <div class="col-lg-3 col-md-6 pt-2 mb-2">
                                     <h6 class="font-type fs-12 fw-semibold"><span>Effective Date</span></h6>
                                     <input type="date" class="form-control font-type fs-12 mb-0 textbox-15 h-30" formControlName="effdate"  min="{{mindate}}"> 
                                     <div *ngIf="TransferForm.get('effdate')?.invalid && TransferForm.get('effdate')?.touched" class="text-danger">

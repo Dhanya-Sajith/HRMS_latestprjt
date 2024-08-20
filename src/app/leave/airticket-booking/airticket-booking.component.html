@@ -135,12 +135,13 @@
                                         <th>Emp Code</th>
                                         <th>Name</th>
                                         <th>Company</th>
-                                        <th>Department</th>
+                                        <!-- <th>Department</th> -->
                                         <th width=5%>Departure</th>
                                         <th width=5%>Destination</th>
                                         <th>Departing</th>
                                         <th>Returning</th>
                                         <th>Passengers</th>
+                                        <th>Booked By</th>
                                         <th>Cost (AED)</th>
                                         <th>Ticket</th>
                                         <th>Action</th>
@@ -164,6 +165,7 @@
                                                 <a href="#DetailsModal" data-bs-toggle="modal" class="bar-text d-inline-block edit-item-btn"  style="text-decoration: underline;" (click)="passengerdetails(AirticketList.REQ_ID,AirticketList.EMP_CODE,1)"> Family</a>
                                             </ng-container>
                                         </td>
+                                        <td>{{AirticketList.BOOKED_BY}}</td>
                                         <td>{{AirticketList.COST}}</td>
                                         <td id="td-ViewDocModal">
                                             <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View" [hidden]="AirticketList.DOCUMENT ==''">

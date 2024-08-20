@@ -320,7 +320,7 @@
                                                                     <td [attr.rowspan]="hdata.Employees.length">
                                                                         <ul class="list-inline hstack gap-1 mb-0" [hidden]="hdata.PLAN_STATUS == 7">
                                                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit Request" *ngIf="hdata.PLAN_STATUS == 0 || hdata.PLAN_STATUS == 1">
-                                                                                <a href="#EditRequestModalTeam" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn" (click)="SelectPlanID(hdata.PLAN_ID)">
+                                                                                <a href="#EditRequestModalTeam" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn" (click)="SelectPlanID(hdata.PLAN_ID,hdata.PROPOSED_QUARTER_ID,hdata.TRAINING_TYPEID)">
                                                                                     <i class="ri-edit-circle-fill fs-22 text-orange text-center"></i>
                                                                                 </a>
                                                                             </li>
@@ -332,7 +332,7 @@
                                                                             </li> 
     
                                                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reject Request">
-                                                                                <a class="remove-item-btn" data-bs-toggle="modal" href="#RejectModal" (click)="SelectPlanID(hdata.PLAN_ID)">
+                                                                                <a class="remove-item-btn" data-bs-toggle="modal" href="#RejectModal" (click)="SelectPlanID(hdata.PLAN_ID,hdata.PROPOSED_QUARTER_ID,hdata.TRAINING_TYPEID)">
                                                                                     <i class="ri-close-circle-fill fs-22 text-danger text-center"></i>
                                                                                 </a>
                                                                             </li>
@@ -655,7 +655,7 @@
                                             <h6 class="fs-12 font-type fw-semibold"><span>Provider</span></h6>
                                             <select class="form-select font-type fs-12 textbox-15" formControlName="eprovider">
                                                 <option value="">Select</option>
-                                                <option *ngFor="let provid of listprovider" value="{{provid.KEY_ID}}"> {{provid.DATA_VALUE}}</option>
+                                                <option *ngFor="let provid of listprovider" value="{{provid.KEY_ID}}" > {{provid.DATA_VALUE}}</option>
                                             </select>   
                                             <div *ngIf="EditrequestForm.get('eprovider')!.hasError('required') && EditrequestForm.get('eprovider')!.touched" class="text-danger">Please select the provider</div>      
                                     </div>

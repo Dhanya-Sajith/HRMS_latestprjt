@@ -1570,28 +1570,38 @@
                                                 </div>
                                             
                                                 <div class="row"  [hidden]="airticketstatus == '1'">     
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-4">
                                                         <div class="mb-2">
                                                             <h3 class="fw-semibold fs-13 font-type"><span>Departure Date</span></h3>
-                                                            <input type="date" class="form-control fs-12 font-type height-check" name="departuredt" formControlName="departuredt" id="departuredt" min="{{mindate}}" Required>
+                                                            <input type="date" class="form-control fs-12 font-type height-check" name="departuredt" formControlName="departuredt" id="departuredt" min="{{mindate}}" required>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-4">
                                                         <div class="mb-3">
                                                             <h3 class="fw-semibold fs-13 font-type"><span>Return Date</span></h3>
                                                             <input type="date" class="form-control fs-12 font-type height-check" name="arrivaldt" formControlName="arrivaldt" id="arrivaldt"  min="{{mindate}}"  required>
                                                         </div>
-                                                    </div>                                       
+                                                    </div>   
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+                                                            <h3 class="fw-semibold fs-13 font-type"><span>Booked By</span></h3>
+                                                            <select class="form-select font-type fs-12 textbox-15 h-30" name = "bookedby"  formControlName="bookedby" id="bookedby" required>
+                                                                <option value="" selected>Select</option>
+                                                                <option *ngFor="let Adata of bookedstatus" [value]="Adata.KEY_ID">{{ Adata.DATA_VALUE }}</option>
+                                                            </select>  
+                                                            <!-- <div *ngIf="requestForm.get('bookedby')!.hasError('required') && requestForm.get('bookedby')!.touched" class="text-danger">Required</div> -->
+                                                        </div>
+                                                    </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-2">
                                                             <h3 class="fw-semibold fs-13 font-type"><span>Departure Airport</span></h3>
-                                                            <input type="text" class="form-control fs-12 font-type height-check" #selectdeparture name="departure" formControlName="departure" id="departure" Required>
+                                                            <input type="text" class="form-control fs-12 font-type height-check" #selectdeparture name="departure" formControlName="departure" id="departure" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <h3 class="fw-semibold fs-13 font-type"><span>Arrival Airport</span></h3>
-                                                            <input type="text" class="form-control fs-12 font-type height-check" #selectarrival name="arrival" formControlName="arrival" id="arrival"required>
+                                                            <input type="text" class="form-control fs-12 font-type height-check" #selectarrival name="arrival" formControlName="arrival" id="arrival" required>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -139,6 +139,7 @@ export class LeavemanagementComponent implements OnInit {
   leave_emp: any = -1;
   data: any; 
   desiredPage: any; 
+  bookedstatus: any;
 
   constructor(private fb: FormBuilder,private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private route: ActivatedRoute)
    { 
@@ -667,6 +668,11 @@ export class LeavemanagementComponent implements OnInit {
     this.apicall.CountryDetails().subscribe((res)=>{
       this.listcountry=res;          
     })
+
+    //Airticket Booked By
+    this.apicall.listRegStatus(87).subscribe((res)=>{
+      this.bookedstatus = res;
+    })
     this.anual='0'; 
     this.reqstatus=0; 
     this.costdoc='0';   
@@ -711,6 +717,7 @@ export class LeavemanagementComponent implements OnInit {
           (<HTMLInputElement>document.getElementById("arrival")).value='';      
           (<HTMLInputElement>document.getElementById("departuredt")).value='';
           (<HTMLInputElement>document.getElementById("arrivaldt")).value='';
+          (<HTMLInputElement>document.getElementById("bookedby")).value=''; 
 
           this.ReasonControl.setValue('');      
           this.DocFileControl.setValue('');
@@ -876,10 +883,11 @@ export class LeavemanagementComponent implements OnInit {
       const enddateControl = this.requestForm.get('enddate');
       const duration= (<HTMLInputElement>document.getElementById("duration")).value;
       const session= (<HTMLInputElement>document.getElementById("session")).value; 
-      const  departure=(<HTMLInputElement>document.getElementById("departure")).value;
-      const  arrival=(<HTMLInputElement>document.getElementById("arrival")).value;
-      const  departuredt=(<HTMLInputElement>document.getElementById("departuredt")).value;
-      const  arrivaldt=(<HTMLInputElement>document.getElementById("arrivaldt")).value;
+      const departure=(<HTMLInputElement>document.getElementById("departure")).value;
+      const arrival=(<HTMLInputElement>document.getElementById("arrival")).value;
+      const departuredt=(<HTMLInputElement>document.getElementById("departuredt")).value;
+      const arrivaldt=(<HTMLInputElement>document.getElementById("arrivaldt")).value;
+      const bookedby=(<HTMLInputElement>document.getElementById("bookedby")).value;
 
       const selectedValue = this.requestForm.get('reqleavetype')?.value;
       const dropdownOptions = Array.from(document.querySelectorAll(`[formControlName="reqleavetype"] option`)) as HTMLOptionElement[];
@@ -922,6 +930,7 @@ export class LeavemanagementComponent implements OnInit {
           departuredate:departuredt,
           arrivaldate:arrivaldt,
           document:this.DocFileControl.value,
+          bookedBy:bookedby
         };
         // alert(JSON.stringify(leavereqdata))
       this.apicall.addLeaveReq(leavereqdata).subscribe(res=>{
@@ -1037,6 +1046,7 @@ export class LeavemanagementComponent implements OnInit {
     (<HTMLInputElement>document.getElementById("arrival")).value='';  
     (<HTMLInputElement>document.getElementById("departuredt")).value='';
     (<HTMLInputElement>document.getElementById("arrivaldt")).value='';  
+    (<HTMLInputElement>document.getElementById("bookedby")).value=''; 
     this.noofleaves.setValue("");
     this.ReasonControl.setValue('');      
     this.NoofDaysControl.setValue('');

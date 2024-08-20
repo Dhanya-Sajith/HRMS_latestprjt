@@ -129,6 +129,7 @@
                                                                     <th scope="col" style="text-align: center;">Departing</th>
                                                                     <th scope="col" style="text-align: center;">Returning</th>
                                                                     <th scope="col" style="text-align: center;">Passengers</th>
+                                                                    <th scope="col" style="text-align: center;">Booked By</th>
                                                                     <th scope="col" style="text-align: center;">Cost(AED)</th>
                                                                 </tr>
                                                             </thead> 
@@ -143,7 +144,15 @@
                                                                     <td>{{AirticketList.STATUS_VAL}}</td>
                                                                     <td>{{AirticketList.START_DATE | date:"dd-MM-yyyy"}}</td>
                                                                     <td>{{AirticketList.END_DATE | date:"dd-MM-yyyy"}}</td>
-                                                                    <td>Self</td>
+                                                                    <td>
+                                                                        <ng-container *ngIf="AirticketList.REASON =='L'">
+                                                                            Self
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="AirticketList.REASON == 'F'">
+                                                                            Family
+                                                                        </ng-container>
+                                                                    </td>
+                                                                    <td>{{AirticketList.BOOKED_BY}}</td>
                                                                     <td>{{AirticketList.COST}}</td>
                                                                 </tr>
                                                             </tbody>

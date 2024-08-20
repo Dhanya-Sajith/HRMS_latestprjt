@@ -69,7 +69,8 @@ export class EmployeeTransferPromotionComponent implements OnInit {
 
   constructor(private apicall:ApiCallService, private datePipe: DatePipe,private fb:FormBuilder,private session:LoginService) { 
     this.TransferForm = this.fb.group({
-      company: ['', this.SelectAction === 1 ? Validators.required : []],
+      company: [''],
+      wps: [''],
       department: ['', Validators.required, ],
       designation: ['', Validators.required],      
       Manager: ['', Validators.required],
@@ -389,6 +390,26 @@ export class EmployeeTransferPromotionComponent implements OnInit {
      this.markFormGroupTouched(this.SalaryForm);
    }
   }
+
+  onSelectActionChange() {
+    this.updateValidators();
+  } 
+
+  updateValidators() {
+    const companyControl = this.TransferForm.get('company');
+    const wpsControl = this.TransferForm.get('wps');
+      
+      if (this.SelectAction == 1) {
+        companyControl?.setValidators([Validators.required]);
+        wpsControl?.setValidators([Validators.required]);
+      } else {
+        companyControl?.clearValidators();
+        wpsControl?.clearValidators();
+      }
+  
+      companyControl?.updateValueAndValidity();
+      wpsControl?.updateValueAndValidity();
+    }
 
   clear()
   {

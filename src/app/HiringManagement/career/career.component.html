@@ -328,8 +328,8 @@
                                                         <h3 class="fw-semibold fs-12 font-type"><span>Upload CV</span></h3>
                                                     </div>
                                                     <div class="col-lg-9">
-                                                        <input class="form-control font-type fs-12 textbox-15" type="file" id="formFile" name="cv" formControlName="cv">
-                                                        <span class="fs-11 font-type ma-10 text-muted">* Maximum Size - 500KB</span>
+                                                        <input class="form-control font-type fs-12 textbox-15" type="file" id="formFile" name="cv" formControlName="cv" accept=".pdf">
+                                                        <!-- <span class="fs-11 font-type ma-10 text-muted">* Maximum Size - 500KB</span> -->
                                                         <div *ngIf="ApplyForm.get('cv')!.hasError('required') && ApplyForm.get('cv')!.touched" class="text-danger">
                                                             Please, upload the CV..
                                                         </div>  

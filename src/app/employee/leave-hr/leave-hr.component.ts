@@ -68,6 +68,7 @@ export class LeaveHRComponent implements OnInit {
   desiredPage: any;
   formattedlastPayrollDay: any;
   startdate: any;
+  showmessage: string='';
   
     constructor(private apicall:ApiCallService,private datepipe:DatePipe,private router: Router,private session:LoginService) { }
   
@@ -166,6 +167,7 @@ export class LeaveHRComponent implements OnInit {
           });
           this.filter();            
        }
+       
        onEmpSelected(selectedEmp:any){
         this.selectedEmp = selectedEmp;  
         this.filter();        
@@ -261,6 +263,7 @@ export class LeaveHRComponent implements OnInit {
            this.emp_code=item.EMP_CODE;
            this.req_Id=item.REQ_ID;          
            }
+
            onReject() {              
              const data={
               empcode:this.emp_code,
@@ -292,6 +295,21 @@ export class LeaveHRComponent implements OnInit {
               this.filter();
             })
              }
+             cancelModal(item: any){
+              this.items=item;
+              this.emp_code=item.EMP_CODE;
+              this.req_Id=item.REQ_ID;   
+            //  if(this.isButtonDisabled(item)){
+            //   (<HTMLInputElement>document.getElementById("CancelModalButton")).click();
+            //   this.showmessage="Payroll is processed for these dates. Please check the employee's attendance before proceeding.";
+            //  } else if(item.AIRTICKET_STATUS==1){
+            //   (<HTMLInputElement>document.getElementById("CancelModalButton")).click();
+            //   this.showmessage="An air ticket is associated with this leave request.Confirm 'Yes' to mark both the Air ticket and Leave request as Cancelled.";
+            //  }else{
+              (<HTMLInputElement>document.getElementById("CancelModalButton")).click();
+              this.showmessage="You are about to cancel your request.";
+            //  }
+             }
              cancel(){
               const Data = {
                 empcode:this.emp_code,
@@ -304,7 +322,8 @@ export class LeaveHRComponent implements OnInit {
                   (<HTMLInputElement>document.getElementById("openModalButton")).click();
                   this.showModal = 1;
                   this.success = "Request Cancelled!";
-                 }else if (res.Errorid==-2){
+                }
+                else if (res.Errorid==-2){
                   (<HTMLInputElement>document.getElementById("openModalButton")).click();
                   this.showModal = 2;
                   this.failed = "Leave cancellation not possible; ticket's booked. Contact HR for assistance.";
@@ -324,8 +343,7 @@ export class LeaveHRComponent implements OnInit {
               this.formattedlastPayrollDay = new Date(item.LEAVE_DATE); //last payroll date 
               if(item.START_DATE){  
               this.startdate = new Date(item.START_DATE); 
-              }
-                
+              }                
               if (this.startdate && this.startdate<this.formattedlastPayrollDay) {    
                 return true;
               } else {   

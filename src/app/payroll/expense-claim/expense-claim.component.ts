@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from 'src/app/login.service';
 import { JsonPipe, formatDate,DatePipe } from '@angular/common';
 import { FormControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { jsDocComment } from '@angular/compiler';
 
 @Component({
   selector: 'app-expense-claim',
@@ -67,6 +68,9 @@ export class ExpenseClaimComponent implements OnInit {
   desiredPage: any; 
   desiredPagePersonal: any;
   searchInput: string='';
+  setRequestID: any;
+  ReuploadForm: FormGroup;
+  updatedoc: any;
   // todayDate=(formatDate(new Date(),'yyyy-MM-dd','en'))
   constructor(private session:LoginService,private apicall:ApiCallService,private router:Router,private fb: FormBuilder,private datePipe: DatePipe,private route: ActivatedRoute) { 
     this.requestForm = this.fb.group({
@@ -76,6 +80,9 @@ export class ExpenseClaimComponent implements OnInit {
       currency: ['-1', Validators.required],
       expincuredate: ['', Validators.required],
       doc : ['', Validators.required],
+    });
+    this.ReuploadForm = this.fb.group({     
+      DocControl: ['', Validators.required],      
     });
   }
 
@@ -281,7 +288,7 @@ ListCompany()
   
    fdata.append('filesup',input.files[0]);
    //alert(JSON.stringify(fdata))
-   alert("before")
+  //  alert("before")
    this.apicall.UploadExpenseDoc(fdata,reqid).subscribe((res)=>{
      const result=res;
     // alert(res)
@@ -358,7 +365,10 @@ ListCompany()
     this.selectedEmpcode = empcode;
 
 }
-
+SetSelectedReqId(requestID: any)
+{
+  this.setRequestID = requestID;
+}
 ExpenseClaimFilterTeam()
   {
     const comp= (<HTMLInputElement>document.getElementById("company")).value;
@@ -671,7 +681,77 @@ download_to_excel()
   const end = this.currentPagePersonal * this.itemsPerPage;
   return Math.min(end, filteredData.length);
   }
+  validateuploadForm()
+    {
+      if (this.ReuploadForm.valid){
+        this.isFormValid = true;
+        }
+        else{
+          this.markFormGroupTouched(this.ReuploadForm);
+        }
+    }
+    Reupload(reqid:any)
+    {
+      let input:any;
+         input=document.getElementById("DocControl");
+         const fdata = new FormData();
+         this.onReFileSelect(input,reqid);
+     }
+     onReFileSelect(input:any,reqid:any) {
   
+      if (input.files && input.files[0]) {
+        
+       const fdata = new FormData();
+      
+       fdata.append('filesup',input.files[0]);
+       this.apicall.UploadExpenseDoc(fdata,reqid).subscribe((res)=>{
+         const result=res;
+         if(res!=1)
+         { 
+           this.showModal = 2;
+          this.failed = "Document uploading failed";
+         }
+         else{
+          this.showModal = 1;
+          this.success = "Document uploaded successfully";
+          this.ExpenseClaimFiterPersonal();
+         }
+         (<HTMLInputElement>document.getElementById("DocControl")).value='';
+        
+       })
+    
+    
+     }
+    }
+ReuploadDoc()
+{
+  if((this.ReuploadForm.valid))
+  {
+  const doc = this.ReuploadForm.get('DocControl');
+  const datavalue = {
+    docpath:doc?.value,
+    req_id:this.setRequestID,    
+  };
+    this.apicall.updateExpenseClaimDoc(datavalue).subscribe((res)=>{
+    this.updatedoc=res;
+    this.Reupload(this.setRequestID)
+    })
+  }
+  
+}
+CheckDocumentsExisting(reqid:any)
+{
+  const data={
+    req_id:reqid,
+    doc_type:'E'
+    
+  }
+  this.apicall.CheckDocExists(data).subscribe((res) => {
+    //alert(res.Errorid)
+    
+  });
+
+}
 }
 
 

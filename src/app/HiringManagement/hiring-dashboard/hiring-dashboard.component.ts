@@ -336,15 +336,16 @@ export class HiringDashboardComponent implements OnInit {
       const interviewer = this.ApplyForm.get('interviewer')?.value; 
       const designation = this.ApplyForm.get('designation')?.value;
       const name = this.ApplyForm.get('name')?.value;
+      const ename = name.split(',',1);
       const type = this.ApplyForm.get('type')?.value;
       const gender = this.ApplyForm.get('gender')?.value;
       const SourceDetail = this.ApplyForm.get('SourceDetail')?.value;
-
+      
       if( type == 0){
-        this.internal_empcode = name;
+        this.internal_empcode = ename[0];
         this.candidate_name= "";
       }else{
-        this.candidate_name= name;
+        this.candidate_name= ename[0];
         this.internal_empcode = "";
       }
 

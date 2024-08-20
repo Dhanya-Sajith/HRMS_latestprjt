@@ -328,8 +328,8 @@
                                                                                 
                                                                                 <button type="button" class="btn btn-danger btn-sm" id="buttonReject" title="Reject" data-bs-toggle="modal" href="#RejectModal"  [disabled]="LeaveRequestList.STATUS_VAL!='Pending for Approval'" 
                                                                                 (click)="setSelectedRequestID(LeaveRequestList)" [hidden]="LeaveRequestList.STATUS_VAL=='Approved'"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
-                                                                                <button type="button" class="btn btn-danger btn-sm" id="buttonReject" title="Cancel"  [hidden]="LeaveRequestList.STATUS_VAL!='Approved'" [disabled]="isButtonDisabled(LeaveRequestList)" data-bs-toggle="modal" href="#CancelModal" (click)="setSelectedRequestID(LeaveRequestList)" ><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;color: #ffffff;"></i></button> 
-                                                                            
+                                                                                <!-- <button type="button" class="btn btn-danger btn-sm" id="buttonReject" title="Cancel"  [hidden]="LeaveRequestList.STATUS_VAL!='Approved'"  data-bs-toggle="modal"  (click)="cancelModal(LeaveRequestList)" ><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;color: #ffffff;"></i></button>  -->
+                                                                                <button type="button" class="btn btn-danger btn-sm" id="buttonReject" title="Cancel"  [hidden]="LeaveRequestList.STATUS_VAL!='Approved'"  data-bs-toggle="modal" [disabled]="isButtonDisabled(LeaveRequestList)" (click)="cancelModal(LeaveRequestList)" ><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;color: #ffffff;"></i></button>
                                                                             </li>
                                                                         </ul>
                                                                     </td>
@@ -497,6 +497,7 @@
                     </div>
                 </div>
                 <!-- End Reject Model-->
+                <button id="CancelModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#CancelModal">Open Modal</button> 
                 <!-- Cancel Model-->
                 <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
@@ -506,7 +507,7 @@
                             </div>
                             <div class="modal-body text-center">
                                 <div class="text-center">
-                                    <h5 class="fs-13 font-type">You are about to cancel your request.</h5>
+                                    <h5 class="fs-13 font-type">{{showmessage}}</h5>
                                     <p class="text-muted fs-12 mb-2 pt-1 font-type">Do you want to continue?</p>
                                     <div class="hstack gap-2 justify-content-center remove">   
                                         <button class="btn btn-danger font-type" id="delete-record" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#SaveModal" (click)="cancel()">Yes</button>

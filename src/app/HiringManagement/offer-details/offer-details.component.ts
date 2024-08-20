@@ -35,6 +35,7 @@ export class OfferDetailsComponent implements OnInit {
   success:any;
   Sourcetype: any;
   listgrade: any;
+  WPSCompany: any;
 
 
   constructor(private apicall:ApiCallService,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute,private router: Router) {
@@ -58,6 +59,7 @@ export class OfferDetailsComponent implements OnInit {
       ProbationPeriod: ['', Validators.required],
       NoticePeriod: ['', Validators.required],
       Non_CompeteClause: [false],
+      WPSCompany: [null, Validators.required],
     });
     this.SalaryDetailsForm = this.fb.group({
       allowanceId: ['', Validators.required],
@@ -95,6 +97,10 @@ export class OfferDetailsComponent implements OnInit {
       this.SalaryComponent=res;
       console.log(JSON.stringify(this.SalaryComponent));
     })
+    //WPS Company
+     this.apicall.listCompany(12).subscribe((res)=>{
+      this.WPSCompany=res;
+    })
     this.Fetch_CandidateOfferDtls();
     this.Fetch_hiring_salarydtl();
   }
@@ -102,7 +108,6 @@ export class OfferDetailsComponent implements OnInit {
     if (!this.SalaryDtls || this.SalaryDtls.length === 0) {
         return 0; // Return 0 if SalaryDtls is not initialized or empty
     }
-
     return this.SalaryDtls.reduce((acc: any, item: { AMOUNT: any; }) => acc + (item.AMOUNT || 0), 0);
 }
 
@@ -128,6 +133,7 @@ export class OfferDetailsComponent implements OnInit {
         ProbationPeriod: this.OfferDtls[0].PROBATION_PERIOD,
         NoticePeriod: this.OfferDtls[0].NOTICE_PERIOD,
         Non_CompeteClause: this.OfferDtls[0].NC_CLAUSE,
+        WPSCompany: this.OfferDtls[0].WPS_COMPANY,
       });
       console.log(JSON.stringify(this.OfferDtls));
     });
@@ -187,6 +193,7 @@ export class OfferDetailsComponent implements OnInit {
       NoticePeriod: this.OfferDetailsForm.get('NoticePeriod')?.value,
       Non_CompeteClause: this.OfferDetailsForm.get('Non_CompeteClause')?.value ?? false,
       SalaryDtls:this.SalaryDtls,
+      WPSCompany: this.OfferDetailsForm.get('WPSCompany')?.value,
     };
   //alert(JSON.stringify(data));
    this.apicall.AddCandidateOfferDetails(data).subscribe((res) => {

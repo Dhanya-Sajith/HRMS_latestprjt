@@ -171,6 +171,10 @@ export class TrainingRequestsComponent implements OnInit {
     {
       this.apicall.listYear().subscribe((res)=>{
       this.listYear=res;
+      if (this.listYear.length > 0) {
+        this.filter_year = this.listYear[0].DISPLAY_FIELD;
+        this.HOD_year  = this.listYear[0].DISPLAY_FIELD;
+      } 
       })
     }
     
@@ -348,10 +352,11 @@ export class TrainingRequestsComponent implements OnInit {
     {
       this.HODrequestForm.reset();
     }
-
-    SelectPlanID(id:any)
+    SelectPlanID(id:any,proposedQuarter:any,subject:any)
     {
-      this.selectedplanId=id
+      this.selectedplanId=id;
+      this.EditrequestForm.controls['eprovider'].setValue(subject);
+      this.EditrequestForm.controls['eschedule'].setValue(proposedQuarter);
     }
 
     EditvalidateForm()
