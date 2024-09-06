@@ -1,4 +1,6 @@
 <!-- Begin page -->
+
+
 <div id="layout-wrapper">
 
     <app-header></app-header>
@@ -23,16 +25,16 @@
                 <div class="col-lg-3 pt-2">
                     <h6 class="fs-12 font-type fw-semibold"><span>Company</span></h6>
                     <select class="form-select font-type fs-11" aria-label="Default select example"  name="comcode" id="comcode" [(ngModel)]="comcode" (change)="changeValue($event)">
-                        <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}">
+                        <option  *ngFor="let CompanyList of listCompany" value="{{CompanyList.KEY_ID}}" [selected]="CompanyList.KEY_ID == companycode">
                             {{CompanyList.DATA_VALUE}}
                         </option>
                     </select> 
                 </div>
                 <div class="col-lg-3 pt-2">
                     <h6 class="fs-12 font-type fw-semibold"><span>Employee</span></h6>
-                    <select class="form-select font-type fs-11" aria-label="Default select example"  name="employee" id="employee" [(ngModel)]="employee">
+                    <select class="form-select font-type fs-11" aria-label="Default select example"  name="employee" id="employee" [(ngModel)]="employee" (change)="changeValueEmp()">
                         <option value="-1">Select</option>
-                        <option  *ngFor="let EmployeeList of listEmployees" value="{{EmployeeList.EMP_CODE}}">
+                        <option  *ngFor="let EmployeeList of listEmployees" value="{{EmployeeList.EMP_CODE}}" [selected]="EmployeeList.EMP_CODE == empcode">
                             {{EmployeeList.EMP_NAME}}
                         </option>
                         
@@ -40,24 +42,15 @@
                 </div>
                 <div class="col-lg-2">
                     <div class="pt-4">    
-                        <button type="button" class="btn btn-orange font-type fs-12 add-button text-white" (click)="viewChart()"><i class="ri-organization-chart me-1"></i>Load</button>
+                        <button type="button" class="btn btn-orange font-type fs-12 add-button text-white"><i class="ri-organization-chart me-1"></i>Load</button>
                     </div>
                 </div>  
                 <div class="col-lg-2">
                     <div class="pt-4">    
-                        <button type="button" class="btn btn-info font-type fs-12 add-button"  data-bs-toggle="modal" data-bs-target=".exampleModalFullscreen" (click)="setscale()"><i class="ri-eye-fill me-1"></i>View Full Size</button>
+                        <button type="button" class="btn btn-info font-type fs-12 add-button"  data-bs-toggle="modal" data-bs-target=".exampleModalFullscreen" (click)="viewfull()" ><i class="ri-eye-fill me-1"></i>View Full Size</button>
                     </div>
                 </div>   
-                <div class="col-lg-1">
-                    <div class="pt-4" title="Zoom In">    
-                        <button type="button" class="btn btn-outline-success font-type fs-15 ma-10" (click)="zoomIn()"><i class="ri-zoom-in-line"></i></button>
-                    </div>
-                </div>  
-                <div class="col-lg-1">
-                    <div class="pt-4" title="Zoom Out">    
-                        <button type="button" class="btn btn-outline-success font-type fs-15 ma-10" (click)="zoomOut()"><i class="ri-zoom-out-line"></i></button>
-                    </div>
-                </div>           
+                        
         </div>
         </form>
         </div>
@@ -69,53 +62,10 @@
         <!--Chart-->
         <div class="row margin-up-10">
             <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header border border-dashed pa-6-8">
-                        <div class="row align-items-center gy-1">
-                            <div class="col-sm">
-                                <div class="align-items-center d-flex">
-                                    <div class="col-sm-auto">
-                                        <span class="avatar-title bg-transparent" *ngIf="this.company=='Worldwide Oilfield Machine Middle East' || this.company=='Worldwide Oilfield Machine Sales and Marketing Ltd' ">
-                                            <img src="assets\styles\img\WOM Logo - 2024.png" alt="" alt="" width="150px" Height="100px">
-                                        </span>
-                                        <span class="avatar-title bg-transparent" *ngIf="this.company=='WOM Valves and Controls International FZE'">
-                                            <img src="assets\styles\img\WVC-LOGO-2024.png" alt="" alt="" width="150px" Height="100px">
-                                        </span>
-                                        <span class="avatar-title bg-transparent" *ngIf="this.company=='Magnum Technology Center FZE - JAFZA'">
-                                            <img src="assets\styles\img\MTC logo.png" alt="" width="150px" Height="100px">
-                                        </span>
-                                    </div>
-                                    <h4 class="card-title mb-0 flex-grow-1 text-center fs-13 font-type fw-semibold text-uppercase">Organization Chart</h4>
-                                </div>
-                            </div>
-                            <div class="col-sm-auto">
-                                <div class="d-flex gap-1 flex-wrap">
-                                    <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">{{currdate| date: 'dd-MM-yyyy'}}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body pa-6-8">
-                        <div #chartContainer class="org-chart-container">
-                            <ngx-org-chart [nodes]="nodes" id="Orgcharts"  (itemClick)="toggleCollapse($event)" > 
-                                
-                                                                   
-                            </ngx-org-chart>
-                        
-                            <!-- <div id="chartContainer" class="chart-container">
-                            
-                              
-                                <ng-template let-node>
-                                  <div class="org-chart-box" id="{{ node.ecode }}" (click)="handleExpand(node)">
-                                    <h3>{{ node.name }}</h3>
-                                    <p>dfds</p>
-                                    <p>dfs</p>
-                                  </div>
-                                </ng-template>
-                            
-                            </div> -->
-                          </div>
-                    </div>
+                <div class="card" id="chartview">
+                                                        
+                           
+             
                 </div>
             </div>
             <!--end col-->
@@ -128,30 +78,30 @@
       <div class="modal fade exampleModalFullscreen" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
-                <div class="modal-header bg-orange" style="padding-bottom: 10px;">
+                <div class="modal-header bg-orange">
                     <div class="flex-grow-1 text-truncate"></div>
-                    <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-sm btn-info font-type fs-12 add-button me-2" (click)="convertToPDF()"><i class="ri-download-2-line me-1"></i>Download PDF</button>
+                    <div class="flex-shrink-0" style="padding-bottom:5px;">
+                        <button type="button" class="btn btn-sm btn-info font-type fs-12 add-button me-2" (click)="convertToPDF()" ><i class="ri-download-2-line me-1" ></i>Download PDF</button>
                     </div>
                     <button type="button" class="btn-close ms-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row margin-up-10">
                         <div class="col-lg-12 col-md-12 col-sm-6">
-                            <div class="card" id="htmlElementId">
-                                <div class="card-header border border-dashed pa-6-8">
+                            <div class="card" id="htmlElementId" >
+                                <div class="card-header border border-dashed p-0">
                                     <div class="row align-items-center gy-3">
                                         <div class="col-sm">
                                             <div class="align-items-center d-flex">
                                                 <div class="col-sm-auto">
-                                                    <span class="avatar-title bg-transparent" *ngIf="this.company=='Worldwide Oilfield Machine Middle East' || this.company=='Worldwide Oilfield Machine Sales and Marketing Ltd' ">
-                                                        <img src="assets\styles\img\WOM Logo - 2024.png" alt="" alt="" width="150px" Height="100px">
+                                                    <span class="avatar-sm bg-transparent" *ngIf="this.company=='Worldwide Oilfield Machine Middle East' || this.company=='Worldwide Oilfield Machine Sales and Marketing Ltd' ">
+                                                        <img src="assets\styles\img\WOM Logo - 2024.png" alt="" alt="" width="100px" Height="100px">
                                                     </span>
-                                                    <span class="avatar-title bg-transparent" *ngIf="this.company=='WOM Valves and Controls International FZE'">
-                                                        <img src="assets\styles\img\WVC-LOGO-2024.png" alt="" alt="" width="150px" Height="100px">
+                                                    <span class="avatar-sm bg-transparent" *ngIf="this.company=='WOM Valves and Controls International FZE'">
+                                                        <img src="assets\styles\img\WVC-LOGO-2024.png" alt="" alt="" width="100px" Height="100px">
                                                     </span>
-                                                    <span class="avatar-title bg-transparent" *ngIf="this.company=='Magnum Technology Center FZE - JAFZA'">
-                                                        <img src="assets\styles\img\MTC logo.png" alt="" width="150px" Height="100px">
+                                                    <span class="avatar-sm bg-transparent" *ngIf="this.company=='Magnum Technology Center FZE - JAFZA'">
+                                                        <img src="assets\styles\img\MTC logo.png" alt="" width="100px" Height="100px">
                                                     </span>
 
                                                 </div>
@@ -160,37 +110,25 @@
                                         </div>
                                         <div class="col-sm-auto">
                                             <div class="d-flex gap-1 flex-wrap">
-                                                <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">{{currdate| date: 'dd-MM-yyyy'}}</h4>
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold" style="padding-right:10px;">{{currdate| date: 'dd-MM-yyyy'}}</h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body pa-6-8">
-                                    <div #chartContainer class="org-chart-container">
-                                        <ngx-org-chart [nodes]="nodes" id="Orgcharts"  (itemClick)="toggleCollapse($event)"  style="transform: scale(.6)"  > 
-                                            <ng-template #nodeTemplate let-node="nodes">
-                                                <div class="node-content">
-                                                  <span>hjhj</span>
-                                                </div>
-                                              </ng-template>
-                                        </ngx-org-chart>
+                                <div class="card-body pa-6-8" id="fullchart">
+                                   
+                                                                  
                                     
-                                        <!-- <div id="chartContainer" class="chart-container">
-                                        
-                                          
-                                            <ng-template let-node>
-                                              <div class="org-chart-box" id="{{ node.ecode }}" (click)="handleExpand(node)">
-                                                <h3>{{ node.name
-                                                    
-                                                }}</h3>
-                                                <p>dfds</p>
-                                                <p>dfs</p>
-                                              </div>
-                                            </ng-template>
-                                        
-                                        </div> -->
-                                      </div>
-                                </div>
+<!-- 
+                                   <object data="http://localhost:4200/assets/Orgchart.html?empcode=-1&company=MJ" width="100%" height="600">
+                                <embed src="http://localhost:4200/assets/Orgchart.html?empcode=-1&company=MJ" width="800" height="600"/>
+                            </object> -->
+<!--ng serve
+  End of adding node functionality
+-->
+</div>
+
+                             
                             </div>
                            
                         </div>

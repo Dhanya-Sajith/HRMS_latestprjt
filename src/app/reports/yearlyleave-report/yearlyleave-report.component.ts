@@ -35,14 +35,14 @@ export class YearlyleaveReportComponent implements OnInit {
     
     this.ListYear();
     this.ListLeaveTypes();
-    const year = (<HTMLInputElement>document.getElementById("year")).value;
-    const leavetype = (<HTMLInputElement>document.getElementById("leavetype")).value;
-      this.apicall.ListYearlyLeaveReport(year,leavetype,this.empcode).subscribe((res)=>{
-        this.ListYrleaveReport=res;
-        this.totaldata = this.ListYrleaveReport.length;  
-        const totalPages = Math.ceil(this.totaldata / 10);
-        this.totalPages = Array(totalPages).fill(0).map((_, index) => index + 1);
-      })
+    // const year = (<HTMLInputElement>document.getElementById("year")).value;
+    // const leavetype = (<HTMLInputElement>document.getElementById("leavetype")).value;
+    //   this.apicall.ListYearlyLeaveReport(year,leavetype,this.empcode).subscribe((res)=>{
+    //     this.ListYrleaveReport=res;
+    //     this.totaldata = this.ListYrleaveReport.length;  
+    //     const totalPages = Math.ceil(this.totaldata / 10);
+    //     this.totalPages = Array(totalPages).fill(0).map((_, index) => index + 1);
+    //   })
   }
 
   ListYear()
@@ -62,18 +62,20 @@ export class YearlyleaveReportComponent implements OnInit {
   ListYearlyLeaveReport(){
     const year = (<HTMLInputElement>document.getElementById("year")).value;
     const leavetype = (<HTMLInputElement>document.getElementById("leavetype")).value;
-    if(year=="-1" || leavetype=="-1")
+    
+    if(year=="-1")
     {
-      this.empexistance="Please Select Fields";
-      this.apicall.ListYearlyLeaveReport(year,leavetype,this.empcode).subscribe((res)=>{
-        this.ListYrleaveReport=res;
-        const maxPageFiltered = Math.ceil(this.ListYrleaveReport.length / this.itemsPerPage);  
+      this.empexistance="Please Select Year";
+      //alert("Please Select Year")
+      // this.apicall.ListYearlyLeaveReport(year,leavetype,this.empcode).subscribe((res)=>{
+      //   this.ListYrleaveReport=res;
+      //   const maxPageFiltered = Math.ceil(this.ListYrleaveReport.length / this.itemsPerPage);  
 
-        if (this.currentPage > maxPageFiltered) {
-          this.currentPage = 1;     
-        }   
+      //   if (this.currentPage > maxPageFiltered) {
+      //     this.currentPage = 1;     
+      //   }   
        
-      })
+      // })
     }
     else{
         this.empexistance="" ;

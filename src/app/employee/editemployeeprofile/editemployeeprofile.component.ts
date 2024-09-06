@@ -119,7 +119,7 @@ export class EditemployeeprofileComponent implements OnInit {
   employeeassetsdisp: any;
   employeeassetsdispcost: any;
   listassetsdetails: any;
- 
+  roleselect: any;
   editedcost:any;
   event: any;
   showModal: any;
@@ -565,6 +565,8 @@ export class EditemployeeprofileComponent implements OnInit {
     this.weekoff.setValue('Select');
     this.accomodationtype=false;
 
+    this.roleDisplay();
+
     this.apicall.FetchCompanyList(this.empcode).subscribe((res)=>{
       this.listsessionCompany=res;
       })
@@ -621,7 +623,7 @@ export class EditemployeeprofileComponent implements OnInit {
     this.apicall.listsponsordtl(this.sponsorid).subscribe((res)=>{
         this.listsponsordtl=res;
         })
-    this.apicall.listaccomodationtype().subscribe((res)=>{
+    this.apicall.listaccomodationtypeEdit(this.empcdd).subscribe((res)=>{
         this.listaccomodationtype=res;
         })
     this.apicall.listworkingdays(this.workingdaysid).subscribe((res)=>{
@@ -2559,7 +2561,7 @@ fetchbasicdetails()
 
  //alert(empcd);
 
-  //alert(this.urlval);
+ // alert(this.dispbasicdet[0].ACCOMMODATION_CODE);
 
   if(this.urlval=="edit_employee_profile") 
   {
@@ -4523,6 +4525,18 @@ changeReportingMngr()
   this.success = "When you change the reporting manager then you have to update the approval level also!";  
 }
 
+
+roleDisplay()
+{
+  if(this.roleids==2)
+  {
+    this.roleselect=0;
+  }
+  else if (this.roleids==9 || this.roleids==16)
+  {
+    this.roleselect=1;
+  }
+}
 
 
 }

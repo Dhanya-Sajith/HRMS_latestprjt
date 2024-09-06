@@ -66,7 +66,8 @@ export class LeavesettingsComponent implements OnInit {
   isYearlyclicked: boolean = false;
   emp_code: any;
   leavedata: any;
-
+  Additionalleave:any
+  remarks:any
 
   constructor(private session:LoginService,private apicall:ApiCallService,private route:Router,private fb: FormBuilder) { 
     this.requestForm = this.fb.group({
@@ -296,8 +297,9 @@ saveEditings(Employeeleave:any)
       balnce:this.currentbalnce,
       adv_months: 0,
       yearly_months: 0,
-      yearlyleave: Employeeleave.YEARLY_LEAVE
-
+      yearlyleave: Employeeleave.YEARLY_LEAVE,
+      permittedDays:null,
+      remarks:''
     };
   }else{
     //this.currentbalnce = (Number(Employeeleave.CURRENTBALANCE) + Number(this.hafzaleave) +  Number(this.hafzayearlyleave) + Number(Employeeleave.carryleave)) - Number(Employeeleave.CARRY_FORWARDED);
@@ -311,8 +313,9 @@ saveEditings(Employeeleave:any)
       balnce:this.currentbalnce,
       adv_months: this.HafzaMonth,
       yearly_months: this.HafzaYearlyMonth,
-      yearlyleave: Employeeleave.yearlyleave
- 
+      yearlyleave: Employeeleave.yearlyleave,
+      permittedDays:null,
+      remarks:''
     };
   }
   // alert(JSON.stringify(this.data))
@@ -334,6 +337,7 @@ saveEditings(Employeeleave:any)
     this.HafzaMonth = 0;
     this.hafzaleave = 0;
     this.hafzayearlyleave= 0;
+    this.currentbalnce = 0;
     }
   //}
 
@@ -552,5 +556,48 @@ const filteredData = this.listemployeelvedata.filter((employee: any) =>
 const end = this.currentPage * this.itemsPerPage;
 return Math.min(end, filteredData.length);
 }
+
+SelectLeave(Employeeleave:any)
+{
+ this.leavedata = Employeeleave;
+}
+
+AddAdditionalleaves(Employeeleave:any)
+{
+ if(this.Additionalleave == undefined || this.remarks == undefined){
+  this.showModal = 2; 
+  this.failed = "Please, Fill the fields.";
+ }else{
+  this.data={ 
+    leavetype :Employeeleave.LEAVE_TYPE,
+    empcode:Employeeleave.KEY_ID,
+    updatedby:this.empcode,
+    carryleave:null,
+    advanceleave:null,
+    balnce:null,
+    adv_months: null,
+    yearly_months: null,
+    yearlyleave: null,
+    permittedDays:this.Additionalleave,
+    remarks:this.remarks
+  };
+  this.apicall.UpdateLeaves(this.data).subscribe(res=>{
+    if(res.Errorid==1)
+    {
+    this.showModal = 1; 
+    this.success = "Saved Successfully";
+      this.FetchEmployeeAnnualLeaveData();
+    }
+    else
+    {
+      this.showModal = 2; 
+      this.failed = "Failed";
+      this.FetchEmployeeAnnualLeaveData();
+    }
+    });
+    this.Additionalleave = undefined;
+    this.remarks = undefined;
+   }
+  }
 
 }   

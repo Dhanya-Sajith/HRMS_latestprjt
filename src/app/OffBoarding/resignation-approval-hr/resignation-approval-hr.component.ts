@@ -91,7 +91,7 @@ rejectReason: any;
       releavingType: ['', Validators.required], 
       remarks: ['', Validators.required], 
       date: ['', Validators.required], 
-      checkbox:['', Validators.required],     
+      checkbox:[''],     
     });
   }
 

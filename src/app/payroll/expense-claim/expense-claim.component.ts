@@ -71,6 +71,8 @@ export class ExpenseClaimComponent implements OnInit {
   setRequestID: any;
   ReuploadForm: FormGroup;
   updatedoc: any;
+  showConvertedAmountTextbox: boolean = false;
+  currentReqId: any;
   // todayDate=(formatDate(new Date(),'yyyy-MM-dd','en'))
   constructor(private session:LoginService,private apicall:ApiCallService,private router:Router,private fb: FormBuilder,private datePipe: DatePipe,private route: ActivatedRoute) { 
     this.requestForm = this.fb.group({
@@ -330,10 +332,10 @@ ListCompany()
     if(convamunt == undefined){
       convamunt = 0;
     }
-    if(convamunt==0 && this.level == 2)
+    if ((convamunt == 0 && this.level == 2) || (convamunt == 0 && this.showConvertedAmountTextbox === true))
     {
       this.showModal = 2; 
-      this.failed = "Plese Fill the Converted Amount in AED";
+      this.failed = "Please Fill the Converted Amount in AED";
     }
     else{
       const approvedata={
@@ -346,13 +348,23 @@ ListCompany()
     }
       this.apicall.ApproveorRejectExpenseClaim(approvedata).subscribe((res) => {      
         if(res.Errorid==1){
+
           this.showModal = 1; 
-          this.success ="Expense Claim Request Approved"  ; 
+          this.success ="Expense Claim Request Approved"  ;
+          this.showConvertedAmountTextbox = false; 
           this.ExpenseClaimFilterTeam(); 
+        }
+        else if(res.Errorid==2)
+        {
+          this.showModal = 2; 
+          this.failed ="Please Fill the Converted Amount in AED to procced with approval";
+          this.showConvertedAmountTextbox = true;
+          this.currentReqId = reqid;  
         }
         else{
         this.showModal = 2; 
         this.failed = "Failed";
+        this.showConvertedAmountTextbox = false; 
      
         }  
             

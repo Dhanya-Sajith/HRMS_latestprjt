@@ -110,7 +110,7 @@
                                                 <th data-sort="amunt">Amount</th>
                                                 <th data-sort="tbl_currency">Currency</th>
                                                 <th data-sort="tbl_doc">Doc</th>
-                                                <th data-sort="convamunt"  *ngIf="this.grpname.includes('HR')">Converted Amount</th>
+                                                <th data-sort="convamunt"  >Converted Amount</th>
                                                 <th data-sort="paydate">Payroll Date</th>
                                                 <th id="th-ViewDocModal">Document</th>
                                                 <th id="th-status">Status</th>
@@ -129,12 +129,17 @@
                                                 <td class="amunt" id="amunt">{{ExpenseClaimList.AMOUNT}}</td>
                                                 <td class="tbl_currency" id="tbl_currency">{{ExpenseClaimList.CURRENCY}}</td>
                                                 <td class="tbl_doc" id="tbl_doc">{{ExpenseClaimList.DOCPATH}}</td>
-                                                <ng-container *ngIf="ExpenseClaimList.APPROVED_STATUS != 'Pending for Approval'">
-                                                    <td *ngIf="this.grpname.includes('HR')">{{ExpenseClaimList.CONVERTED_AMOUNT}}</td>
-                                                </ng-container>
-                                                <ng-container *ngIf="ExpenseClaimList.APPROVED_STATUS == 'Pending for Approval'">
-                                                    <td *ngIf="this.grpname.includes('HR')"><input type="number" class="form-control  font-type fs-11"  id="convamunt{{i+1}}" name ="convamunt" [(ngModel)]="ExpenseClaimList.convamunt"></td>
-                                                </ng-container>
+                                                <td class="converted-amount" id="converted-amount">
+                                                    <ng-container *ngIf="ExpenseClaimList.APPROVED_STATUS == 'Pending for Approval'">
+                                                        <input *ngIf="this.grpname.includes('HR') || (showConvertedAmountTextbox && currentReqId === ExpenseClaimList.REQ_ID)"
+                                                               type="number" class="form-control font-type fs-11"
+                                                               id="convamunt{{i+1}}" name="convamunt"
+                                                               [(ngModel)]="ExpenseClaimList.convamunt">
+                                                    </ng-container>
+                                                    <ng-container *ngIf="ExpenseClaimList.APPROVED_STATUS != 'Pending for Approval'">
+                                                        {{ ExpenseClaimList.CONVERTED_AMOUNT}}
+                                                    </ng-container>
+                                                </td>
                                                 <td class="paydate" id="paydate">{{ExpenseClaimList.PAYROLL_DATE| date: 'dd-MM-yyyy'}}</td>
                                                 
                                                 <td id="td-ViewDocModal"> <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit" >

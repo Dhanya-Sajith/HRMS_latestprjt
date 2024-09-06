@@ -1010,9 +1010,9 @@
                                                         <td style="white-space: pre-wrap;">{{candata.CANDIDATE_NAME}}</td>
                                                         <td style="white-space: pre-wrap;">{{candata.INTERVIEWERS}}</td>
                                                         <td>{{candata.SOURCE_TYPE}}</td>
-                                                        <td><button type="button" class="btn bg-info-subtle" (click)="download_documents_cand(candata.REQID)"><i class="ri-file-pdf-fill fs-14 text-blue"></i></button></td>
+                                                        <td><button type="button" class="btn bg-info-subtle" (click)="download_documents_cand(candata.CANDIDATE_ID)"><i class="ri-file-pdf-fill fs-14 text-blue"></i></button></td>
                                                         <td>
-                                                            <ul class="list-inline hstack gap-1 mb-0">
+                                                            <ul class="list-inline hstack gap-1 mb-0" *ngIf="candata.STATUS == 0">
                                                                 <li class="list-inline-item text-danger d-inline-block remove-item-btn" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove" (click)="DeleteCand(candata.REQID,candata.CANDIDATE_ID)">
                                                                         <i class="ri-delete-bin-5-fill fs-18"></i>
                                                                 </li>

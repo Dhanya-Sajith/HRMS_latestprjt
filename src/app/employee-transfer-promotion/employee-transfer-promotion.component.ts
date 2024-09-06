@@ -66,6 +66,7 @@ export class EmployeeTransferPromotionComponent implements OnInit {
   empdetails: any;
   errorMessage: any;
   reason: any;
+  effectivedt:any
 
   constructor(private apicall:ApiCallService, private datePipe: DatePipe,private fb:FormBuilder,private session:LoginService) { 
     this.TransferForm = this.fb.group({
@@ -87,7 +88,7 @@ export class EmployeeTransferPromotionComponent implements OnInit {
       shift: ['', Validators.required],
       work_schedule: ['', Validators.required],
       AirTicketEligibility: [null, Validators.required],
-      ProbationPeriod: ['', Validators.required],
+      // ProbationPeriod: ['', Validators.required],
       NoticePeriod: ['', Validators.required],
       Non_CompeteClause: [false],
     });
@@ -206,6 +207,10 @@ export class EmployeeTransferPromotionComponent implements OnInit {
       }
       this.populateForm(this.Allowance);
     });
+    this.apicall.Fetch_EffectiveDate_SalRevision(this.SelectEmployee).subscribe(res =>{
+      this.effectivedt=this.datePipe.transform(res.FROM_DATE,"yyyy-MM-dd");
+      this.TransferForm.get('effdate')?.setValue('');
+    })
   }
 
   getAvailableAllowanceOptions(index: number): any[] {
@@ -352,7 +357,7 @@ export class EmployeeTransferPromotionComponent implements OnInit {
         shiftId : this.TransferForm.get('shift')?.value,
         workingDays: this.TransferForm.get('work_schedule')?.value,
         airticketEligibility : this.TransferForm.get('AirTicketEligibility')?.value,
-        probationPeriod : this.TransferForm.get('ProbationPeriod')?.value,
+        // probationPeriod : this.TransferForm.get('ProbationPeriod')?.value,
         noticePeriod : this.TransferForm.get('NoticePeriod')?.value,
         ncClause : this.TransferForm.get('Non_CompeteClause')?.value ?? false,
         enterBy  : this.empcode,

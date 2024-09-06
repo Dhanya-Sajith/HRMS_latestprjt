@@ -178,6 +178,12 @@
                                                             <div class="col-sm-auto">
                                                                 <div class="d-flex gap-1 flex-wrap">
                                                                     <div class="">
+                                                                        <div class="search-box">
+                                                                            <input type="text" class="form-control font-type fs-12 textbox-15" placeholder="Search..."  [(ngModel)]="searchInput">
+                                                                            <i class="ri-search-line search-icon"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="">
                                                                         <select class="form-select h-30 font-type textbox-15" name="empleave" id="empleave"  [(ngModel)]="empleave" (change)="FetchEmployeeAnnualLeaveData()">
                                                                             <option  *ngFor="let listleave of listleaves" value="{{listleave.KEY_ID}}">
                                                                                 {{listleave.DATA_VALUE}}
@@ -213,7 +219,7 @@
                                                                             <th *ngIf="empleave == 10">Advance Leave</th>
                                                                             <th>Availed Leave</th>
                                                                             <th>Current Balance</th>
-                                                                            <th *ngIf="empleave == 10">Actions</th>
+                                                                            <th *ngIf="empleave == 10 || empleave == 11">Actions</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody class="font-type">
@@ -262,6 +268,7 @@
 
                                                                               </td>
                                                                             <td>{{Employeeleave.AVAILED_LEAVES}}</td>
+                                                                           
                                                                             <td>{{Employeeleave.CURRENTBALANCE}}</td>
                                                                             <td *ngIf="empleave == 10">
                                                                                 <ul class="list-inline hstack gap-2 mb-0">
@@ -273,6 +280,13 @@
                                                                                     </li>
                                                                                     <li class="list-inline-item">
                                                                                         <button type="button" class="btn btn-success font-type fs-12 add-button text-white" href="#SaveModal" data-bs-toggle="modal"  style="height:30px;width:50px;margin-top: 1px;"  id = "buttonsave"(click)="saveEditings(Employeeleave)"  [disabled]="!Employeeleave.isEditing"  ><i class="fa fa-save" aria-hidden="true" style="font-size: 18px;" ></i></button>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </td>
+                                                                            <td *ngIf="empleave == 11">
+                                                                                <ul class="list-inline hstack gap-2 mb-0">
+                                                                                    <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit" >
+                                                                                        <button class="btn btn-outline-warning btn-sm br_radius mr-2" data-bs-toggle="modal" data-bs-target="#AddAdditionModal" (click)="SelectLeave(Employeeleave)"><i class="fa fa-pencil-square-o ic_color" aria-hidden="true" style="font-size: 18px;"></i></button>
                                                                                     </li>
                                                                                 </ul>
                                                                             </td>
@@ -441,15 +455,13 @@
                                             <div class="modal-body text-center padding-down-5" *ngIf="showModal==1">
                                                 
                                                 <div class="text-center">
-                                                    <h5 class="bar-text fs-12 font-type">{{success}}</h5>
-                                                     
+                                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-check-circle text-success" style="font-size: 25px;" style="font-size: 12px;"></i> {{success}}</h2>
                                                 </div>
                                             </div>
                                             <div class="modal-body text-center padding-down-5" *ngIf="showModal==2">
                                                 
                                                 <div class="text-center">
-                                                    <h5 class="bar-text fs-12 font-type">{{failed}}</h5>
-                                                     
+                                                    <h2 class="text-center" style="font-size: 12px;"><i class="fa fa-times-circle text-danger" style="font-size: 25px;" style="font-size: 12px;"></i> {{failed}}</h2>
                                                 </div>
                                             </div>
                                         </div>
@@ -478,6 +490,36 @@
                                     </div>
                                 </div>
                                 <!--Cancel Request Model-->
+
+                                <!--Add Add leave Model-->
+                            <div class="modal fade" id="AddAdditionModal" tabindex="-1" aria-labelledby="AddAdditionModal" aria-hidden="true">     
+                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-orange padding-up-5">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" ></button>
+                                    </div>
+                                    <form class="tablelist-form" autocomplete="off">
+                                        <div class="modal-body">
+                                            <input type="hidden" id="id-field" />
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <h3 class="fw-semibold"><span>No.of Leaves</span></h3>
+                                                    <input type="number" class="form-control" name="HafzaYearlyMonth" [(ngModel)]="Additionalleave" required>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <h3 class="fw-semibold"><span>Remarks</span></h3>
+                                                    <input type="text" class="form-control" name="HafzaYearlyMonth" [(ngModel)]="remarks" required>
+                                                </div>
+                                            </div>
+                                        </div>           
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-orange font-type text-white" data-bs-toggle="modal" data-bs-target="#SaveModal" (click)="AddAdditionalleaves(leavedata)">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>                
+                        <!-- End Add leave Model -->
 
                                 <!--Add Add leave Model-->
                                 <div class="modal fade" id="AddLeaveHAFZAModal" tabindex="-1" aria-labelledby="AddLeaveHAFZAModal" aria-hidden="true">     

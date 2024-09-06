@@ -65,16 +65,17 @@
                                                             <div class="col-md-6 col-lg-2" *ngIf="this.goalassessmentdtls[0].REVIEW_DATE!=null">
                                                                 <h6 class="fs-12 font-type">Status<span class="ms-1">:</span></h6>
                                                                 <ng-container [ngSwitch]="true">
-                                                                    <div *ngSwitchCase="today < this.goalassessmentdtls[0].REVIEW_DATE">
+                                                                    <!-- <div *ngSwitchCase="today > this.goalassessmentdtls[0].REVIEW_DATE">
                                                                         <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13">Overdue</h6>
                                                                     </div>
-                                                                    <div *ngSwitchCase="today >= this.goalassessmentdtls[0].REVIEW_DATE">
+                                                                    <div *ngSwitchCase="today <= this.goalassessmentdtls[0].REVIEW_DATE"> -->
                                                                         <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13" *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==13">Pending</h6>
                                                                         <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13" *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==6">Evaluation Submitted</h6>
                                                                         <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13" *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==8">Assessment Completed</h6>
                                                                         <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13" *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==9">Reassessment</h6>
                                                                         <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13" *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==10">Completed</h6>
-                                                                    </div>
+                                                                        <h6 class="fs-12 font-type fw-semibold text-info text-uppercase fs-13" *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==7">Evaluation Overdue</h6>
+                                                                    <!-- </div> -->
                                                                 </ng-container>
                                                             </div>
                                                            </div>
@@ -109,7 +110,7 @@
                                         <table class="table table-nowrap align-middle table-bordered border-blue">
                                             <thead class="bg-info-subtle font-type border-blue">
                                                 <tr class="border-blue">
-                                                    <th>No</th>
+                                                    <th>No.</th>
                                                     <th width="35%">Goal</th>
                                                     <th width="35%">Answer<span style="visibility:hidden;">Enter Your Answer Here</span></th>
                                                     <th class="text-center" width="5%">Self <br/>Assessment<br/>Out of 10</th>
@@ -132,10 +133,22 @@
                                                             </textarea>
                                                         </div>
                                                         <div *ngSwitchCase="1">
-                                                            <textarea class="form-control border-0 font-type content-text fs-12"
+
+                                                            <ng-container *ngIf="assessdtl.REQUEST_STATUS==7 || assessdtl.REQUEST_STATUS==6 || assessdtl.REQUEST_STATUS==8 || assessdtl.REQUEST_STATUS==10 || assessdtl.REQUEST_STATUS==9; else elseBlock">
+                                                                <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
                                                               required rows="3"
-                                                              [(ngModel)]="assessdtl.EMP_GOAL_COMMENT">
-                                                            </textarea>
+                                                              [(ngModel)]="assessdtl.EMP_GOAL_COMMENT" readonly>
+                                                                </textarea>
+                                                            </ng-container>
+                                                            <ng-template #elseBlock>
+                                                                
+                                                                    <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                    required rows="3"
+                                                                    [(ngModel)]="assessdtl.EMP_GOAL_COMMENT">
+                                                                    </textarea>
+                                                                
+                                                            </ng-template>
+
                                                         </div>
                                                         <div *ngSwitchCase="2">
                                                             <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
@@ -154,16 +167,36 @@
                                                             [(ngModel)]="assessdtl.EMP_GOAL_SCORE" readonly />
                                                         </div>
                                                         <div *ngSwitchCase="1">
-                                                            <input type="text"
-                                                            class="form-control border-0 font-type textbox-15"
+
+                                                            <ng-container *ngIf="assessdtl.REQUEST_STATUS==7 || assessdtl.REQUEST_STATUS==6 || assessdtl.REQUEST_STATUS==8 || assessdtl.REQUEST_STATUS==10 || assessdtl.REQUEST_STATUS==9; else elseBlock">
+                                                                <input type="text"
+                                                            class="form-control border-0 font-type textbox-15 bg-light"
                                                             [(ngModel)]="assessdtl.EMP_GOAL_SCORE"
-                                                            (ngModelChange)="onScoreChange()" />
+                                                            (ngModelChange)="onScoreChange()" readonly />
+
+                                                            </ng-container>
+                                                            <ng-template #elseBlock>
+                                                                
+                                                                            <input type="text"
+                                                                    class="form-control border-0 font-type textbox-15"
+                                                                    [(ngModel)]="assessdtl.EMP_GOAL_SCORE"
+                                                                    (ngModelChange)="onScoreChange()" />
+                                                                
+                                                            </ng-template>
+
+                                                            
+
                                                         </div>
                                                         <div *ngSwitchCase="2">
+
+
                                                             <input type="text"
                                                             class="form-control border-0 font-type textbox-15 bg-light"
                                                             [(ngModel)]="assessdtl.EMP_GOAL_SCORE"
                                                             (ngModelChange)="onScoreChange()" readonly />
+
+
+
                                                         </div>
                                                     </ng-container>
                                                   </td>
@@ -184,10 +217,27 @@
                                                         </textarea>
                                                       </div>
                                                       <div *ngSwitchCase="2">
-                                                        <textarea class="form-control border-0 font-type content-text fs-12"
-                                                                  required rows="3"
-                                                                  [(ngModel)]="assessdtl.LM_GOAL_COMMENT">
-                                                        </textarea>
+
+
+                                                        <ng-container *ngIf="assessdtl.REQUEST_STATUS==8 || assessdtl.REQUEST_STATUS==10; else elseBlock">
+                                                            <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
+                                                            required rows="3"
+                                                            [(ngModel)]="assessdtl.LM_GOAL_COMMENT" readonly>
+                                                            </textarea>
+
+                                                        </ng-container>
+                                                        <ng-template #elseBlock>
+                                                             
+                                                                <textarea class="form-control border-0 font-type content-text fs-12"
+                                                                required rows="3"
+                                                                [(ngModel)]="assessdtl.LM_GOAL_COMMENT">
+                                                                </textarea>
+                                                            
+                                                        </ng-template>
+
+                                                       
+
+
                                                       </div>
                                                     </ng-container>
                                                   </td>
@@ -206,10 +256,30 @@
                                                                readonly />
                                                       </div>
                                                       <div *ngSwitchCase="2">
-                                                        <input type="text"
+
+
+                                                        <ng-container *ngIf="assessdtl.REQUEST_STATUS==8 || assessdtl.REQUEST_STATUS==10; else elseBlock">
+
+                                                            <input type="text"
+                                                               class="form-control border-0 font-type textbox-15 bg-light"
+                                                               [(ngModel)]="assessdtl.LM_GOAL_SCORE"
+                                                               (ngModelChange)="onScoreChange()"  readonly />
+
+
+                                                        </ng-container>
+                                                        <ng-template #elseBlock>
+                                                            
+                                                                <input type="text"
                                                                class="form-control border-0 font-type textbox-15"
                                                                [(ngModel)]="assessdtl.LM_GOAL_SCORE"
                                                                (ngModelChange)="onScoreChange()" />
+
+                                                            
+                                                        </ng-template>
+
+                                                        
+
+                                                               
                                                       </div>
                                                     </ng-container>
                                                   </td>
@@ -244,16 +314,16 @@
                                             </div>
                                             <div *ngSwitchCase="this.category==0 && this.backcate==0">
                                                 <div class="row align-items-center gy-3">
-                                                    <div class="col-sm">
-                                                        <div class="align-items-center d-flex ">
+                                                     <div class="col-sm">
+                                                        <!-- <div class="align-items-center d-flex ">
                                                             <div class="form-check form-check-info mb-2" *ngIf="this.category==0">
                                                                 <input class="form-check-input" type="checkbox" id="formCheck10" value="1" (click)="markcheck()">
                                                                 <label class="form-check-label fs-12 fw-semibold font-type text-uppercase text-blue">
                                                                     Mark as Assessment Complete
                                                                 </label>
                                                             </div>
-                                                        </div>
-                                                    </div>
+                                                        </div> -->
+                                                    </div> 
                                                     <div class="col-sm-auto" >
                                                         <div class="d-flex gap-1 flex-wrap">
                                                             <ng-container *ngIf="category == 1 || category == 2; else elseBlock">
@@ -262,16 +332,43 @@
                                                                 </button>
                                                             </ng-container>
                                                             <ng-template #elseBlock>
-                                                                <p><button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button" [disabled]="isButtonDisabledSub">
-                                                                    <span class="fw-medium font-type text-white" style="font-size: 12px;" data-bs-toggle="modal" data-bs-target="#RejectModal" >Submit</span>
-                                                                </button></p>
+
+
+                                                                <ng-container *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==9 || this.goalassessmentdtls[0].REQUEST_STATUS==10 ">
+                                                                    <button  class="btn btn-sm btn-success focus-ring focus-ring-info" type="button" disabled>
+                                                                        <span class="fw-medium font-type text-white" style="font-size: 12px;" data-bs-toggle="modal" data-bs-target="#RejectModal" >Approve</span>
+                                                                    </button>
+    
+                                                                </ng-container>
+                                                               
+                                                                <ng-container *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS!=9 && this.goalassessmentdtls[0].REQUEST_STATUS!=10 ">
+                                                                    <button  class="btn btn-sm btn-success focus-ring focus-ring-info" type="button">
+                                                                        <span class="fw-medium font-type text-white" style="font-size: 12px;" data-bs-toggle="modal" data-bs-target="#RejectModal" >Approve</span>
+                                                                    </button>
+                                                                </ng-container>
+                                                                    
+                                                                <!-- </ng-template> -->
+
+
                                                             </ng-template>
-                                                            <button type="button" id="reassessmnt" [disabled]="isButtonDisabled" *ngIf="this.category==0" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" data-bs-toggle="modal" data-bs-target="#RejectModal" style="height: 24px;" ><i class="ri-send-plane-fill label-icon align-middle fs-16 ms-2"></i>Send for Reassessment</button>
+
+                                                            <ng-container *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS==9 || this.goalassessmentdtls[0].REQUEST_STATUS==10">
+                                                                <button  type="button" id="reassessmnt"  *ngIf="this.category==0" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" data-bs-toggle="modal" data-bs-target="#reassessmentModal" style="height: 24px;" disabled ><i class="ri-send-plane-fill label-icon align-middle fs-16 ms-2"></i>Send for Reassessment</button>
+
+                                                            </ng-container>
+                                                          
+                                                            <ng-container *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS!=9 && this.goalassessmentdtls[0].REQUEST_STATUS!=10">  
+                                                                <button  type="button" id="reassessmnt"  *ngIf="this.category==0" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" data-bs-toggle="modal" data-bs-target="#reassessmentModal" style="height: 24px;" ><i class="ri-send-plane-fill label-icon align-middle fs-16 ms-2"></i>Send for Reassessment</button>
+                                                            </ng-container>   
+                                                           
+
+
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div *ngSwitchCase="category==1 || category==2">
+                                            <div *ngSwitchCase="category==1">
                                                 <div class="row align-items-center gy-3">
                                                     <div class="col-sm">
                                                         <div class="align-items-center d-flex ">
@@ -284,22 +381,57 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-auto" >
+
+
                                                         <div class="d-flex gap-1 flex-wrap">
-                                                            <!-- <ng-container *ngIf="category == 1 || category == 2; else elseBlock"> -->
+                                                            <ng-container *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS != 7 && this.goalassessmentdtls[0].REQUEST_STATUS != 6 && this.goalassessmentdtls[0].REQUEST_STATUS != 8 && this.goalassessmentdtls[0].REQUEST_STATUS != 10 && this.goalassessmentdtls[0].REQUEST_STATUS != 9; else elseBlock">
                                                                 <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button">
-                                                                    <span class="fw-medium font-type text-white" style="font-size: 12px;" (click)="updateassessmenttrack()" >Update</span>
+                                                                    <span class="fw-medium font-type text-white" style="font-size: 12px;" (click)="updateassessmenttrack()">Update</span>
                                                                 </button>
-                                                            <!-- </ng-container> -->
-                                                            <!-- <ng-template #elseBlock> -->
-                                                                <!-- <p><button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button" [disabled]="isButtonDisabledSub">
-                                                                    <span class="fw-medium font-type text-white" style="font-size: 12px;" data-bs-toggle="modal" data-bs-target="#RejectModal" >Submit</span>
-                                                                </button></p> -->
-                                                            <!-- </ng-template> -->
+                                                            </ng-container>
+                                                            <ng-template #elseBlock>
+                                                                <!-- You can add content here that will be displayed when the condition is not met -->
+                                                            </ng-template>
                                                             <!-- <button type="button" id="reassessmnt" [disabled]="isButtonDisabled" *ngIf="this.category==0" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" data-bs-toggle="modal" data-bs-target="#RejectModal" style="height: 24px;" ><i class="ri-send-plane-fill label-icon align-middle fs-16 ms-2"></i>Send for Reassessment</button> -->
                                                         </div>
+
+
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div *ngSwitchCase="category==2">
+                                                <div class="row align-items-center gy-3">
+                                                    <div class="col-sm">
+                                                        <div class="align-items-center d-flex ">
+                                                            <!-- <div class="form-check form-check-info mb-2" *ngIf="this.category==0">
+                                                                <input class="form-check-input" type="checkbox" id="formCheck10" value="1" (click)="markcheck()">
+                                                                <label class="form-check-label fs-12 fw-semibold font-type text-uppercase text-blue">
+                                                                    Mark as Assessment Complete
+                                                                </label>
+                                                            </div> -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-auto" >
+
+
+                                                        <div class="d-flex gap-1 flex-wrap">
+                                                            <ng-container *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS != 8 && this.goalassessmentdtls[0].REQUEST_STATUS != 10; else elseBlock">
+                                                                <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button">
+                                                                    <span class="fw-medium font-type text-white" style="font-size: 12px;" (click)="updateassessmenttrack()">Update</span>
+                                                                </button>
+                                                            </ng-container>
+                                                            <ng-template #elseBlock>
+                                                                <!-- You can add content here that will be displayed when the condition is not met -->
+                                                            </ng-template>
+                                                            <!-- <button type="button" id="reassessmnt" [disabled]="isButtonDisabled" *ngIf="this.category==0" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" data-bs-toggle="modal" data-bs-target="#RejectModal" style="height: 24px;" ><i class="ri-send-plane-fill label-icon align-middle fs-16 ms-2"></i>Send for Reassessment</button> -->
+                                                        </div>
+
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </ng-container>
 
 
@@ -322,14 +454,16 @@
                         <div class="col-md-12 col-lg-12">
                             <h4 class="card-title card-header shadow-lg bg-blue fs-12 font-type fw-semibold p-2 text-uppercase text-center text-white">Goal Progress Tracking</h4>
                             <!-- Accordions Fill Colored -->
-                                <div class="accordion accordion-fill-info mb-3 shadow-lg" id="accordionFill"   *ngFor="let goaldtls of goalassessmentdtls">
-                                    <div class="accordion-item material-shadow">
-                                        <h2 class="accordion-header" id="accordionFillExample1">
+                                <div class="accordion accordion-fill-info mb-3 shadow-lg" id="accordionFill" >
+                                    <div class="accordion-item material-shadow" *ngFor="let goaldtls of goalassessmentdtls">
+                                        <h2 class="accordion-header" id="accordionFillExample{{goaldtls.GOAL_ID}}">
                                             <button class="accordion-button font-type fs-13" type="button" data-bs-toggle="collapse"  [attr.data-bs-target]="'#' + goaldtls.GOAL_ID"  aria-expanded="false" aria-controls="accor_fill1"  (click)="goalprogressdtl(goaldtls.GOAL_ID)">
                                                 <span>{{goaldtls.GOAL_ID}}.</span><span class="ms-1">{{goaldtls.GOAL_DESCRIPTION}}<span class="badge bg-info-subtle text-info ms-2 fs-11 fw-semibold text-uppercase" *ngIf="goaldtls.ACTION_STATUS==1">Action Required</span></span>
                                             </button>
                                         </h2>
-                                        <div id="{{goaldtls.GOAL_ID}}" class="accordion-collapse collapse" aria-labelledby="accordionFillExample1" data-bs-parent="#accordionFill">
+                                        <div [id]="goaldtls.GOAL_ID" class="accordion-collapse collapse"
+                                        [attr.aria-labelledby]="'accordionFillExample' + goaldtls.GOAL_ID"
+                                        data-bs-parent="#accordionFill">
                                             <div class="accordion-body">
                                                 <div class="table-responsive table-card p-2 pb-0">
                                                     <table class="table table-nowrap align-middle border-blue table-bordered" >
@@ -357,16 +491,48 @@
                                                                        placeholder="Enter %."  readonly/>
                                                                     </div>
                                                                     <div *ngSwitchCase="1">
+
+
+                                                                      <ng-container *ngIf="today < progressdtl.REVIEW_DATE && (this.goalassessmentdtls[0].REQUEST_STATUS != 7 && this.goalassessmentdtls[0].REQUEST_STATUS != 6  && this.goalassessmentdtls[0].REQUEST_STATUS != 8  && this.goalassessmentdtls[0].REQUEST_STATUS != 10 && this.goalassessmentdtls[0].REQUEST_STATUS != 9); else elseBlock">
+                                                                        <!-- Content to display when condition is true -->
                                                                         <input type="text" class="form-control border-0 font-type textbox-15 fs-12"
                                                                        id="weightage{{i}}" name="weightage{{i}}"
                                                                        [(ngModel)]="progressdtl.EMP_GOAL_SCORE"
                                                                        placeholder="Enter %." />
+                                                                      </ng-container>
+                                                                      <ng-template #elseBlock>
+                                                                        <!-- Content to display when condition is false -->
+                                                                        <input type="text" class="form-control border-0 font-type textbox-15 fs-12 bg-light"
+                                                                            id="weightage{{i}}" name="weightage{{i}}"
+                                                                            [(ngModel)]="progressdtl.EMP_GOAL_SCORE"
+                                                                            placeholder="Enter %." readonly />
+                                                                        
+                                                                      </ng-template>
+
+
                                                                     </div>
                                                                     <div *ngSwitchCase="2">
-                                                                        <input type="text" class="form-control border-0 font-type textbox-15 fs-12"
+
+
+                                                                        <ng-container *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS != 8 && this.goalassessmentdtls[0].REQUEST_STATUS != 10; else elseBlock">
+                                                                            <input type="text" class="form-control border-0 font-type textbox-15 fs-12"
                                                                        id="weightage{{i}}" name="weightage{{i}}"
                                                                        [(ngModel)]="progressdtl.EMP_GOAL_SCORE"
                                                                        placeholder="Enter %."  />
+                                                                          </ng-container>
+                                                                          <ng-template #elseBlock>
+                                                                            <!-- Content to display when condition is false -->
+                                                                             <input type="text" class="form-control border-0 font-type textbox-15 fs-12 bg-light"
+                                                                                id="weightage{{i}}" name="weightage{{i}}"
+                                                                                [(ngModel)]="progressdtl.EMP_GOAL_SCORE"
+                                                                                placeholder="Enter %." readonly />
+                                                                            
+                                                                          </ng-template>
+
+
+                                                                       
+
+
                                                                     </div>
                                                                 </ng-container>
                                                                 
@@ -382,7 +548,7 @@
                                                                           rows="4" placeholder="Answer"  [(ngModel)]="progressdtl.EMP_GOAL_COMMENT" readonly>{{progressdtl.EMP_GOAL_COMMENT}}</textarea>
                                                                     </div>
                                                                     <div *ngSwitchCase="1">
-                                                                    <ng-container *ngIf="today < progressdtl.REVIEW_DATE; else elseBlock">
+                                                                    <ng-container *ngIf="today < progressdtl.REVIEW_DATE && (this.goalassessmentdtls[0].REQUEST_STATUS != 7 && this.goalassessmentdtls[0].REQUEST_STATUS != 6 && this.goalassessmentdtls[0].REQUEST_STATUS != 8 && this.goalassessmentdtls[0].REQUEST_STATUS != 10 && this.goalassessmentdtls[0].REQUEST_STATUS != 9); else elseBlock">
                                                                         <!-- Content to display when condition is true -->
                                                                         <textarea class="form-control border-0 font-type content-text fs-12"
                                                                                   id="emp_goal_cmt{{i}}"
@@ -396,7 +562,7 @@
                                                                       </ng-container>
                                                                       <ng-template #elseBlock>
                                                                         <!-- Content to display when condition is false -->
-                                                                        <p><textarea class="form-control border-0 font-type content-text fs-12 bg-light"
+                                                                        <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
                                                                             id="emp_goal_cmt{{i}}"
                                                                             name="emp_goal_cmt{{i}}"
                                                                             required
@@ -404,7 +570,7 @@
                                                                             placeholder="Answer"
                                                                             [(ngModel)]="progressdtl.EMP_GOAL_COMMENT" readonly>
                                                                                 {{progressdtl.EMP_GOAL_COMMENT}}
-                                                                          </textarea></p>
+                                                                          </textarea>
                                                                       </ng-template>
                                                                     </div>
                                                                     <div *ngSwitchCase="2">
@@ -432,24 +598,78 @@
                                                                     
                                                                     </div>
                                                                     <div *ngSwitchCase="2">
-                                                                    
-                                                                        <textarea class="form-control border-0 font-type content-text fs-12"
+
+                                                                          <ng-container *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS != 8 && this.goalassessmentdtls[0].REQUEST_STATUS != 10; else elseBlock">
+                                                                            <textarea class="form-control border-0 font-type content-text fs-12"
                                                                                 id="lm_comment{{i}}" name="lm_comment{{i}}" required
                                                                                 rows="4" placeholder="Comments" [(ngModel)]="progressdtl.LM_GOAL_COMMENT">{{progressdtl.LM_GOAL_COMMENT}}</textarea>
-                                                                    
+                                                                          </ng-container>
+                                                                          <ng-template #elseBlock>
+                                                                            <!-- Content to display when condition is false -->
+                                                                            <textarea class="form-control border-0 font-type content-text fs-12 bg-light"
+                                                                                id="lm_comment{{i}}" name="lm_comment{{i}}" required
+                                                                                rows="4" placeholder="Comments" [(ngModel)]="progressdtl.LM_GOAL_COMMENT" readonly>{{progressdtl.LM_GOAL_COMMENT}}</textarea>
+                                                                            
+                                                                          </ng-template>
+
+                                                                                                                                        
                                                                     </div>
                                                                 </ng-container>
                                                               </td>
                                                           
-                                                              <td *ngIf="category == 1 || category == 2">
-                                                                <ul class="list-inline hstack gap-1 mb-0">
-                                                                  <li class="list-inline-item">
-                                                                    <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button"
+                                                              <td>
+
+                                                                <ng-container [ngSwitch]="category">
+                                                                <div *ngSwitchCase="1">
+                                                                    <ul class="list-inline hstack gap-1 mb-0">
+                                                                    <li class="list-inline-item">
+
+
+                                                                        <ng-container *ngIf="today < progressdtl.REVIEW_DATE && (this.goalassessmentdtls[0].REQUEST_STATUS != 7 && this.goalassessmentdtls[0].REQUEST_STATUS != 6 && this.goalassessmentdtls[0].REQUEST_STATUS != 8 && this.goalassessmentdtls[0].REQUEST_STATUS != 10 && this.goalassessmentdtls[0].REQUEST_STATUS != 9); else elseBlock">
+                                                                            <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button"
+                                                                                (click)="updateprogresstrack(progressdtl.ACTION_STATUS, progressdtl.GOAL_ID, progressdtl.EMP_GOAL_SCORE,progressdtl.EMP_GOAL_COMMENT,progressdtl.LM_GOAL_COMMENT)">
+                                                                                <span class="text-uppercase fw-medium font-type text-white" style="font-size: 8px;">Update</span>
+                                                                                </button>
+                                                                        </ng-container>
+                                                                        <ng-template #elseBlock>
+                                                                            <!-- Content to display when condition is false -->
+                                                                            <p>
+                                                                            </p>
+                                                                        </ng-template>
+
+                                                                    </li>
+                                                                    </ul>
+
+                                                                </div>
+                                                                <div *ngSwitchCase="2">
+
+                                                                    <ul class="list-inline hstack gap-1 mb-0">
+                                                                      <li class="list-inline-item">
+
+                                                                        <ng-container *ngIf="this.goalassessmentdtls[0].REQUEST_STATUS != 8 && this.goalassessmentdtls[0].REQUEST_STATUS != 10; else elseBlock">
+                                                                            <button class="btn btn-sm btn-success focus-ring focus-ring-info" type="button"
                                                                             (click)="updateprogresstrack(progressdtl.ACTION_STATUS, progressdtl.GOAL_ID, progressdtl.EMP_GOAL_SCORE,progressdtl.EMP_GOAL_COMMENT,progressdtl.LM_GOAL_COMMENT)">
-                                                                      <span class="text-uppercase fw-medium font-type text-white" style="font-size: 8px;">Update</span>
+                                                                            <span class="text-uppercase fw-medium font-type text-white" style="font-size: 8px;">Update</span>
                                                                     </button>
-                                                                  </li>
-                                                                </ul>
+                                                                        </ng-container>
+                                                                        <ng-template #elseBlock>
+                                                                            <!-- Content to display when condition is false -->
+                                                                            <p>
+                                                                            </p>
+                                                                        </ng-template>
+
+
+                                                                       
+
+
+
+                                                                      </li>
+                                                                    </ul>
+    
+                                                                </div>
+                                                                </ng-container>
+
+
                                                               </td>
                                                             </tr>
                                                           </tbody>
@@ -576,6 +796,34 @@
                         </div>
                     </div>    
                     <!-- End Reason Model-->
+
+                    <!-- Reassessment model -->
+                    <div class="modal fade zoomIn" id="reassessmentModal" tabindex="-1" aria-labelledby="reassessmentModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-orange padding-up-5">
+                                    <h5 class="fs-13 font-type text-white ma-5"></h5>
+                                    <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                </div>
+                                <form class="tablelist-form" autocomplete="off">
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id-field" />
+                                        <div class="margin-up-5">
+                                            <label class="form-label font-type fs-12">Comments</label>
+                                            <textarea class="form-control" rows="3" id="sendreassessremarks" name="sendreassessremarks" required></textarea>  
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="padding-bottom:10px;">
+                                        <div class="hstack gap-2 margin-up-5">
+                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type text-white" (click)="sendForreassessment()"><i class="ri-check-line label-icon align-middle fs-16 ms-2"></i>Send</button>
+                                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type text-white" data-bs-dismiss="modal" aria-label="Close" id="btn-close"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>  
+                    <!-- Reassessment model -->
 
                     
                  <!-- success model -->

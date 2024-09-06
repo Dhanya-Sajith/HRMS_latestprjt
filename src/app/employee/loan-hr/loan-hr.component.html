@@ -260,7 +260,7 @@
                                                                             <button type="button" class="btn btn-success btn-sm" id="buttonApprove" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" [disabled]="item.APPROVED_STATUS!='Pending for Approval'" (click)="approve(item.REQ_ID,item.EMP_CODE)"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
                                                                         </li> -->
                                                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve" >
-                                                                            <button type="button" class="btn btn-success btn-sm" id="buttonApprove" data-bs-toggle="modal" data-bs-target="#EditModal" [disabled]="item.APPROVED_STATUS!='Pending for Approval'" (click)="setSelectedRequestID(item)"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                                                            <button type="button" class="btn btn-success btn-sm" id="buttonApprove"  [disabled]="item.APPROVED_STATUS!='Pending for Approval'" (click)="setSelectedRequestID(item)"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 18px;"></i></button>
                                                                         </li>
                                                                         
                                                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top">
@@ -462,6 +462,7 @@
 </div> 
 <!--End View details modal -->
  <!--Edit Model-->
+ <button id="openEditModal" [hidden]="true" data-bs-toggle="modal" data-bs-target="#EditModal">Open</button>
  <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="EditModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -476,7 +477,7 @@
                         <div class="col-lg-6">
                             <div class="mb-2">
                                 <h3 class="fw-semibold fs-13 font-type"><span>Disbursement Month & Year</span></h3>
-                                <input type="month" min="{{currentmonthno}}" id="DSB" class="form-control fs-12 font-type height-check" required  formControlName="DSBdate"/>
+                                <input type="month" min="{{validateMonth}}" id="DSB" class="form-control fs-12 font-type height-check" required  formControlName="DSBdate"/>
                                <div *ngIf="EditForm.get('DSBdate')!.hasError('required') && EditForm.get('DSBdate')!.touched" class="text-danger">
                                 Please select a month and year!
                               </div>
@@ -485,7 +486,7 @@
                         <div class="col-lg-6">
                             <div class="mb-2">
                                 <h3 class="fw-semibold fs-13 font-type"><span>Deduction Start Month & Year</span></h3>
-                               <input type="month" min="{{currentmonthno}}" id="DED" class="form-control fs-12 font-type height-check" required  formControlName="DEDdate" (change)="datevalidation()"/>
+                               <input type="month" min="{{validateMonth}}" id="DED" class="form-control fs-12 font-type height-check" required  formControlName="DEDdate" (change)="datevalidation()"/>
                                <div *ngIf="EditForm.get('DEDdate')!.hasError('required') && EditForm.get('DEDdate')!.touched" class="text-danger">
                                 Please select a month and year!
                               </div>

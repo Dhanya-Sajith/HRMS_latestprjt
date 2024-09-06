@@ -282,23 +282,18 @@ onShiftSelected(){
  })
 
 }
-
-saveChanges(): void {   
-  if(this.selectedShift==-1||!this.editedIntime||!this.editedOuttime){
-    (<HTMLInputElement>document.getElementById("openModalButton")).click();
-    this.showModal = 2;
-    this.Failed="Please fill in all fields!";  
-  }else{
+MarkWeekoff(item:any){
    const updateData={
-     empcode:this.itemtoedit.EMP_CODE,
+     empcode:item.EMP_CODE,
      shift:this.selectedShift,
-     indate:this.itemtoedit.IN_DATE,
-     outdate:this.todate,
-     old_intime:this.itemtoedit.INTIME,
-     old_outtime:this.itemtoedit.OUTTIME,
-     new_intime:this.editedIntime,
-     new_outtime:this.editedOuttime,
-     enterby:this.empcode     
+     indate:item.IN_DATE,
+     outdate:item.OUT_DATE,
+     old_intime:item.INTIME,
+     old_outtime:item.OUTTIME,
+     new_intime:item.INTIME,
+     new_outtime:item.OUTTIME,
+     enterby:this.empcode,
+     WeekoffFlag:1,     
    };
    console.log(JSON.stringify(updateData));
    this.apicall.EditAttendancebyHR(updateData).subscribe(res => {
@@ -319,10 +314,51 @@ saveChanges(): void {
       this.Failed='Failed!';      
     }
    //this.FetchAttendanceData();
+    this.filter();   
+   });
+  
+}
+
+saveChanges(): void {   
+  if(this.selectedShift==-1||!this.editedIntime||!this.editedOuttime){
+    (<HTMLInputElement>document.getElementById("openModalButton")).click();
+    this.showModal = 2;
+    this.Failed="Please fill in all fields!";  
+  }else{
+   const updateData={
+     empcode:this.itemtoedit.EMP_CODE,
+     shift:this.selectedShift,
+     indate:this.itemtoedit.IN_DATE,
+     outdate:this.todate,
+     old_intime:this.itemtoedit.INTIME,
+     old_outtime:this.itemtoedit.OUTTIME,
+     new_intime:this.editedIntime,
+     new_outtime:this.editedOuttime,
+     enterby:this.empcode,
+     WeekoffFlag:0,     
+   };
+   console.log(JSON.stringify(updateData));
+   this.apicall.EditAttendancebyHR(updateData).subscribe(res => {
+     //alert(JSON.stringify(res)); 
+     if(res.Errorid==1){
+      (<HTMLInputElement>document.getElementById("openModalButton")).click();
+      this.showModal = 1; 
+      this.success='Changes saved Successfully!'; 
+      //this.timeselected=0;    
+    }else if(res.Errorid==-1){
+      (<HTMLInputElement>document.getElementById("openModalButton")).click();
+      this.showModal = 2; 
+      this.Failed=res.Errormsg;  
+    }
+    else{
+      (<HTMLInputElement>document.getElementById("openModalButton")).click();
+      this.showModal = 2; 
+      this.Failed='Failed!';      
+    }
+   //this.FetchAttendanceData();
     this.filter();
     this.clearEdit();
-   }); 
- 
+   });  
   }
  }
  clearEdit(){

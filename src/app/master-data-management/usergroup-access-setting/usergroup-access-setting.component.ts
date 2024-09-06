@@ -50,12 +50,17 @@ export class UsergroupAccessSettingComponent implements OnInit {
   totalValue = 0;
   gotoCheckBox:boolean=false;
   hasChanges: boolean = false;
+  menuaccesslist: any;
+  userlistvalue: any;
+  usermenuAccesslist: any;
+  lengthmenu: number = 0;
 
   constructor(private session:LoginService,private apicall:ApiCallService,private router:Router) { }
 
   ngOnInit(): void {
     this.apicall.listUserGroups(31).subscribe((res)=>{
       this.usergroup=res;
+     // alert(JSON.stringify( this.usergroup))
     })
     this.dropdownSettings = {
       idField: 'KEY_ID',
@@ -360,7 +365,14 @@ Cancel()
       const usergrpname = this.selectedItemUserGroup.map((item: {
         DATA_VALUE: any; id: any; 
         }) => item.DATA_VALUE).join('-');
-    const data = {
+        if(usergrpid=='')
+          {
+            this.showModal = 2; 
+                this.failed='Please Select users!';
+          }
+          else
+          {
+  const data = {
   usergroupid:usergrpid,
   usergroupname:usergrpname,
   updatedby:this.empcode
@@ -390,6 +402,7 @@ Cancel()
       this. selectedItemUserGroup = [];
       this.ListGroups();
     })
+  }
     
   }
 
@@ -399,7 +412,23 @@ Cancel()
     this.listAccess[index].VIEW_FLAG = checkbox.checked ? 1 : 0;
     this.listAccess[index].changed = true; // Mark this item as changed
   }
-
+  onCheckboxChangeMenu(event: Event, index: number): void {
+    const checkbox = event.target as HTMLInputElement;
+    this.usermenuAccesslist[index].VIEW_FLAG = checkbox.checked ? 1 : 0;
+    this.usermenuAccesslist[index].changed = true; // Mark this item as changed
+  }
+  UserMenuAccessSavingList(userid:any)
+  {
+    this.apicall.UserMenuAccessSettingList(userid).subscribe((res)=>{
+      this.menuaccesslist=res;
+      //alert(JSON.stringify(this.menuaccesslist))
+      this.userlistvalue = this.menuaccesslist[0].MenuName;
+      this.usermenuAccesslist = this.menuaccesslist[0].userGroupAccess;
+     // alert(JSON.stringify(this.usermenuAccesslist))
+      this.lengthmenu=this.usermenuAccesslist.length;
+    })
+    
+  }
   SaveUserGroupFlag(menuname: any, viewflag: boolean, usergroup: any): void {
     const data = {
       mflag: 2,
@@ -407,8 +436,47 @@ Cancel()
       menu: menuname,
       userFlag: viewflag ? 1 : 0
     };
-    // alert(JSON.stringify(data))
+     alert(JSON.stringify(data))
     this.apicall.UserAccessSetting(data).subscribe(res => {
+      this.useraccess = res;
+      if (res.Errorid === 1) {
+        this.showModal = 1;
+        this.success = 'Access Updated Successfully';
+      } else {
+        this.showModal = 2;
+        this.failed = 'Failed!';
+      }
+    });
+  }
+  SaveUserMenuFlag(menuname: any, viewflag: boolean, usergroup: any): void {
+    const data = {
+      mflag: 3,
+      userGroup: usergroup,
+      menu: menuname,
+      userFlag: viewflag ? 1 : 0
+    };
+     alert(JSON.stringify(data))
+    this.apicall.UserAccessSetting(data).subscribe(res => {
+      this.useraccess = res;
+      if (res.Errorid === 1) {
+        this.showModal = 1;
+        this.success = 'Access Updated Successfully';
+      } else {
+        this.showModal = 2;
+        this.failed = 'Failed!';
+      }
+    });
+  }
+  SaveUserGroupMenuFlag(menuname: any, viewflag: boolean, usergroup: any,menuId:any,parentId:any): void {
+    const data = {
+      userGroup: usergroup,
+      menu: menuname,
+      userFlag: viewflag ? 1 : 0,
+      menuID:menuId,
+      parentID:parentId
+    };
+    //alert(JSON.stringify(data))
+    this.apicall.MenuAccessSetting(data).subscribe(res => {
       this.useraccess = res;
       if (res.Errorid === 1) {
         this.showModal = 1;

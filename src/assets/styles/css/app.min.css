@@ -18307,27 +18307,52 @@ text-transform: uppercase;
     background-color: #e2f5ff
 }
 
-.ScrollStyle
-{
-       max-height: 100%;
+
+.ScrollStyle {
+    max-height: 100%;
     min-height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
     -webkit-transition: opacity .1s linear;
     transition: opacity .1s linear;
     display: inline-block;
-    z-index: 1000; /* Set a lower z-index to keep it behind */
-    direction: rtl; /* Add this line to move scrollbar to the left */
-    /* position:static */
-    /* max-width: 100%; */
+    z-index: 1000;
+
+    padding-right: 23px; /* Adds space between the content and the scrollbar */
+    box-sizing: content-box; /* Ensures padding does not affect width */
 }
+
+/* Hide the scrollbar by default */
 .ScrollStyle::-webkit-scrollbar {
-    width: 2px; 
-    -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); 
+    width: 5px;
+    background: transparent; /* Make scrollbar background transparent */
 }
-.ScrollStyle > * {
-    direction: ltr; /* Reset the text direction to normal */
+
+/* Show scrollbar on hover */
+.ScrollStyle:hover::-webkit-scrollbar {
+    width: 5px; /* Thinner scrollbar */
 }
+
+/* Scrollbar track (background) */
+.ScrollStyle::-webkit-scrollbar-track {
+    background-color: transparent; /* Light gray background */
+    border-radius: 10px; /* Rounded corners */
+}
+
+/* Scrollbar thumb (scroll handle) */
+.ScrollStyle::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .6);
+    border-radius: 10px; /* Rounded corners */
+}
+
+/* Scrollbar thumb on hover */
+.ScrollStyle:hover::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, .6);
+    opacity:0.9;
+}
+
+
+
 
 @media (max-width: 767px) 
 {     .table-responsives .dropdown-menu {         position: static !important;     } } 

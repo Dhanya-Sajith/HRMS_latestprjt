@@ -50,6 +50,7 @@ export class LeaveledgerComponent implements OnInit {
   leave: any;
   yearvalue: any;
   companyName: any;
+  selectedempcode: any;
 
   constructor(private session:LoginService,private apicall:ApiCallService,private route:Router) { }
 
@@ -112,12 +113,12 @@ export class LeaveledgerComponent implements OnInit {
     }
     else{
       this.empexistance="";
+      this.selectedempcode = this.employee.EMP_CODE;
       this.employeename = this.employee.EMP_NAME;
       this.leave = this.leavetype.DATA_VALUE
       this.yearvalue = this.year.DISPLAY_FIELD
     this.apicall.ListLeaveLedgerReport(this.employee.EMP_CODE,this.year.DISPLAY_FIELD,this.leavetype.KEY_ID).subscribe((res)=>{
     this.ListleaveReport=res;
-    //alert(JSON.stringify(this.ListleaveReport))
 
     if(this.ListleaveReport.length > 0)
     {

@@ -299,16 +299,16 @@ export class LeaveHRComponent implements OnInit {
               this.items=item;
               this.emp_code=item.EMP_CODE;
               this.req_Id=item.REQ_ID;   
-            //  if(this.isButtonDisabled(item)){
-            //   (<HTMLInputElement>document.getElementById("CancelModalButton")).click();
-            //   this.showmessage="Payroll is processed for these dates. Please check the employee's attendance before proceeding.";
-            //  } else if(item.AIRTICKET_STATUS==1){
-            //   (<HTMLInputElement>document.getElementById("CancelModalButton")).click();
-            //   this.showmessage="An air ticket is associated with this leave request.Confirm 'Yes' to mark both the Air ticket and Leave request as Cancelled.";
-            //  }else{
+             if(this.isButtonDisabled(item)){
+              (<HTMLInputElement>document.getElementById("CancelModalButton")).click();
+              this.showmessage="Payroll is processed for these dates. Please check the employee's attendance before proceeding.";
+             } else if(item.AIRTICKET_STATUS==1){
+              (<HTMLInputElement>document.getElementById("CancelModalButton")).click();
+              this.showmessage="An air ticket is associated with this leave request.Confirm 'Yes' to mark both the Air ticket and Leave request as Cancelled.";
+             }else{
               (<HTMLInputElement>document.getElementById("CancelModalButton")).click();
               this.showmessage="You are about to cancel your request.";
-            //  }
+              }
              }
              cancel(){
               const Data = {

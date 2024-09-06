@@ -565,7 +565,7 @@
                                                     <input type="radio" name="qus23" class="ma-5" formControlName="qus23" value="4"/>
                                                 </td>
                                             </tr>
-                                            <tr class="font-type h-30">
+                                            <!-- <tr class="font-type h-30">
                                                 <td style="white-space: pre-wrap;" class="fs-13">There was no bullying or harassment
                                                     <div *ngIf="requestForm.get('qus24')!.hasError('required') && requestForm.get('qus24')!.touched" class="text-danger">Please select the ratings</div> 
                                                 </td>
@@ -581,7 +581,7 @@
                                                 <td class="text-center"> 
                                                     <input type="radio" name="qus24" class="ma-5" formControlName="qus24" value="4"/>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                             <tr class="font-type h-30">
                                                 <td style="white-space: pre-wrap;" class="fs-13">There are adequate parking facilities
                                                     <div *ngIf="requestForm.get('qus25')!.hasError('required') && requestForm.get('qus25')!.touched" class="text-danger">Please select the ratings</div>
@@ -1015,11 +1015,11 @@
                                         </div>
                                     </div>
                                     <div class="flex-shrink-0">
-                                        <div class="hstack text-nowrap gap-2" *ngIf="view != 1">
-                                            <a href="resignationReq"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
-                                        </div>
+                                        <!-- <div class="hstack text-nowrap gap-2" *ngIf="view != 1">
+                                            <a routerLink="/resignationReq"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                        </div> -->
                                         <div class="hstack text-nowrap gap-2" *ngIf="view == 1">
-                                            <a href="ResignationApprovalHR"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                            <a routerLink="/ResignationApprovalHR"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
                                         </div>
                                     </div>
                                 </div>
@@ -1067,6 +1067,16 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-12 mb-3"  *ngIf="view != 1">
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    <div class="flex-shrink-0">
+                        <div class="hstack text-nowrap gap-2">
+                            <a href="resignationReq"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
 
          </div>

@@ -20,7 +20,7 @@
                                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                         <h4 class="mb-sm-0">Yearly Leave Report</h4>
                                     </div>
-                                    <div *ngIf="empexistance == 'Please Select Fields'">
+                                    <div *ngIf="empexistance == 'Please Select Year'">
                                         <span class="existance_cls">{{empexistance}}</span>
                                     </div>  
                                 </div>
@@ -40,7 +40,7 @@
                                                         <div>
                                                             <h3 class="font-type fs-12"><span>Year</span></h3>
                                                             <select class="form-select font-type fs-11" aria-label="Default select example"  name="year" id="year">
-                                                                <option value="-1">All</option>
+                                                                <option value="-1">Select</option>
                                                                 <option *ngFor="let YearList of listYear" value="{{YearList.DISPLAY_FIELD}}">
                                                                     {{YearList.DISPLAY_FIELD}}</option>
                                                             </select>

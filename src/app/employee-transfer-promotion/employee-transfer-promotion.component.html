@@ -191,7 +191,7 @@
                                 </div>      
                                 <div class="col-lg-3 col-md-6 pt-2 mb-2">
                                     <h6 class="font-type fs-12 fw-semibold"><span>Effective Date</span></h6>
-                                    <input type="date" class="form-control font-type fs-12 mb-0 textbox-15 h-30" formControlName="effdate"  min="{{mindate}}"> 
+                                    <input type="date" class="form-control font-type fs-12 mb-0 textbox-15 h-30" formControlName="effdate" min="{{effectivedt}}"> 
                                     <div *ngIf="TransferForm.get('effdate')?.invalid && TransferForm.get('effdate')?.touched" class="text-danger">
                                         *Required!                                        
                                     </div>
@@ -420,13 +420,13 @@
                                         *Required!                                        
                                     </div>
                                 </div>  
-                                <div class="col-lg-3 col-md-6 mb-2">
+                                <!-- <div class="col-lg-3 col-md-6 mb-2">
                                     <label class="form-label font-type fs-12 fw-semibold">Probation Period(Months)</label>
                                     <input type="text" class="form-control font-type textbox-15 h-30 fs-12" placeholder="Probation Period (In Months)" formControlName="ProbationPeriod">
                                     <div *ngIf="TransferForm.get('ProbationPeriod')?.invalid && TransferForm.get('ProbationPeriod')?.touched" class="text-danger">
                                         *Required!                                        
                                     </div>
-                                </div>   
+                                </div>    -->
                                 <div class="col-lg-3 col-md-6">
                                     <label class="form-label font-type fs-12 fw-semibold">Notice Period(Days)</label>
                                     <input type="text" class="form-control font-type textbox-15 h-30 fs-12" placeholder="Notice Period (In Months)" formControlName="NoticePeriod">

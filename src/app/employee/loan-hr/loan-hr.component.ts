@@ -76,15 +76,17 @@ isFormValid:boolean=false;
       request_status:any;
       EditForm: FormGroup;
       isValid: boolean=false;
-  emp_code: any;
-  req_Id: any;
-  leave: any;
-  compoff: any;
-  business: any;
-  permissions: any;
-  loan: any;
-  expense: any;
-  desiredPage: any;
+      emp_code: any;
+      req_Id: any;
+      leave: any;
+      compoff: any;
+      business: any;
+      permissions: any;
+      loan: any;
+      expense: any;
+      desiredPage: any;
+      month: any;
+      validateMonth: any;
     
       constructor(private session:LoginService,private apicall:ApiCallService,private router:Router,private fb: FormBuilder,private datepipe:DatePipe) { 
         
@@ -94,7 +96,7 @@ isFormValid:boolean=false;
         });
       }
     
-      ngOnInit(): void {
+      ngOnInit(): void { 
         
         //Button selection
         var buttons = document.querySelectorAll('.toggle-button');        
@@ -324,11 +326,20 @@ isFormValid:boolean=false;
               this.filter(); 
            })
            }
-           setSelectedRequestID(item: any) {
-             this.item=item;
-             this.emp_code=item.EMP_CODE;
-             this.req_Id=item.REQ_ID;                    
-             }
+
+  setSelectedRequestID(item: any) {
+    this.item=item;
+    this.emp_code=item.EMP_CODE;
+    this.req_Id=item.REQ_ID;   
+    this.apicall.FetchDisbursmentMonth(this.emp_code).subscribe((res) => {
+      this.month = res.DISPLAY_FIELD;
+      this.validateMonth = `${this.currentyear}-${this.month}`;
+      (<HTMLInputElement>document.getElementById("openEditModal")).click();
+    }, (error) => {
+      console.error('Error fetching disbursement month:', error);
+    });                 
+  }
+
              onReject() {              
                const data={
                 empcode:this.emp_code,

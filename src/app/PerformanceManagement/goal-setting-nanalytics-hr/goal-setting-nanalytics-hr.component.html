@@ -275,7 +275,7 @@
                                          <!--end col-->
                                          <div class="col-lg-3 col-sm-3">
                                              <select class="form-select font-type fs-12 textbox-15 h-30"name="status"[(ngModel)]="selectedStatusAssessment"(change)="FetchGoalSettingData(2)">
-                                                <option value="" selected disabled >Status</option>
+                                                <option value="-2" selected  >Status</option>
                                                 <option value="-1">All</option>
                                                 <option *ngFor="let combo of GoalSettingstatus" [value]="combo.KEY_ID"[hidden]="combo.KEY_ID <= 2 || combo.KEY_ID == 4 || combo.KEY_ID == 11|| combo.KEY_ID == 12">{{ combo.DATA_VALUE }}</option>
                                              </select>  

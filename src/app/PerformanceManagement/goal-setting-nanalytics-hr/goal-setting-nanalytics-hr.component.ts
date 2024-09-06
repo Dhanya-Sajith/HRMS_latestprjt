@@ -60,7 +60,7 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
   GoalDetails: any;
   selectedYearAssessment:any= new Date().getFullYear();
   selectedCompanyAssessment:any=-1;
-  selectedStatusAssessment:any=3;
+  selectedStatusAssessment:any=-2;
   AssessmentData: any;
   currentPageAssessment: number=1;
   itemsPerPageAssessment: any=10;

@@ -55,6 +55,7 @@ export class GoalProgressTrackerComponent implements OnInit {
        this.backcate = params['view'];
     }); 
 
+   // alert(this.category);
 
   this.listassessmentDetails();
 
@@ -143,7 +144,7 @@ export class GoalProgressTrackerComponent implements OnInit {
 
 
 
-  goalprogressdtl(goalId:any)
+  goalprogressdtl(goalId:any) 
   {
     this.apicall.goalpogressdetails(this.empcodes,this.reqId,goalId).subscribe((res) => {
     this.goalprogressdtls = res;
@@ -179,6 +180,7 @@ export class GoalProgressTrackerComponent implements OnInit {
               (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
               this.showModals = 1;
               this.successs = "Updated Successfully";
+              this.listassessmentDetails();
             }
             else{
               (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
@@ -258,6 +260,8 @@ export class GoalProgressTrackerComponent implements OnInit {
             (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
             this.showModals = 1;
             this.successs = "Updated Successfully";
+            this.listassessmentDetails();
+
         } else {
             // Failure alert
             (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
@@ -272,15 +276,52 @@ export class GoalProgressTrackerComponent implements OnInit {
   {
 
     const sendremarks = (<HTMLInputElement>document.getElementById("sendremarks")).value;
-    const checkbox = (<HTMLInputElement>document.getElementById("formCheck10"))
-    const markasvalue = checkbox.checked ? checkbox.value : "0";
+    // const checkbox = (<HTMLInputElement>document.getElementById("formCheck10"))
+    // const markasvalue = checkbox.checked ? checkbox.value : "0";
 
     const data = {
       empcode: this.empcodes,
       verified_by: this.empcode,
       remarks: sendremarks,
       reqid:this.reqId,
-      mflag:markasvalue,
+      mflag:1,
+  };
+
+ // alert(JSON.stringify(data));
+
+  this.apicall.appRejGoalEvaluation(data).subscribe(res =>{
+    //  alert(res.Errorid);
+      if(res.Errorid!=0){
+        (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
+        this.showModals = 1;
+        this.successs = "Approved Successfully";
+        // location.reload();
+        this.listassessmentDetails();
+      }
+      else{
+        (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
+        this.showModals = 2;
+        this.faileds = "Failed!";
+      }  
+
+    }) 
+
+
+  }
+
+  sendForreassessment()
+  {
+
+    const sendremarks = (<HTMLInputElement>document.getElementById("sendreassessremarks")).value;
+    // const checkbox = (<HTMLInputElement>document.getElementById("formCheck10"))
+    // const markasvalue = checkbox.checked ? checkbox.value : "0";
+
+    const data = {
+      empcode: this.empcodes,
+      verified_by: this.empcode,
+      remarks: sendremarks,
+      reqid:this.reqId,
+      mflag:0,
   };
 
  // alert(JSON.stringify(data));
@@ -291,6 +332,8 @@ export class GoalProgressTrackerComponent implements OnInit {
         (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
         this.showModals = 1;
         this.successs = "Send Successfully";
+        // location.reload();
+        this.listassessmentDetails();
       }
       else{
         (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();

@@ -74,7 +74,7 @@ export class ExitinterviewformComponent implements OnInit {
       qus21: ['', Validators.required],
       qus22: ['', Validators.required],
       qus23: ['', Validators.required],
-      qus24: ['', Validators.required],
+      // qus24: ['', Validators.required],
       qus25: ['', Validators.required],
       qus26: ['', Validators.required],
       qus27: ['', Validators.required],
@@ -201,7 +201,7 @@ export class ExitinterviewformComponent implements OnInit {
        quest21: this.requestForm.get('qus21')?.value,
        quest22: this.requestForm.get('qus22')?.value,
        quest23: this.requestForm.get('qus23')?.value,
-       quest24: this.requestForm.get('qus24')?.value,
+      //  quest24: this.requestForm.get('qus24')?.value,
        quest25: this.requestForm.get('qus25')?.value,
        quest26: this.requestForm.get('qus26')?.value,
        quest27: this.requestForm.get('qus27')?.value,
@@ -278,14 +278,82 @@ export class ExitinterviewformComponent implements OnInit {
     return this.selectedReasons.includes(reason);
   }
 
+  // FetchQuestions(code:any)
+  // {
+  //   this.apicall.View_ExitInterviewDetails(code).subscribe((res)=>{
+  //     this.fillform = res
+  //     alert(JSON.stringify(res))
+  //     this.questionnaireAnswers = this.fillform[0].Questionnaire;
+  //     if (this.questionnaireAnswers['1']) {
+  //       this.selectedReasons = this.questionnaireAnswers['1'].split(',').map((reason: string) => reason.trim());
+  //       // alert(JSON.stringify( this.selectedReasons))
+  //     }
+
+  //     // this.requestForm.controls['qus1'].setValue(this.questionnaireAnswers['1']);
+  //     this.requestForm.controls['qus2'].setValue(this.questionnaireAnswers['2']);
+  //     this.requestForm.controls['qus3'].setValue(this.questionnaireAnswers['3']);
+  //     this.requestForm.controls['qus4'].setValue(this.questionnaireAnswers['4']);
+  //     this.requestForm.controls['qus5'].setValue(this.questionnaireAnswers['5']);
+  //     this.requestForm.controls['qus6'].setValue(this.questionnaireAnswers['6']);
+  //     this.requestForm.controls['qus7'].setValue(this.questionnaireAnswers['7']);
+  //     this.requestForm.controls['qus8'].setValue(this.questionnaireAnswers['8']);
+  //     this.requestForm.controls['qus9'].setValue(this.questionnaireAnswers['9']);
+  //     this.requestForm.controls['qus10'].setValue(this.questionnaireAnswers['10']);
+  //     this.requestForm.controls['qus11'].setValue(this.questionnaireAnswers['11']);
+  //     this.requestForm.controls['qus12'].setValue(this.questionnaireAnswers['12']);
+  //     this.requestForm.controls['qus13'].setValue(this.questionnaireAnswers['13']);
+  //     this.requestForm.controls['qus14'].setValue(this.questionnaireAnswers['14']);
+  //     this.requestForm.controls['qus15'].setValue(this.questionnaireAnswers['15']);
+  //     this.requestForm.controls['qus16'].setValue(this.questionnaireAnswers['16']);
+  //     this.requestForm.controls['qus17'].setValue(this.questionnaireAnswers['17']);
+  //     this.requestForm.controls['qus18'].setValue(this.questionnaireAnswers['18']);
+  //     this.requestForm.controls['qus19'].setValue(this.questionnaireAnswers['19']);
+  //     this.requestForm.controls['qus20'].setValue(this.questionnaireAnswers['20']);
+  //     this.requestForm.controls['qus21'].setValue(this.questionnaireAnswers['21']);
+  //     this.requestForm.controls['qus22'].setValue(this.questionnaireAnswers['22']);
+  //     this.requestForm.controls['qus23'].setValue(this.questionnaireAnswers['23']);
+  //     this.requestForm.controls['qus24'].setValue(this.questionnaireAnswers['24']);
+  //     this.requestForm.controls['qus25'].setValue(this.questionnaireAnswers['25']);
+  //     this.requestForm.controls['qus26'].setValue(this.questionnaireAnswers['26']);
+  //     this.requestForm.controls['qus27'].setValue(this.questionnaireAnswers['27']);
+  //     this.requestForm.controls['qus28'].setValue(this.questionnaireAnswers['28']);
+  //     this.requestForm.controls['qus29'].setValue(this.questionnaireAnswers['29']);
+  //     this.requestForm.controls['qus30'].setValue(this.questionnaireAnswers['30']);
+  //     this.requestForm.controls['qus31'].setValue(this.questionnaireAnswers['31']);
+  //     this.requestForm.controls['qus32'].setValue(this.questionnaireAnswers['32']);
+  //     this.requestForm.controls['qus33'].setValue(this.questionnaireAnswers['33']);
+  //     this.requestForm.controls['qus34'].setValue(this.questionnaireAnswers['34']);
+  //     this.requestForm.controls['qus35'].setValue(this.questionnaireAnswers['35']);
+  //     this.requestForm.controls['qus36'].setValue(this.questionnaireAnswers['36']);
+  //     this.requestForm.controls['qus37'].setValue(this.questionnaireAnswers['37']);
+  //     this.requestForm.controls['qus38'].setValue(this.questionnaireAnswers['38']);
+  //     this.requestForm.controls['qus39'].setValue(this.questionnaireAnswers['39']);
+  //     this.requestForm.controls['qus40'].setValue(this.questionnaireAnswers['40']);
+  //     this.requestForm.controls['qus41'].setValue(this.questionnaireAnswers['41']);
+  //     this.requestForm.controls['qus42'].setValue(this.questionnaireAnswers['42']);
+  //     this.requestForm.controls['qus43'].setValue(this.questionnaireAnswers['43']);
+  //     this.requestForm.controls['qus44'].setValue(this.questionnaireAnswers['44']);
+  //     this.requestForm.controls['qus45'].setValue(this.questionnaireAnswers['45']);
+  //     this.requestForm.controls['qus46'].setValue(this.questionnaireAnswers['46']);
+  //     this.requestForm.controls['qus47'].setValue(this.questionnaireAnswers['47']);
+  //   })
+  // }
+
   FetchQuestions(code:any)
   {
-    this.apicall.View_ExitInterviewDetails(code).subscribe((res)=>{
+    this.apicall.Fetch_ExitInterviewAnswers(code).subscribe((res)=>{
       this.fillform = res
-      this.questionnaireAnswers = this.fillform[0].Questionnaire;
+      // Convert the array of objects into a dictionary
+      this.fillform = res.reduce((acc: any, item: any) => {
+        acc[item.KEY_ID] = item.DATA_VALUE;
+        return acc;
+      }, {});
+
+      // Access the transformed data
+      this.questionnaireAnswers = this.fillform;
+
       if (this.questionnaireAnswers['1']) {
         this.selectedReasons = this.questionnaireAnswers['1'].split(',').map((reason: string) => reason.trim());
-        // alert(JSON.stringify( this.selectedReasons))
       }
 
       // this.requestForm.controls['qus1'].setValue(this.questionnaireAnswers['1']);
@@ -311,7 +379,7 @@ export class ExitinterviewformComponent implements OnInit {
       this.requestForm.controls['qus21'].setValue(this.questionnaireAnswers['21']);
       this.requestForm.controls['qus22'].setValue(this.questionnaireAnswers['22']);
       this.requestForm.controls['qus23'].setValue(this.questionnaireAnswers['23']);
-      this.requestForm.controls['qus24'].setValue(this.questionnaireAnswers['24']);
+      // this.requestForm.controls['qus24'].setValue(this.questionnaireAnswers['24']);
       this.requestForm.controls['qus25'].setValue(this.questionnaireAnswers['25']);
       this.requestForm.controls['qus26'].setValue(this.questionnaireAnswers['26']);
       this.requestForm.controls['qus27'].setValue(this.questionnaireAnswers['27']);
@@ -335,7 +403,7 @@ export class ExitinterviewformComponent implements OnInit {
       this.requestForm.controls['qus45'].setValue(this.questionnaireAnswers['45']);
       this.requestForm.controls['qus46'].setValue(this.questionnaireAnswers['46']);
       this.requestForm.controls['qus47'].setValue(this.questionnaireAnswers['47']);
-    })
+    });
   }
 
   convertToPDF() {

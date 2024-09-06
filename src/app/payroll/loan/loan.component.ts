@@ -89,6 +89,8 @@ export class LoanComponent implements OnInit {
   currentdate:any
   pdate: any;
   gratuity: any;
+  validateMonth: any;
+  month: any;
 
   constructor(private session:LoginService,private apicall:ApiCallService,private router:Router,private fb: FormBuilder,private datepipe:DatePipe,private route: ActivatedRoute) { 
     this.requestForm = this.fb.group({
@@ -268,16 +270,24 @@ export class LoanComponent implements OnInit {
     this.item=item;
     const payrolldt = this.item.PAYROLL_DATE
     this.pdate = this.datepipe.transform(payrolldt, 'yyyy-MM-dd');
-  
-    if(this.pdate > this.currentdate) {
-      this.current = new Date(this.now.getFullYear(), this.now.getMonth(), 1);
-      this.nextmonth=this.datepipe.transform(this.current, 'MM');
-      this.currentmonthno=this.currentyear+ '-' +this.nextmonth;
-    }else{
-      this.current = new Date(this.now.getFullYear(), this.now.getMonth()+1, 1);
-      this.nextmonth=this.datepipe.transform(this.current, 'MM');
-      this.currentmonthno=this.currentyear+ '-' +this.nextmonth;
-    }
+
+    this.apicall.FetchDisbursmentMonth(empCode).subscribe((res) => {
+      this.month = res.DISPLAY_FIELD;
+      this.validateMonth = `${this.currentyear}-${this.month}`;
+      (<HTMLInputElement>document.getElementById("openEditModal")).click();
+    }, (error) => {
+      console.error('Error fetching disbursement month:', error);
+    });
+   
+    // if(this.pdate > this.currentdate) {
+    //   this.current = new Date(this.now.getFullYear(), this.now.getMonth(), 1);
+    //   this.nextmonth=this.datepipe.transform(this.current, 'MM');
+    //   this.currentmonthno=this.currentyear+ '-' +this.nextmonth;
+    // }else{
+    //   this.current = new Date(this.now.getFullYear(), this.now.getMonth()+1, 1);
+    //   this.nextmonth=this.datepipe.transform(this.current, 'MM');
+    //   this.currentmonthno=this.currentyear+ '-' +this.nextmonth;
+    // }
    }
 
    reject(reqid:any,reason:string){     

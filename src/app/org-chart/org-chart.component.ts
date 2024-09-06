@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./org-chart.component.scss']
 })
 export class OrgChartComponent implements OnInit {
+
   userSession:any = this.session.getUserSession();
   empcode: any=this.userSession.empcode;
   level: any=this.userSession.level;
@@ -34,323 +35,154 @@ export class OrgChartComponent implements OnInit {
   private readonly scaleStep: number = 0.1;
   private readonly minScale: number = 0.5;
   private readonly maxScale: number = 1;
+  companycode: any;
+  ecount: any;
+  chartUrl: any;
 
-  @ViewChild('Orgcharts', { static: true }) Orgcharts!: ElementRef;
-  logo: any;
+ 
   constructor(private apicall:ApiCallService,private session:LoginService,private renderer: Renderer2,private http: HttpClient){}
 
 ngOnInit(): void {
+  this.comcode = this.companycode
+  this.employee = this.empcode
   this.hostname=this.apicall.dotnetapi;
+  this.apicall.GetCurrentDate(this.comcode).subscribe((res)=>{
+    this.currdate=res[0].WORK_DATE;
+  //  alert(JSON.stringify(res));
+    this.ecount=res[0].REQUEST_ID;
+  //  alert('fdf')
+  //  alert(this.currdate)
+       });
   this.apicall.FetchCompanyList(this.empcode).subscribe((res)=>{
     this.listCompany=res;
-    //alert(JSON.stringify(this.listCompany));
+  //  alert(SON.stringify(this.listCompany));
     if (this.listCompany.length > 0) {
       this.comcode = this.listCompany[0].KEY_ID;
       this.company=this.listCompany[0].DATA_VALUE;
     }
-   // alert(this.company)
-    // this.apicall.GetCompanyLogo(this.comcode).subscribe(async (res)=>{
-    //   this.listcompany=res;
-    //   this.logopath=res[0].DATA_VALUE;
-    //   this.logo = this.hostname + this.listcompany[0].DATA_VALUE;
-    //   this.logo = await this.getBase64ImageFromUrl(this.hostname + this.listcompany[0].DATA_VALUE);
-    // });
-    this.apicall.GetCurrentDate().subscribe(async (res)=>{
-      this.currdate=res[0].FROM_DATE;
-    //  alert(this.currdate)
-    });
-  })
-
-  this.apicall.FetchEmployeeList(-1,-1,this.empcode).subscribe((res)=>{
+    
+  });
+ 
+  this.apicall.FetchEmployeeList(-1,-1,this.employee).subscribe((res)=>{
     this.listEmployees=res;
          
-  })
-
+  });
+ //alert(this.currdate)
+// if(this.currdate!=undefined)
+this.viewChart(this.employee,this.comcode,1,0,this.currdate);
   }
-customizenodes(nd:INode[],pid:any)
-{ //alert("FHh")
-  //alert(this.nodes.length);
-  for(let nds of nd)
-  { let imgs=nds.image;
-   // alert(this.employee);
-   //if((nds.ParentId=='0'|| nds.ecode=='0') && this.employee=='-1')
-   //{
-    nds.title=nds.title=nds.title.replace('⮟','⮝');
-   // nds.image="https://localhost:44381/api/File/GetEmployeeDocs/1/MH00048/2/PIC.JPG";
-   imgs=this.hostname+"/File/GetEmployeeDocs/1/"+nds.ecode+"/2/"+nds.image;
-    nds.image=imgs;
-    imgs='';
-  //  alert(nds.image);
-   // nds.image="assets/styles/img/Admin 2.png";
-  // nds.cssClass="node-content";
-   //}
-    if(nds.ParentId==pid)
-    {//alert(this.nodes[l].name);
-      nds.hidden=false;
-    //nds.title='hhj';
-      this.toggleCollapse(nds);
-      //nds.hidden=true;
-    }
-    this.customizenodes(nds.childs,pid);
-  }
-  
-}
-toggleNode(node: INode): void {
-  node.hidden = !node.hidden;
-  //alert('fd')
-}
-toggleCollapse(nod:INode) {
-
-if(nod.hidden==false)
-  {
-  nod.title=nod.title.replace('⮝','⮟');
- // nod.title=nod.title.replace('⮟','⮝');
-let childlen=nod.childs.length;
-//alert(childlen)
-if(childlen>0)//ie there
- // alert(childlen)
-  for(var k=childlen;k>0;)
-  {
-        nod.childs = nod.childs.filter(child => child.ecode !== nod.childs[k-1].ecode);
-    k=nod.childs.length;
-  }
- 
-  nod.title=nod.title.replace('⮝','⮟');
- nod.hidden=true;
- // nod.image='path_to_image';
- }
-else
-  { //alert('condition')
-    this.apicall.GetChartData(this.employee,this.comcode).subscribe((res)=>{
+  // loadHtml() {
+  //   alert('fdf')
+  //   this.http.get<any>('http://localhost:4200/assets/Orgchart.html').subscribe((data)=>{
+  //     alert('gf')
+  //     this.htmlContent = data;
+  //     alert(this.htmlContent)
+  //   })
+  // }
       
-      this.mainjson=res;
-      //alert(JSON.stringify(this.mainjson));
-    });
-let mainchildlen=this.mainjson.length;
-
-// alert(mainchildlen)
-if(mainchildlen>0)//ie there
- {
- const node = this.searchFilter(nod.ecode,this.mainjson)
-//alert(node.childs.length)
- //node.childs.push(child => child.ecode !== nod.childs[k-1].ecode);
- const node1 = this.searchFilter(nod.ecode,this.nodes)
- //alert(node.childs.length)
-   for(var j=0; j<node.childs.length;j++)
-  {
-    //alert(JSON.stringify(node.childs[j]));
-    
-    node1.childs.push(node.childs[j]);
-    this.customizenodes(node1.childs,nod.ecode);
-    //this.toggleCollapse(node1.childs);
+  changeValueEmp(): void {
+ 
+   // alert(this.employee)
+    this.viewChart(this.employee,this.comcode,1,this.ecount,this.currdate);
+    //alert(text);
   }
-  
-  nod.hidden=false;
-  nod.title=nod.title.replace('⮟','⮝');
-//this.nodes[0].childs = this.nodes[0].childs.filter(child => child.ecode !== nod.ecode);
-}
-}
-}
+  viewfull(): void {
+ 
+   //  alert(this.employee)
+     
+     this.viewChart(this.employee,this.comcode,0,this.ecount,this.currdate);
+     }
 
-childsearch:any;
-searchFilter(search: string, directories: any[]) {
-//alert(JSON.stringify(directories));
-for(let directory of directories){
- // alert(JSON.stringify(directory));
-    if(directory.ecode==search){
-     // alert(JSON.stringify(directory));
-        return directory;
-    }
-    if (directory.childs !== undefined && directory.childs.length > 0) {
-        this.childsearch = this.searchFilter(search, directory.childs)
-        if (this.childsearch !== undefined) {
-            return this.childsearch
-        }
-    }
-}
-return undefined;
-}
-deepCloneTree(nodes: INode[]): INode[] {
-return nodes.map(node => ({
-  ecode:node.ecode,
-        name: node.name,
-        title: node.title,
-        cssClass: node.cssClass,
-        image:node.image,
-        hidden:node.hidden,
-        ParentId:node.ParentId,
-        addtext:node.addtext,
-        childs: node.childs ? this.deepCloneTree(node.childs) : []
-}));
-}
-handleExpand(node: INode) {
-//alert("fdf")
-const element = document.getElementById(node.ecode);
-if (element) {
-  const chartContainer = document.getElementById('chartContainer');
-  if (chartContainer) {
-    chartContainer.scrollLeft += element.offsetWidth; // Adjust this value as needed
-  }
-}
-}
 changeValue(event: any): void {
   let text = event.target.options[event.target.options.selectedIndex].text;
+  //let selecode = event.target.options.selected;
   this.company=text;
-  this.viewChart();
-  //alert(text);
-}
-viewChart()
-{
-
-  this.apicall.GetChartData(this.employee,this.comcode).subscribe((res)=>{
-    this.nodes=res;
-   
-    if(this.employee=='-1')
-    {this.customizenodes(this.nodes,'MJ00022');}
-    //alert('op')
-   // this.mainjson=this.deepCloneTree(this.nodes);
-   // alert(JSON.stringify(res));
-   else{
-    this.customizenodes(this.nodes,this.employee);
-   }
-  });
-  //alert(this.comcode)
-  this.apicall.GetCompanyLogo(this.comcode).subscribe((res)=>{
-    this.listcompany=res;
-    this.logopath=res[0].DATA_VALUE;
-   // alert(this.logopath)
-   let kk=(<HTMLInputElement>document.getElementById("Orgcharts")); 
-   this.renderer.setStyle(kk, 'transform', `scale(${this.scale})`);
-  })
  
-}
-zoomIn() {
-  let kk=(<HTMLInputElement>document.getElementById("Orgcharts")); 
+  this.apicall.FetchEmployeeList(-1,this.comcode,this.empcode).subscribe((res)=>{
+    this.listEmployees=res;
+               
+  })
+  this.apicall.GetCurrentDate(this.comcode).subscribe((res)=>{
+    this.currdate=res[0].WORK_DATE;
+   // alert(JSON.stringify(res));
+    this.ecount=res[0].REQUEST_ID;
+  //  alert(this.ecount)
+    this.employee='-1';
+  this.viewChart(this.employee,this.comcode,1,this.ecount,this.currdate);
+         });
+ 
+  //alert(text);
+
   
-     if (this.scale < this.maxScale) {
-     this.scale += this.scaleStep;
-    //alert(this.scale)
-    this.renderer.setStyle(kk, 'transform', `scale(${this.scale})`);
-   }
-  
 }
-zoomOut() {
-  let kk=(<HTMLInputElement>document.getElementById("Orgcharts")); 
-  
-  if (this.scale > this.minScale) {
-    this.scale -= this.scaleStep;
-    //alert(this.scale)
-    this.renderer.setStyle(kk, 'transform', `scale(${this.scale})`);
-  }
-}
-setscale()
+viewChart(ecode:any,comp:any,tp:any,ecount:any,dd:any)
 {
-  //alert(this.scale)
-}
-private applyScale() {
-  //alert(this.Orgcharts.nativeElement);
-   this.renderer.setStyle(this.Orgcharts.nativeElement, 'transform', `scale(.75)`);
-}
+ 
+  //alert(ecode)
 
-async getBase64ImageFromUrl(imageUrl: string): Promise<string | undefined> {
-  try {
-    const response = await this.http.get(imageUrl, { responseType: 'blob' }).toPromise();
+  this.chartUrl='http://localhost:4200/assets/organizationChart.html?empcode='+ecode+'&company='+comp+'&ecount='+ecount+'&dd='+this.currdate;
+  //alert(this.chartUrl)
+ if(tp==1)
+ {
+//  alert(this.chartUrl)
+  let fl=<HTMLDivElement>document.getElementById('chartview');
+  fl.innerHTML='<object  data=' + this.chartUrl + ' width="100%" height="700" ><embed src='+ this.chartUrl +' width="100%" height="700" /></object>'
+ }
+ else{
+  window.location.href = this.chartUrl;
+ }
 
-    if (!response) {
-      console.error(`Image not found at ${imageUrl}`);
-      return undefined;
-    }
-
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (reader.result) {
-          resolve(reader.result as string);
-        } else {
-          reject(new Error("Failed to convert image to base64."));
-        }
-      };
-      reader.onerror = () => {
-        reject(new Error("Failed to read image file."));
-      };
-      reader.readAsDataURL(response);
-    });
-  } catch (error) {
-    console.error(`Failed to fetch image from ${imageUrl}:`, error);
-    return undefined;
-  }
-}
-
-convertToPDF() {
-  const element: HTMLElement = <HTMLDivElement>document.getElementById('htmlElementId'); // Replace with your HTML element's ID
-  const logoImg = new Image();
-  logoImg.src = this.hostname+this.logopath;
-  if (element) {
-    html2canvas(element,{
-      logging: true,
-      allowTaint: true,
-      useCORS: true,
-      }).then((canvas) => {
-
-      //alert(canvas);
-
-      const contentDataURL = canvas.toDataURL();
-      const pdf = new jsPDF('portrait', 'mm', 'a4'); // Portrait, millimeters, A4 size
-
-      const imgWidth = 208;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      const xPosition = (pdf.internal.pageSize.width - imgWidth) / 2; // Center horizontally
-      const yPosition = 10; // Center vertically
-
-      // Draw a border around the entire page
-      pdf.rect(0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height);
-
-      // Add the image inside the bordered area
-     // pdf.addImage(contentDataURL, 'JPG', xPosition, yPosition, imgWidth, imgHeight);
-      pdf.addImage(contentDataURL, '', xPosition, yPosition, imgWidth, imgHeight);
-
-      pdf.save('Org Chart.pdf');
-      
-    }).catch((error) => {
-      console.error('Error during html2canvas conversion:', error);
-    });
-  } else {
-    console.error("Element with ID 'htmlElementId' not found");
-  }
-}
-
-zoomIn1() {
-  let kk=(<HTMLInputElement>document.getElementById("Orgcharts")); 
-  
-     if (this.scale < this.maxScale) {
-    //alert(this.scale)
-   // alert(this.maxScale)
-    //alert(kk)
-    this.scale += this.scaleStep;
-   // alert(this.scale)
-    this.renderer.setStyle(kk, 'transform', `scale(${this.scale})`);
-  //   alert(this.scale)
-   // this.applyScale();
-  //  alert(this.username);
-  }
-
-}
-zoomOut1() {
-  let kk=(<HTMLInputElement>document.getElementById("Orgcharts")); 
- // alert(this.scale)
-    //alert(this.minScale)
-    //alert(kk)
-  if (this.scale > this.minScale) {
-    this.scale -= this.scaleStep;
-   // alert(this.scale)
-    this.renderer.setStyle(kk, 'transform', `scale(${this.scale})`);
-  }
+// //this.loadExternalContent(this.chartUrl);
+//   let fl=<HTMLDivElement>document.getElementById('fullchart');
+// //fl.innerHTML='<p>dggfgfg</p>';
+//     fl.innerHTML='<object  data=' + this.chartUrl + ' width="100%" height="700" ><embed src='+ this.chartUrl +' width="100%" height="700" /></object>'
+//  //fl.innerHTML='<iframe  src=' + this.chartUrl + ' width="100%" height="700"></iframe>'
+//  //this.loadExternalContent(this.chartUrl);
 }
 
 
+ convertToPDF()
+{
+// this.captureAndGeneratePdf();
+// alert('gfg');
+const element: HTMLElement = <HTMLDivElement>document.getElementById('htmlElementId'); // Replace with your HTML element's ID
+//alert("fgg")
+if (element) {
+  html2canvas(element,{
+        useCORS: true,
+        allowTaint: false,
+    }).then((canvas) => {
 
+    //alert(canvas);
 
+    const contentDataURL = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('l', 'mm', 'a4'); // Portrait, millimeters, A4 size
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+
+    // Calculate the PDF dimensions
+    const imgWidth = 310; // A4 size width in mm
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    // Add image to PDF and handle scaling
+   pdf.addImage(contentDataURL, 'PNG',0,0,0,0);
+    // // Draw a border around the entire page
+    // pdf.rect(0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height);
+
+    // Add the image inside the bordered area
+   // pdf.addImage(contentDataURL, 'JPG', xPosition, yPosition, imgWidth, imgHeight);
+    //pdf.addImage(contentDataURL, 'PNG', imgWidth, imgHeight);
+
+    pdf.save('Org Chart.pdf');
+    
+  }).catch((error) => {
+    console.error('Error during html2canvas conversion:', error);
+  });
+} else {
+  console.error("Element with ID 'htmlElementId' not found");
+}
+}
 
 }
 

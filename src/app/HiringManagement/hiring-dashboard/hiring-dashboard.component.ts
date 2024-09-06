@@ -134,6 +134,9 @@ export class HiringDashboardComponent implements OnInit {
     //Year
     this.apicall.listYear().subscribe((res) => {
       this.yeardata=res;  
+       if (this.yeardata.length > 0) {
+        this.year = this.yeardata[0].DISPLAY_FIELD;
+      }
     });
     //Status 
     this.apicall.listRegStatus(82).subscribe((res)=>{

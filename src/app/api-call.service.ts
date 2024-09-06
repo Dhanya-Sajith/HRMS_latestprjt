@@ -17,12 +17,12 @@ export class ApiCallService {
   //Local host
   public dotnetapi = 'https://localhost:5001/api';
   //Live server for Customer intranet
-  // public dotnetapi = 'http://192.168.10.29:81/api';
+  //public dotnetapi = 'http://192.168.10.29:81/api';
   //public hostname='localhost:44381';
   //Live server for Customer Cloud 
   //public dotnetapi = 'http://72.167.151.157:81/api';
   // Emisoft common Test server
-  //public dotnetapi = 'http://192.168.1.37:84/api';
+ //public dotnetapi = 'http://192.168.1.36:84/api';
   // Emisoft common Test cloud server
   //public dotnetapi = 'http://13.53.118.116:81/api';//
  
@@ -31,9 +31,9 @@ export class ApiCallService {
   {
     return this.http.get<any>(`${this.dotnetapi}/MasterManagement/generatejson/${empcode}/${company}`);
   }
-  GetCurrentDate()
+  GetCurrentDate(company:any)
   {
-    return this.http.get<any>(`${this.dotnetapi}/Attendance/GetCurrentDates`);
+    return this.http.get<any>(`${this.dotnetapi}/Attendance/GetCurrentDates/${company}`);
   }
   FetchLeaveTypes()
   {
@@ -686,6 +686,12 @@ listaccomodationtype()
 {
   return this.http.get<any>(`${this.dotnetapi}/EmployeeManagement/GetAccommodation_code`);
 }
+listaccomodationtypeEdit(empcode:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/EmployeeManagement/GetAccommodation_codeforEdit/${empcode}`);
+}
+
+
 listworkingdays(workingdaysid:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/MasterManagement/MasterComboData/${workingdaysid}`);
@@ -2947,6 +2953,10 @@ listUserGroups(tid:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/MasterManagement/MasterComboData/${tid}`);
 }
+// FetchlistUserGroups(tid:any)
+// {
+//   return this.http.get<any>(`${this.dotnetapi}/MasterManagement/FetchUserGroups/${tid}`);
+// }
 UserAccessSettingList(menuid:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/MasterManagement/UserAccessSettingList/${menuid}`);
@@ -2956,7 +2966,11 @@ AddNewUserGroup(data:any)
   return this.http.post<any>(`${this.dotnetapi}/MasterManagement/Add_NewUserGroup`,data)
 }
 
-
+// new on 02-09-2024
+UserMenuAccessSettingList(userid:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/MasterManagement/MenuAccesUserGrp/${userid}`);
+}
 
 //Recruitment Report
 FetchRecruitmentData(empcode:any,company:any,fromdate:any,todate:any,reqstatus:any)
@@ -2980,7 +2994,23 @@ CheckDocExists(data:any)
 //Expense Claim
 updateExpenseClaimDoc(data:any)
 {
-  alert('X')
   return this.http.post<any>(`${this.dotnetapi}/Payroll/UpdateExpenseClaimDoc`,data);
 }
+
+//loan Disbursment Month validation
+FetchDisbursmentMonth(empcode:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Payroll/FetchDisbursmentMonth/${empcode}`);
+}
+MenuAccessSetting(data:any)
+{
+  return this.http.post<any>(`${this.dotnetapi}/MasterManagement/MenuAccessSetting`,data);
+}
+
+//exit interview new API
+Fetch_ExitInterviewAnswers(empcode:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/OffBoarding/Fetch_ExitInterviewAnswers/${empcode}`);
+}
+
 }

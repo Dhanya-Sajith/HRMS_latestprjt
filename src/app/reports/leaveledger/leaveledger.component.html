@@ -130,6 +130,9 @@
                                                   
                                                         <div class="d-lg-flex align-items-center  mb-2">
                                                             <div class="flex-grow-1">
+                                                                <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">Empcode : <span class="fs-13 fw-semibold text-blue">{{selectedempcode}}</span></h6>
+                                                            </div>
+                                                            <div class="flex-grow-1">
                                                                 <h6 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold">Employee : <span class="fs-13 fw-semibold text-blue">{{employeename}}</span></h6>
                                                             </div>
                                                             <div class="flex-grow-1">
@@ -165,7 +168,7 @@
                                                             </tr>
                                                             <tr *ngFor="let ReportList of mapper| search : searchInput ;let i = index">
                                                                 <td>{{i+1}}</td>
-                                                                <td>{{ReportList.UPDATED_DATE|date: 'dd-MM-yyyy'}}</td>
+                                                                <td>{{ReportList.UPDATED_DATE | date:'dd-MM-yyyy'}}</td>
                                                                 <td>{{ReportList.REMARKS}}</td>
                                                                 <td>{{ReportList.LEAVE_ADDITION}}</td>
                                                                 <td>{{ReportList.LEAVE_DEDUCTION}}</td>

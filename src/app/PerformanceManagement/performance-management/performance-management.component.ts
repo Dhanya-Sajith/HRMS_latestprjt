@@ -14,6 +14,7 @@ export class PerformanceManagementComponent implements OnInit {
 
   userSession:any = this.session.getUserSession();
   empcode: any=this.userSession.empcode;
+  grpname:any=this.userSession.grpname; 
 
   user:any = 'personal';
   companydata: any;
@@ -22,7 +23,7 @@ export class PerformanceManagementComponent implements OnInit {
   year:any = -1;
   status:any = -1;
   teamyear:any = -1;
-  teamstatus:any = 0;
+  teamstatus:any = -2;
   isValid: boolean=false;
   showModal = 0;
   success:any="";
@@ -50,6 +51,7 @@ export class PerformanceManagementComponent implements OnInit {
   desiredPage: any;
   viewflag: number = 0;
   vstatus: any;
+  itemClicked: any;
 
   constructor(private apicall:ApiCallService, private datePipe: DatePipe,private fb:FormBuilder,private session:LoginService,private router:Router,private route: ActivatedRoute) { 
     this.AcceptanceForm = this.fb.group({
@@ -104,6 +106,8 @@ export class PerformanceManagementComponent implements OnInit {
     {
       this.addTableRow();
     }
+
+    // this.updateFormControls();
   }
 
   // Radio button selection
@@ -149,9 +153,11 @@ export class PerformanceManagementComponent implements OnInit {
     if(data.REQUEST_STATUS == 4 || data.REQUEST_STATUS == 0 )
     {
       this.viewflag = 1;
+      this.isDisabled = false;
     }
     else{
       this.viewflag = 0;
+      this.isDisabled = true;
     }
     this.apicall.Fetch_GoalDetails(this.emp_code,this.empyear,this.Reqid).subscribe((res) => {
       this.GoalList = res; 
@@ -370,12 +376,25 @@ export class PerformanceManagementComponent implements OnInit {
     control.clear();
   }
 
+  viewStatusModel(item:any){
+    this.apicall.Goal_Status_LogDetails(item.EMP_CODE,item.REQUEST_ID).subscribe((res)=>{ 
+       this.statusdata=res;      
+       this.itemClicked = item;      
+    })
+  }
+
+  clearHighlight() {
+    setTimeout(() => {
+    this.itemClicked = null;// Reset itemClicked to remove highlight
+    }, 500); 
+  }
+
   //PaginationTeam
  getTotalPages(): number {
   return Math.ceil(this.totalSearchResults / this.itemsPerPage);
-}
+ }
 
-goToPage() {
+ goToPage() {
   const totalPages = Math.ceil(this.totalSearchResults / this.itemsPerPage);
   if (this.desiredPage >= 1 && this.desiredPage <= totalPages) {
     this.currentPage = this.desiredPage;
@@ -454,6 +473,14 @@ const filteredData = this.EvaluationdataLM.filter((employee: any) =>
 );
 const end = this.currentPage * this.itemsPerPage;
 return Math.min(end, filteredData.length);
+}
+
+updateFormControls() {
+  if (this.isDisabled) {
+    this.tableRows.controls.forEach(control => control.disable()); // Disable each form control
+  } else {
+    this.tableRows.controls.forEach(control => control.enable()); // Enable each form control
+  }
 }
 
 }

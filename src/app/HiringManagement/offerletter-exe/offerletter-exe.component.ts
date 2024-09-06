@@ -155,7 +155,7 @@ convertToPDF() {
           {
               text: [
                   { text: 'To ,'+ '\n', style: 'boldText' },
-                  { text: `${this.offerletterdt[0].GENDER === 'Female' ? 'Ms. ' : 'Mr. '}`, style: 'boldText' },
+                  { text: `${this.offerletterdt[0].GENDER === 2 ? 'Ms. ' : 'Mr. '}`, style: 'boldText' },
                   { text: this.offerletterdt[0].CANDIDATE_NAME + '\n', style: 'boldText' }
               ]
           },
