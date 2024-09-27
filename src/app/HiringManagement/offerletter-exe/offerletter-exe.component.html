@@ -18,7 +18,7 @@
         <div class="main-content">
 
             <div class="page-content">
-                <div class="container-fluid">
+                <div class="container-fluid"> 
 
                     <!--Offer Letter Style-->
                     <div class="row" style="justify-content:center;">
@@ -98,7 +98,7 @@
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12">
                                             <div class="p-2">
-                                                <h6 class="fs-14 font-type lh-base text-black">On behalf of <span class="fw-semibold text-italic fs-14">Worldwide Oilfield Machine M.E. "({{this.offerletterdt[0].COMPANY}})", </span> It is my pleasure to offer you the position of <span class="fw-semibold text-italic fs-14">"{{this.offerletterdt[0].DESIGNATION}}".</span></h6>
+                                                <h6 class="fs-14 font-type lh-base text-black">On behalf of <span class="fw-semibold text-italic fs-14">Worldwide Oilfield Machine M.E. ({{this.offerletterdt[0].COMPANY}}), </span> It is my pleasure to offer you the position of <span class="fw-semibold text-italic fs-14">{{this.offerletterdt[0].DESIGNATION}}.</span></h6>
                                             </div>
                                         </div>
                                     </div>
@@ -116,7 +116,7 @@
                                                         <tr>
                                                             <td class="fs-14 text-black">Employment Start Date</td>
                                                             <td class="fs-14 text-black">:</td>
-                                                            <td class="fs-14 text-black">26/06/2024</td>
+                                                            <td class="fs-14 text-black">TBC</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -162,9 +162,13 @@
                                         </div>
                                     </div>
                                         
+                                   
+
                                     <div class="row">
+
                                         <div class="col-lg-12 col-md-12">
                                                 <div class="p-2">
+                                                    <div *ngIf="this.offerletterdt[0].probationCompletionSalary!=null">The total salary will be revised to <b>AED {{this.offerletterdt[0].probationCompletionSalary}}/- </b> upon completion of your probation period.</div><br/>
                                                         <h6 class="fs-14 font-type text-black">The employment status of this position is full time and the other benefits will include :</h6>
                                                 </div>
                                                 <div class="table-responsive">
@@ -185,10 +189,16 @@
                                                                 <td class="fw-semibold text-black fs-14">:</td>
                                                                 <td class="text-black fs-14">To and from work place provided by the company</td>
                                                             </tr>
-                                                            <tr *ngIf="this.offerletterdt[0].MEDICAL_INSURANCE==1">
+                                                            <tr *ngIf="this.offerletterdt[0].FAMILY_INSURANCE==1 && this.offerletterdt[0].MEDICAL_INSURANCE==1">
                                                                 <td class="fw-semibold text-black fs-14">Medical Insurance</td>
                                                                 <td class="fw-semibold text-black fs-14">:</td>
-                                                                <td class="text-black fs-14">Private medical insurance to self (spouse and two kids below 18 years of age) by the company</td>
+                                                                <td class="text-black fs-14">Private medical insurance to self, spouse and two kids below 18 
+                                                                    years of age by the company</td>
+                                                            </tr>
+                                                            <tr *ngIf="this.offerletterdt[0].FAMILY_INSURANCE==0 && this.offerletterdt[0].MEDICAL_INSURANCE==1">
+                                                                <td class="fw-semibold text-black fs-14">Medical Insurance</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">Private medical insurance to self by the company</td>
                                                             </tr>
                                                             <tr *ngIf="this.offerletterdt[0].LIFE_INSURANCE==1">
                                                                 <td class="fw-semibold text-black fs-14">Life Insurance</td>
@@ -200,10 +210,30 @@
                                                                 <td class="fw-semibold text-black fs-14">:</td>
                                                                 <td class="text-black fs-14">Provided by the company</td>
                                                             </tr>
-                                                            <tr *ngIf="this.offerletterdt[0].FAMILY_AIRTICKET==1">
+                                                            <tr *ngIf="this.offerletterdt[0].AIRTICKET_ELIGIBILITY==1">
                                                                 <td class="fw-semibold text-black fs-14">Home Ticket</td>
                                                                 <td class="fw-semibold text-black fs-14">:</td>
-                                                                <td class="text-black fs-14">One economy class air ticket to and from the home country for self (spouse and two kids below 18 years of age) once every 24/12 months of employment. </td>
+                                                                <td class="text-black fs-14">Not Eligible</td>
+                                                            </tr>
+                                                            <tr *ngIf="this.offerletterdt[0].AIRTICKET_ELIGIBILITY==2 &&  this.offerletterdt[0].FAMILY_AIRTICKET==1">
+                                                                <td class="fw-semibold text-black fs-14">Home Ticket</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">One economy class air ticket to and from the home country for self, spouse and two kids below 18 years of age once every 12 months of employment. </td>
+                                                            </tr>
+                                                            <tr *ngIf="this.offerletterdt[0].AIRTICKET_ELIGIBILITY==2 &&  this.offerletterdt[0].FAMILY_AIRTICKET==0">
+                                                                <td class="fw-semibold text-black fs-14">Home Ticket</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">One economy class air ticket to and from the home country for self once every 12 months of employment. </td>
+                                                            </tr>
+                                                            <tr *ngIf="this.offerletterdt[0].AIRTICKET_ELIGIBILITY==3 &&  this.offerletterdt[0].FAMILY_AIRTICKET==1">
+                                                                <td class="fw-semibold text-black fs-14">Home Ticket</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">One economy class air ticket to and from the home country for self, spouse and two kids below 18 years of age once every 24 months of employment. </td>
+                                                            </tr>
+                                                            <tr *ngIf="this.offerletterdt[0].AIRTICKET_ELIGIBILITY==3 &&  this.offerletterdt[0].FAMILY_AIRTICKET==0">
+                                                                <td class="fw-semibold text-black fs-14">Home Ticket</td>
+                                                                <td class="fw-semibold text-black fs-14">:</td>
+                                                                <td class="text-black fs-14">One economy class air ticket to and from the home country for self once every 24 months of employment. </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -227,13 +257,13 @@
                                                             <tr>
                                                                 <td class="fw-semibold text-black fs-14">Probation period</td>
                                                                 <td class="fw-semibold text-black fs-14">:</td>
-                                                                <td class="fw-medium text-black fs-14">{{this.offerletterdt[0].PROBATION_PERIOD}}</td>
+                                                                <td class="fw-medium text-black fs-14">{{this.offerletterdt[0].PROBATION_PERIOD}} Months from the date of joining</td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="fw-semibold text-black fs-14">Notice period</td>
                                                                 <td class="fw-semibold text-black fs-14">:</td>
-                                                                <td class="fw-medium text-black fs-14">{{this.offerletterdt[0].NOTICE_PERIOD}}</td>
-                                                            </tr>
+                                                                <td class="fw-medium text-black fs-14">{{this.offerletterdt[0].NOTICE_PERIOD}} Days in writing by either party</td>
+                                                            </tr> 
 
                                                             <tr>
                                                                 <td class="fw-semibold text-black fs-14">Vacation</td>
@@ -281,7 +311,7 @@
                                         </div>
                                     </div>
                                     </div>
-
+                                    <hr style="border:1px solid #000;width: 150px;">
                                     <div class="row margin-up-10">
                                         <div class="col-lg-12 col-md-12">
                                             <div class="p-2">
@@ -299,7 +329,7 @@
                                         </div>
                                     </div>
                                 
-
+                                    
                                     <div class="row ma-10">
                                         <div class="col-lg-12 col-md-12">
                                             <div class="p-2">
@@ -307,6 +337,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <hr style="border:1px solid #000000;width: 250px;">
 
                                     <div class="row">
                                         <div class="col-lg-4 col-md-4">

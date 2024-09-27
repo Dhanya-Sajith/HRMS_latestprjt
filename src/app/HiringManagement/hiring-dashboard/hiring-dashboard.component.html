@@ -466,7 +466,7 @@
                                                     <ng-container *ngIf="cdata.STATUS == 2 || cdata.STATUS == 5 || cdata.STATUS == 7">
                                                         <span class="badge badge-height bg-info-subtle text-blue width-budge fs-11 fw-semibold text-uppercase">{{cdata.STATUS_VAL}}</span>
                                                     </ng-container>
-                                                    <ng-container *ngIf="cdata.STATUS == 3 || cdata.STATUS == 4 || cdata.STATUS == 6">
+                                                    <ng-container *ngIf="cdata.STATUS == 3 || cdata.STATUS == 4 || cdata.STATUS == 6 || cdata.STATUS == 8">
                                                         <span class="badge badge-height bg-warning-subtle text-warning  width-budge fs-11 fw-semibold text-uppercase">{{cdata.STATUS_VAL}}</span>
                                                     </ng-container>
                                                     <!-- <ng-container  *ngIf="cdata.STATUS == 7">
@@ -474,7 +474,7 @@
                                                     </ng-container> -->
                                                 </td>
                                                 <td>
-                                                    <ul class="list-inline hstack mb-0" [hidden]="cdata.STATUS == 1 || cdata.STATUS == 6">
+                                                    <ul class="list-inline hstack mb-0" [hidden]="cdata.STATUS == 1 || cdata.STATUS == 6 ||  cdata.STATUS == 8">
                                                     <!-- <ul class="list-inline hstack mb-0"> -->
                                                         <li>
                                                             <div class="dropdown" style="overflow:visible;position: static;">
@@ -960,8 +960,10 @@
                                                     </div>
                                                     <div class="col-lg-3">
                                                         <h3 class="fw-semibold fs-12 font-type"><span>Upload CV</span></h3>
-                                                        <input class="form-control font-type fs-12 textbox-15" type="file" id="formFile" name="cv" formControlName="cv" accept=".pdf">
+                                                        <input *ngIf="selectedtypeValue != '0'" class="form-control font-type fs-12 textbox-15" type="file" id="formFile" name="cv" formControlName="cv" accept=".pdf">
                                                         <!-- <span class="fs-11 font-type ma-10 text-muted">* Maximum Size - 500KB</span> -->
+                                                        <input *ngIf="selectedtypeValue == '0'" class="form-control font-type fs-12 textbox-15" type="text" name="cv" formControlName="cv">
+                                                        <input type="hidden" name="jobid" formControlName="jobid">
                                                         <div *ngIf="ApplyForm.get('cv')!.hasError('required') && ApplyForm.get('cv')!.touched" class="text-danger">
                                                             Please, upload the CV..
                                                         </div>

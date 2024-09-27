@@ -630,21 +630,30 @@ fetchpersonaldata()
 
   CancelRequest(Empcode:any,requestID:any)
 {
-  const req_category='B'
-  this.apicall.CancelRequests(Empcode,requestID,req_category).subscribe((res) => {
+
+  const Data = {
+    empcode:Empcode,
+    reqid:requestID,        
+    updated_by:this.empcode,
+    Sflag:6,
+  };  
+  this.apicall.CancelRequest_HR(Data).subscribe((res)=>{
     if(res.Errorid==1){
       (<HTMLInputElement>document.getElementById("openModalButtonForalert")).click();
-      this.showModal = 1; 
-      this.success='Request cancelled!'; 
-      this.fetchpersonaldata();
-
-    }
-    else{
+      this.showModal = 1;
+      this.success = "Request Cancelled!";
+      this.BusinessTripOnloadTeam();
+      this.FetchPendingCount(); 
+     }
+     else{
       (<HTMLInputElement>document.getElementById("openModalButtonForalert")).click();
-      this.showModal = 2; 
-      this.failed='Failed!';      
-    }  
-  });
+      this.showModal = 2;
+      this.failed = "Failed!";
+     }          
+    this.FetchPendingCount(); 
+   })  
+
+
 }
 
 Reject(requestID:any,Empcode:any,Reason:string ){  

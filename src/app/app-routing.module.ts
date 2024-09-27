@@ -8,7 +8,6 @@ import { TimetrackingComponent } from './dashboards/timetracking/timetracking.co
 import { ViewbiometricdataComponent } from './attendance/viewbiometricdata/viewbiometricdata.component';
 import { ReportsandsheetsComponent } from './reports/reportsandsheets/reportsandsheets.component';
 import { AttendanceregularizationHrComponent } from './attendance/attendanceregularization-hr/attendanceregularization-hr.component';
-import { CancellationreqComponent } from './attendance/cancellationreq/cancellationreq.component';
 import { AttendancefinalizationComponent } from './attendance/attendancefinalization/attendancefinalization.component';
 import { RegularizationComponent } from './attendance/regularization/regularization.component';
 import { CompensationComponent } from './attendance/compensation/compensation.component';
@@ -19,10 +18,6 @@ import { MonthlyAttendanceReportComponent } from './reports/monthly-attendance-r
 import { DailyAttendanceReportComponent } from './reports/daily-attendance-report/daily-attendance-report.component';
 import { ManhoursReportComponent } from './reports/manhours-report/manhours-report.component';
 import { LeaveHistoryReportComponent } from './reports/leave-history-report/leave-history-report.component';
-import { LeaveManagementComponent } from './leave/leave-management/leave-management.component';
-import { CompoffComponent } from './leave/compoff/compoff.component';
-import { BusinesstripComponent } from './leave/businesstrip/businesstrip.component';
-import { PermissionsComponent } from './leave/permissions/permissions.component';
 import { ApprovelevelsettingComponent } from './approvelevelsetting/approvelevelsetting.component';
 import { DashboardEmpComponent } from './dashboards/dashboard-emp/dashboard-emp.component';
 import { AttendancedataComponent } from './attendance/attendancedata/attendancedata.component';
@@ -168,7 +163,6 @@ const routes: Routes = [
   {path :'viewbiometricdata' , component:ViewbiometricdataComponent},
   {path :'reportsandtimesheets' , component:ReportsandsheetsComponent},
   {path :'attendanceregularizationHR' , component:AttendanceregularizationHrComponent},
-  {path :'cancellationrequest' , component:CancellationreqComponent},
   {path :'attendancefinalization' , component:AttendancefinalizationComponent},
   {path :'regularization' , component:RegularizationComponent},
   {path :'compensation' , component:CompensationComponent},
@@ -179,10 +173,6 @@ const routes: Routes = [
   {path :'Daily_attendance_reports' , component:DailyAttendanceReportComponent},
   {path :'ManHour_reports' , component:ManhoursReportComponent},
   {path :'Leave_History_Report' , component:LeaveHistoryReportComponent},
-  {path :'Leave_Management' , component:LeaveManagementComponent},
-  {path :'compoff' , component:CompoffComponent},
-  {path :'businesstrip' , component:BusinesstripComponent},
-  {path :'permissions' , component:PermissionsComponent},
   {path :'app' , component:ApprovelevelsettingComponent},
   {path :'DashboardEmp' , component:DashboardEmpComponent},
   {path :'attendancedata' , component:AttendancedataComponent},
@@ -308,7 +298,7 @@ const routes: Routes = [
   {path:'Offer_Letter_Int' , component:OfferletterIntComponent},
   {path:'GoalSettingsNAnalyticsHR' , component:GoalSettingNanalyticsHRComponent},
   {path:'org_chart', component:OrgChartComponent},
-  {path:'assestlist',component:AssestlistComponent},
+  {path:'assetlist',component:AssestlistComponent},
   {path:'document-report',component:DocumentsReportComponent},
   {path:'employee-insurance-report',component:EmployeeInsuranceReportComponent},
   {path:'Goalprogress_tracker' , component:GoalProgressTrackerComponent},

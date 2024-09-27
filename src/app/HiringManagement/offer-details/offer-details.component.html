@@ -188,10 +188,15 @@
                                                             <td class="fw-semibold fs-12 text-blue" colspan="2"formControlName="total"ngDefaultControl>{{SalaryDtls[0]?.GROSS_SALARY}}</td>
                                                         </tr>
                                                     </tfoot>
-                                                    </table>
-                                                </div>
+                                                    </table>                                                    
+                                                </div><br>
+                                               
                                             </div>
                                             </div>
+                                        </div>
+                                        <div [hidden]="Sourcetype==0">
+                                            <P>Total salary upon completion of probation period (in AED) : <input type="text"class="font-type" formControlName="probationCompletionSalary">
+                                            </P>                                                
                                         </div>
                                         </div>
                                     </div>
@@ -394,7 +399,7 @@
                             </div>
                             <div class="flex-shrink-0">
                                 <div class="hstack text-nowrap gap-2">
-                                    <a routerLink="/hiring_dashboard"[queryParams]="{ user:'tab2' }"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
+                                    <a routerLink="/hiring_dashboard"[queryParams]="{ user:'tab3' }"><button type="button" class="btn btn-success btn-label right nexttab nexttab font-type text-white"><i class="ri-arrow-go-back-line label-icon align-middle fs-16 ms-2"></i>Back</button></a>
                                 </div>
                             </div>
                         </div>

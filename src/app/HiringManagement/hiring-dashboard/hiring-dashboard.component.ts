@@ -84,6 +84,7 @@ export class HiringDashboardComponent implements OnInit {
   selectdesig: any;
   user: any;
   offerstatus: any;
+  jobid: any;
 
   constructor(private apicall:ApiCallService,private session:LoginService,private fb:FormBuilder,private datePipe: DatePipe,private route: ActivatedRoute, private cdr: ChangeDetectorRef) { 
     this.PushForm = this.fb.group({
@@ -96,7 +97,8 @@ export class HiringDashboardComponent implements OnInit {
       designation: [''],
       cv: ['', Validators.required],
       gender: ['', Validators.required],
-      SourceDetail: ['']
+      SourceDetail: [''],
+      jobid: [''],
     });
     this.EvaluatorForm = this.fb.group({
       Evaluator: ['', Validators.required],
@@ -311,7 +313,9 @@ export class HiringDashboardComponent implements OnInit {
 
     const selectedCandidate = this.canddata.find((candidate: { EMP_CODE: any; }) => candidate.EMP_CODE === empCode);
     if (selectedCandidate) {
-      this.ApplyForm.get('gender')?.setValue(selectedCandidate.EMP_ID);
+      this.ApplyForm.get('gender')?.setValue(selectedCandidate.GENDER);
+      this.ApplyForm.get('jobid')?.setValue(selectedCandidate.JOB_APPLN_ID);
+      this.ApplyForm.get('cv')?.setValue(selectedCandidate.CV_FILE_NAME);
     }
   }
 
@@ -343,18 +347,22 @@ export class HiringDashboardComponent implements OnInit {
       const type = this.ApplyForm.get('type')?.value;
       const gender = this.ApplyForm.get('gender')?.value;
       const SourceDetail = this.ApplyForm.get('SourceDetail')?.value;
+      const jobid = this.ApplyForm.get('jobid')?.value;
       
       if( type == 0){
         this.internal_empcode = ename[0];
         this.candidate_name= "";
+        this.jobid = jobid
       }else{
         this.candidate_name= ename[0];
         this.internal_empcode = "";
+        this.jobid = 0
       }
 
       const data = {
         reqId : this.activereqid,
         source_type : type,
+        job_appln_id: this.jobid,
         gender:gender,
         internal_empcode : this.internal_empcode,
         candidate_name: this.candidate_name,
@@ -369,7 +377,13 @@ export class HiringDashboardComponent implements OnInit {
        {
          const input=document.getElementById("formFile");    
          const fdata = new FormData();
-         this.onFileSelect(input,res.Errorid);
+         if(type != 0)
+         {
+          this.onFileSelect(input,res.Errorid);
+         }
+         this.HireRequestCandidates();
+         this.ApplyForm.reset(); 
+         this.ApplyForm.controls['designation'].setValue(this.selectdesig);
          this.JobRequest_ListHR();
        }
      })
@@ -569,7 +583,7 @@ export class HiringDashboardComponent implements OnInit {
   CandidateActive(REQID:any)
   {
     this.Acivecandreqid = REQID;
-    this.apicall.ResourceEmployeesComboData(-1,-1,this.empcode,1).subscribe((res) => {
+    this.apicall.EmployeeList_NonESS(this.empcode).subscribe((res) => {
       this.emplist=res;
     });
   }

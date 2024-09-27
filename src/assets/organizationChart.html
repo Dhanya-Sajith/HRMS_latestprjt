@@ -54,10 +54,11 @@
                 <!--Chart-->
                 <div class="row ma-10">
                     <div class="col-lg-12">
-                        <div  class="card shadow-lg"><div class="row align-items-center gy-3" >
+                        <div  class="card shadow-lg" ><div class="row align-items-center gy-3" id="btndiv">
                             <div class="pt-2" >
                                 <button type="button" class="btn btn-success font-type fs-15 margin-up-10" onclick="downloadPdf()" style="float:right"><i class="ri-printer-line" title="Print"></i></button>
-                                <a href="/org_chart"><button type="button" class="btn btn-info font-type fs-15 margin-up-10" ><i class="ri-arrow-go-back-line me-1" title="Back"></i>Back</button></a>
+                                <button type="button" class="btn btn-success font-type fs-15 margin-up-10 " onclick="fit()" style="margin-right: 2px;float: right;"><i class="ri-fullscreen-fill" title="Fit to screen"></i></button>
+                                <button type="button" class="btn btn-info font-type fs-15 margin-up-10" onclick="closing()" ><i class="ri-arrow-go-back-line me-1" title="Back"></i>Back</button>
                             </div>
                             </div></div>
                         <div class="card shadow-lg" id="fulldiv">
@@ -73,11 +74,11 @@
                                         <div class="align-items-center d-flex">
                                             <div class="col-sm-auto">
                                                 <span>
-                                                    <img src="styles\img\WVC-LOGO-2024.png" id="logimg" alt="" width="120px" Height="60px">
+                                                    <img src="" id="logimg" alt="" width="120px" Height="60px">
                                                 </span>
                                             </div>
-                                            <h4 class="card-title mb-0 flex-grow-1 text-center fs-13 font-type fw-semibold text-uppercase text-info" style="visibility: hidden;">DIV</h4>
-                                            <h4 class="card-title mb-0 flex-grow-1 text-center fs-13 font-type fw-semibold text-uppercase text-info" >Organization Chart</h4>
+                                            <h4 class="card-title mb-0 flex-grow-1 text-center fs-13 font-type fw-semibold text-uppercase text-info" style="visibility: hidden;">D</h4>
+                                            <h2 class="card-title mb-0 flex-grow-1 text-center fs-13 font-type fw-semibold text-uppercase text-info" >Organization Chart</h2>
                                         </div>
                                     </div>
                                     <div class="col-sm-auto">
@@ -89,6 +90,9 @@
                                             <div>
                                             <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold" id="ecdiv">Date:<span class="ms-1 fw-medium" id="dd"></span></h4>
                                             </div>
+                                            <div>
+                                                <h4 class="card-title mb-0 flex-grow-1 fs-13 font-type fw-semibold" id="enmdiv">Employee:<span class="ms-1 fw-medium" id="enamespan"></span></h4>
+                                                </div>
                                             
                                         </div>
                                     </div>
@@ -97,42 +101,78 @@
                             <div class="card-body pt-0 text-center">
                                 <br/>
                                 <div class="chart-container" id="chartdiv"></div>
-                                <!-- <style>
-                                .chart-container {
-                                    overflow-x: auto;
-                                    white-space: nowrap;
-                                    width: 100%;
-                                    height: 100vh;
-                                    border: 1px solid #ccc;
-                                    padding: 10px;
-                                    box-sizing: border-box;
-                                  }
-</style> -->
+                                <style>
+                                #chartdiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+      
+}
+</style>
 <script>
  const queryString = window.location.search;
    const urlParams = new URLSearchParams(queryString);
-   const emp = urlParams.get('empcode')
-   const comp = urlParams.get('company')
-   const ecount = urlParams.get('ecount')
-   const dd = new Date(urlParams.get('dd'))
-   var date = '' + dd.getDate() + '-' + (1 + dd.getMonth()) + '-' + dd.getFullYear().toString();
+//    const emp = urlParams.get('empcode')
+//    const comp = urlParams.get('company')
+//    const ecount = urlParams.get('ecount')
+  var  date="";
+   const emp = localStorage.getItem('chrt_empcode')
+   const comp =  localStorage.getItem('chrt_company')
+   const ecount =  localStorage.getItem('chrt_ecount')
+   const viewtp =  localStorage.getItem('chrt_viewtp')
+   const chart_api =  localStorage.getItem('chart_api')
+  //alert(viewtp)
+   if(viewtp==1)
+   {
+    document.getElementById('btndiv').style.display='none';
+    document.getElementById('ecdiv').style.color='white';
+    document.getElementById('dd').style.color='white';
+   }
+   else{
+   
+    document.getElementById('btndiv').style.display='inline';
+    const dd = new Date(localStorage.getItem('chrt_dd'))
+    if(dd!='Invalid Date')
+   {
+     date = '' + dd.getDate() + '-' + (1 + dd.getMonth()) + '-' + dd.getFullYear().toString();
+    document.getElementById('dd').innerHTML=date;
+    document.getElementById('dd').style.color='black';
+    document.getElementById('dd').style.display='inline';
+    document.getElementById('ecdiv').style.color='black';
+    document.getElementById('ecdiv').style.display='inline';
+   }
+   else{
+    document.getElementById('btndiv').style.display='none';
+    document.getElementById('ecdiv').style.color='white';
+    document.getElementById('dd').style.color='white';
+   }
+   }
    let logotag=document.getElementById('logimg');
+  
+   //alert(dd)
+ 
    if(emp!='-1')
    {
+    const ename =  localStorage.getItem('chrt_ename');
     document.getElementById('nodiv').style.color='white';
-    document.getElementById('ecdiv').style.color='white';
+    document.getElementById('enamespan').innerHTML=ename;
    }
-//    else{
-//     document.getElementById('nodiv').style.display='inline';
-//     document.getElementById('ecdiv').style.display='inline';
-   
-//    }
+   else{
   
-   document.getElementById('ecount').innerHTML=ecount;
-   document.getElementById('dd').innerHTML=date;
+    document.getElementById('ecount').innerHTML=ecount;
+   
+   document.getElementById('nodiv').style.color='black';
+   document.getElementById('enmdiv').style.color='white';
+ // document.getElementById('ecdiv').style.color='black';
+  //document.getElementById('dd').style.color='black';
+   }
+  
+   
 
    
-  // alert(comp)
+  //alert(comp)
    if(comp=='MJ')
     {
        // logotag.src="styles\img\MTC logo.png";
@@ -158,14 +198,13 @@
     //const comp = 'MJ';
     //alert(comp)
   var chart = null;
-  
  // const apiUrl='http://localhost:90/api/Login/GetCSVdata/-1/MJ';
  //http://localhost:90/api/Login/GetCSVdata/'+emp+'/'+comp+'
   //'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv'
   // This is the data used - https://github.com/bumbeishvili/sample-data/blob/main/data-oracle.csv
   //alert('in chart')
   d3.csv(
-    'http://192.168.1.36:84/api/Login/GetCSVdata/'+emp+'/'+comp+''
+     chart_api+'/Login/GetCSVdata/'+emp+'/'+comp+''
   ).then((data) => {
     chart = new d3.OrgChart()
       .nodeHeight((d) => 50 + 25)
@@ -174,8 +213,8 @@
       .compactMarginBetween((d) => 25)
       .compactMarginPair((d) => 10)
       .neighbourMargin((a, b) => 10)
-      .initialZoom(0.7)
-       .nodeContent(function (d, i, arr, state) {
+      .initialZoom(0.6)
+      .nodeContent(function (d, i, arr, state) {
         const color = '#d6eaf8'
         const imageDiffVert = 25 + 2;
         return `
@@ -211,17 +250,20 @@
   
 </script>
 <script>
+    function  fit()
+    {
+        chart.fit();
+    }
   function downloadPdf() { 
-    chart.fit();
+ //fit();
   // document.getElementById('btnprint').style.display='none';
     const element = document.getElementById("fulldiv");
-    
     const options = {
-        margin: [1, 1, 1, 1],
-                filename: 'download.pdf',
+        margin: [0, 0, 0, 0],
+                filename: 'Orgchart_'+date+'.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 }, // Increase the scale for better quality
-                jsPDF: { unit: 'cm', format: 'a4', orientation: 'landscape' } // Set orientation to landscape
+                html2canvas: { scale: 1 }, // Increase the scale for better quality
+                jsPDF: { unit: 'cm', format: 'a3', orientation: 'landscape' } // Set orientation to landscape
             };
 
             // Generate PDF
@@ -229,7 +271,7 @@
     }
    function closing()
     {
-       alert("ds")
+       history.back();
        
     }
 </script>

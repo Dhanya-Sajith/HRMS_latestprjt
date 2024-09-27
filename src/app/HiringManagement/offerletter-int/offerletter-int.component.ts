@@ -105,6 +105,8 @@ convertToPDF() {
   ]);
   console.log('Company Data:', this.companydata);
 
+   
+
   const docDefinition: TDocumentDefinitions = {
         header: (currentPage, pageCount) => {
           return {
@@ -113,7 +115,7 @@ convertToPDF() {
                   image: this.logo,
                   width: 150,
                   alignment: 'center',
-                  margin: [0, 5, 0, 0] 
+                  margin: [0, 10, 0, 0] 
               },
               {
                   text: this.companydata[0].COMPANY_ID,
@@ -146,16 +148,16 @@ convertToPDF() {
           { text: 'Private and Confidential', style: 'title', alignment: 'center', decoration: 'underline', margin: [0, 10, 0, 10] },  
           {
               text: [
-                  { text: 'Date :'+ '\n', style: 'normal' },
-                   { text: `${this.datePipe.transform(this.offerletterdt[0].ENTER_DATE,"MMMM d, y")}`, style: 'boldText' }
+                  { text: 'Date : ', style: 'normal' },
+                   { text: `${this.datePipe.transform(this.offerletterdt[0].ENTER_DATE,"dd-MM-yyyy")}`, style: 'boldText' }
               ],
               margin: [0, 10, 0, 10]
           },
           {
               text: [
-                  { text: 'To ,'+ '\n', style: 'boldText' },
+                  { text: 'To ,'+ '\n', style: 'boldText' , margin: [0, 10, 0, 20] },
                   { text: `${this.offerletterdt[0].GENDER === 2 ? 'Ms. ' : 'Mr. '}`, style: 'boldText' },
-                  { text: this.offerletterdt[0].CANDIDATE_NAME + '\n', style: 'boldText' }
+                  { text: this.offerletterdt[0].CANDIDATE_NAME + '\n', style: 'boldText' , margin: [0, 20, 0, 10] }
               ]
           },
           {
@@ -195,11 +197,11 @@ convertToPDF() {
                   { text: ' Worldwide Oilfield Machine M.E. ', style: 'boldText' },
                   { text: `(${this.offerletterdt[0].COMPANY}) , `, style: 'boldText' },
                   { text: 'we are pleased to inform you that your request for internal transfer to the position of ', style: 'normal' },
-                  { text: `"${this.offerletterdt[0].DESIGNATION}" `, style: 'boldText' },
-                  { text: 'is approved based on the interview/internal selection process. We believe that your skill, expertise and the experience makes you more suitable for this position.', style: 'normal' },
+                  { text: `${this.offerletterdt[0].DESIGNATION}`, style: 'boldText' },
+                  { text: ' is approved based on the interview/internal selection process. We believe that your skill, expertise and the experience makes you more suitable for this position.', style: 'normal' },
 
               ],
-              margin: [0, 5, 0, 10]
+              margin: [0, 5, 0, 5]
           },
           {
               table: {
@@ -213,29 +215,58 @@ convertToPDF() {
                       [
                           { text: 'Employment Start Date', style: 'normal' },
                           { text: ':', style: 'normal' },
-                          { text: '26/06/2024', style: 'normal' }
+                          { text: 'TBC', style: 'normal' }
                       ]
                   ].filter(row => row.length) // Filter out empty rows
               },
               layout: 'noBorders',
-              margin: [0, 10, 0, 10]
+              margin: [0, 5, 0, 5]
           },
-          { text: 'You will be entitled to the following remuneration:', style: 'normal', margin: [0, 10, 0, 10] },
+          { text: 'You will be entitled to the following remuneration:', style: 'normal', margin: [0, 5, 0, 5] },
           {
-              table: {
-                  body: [
-                      ...salaryDetails,
-                      [
-                        { text: 'Total', style: 'boldText' }, 
-                        { text: ':', style: 'boldText' }, 
-                        { text: `AED ${this.salarydtls[0].GROSS_SALARY} / month`, style: 'boldText' }
-                    ]
-                  ]
+            table: {
+              widths: ['25%', '5%', '70%'],
+              body: [
+                ...salaryDetails,
+                // Custom row for the horizontal line
+                [
+                  {
+                    canvas: [
+                      {
+                        type: 'line',
+                        x1: 0,
+                        y1: 0,
+                        x2: 300, // Adjust this value for the line length
+                        y2: 0,
+                        lineWidth: 0.5, // Adjust line thickness
+                        lineColor: '#000' // Line color
+                      }
+                    ],
+                    colSpan: 3,
+                    margin: [0, 5, 0, 5] // Margin around the line
+                  },
+                  {}, // Placeholder for the second column
+                  {}  // Placeholder for the third column
+                ],
+                [
+                  { text: 'Total', style: 'boldText' }, 
+                  { text: ':', style: 'boldText' }, 
+                  { text: `AED ${this.salarydtls[0].GROSS_SALARY} / month`, style: 'boldText' }
+                ]
+              ]
+            },
+            layout: {
+              hLineWidth: function (i) {
+                return 0; // Prevent default horizontal lines
               },
-              layout: 'noBorders',
-              style: 'tableExample',
-              margin: [0, 10, 0, 10]
+              vLineWidth: function () {
+                return 0; // No vertical lines
+              }
+            },
+            style: 'tableExample',
+            margin: [0, 5, 0, 5]
           },
+         
           { text: 'The employment status of this position is full time and the other benefits will include :', style: 'normal', margin: [0, 10, 0, 10] },
           {
               table: {
@@ -256,10 +287,15 @@ convertToPDF() {
                           { text: ':', bold: true, style: 'boldText' },
                           'To and from work place provided by the company'
                       ] : [],
-                      this.offerletterdt[0].MEDICAL_INSURANCE ? [
+                      this.offerletterdt[0].FAMILY_INSURANCE==1 && this.offerletterdt[0].MEDICAL_INSURANCE==1 ?[
                           { text: 'Medical Insurance', bold: true, style: 'boldText' },
                           { text: ':', bold: true, style: 'boldText' },
-                          'Private medical insurance to self (spouse and two kids below 18 years of age) by the company'
+                          'Private medical insurance to self, spouse and two kids below 18 years of age by the company'
+                      ] : [],
+                      this.offerletterdt[0].FAMILY_INSURANCE==0 && this.offerletterdt[0].MEDICAL_INSURANCE==1 ? [
+                          { text: 'Medical Insurance', bold: true, style: 'boldText' },
+                          { text: ':', bold: true, style: 'boldText' },
+                          'Private medical insurance to self by the company'
                       ] : [],
                       this.offerletterdt[0].LIFE_INSURANCE ? [
                           { text: 'Life Insurance', bold: true, style: 'boldText' },
@@ -271,17 +307,38 @@ convertToPDF() {
                           { text: ':', bold: true, style: 'boldText' },
                           'Provided by the company'
                       ],
-                      this.offerletterdt[0].FAMILY_AIRTICKET ? [
-                          { text: 'Home Ticket', bold: true, style: 'boldText' },
-                          { text: ':', bold: true, style: 'boldText' },
-                          'One economy class air ticket to and from the home country for self (spouse and two kids below 18 years of age) once every 24/12 months of employment.'
-                      ] : []
+                      this.offerletterdt[0].AIRTICKET_ELIGIBILITY==1 ? [
+                        { text: 'Home Ticket', bold: true, style: 'boldText' },
+                        { text: ':', bold: true, style: 'boldText' },
+                        'Not Eligible.'
+                    ] : [],
+                    this.offerletterdt[0].AIRTICKET_ELIGIBILITY==2 &&  this.offerletterdt[0].FAMILY_AIRTICKET==1 ? [
+                      { text: 'Home Ticket', bold: true, style: 'boldText' },
+                      { text: ':', bold: true, style: 'boldText' },
+                      'One economy class air ticket to and from the home country for self, spouse and two kids below 18 years of age once every 12 months of employment.'
+                    ] : [],
+                    this.offerletterdt[0].AIRTICKET_ELIGIBILITY==2 &&  this.offerletterdt[0].FAMILY_AIRTICKET==0 ? [
+                        { text: 'Home Ticket', bold: true, style: 'boldText' },
+                        { text: ':', bold: true, style: 'boldText' },
+                        'One economy class air ticket to and from the home country for self once every 12 months of employment.'
+                    ] : [],
+                    this.offerletterdt[0].AIRTICKET_ELIGIBILITY==3 &&  this.offerletterdt[0].FAMILY_AIRTICKET==1 ? [
+                      { text: 'Home Ticket', bold: true, style: 'boldText' },
+                      { text: ':', bold: true, style: 'boldText' },
+                      'One economy class air ticket to and from the home country for self, spouse and two kids below 18 years of age once every 24 months of employment.'
+                    ] : [],
+                    this.offerletterdt[0].AIRTICKET_ELIGIBILITY==3 &&  this.offerletterdt[0].FAMILY_AIRTICKET==0 ? [
+                        { text: 'Home Ticket', bold: true, style: 'boldText' },
+                        { text: ':', bold: true, style: 'boldText' },
+                        'One economy class air ticket to and from the home country for self once every 24 months of employment.'
+                    ] : [],
                   ].filter(row => row.length) // Filter out empty rows
               },
               style: 'normal',
               layout: 'noBorders',
               margin: [0, 10, 0, 10]
           },
+          { text: '', pageBreak: 'after' },
           { text: 'Other terms of employment are :', style: 'normal', margin: [0, 10, 0, 10] },
           {
               table: {
@@ -295,12 +352,12 @@ convertToPDF() {
                       [
                           { text: 'Probation period', style: 'boldText' },
                           { text: ':', style: 'normal' },
-                          { text: this.offerletterdt[0].PROBATION_PERIOD, style: 'normal' }
+                          { text: this.offerletterdt[0].PROBATION_PERIOD + ' Months from the date of joining', style: 'normal' }
                       ],
                       [
                           { text: 'Notice period', style: 'boldText' },
                           { text: ':', style: 'normal' },
-                          { text: this.offerletterdt[0].NOTICE_PERIOD, style: 'normal' }
+                          { text: this.offerletterdt[0].NOTICE_PERIOD + ' Days in writing by either party', style: 'normal' }
                       ],
                       [
                           { text: 'Vacation', style: 'boldText' },
@@ -331,9 +388,21 @@ convertToPDF() {
               layout: 'noBorders',
               margin: [0, 10, 0, 20]
           },
-          
-          { text: 'All other terms and conditions will remain unchanged as per your existing employment contract.  Many congratulations on this transfer.  We believe this shall be an excellent milestone in your career and we appreciate your continuous contribution to the company.', style: 'normal', margin: [0, 10, 0, 10] },
-          { text: 'Yours Sincerely,', style: 'normal', margin: [0, 10, 0, 10] },
+          { text: 'All other terms and conditions will remain unchanged as per your existing employment contract.  Many congratulations on this transfer.  We believe this shall be an excellent milestone in your career and we appreciate your continuous contribution to the company.', style: 'normal' ,alignment: 'justify', margin: [0, 10, 0, 10] },
+          { text: 'Yours Sincerely,', style: 'normal', margin: [0, 10, 0, 30] },
+          {
+            canvas: [
+                {
+                    type: 'line',
+                    x1: 0,
+                    y1: 0,
+                    x2: 100, // Adjust width as needed
+                    y2: 0,
+                    lineWidth: 1
+                }
+            ],
+            margin: [0, 30, 0, 0] // Adjust margin as needed
+          },
           { text: 'MERLIN VATHANA', style: 'normal', bold: true, margin: [0, 10, 0, 0] },
           { text: 'HR Manager', style: 'normal', bold: true, margin: [0, 0, 0, 10] },
           { text: 'If you choose to accept this offer, please sign a copy of this offer and return it to us within 3 days from the receipt of this offer.', style: 'normal', margin: [0, 5, 0, 5] },
@@ -342,17 +411,38 @@ convertToPDF() {
                   { text: 'Name :', style: 'normal' },
                   { text: this.offerletterdt[0].CANDIDATE_NAME + '\n', style: 'boldText' },
               ],
-              margin: [0, 10, 0, 10]
+              margin: [0, 10, 0, 30]
+          },
+          {
+            canvas: [
+                {
+                    type: 'line',
+                    x1: 0,
+                    y1: 0,
+                    x2: 150, // Adjust width as needed
+                    y2: 0,
+                    lineWidth: 1
+                }
+            ],
+            margin: [0, 30, 0, 0] // Adjust margin as needed
           },
           { text: 'I confirm acceptance after reading and understanding all the terms and conditions of the employment.', style: 'normal', margin: [0, 10, 0, 10] },
       ],
+      footer: function(currentPage, pageCount) {
+        return {
+          text: `Page ${currentPage} of ${pageCount}`,
+          alignment: 'center',
+          style: 'normal',
+          margin: [0, 10]
+        };
+      },
       pageMargins: [40, 150, 40, 60],
       styles: {
           header: { fontSize: 14, bold: true },
           subheader: { fontSize: 10, bold: true },
           title: { fontSize: 12, bold: true },
-          normal: { fontSize: 10, lineHeight: 1.3 },
-          boldText: { fontSize: 10, bold: true } 
+          normal: { fontSize: 9, lineHeight: 1.0 },
+          boldText: { fontSize: 9, bold: true } 
       }
   };
 

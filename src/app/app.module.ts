@@ -16,7 +16,6 @@ import { TimetrackingComponent } from './dashboards/timetracking/timetracking.co
 import { ViewbiometricdataComponent } from './attendance/viewbiometricdata/viewbiometricdata.component';
 import { ReportsandsheetsComponent } from './reports/reportsandsheets/reportsandsheets.component';
 import { AttendanceregularizationHrComponent } from './attendance/attendanceregularization-hr/attendanceregularization-hr.component';
-import { CancellationreqComponent } from './attendance/cancellationreq/cancellationreq.component';
 import { AttendancefinalizationComponent } from './attendance/attendancefinalization/attendancefinalization.component';
 import { DateRangeDirective } from './date-range.directive';
 import { RegularizationComponent } from './attendance/regularization/regularization.component';
@@ -30,11 +29,7 @@ import { MonthlyAttendanceReportComponent } from './reports/monthly-attendance-r
 import { DailyAttendanceReportComponent } from './reports/daily-attendance-report/daily-attendance-report.component';
 import { ManhoursReportComponent } from './reports/manhours-report/manhours-report.component';
 import { LeaveHistoryReportComponent } from './reports/leave-history-report/leave-history-report.component';
-import { LeaveManagementComponent } from './leave/leave-management/leave-management.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { CompoffComponent } from './leave/compoff/compoff.component';
-import { BusinesstripComponent } from './leave/businesstrip/businesstrip.component';
-import { PermissionsComponent } from './leave/permissions/permissions.component';
 import { ApprovelevelsettingComponent } from './approvelevelsetting/approvelevelsetting.component';
 import { DashboardEmpComponent } from './dashboards/dashboard-emp/dashboard-emp.component';
 import { AttendancedataComponent } from './attendance/attendancedata/attendancedata.component';
@@ -159,7 +154,6 @@ import { SalaryRevisionHistoryReportComponent } from './reports/salary-revision-
 import { GoalSettingNanalyticsHRComponent } from './PerformanceManagement/goal-setting-nanalytics-hr/goal-setting-nanalytics-hr.component';
 import { PerformanceManagementComponent } from './PerformanceManagement/performance-management/performance-management.component';
 import { OrgChartComponent } from './org-chart/org-chart.component';
-import { NgxOrgChartModule } from 'ngx-org-chart';
 import { AssestlistComponent } from './reports/assestlist/assestlist.component';
 import { DocumentsReportComponent } from './reports/documents-report/documents-report.component';
 import { EmployeeInsuranceReportComponent } from './reports/employee-insurance-report/employee-insurance-report.component';
@@ -190,7 +184,6 @@ import { RecruitmentReportComponent } from './reports/recruitment-report/recruit
     ViewbiometricdataComponent,
     ReportsandsheetsComponent,
     AttendanceregularizationHrComponent,
-    CancellationreqComponent,
     AttendancefinalizationComponent,
     DateRangeDirective,
     RegularizationComponent,
@@ -202,10 +195,6 @@ import { RecruitmentReportComponent } from './reports/recruitment-report/recruit
     DailyAttendanceReportComponent,
     ManhoursReportComponent,
     LeaveHistoryReportComponent,
-    LeaveManagementComponent,
-    CompoffComponent,
-    BusinesstripComponent,
-    PermissionsComponent,
     ApprovelevelsettingComponent,
     DashboardEmpComponent,
     AttendancedataComponent,
@@ -372,8 +361,7 @@ import { RecruitmentReportComponent } from './reports/recruitment-report/recruit
       "clockwise": true,
       "startFromZero": false,
       "lazy": true}),
-      NgMultiSelectDropDownModule.forRoot(),
-      NgxOrgChartModule
+      NgMultiSelectDropDownModule.forRoot()
     
   ],
   providers: [DatePipe],

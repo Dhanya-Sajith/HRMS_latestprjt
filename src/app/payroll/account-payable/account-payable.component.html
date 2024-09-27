@@ -320,7 +320,7 @@
                                                                 <th class="text-center fs-11">No of<br>Inst.</th>
                                                                 <th class="text-center fs-11">Inst.<br>Amount</th>
                                                                 <th class="text-center fs-11">DSB Month &<br>Year</th>
-                                                                <th class="text-center fs-11">DSB St. Month<br> & Year</th>
+                                                                <th class="text-center fs-11">DED St. Month<br> & Year</th>
                                                                 <th class="fs-11">Remarks</th>
                                                                 <th class="fs-11">Status</th>
                                                                 <th class="fs-11">Details</th>
@@ -336,8 +336,8 @@
                                                                 <td class="fs-10">{{LoanList.AMOUNT}}</td>
                                                                 <td class="fs-10 text-center">{{LoanList.noOfInstal}}</td>
                                                                 <td class="fs-10">{{LoanList.Instal_Amnt}}</td>
-                                                                <td class="fs-10 text-center">{{LoanList.dSMonth}} {{LoanList.dSYear}}</td>
                                                                 <td class="fs-10 text-center">{{LoanList.dSBMonth}} {{LoanList.dSBYear}}</td>
+                                                                <td class="fs-10 text-center">{{LoanList.dSMonth}} {{LoanList.dSYear}}</td>
                                                                 <td><a href="#RemarksModal" data-bs-toggle="modal" class="textblack"(click)="selectRemarks(LoanList.CLOSE_REMARKS)">{{LoanList.CLOSE_REMARKS ? LoanList.CLOSE_REMARKS.substring(0, 4) : ''}}</a></td>
                                                                 <!-- <td class="text-center"><a href="#RemarksModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;">View</a></td> -->
                                                                 <td class="fs-10">{{LoanList.APPROVED_STATUS}}</td>

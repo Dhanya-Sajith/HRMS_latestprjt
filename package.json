@@ -28,7 +28,6 @@
     "ng-circle-progress": "^1.7.1",
     "ng-multiselect-dropdown": "^0.3.8",
     "ngx-material-timepicker": "^13.1.1",
-    "ngx-org-chart": "^1.1.1",
     "number-to-words": "^1.2.4",
     "pdfmake": "^0.2.10",
     "rxjs": "~7.5.0",

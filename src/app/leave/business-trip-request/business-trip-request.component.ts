@@ -262,7 +262,7 @@ fetchpersonaldata()
 
   const reqstatus=0;
   const viewflag=0;
-  this.apicall.ListBusinessTripLevelwise(this.empcode,reqstatus,viewflag,this.firstDay,this.lastDay).subscribe((res)=>{
+  this.apicall.ListBusinessTripLevelwise(this.empcode,reqstatus,viewflag,-1,-1).subscribe((res)=>{
   this.listBussinesstrip_personal=res;
   
 
@@ -300,18 +300,21 @@ fetchpersonaldata()
           this.submitted = false;
         }, 1000);
 
+        this.BussTripSelfForm.reset();
       }
       else if(res.Errorid==2)
       {
         (<HTMLInputElement>document.getElementById("openModalButtonForalert")).click();
         this.showModal = 1;
         this.failed = "Cannot apply for business trip before last payroll processed date..!";  
+        this.BussTripSelfForm.reset();
       }
       else
       {
         (<HTMLInputElement>document.getElementById("openModalButtonForalert")).click();
         this.showModal = 1;
         this.failed = "Request Failed";  
+        this.BussTripSelfForm.reset();
       }
       })
     }
@@ -535,7 +538,7 @@ fetchpersonaldata()
 
     const reqstatus=0;
     const viewflag=1;
-    this.apicall.ListBusinessTripLevelwise(this.empcode,reqstatus,viewflag,this.firstDay,this.lastDay).subscribe((res)=>{
+    this.apicall.ListBusinessTripLevelwise(this.empcode,reqstatus,viewflag,-1,-1).subscribe((res)=>{
     this.listBussinesstrip_team=res;
     // alert(JSON.stringify(res))
     })

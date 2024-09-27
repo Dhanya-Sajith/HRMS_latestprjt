@@ -41,7 +41,7 @@ export class OfferDetailsComponent implements OnInit {
   constructor(private apicall:ApiCallService,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute,private router: Router) {
     this.OfferDetailsForm = this.fb.group({
       passportNo: ['', Validators.required],
-      mobileNo: ['', Validators.required, ],
+      mobileNo: ['', Validators.required ],
       address: ['', Validators.required],      
       total: [''],
       Accommodation: [false],
@@ -60,6 +60,7 @@ export class OfferDetailsComponent implements OnInit {
       NoticePeriod: ['', Validators.required],
       Non_CompeteClause: [false],
       WPSCompany: [null, Validators.required],
+      probationCompletionSalary:[''],  
     });
     this.SalaryDetailsForm = this.fb.group({
       allowanceId: ['', Validators.required],
@@ -134,6 +135,7 @@ export class OfferDetailsComponent implements OnInit {
         NoticePeriod: this.OfferDtls[0].NOTICE_PERIOD,
         Non_CompeteClause: this.OfferDtls[0].NC_CLAUSE,
         WPSCompany: this.OfferDtls[0].WPS_COMPANY,
+        probationCompletionSalary: this.OfferDtls[0].probationCompletionSalary,
       });
       console.log(JSON.stringify(this.OfferDtls));
     });
@@ -194,6 +196,7 @@ export class OfferDetailsComponent implements OnInit {
       Non_CompeteClause: this.OfferDetailsForm.get('Non_CompeteClause')?.value ?? false,
       SalaryDtls:this.SalaryDtls,
       WPSCompany: this.OfferDetailsForm.get('WPSCompany')?.value,
+      probationRevision: this.OfferDetailsForm.get('probationCompletionSalary')?.value,
     };
   //alert(JSON.stringify(data));
    this.apicall.AddCandidateOfferDetails(data).subscribe((res) => {

@@ -140,7 +140,7 @@
                                                                 <div class="card-box" style="background-color: lightgreen;" *ngIf="getAttendance(employee, date)?.N_MARK_CATEGORY == 'P'" >
                                                                     {{ getAttendance(employee, date)?.N_MARK_CATEGORY }}
                                                                 </div>
-                                                                <div class="card-box" style="background-color: lightgoldenrodyellow;" *ngIf="getAttendance(employee, date)?.N_MARK_CATEGORY == 'WE'" >
+                                                                <div class="card-box" style="background-color: lightgray;" *ngIf="getAttendance(employee, date)?.N_MARK_CATEGORY == 'WE'" >
                                                                     {{ getAttendance(employee, date)?.N_MARK_CATEGORY }}
                                                                 </div>
                                                                 <div class="card-box" style="background-color: lightsalmon;" *ngIf="getAttendance(employee, date)?.N_MARK_CATEGORY == 'AL'">
@@ -149,7 +149,7 @@
                                                                 <div class="card-box" style="background-color: lightcoral;" *ngIf="getAttendance(employee, date)?.N_MARK_CATEGORY == 'AB'">
                                                                     {{ getAttendance(employee, date)?.N_MARK_CATEGORY}}
                                                                 </div>
-                                                                <div class="card-box" style="background-color: lightyellow;" *ngIf="getAttendance(employee, date)?.N_MARK_CATEGORY != 'AB' && getAttendance(employee, date)?.N_MARK_CATEGORY != 'P' && getAttendance(employee, date)?.N_MARK_CATEGORY != 'WE' && getAttendance(employee, date)?.N_MARK_CATEGORY != 'AL'">
+                                                                <div class="card-box" style="background-color:lemonchiffon;" *ngIf="getAttendance(employee, date)?.N_MARK_CATEGORY != 'AB' && getAttendance(employee, date)?.N_MARK_CATEGORY != 'P' && getAttendance(employee, date)?.N_MARK_CATEGORY != 'WE' && getAttendance(employee, date)?.N_MARK_CATEGORY != 'AL'">
                                                                     {{ getAttendance(employee, date)?.N_MARK_CATEGORY }}
                                                                 </div>
                                                             </ng-container>

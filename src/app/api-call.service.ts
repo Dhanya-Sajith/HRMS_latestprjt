@@ -15,14 +15,16 @@ export class ApiCallService {
   //Emisoft cloud for customer testing
   //public dotnetapi = 'http://3.111.100.109:81/api';
   //Local host
-  public dotnetapi = 'https://localhost:5001/api';
-  //Live server for Customer intranet
+ public dotnetapi = 'https://localhost:5001/api';
+  //Live server for Customer intranet//
   //public dotnetapi = 'http://192.168.10.29:81/api';
   //public hostname='localhost:44381';
   //Live server for Customer Cloud 
-  //public dotnetapi = 'http://72.167.151.157:81/api';
+   //public dotnetapi = 'http://72.167.151.157:81/api';
+  //public hostnm = 'http://72.167.151.157';
   // Emisoft common Test server
- //public dotnetapi = 'http://192.168.1.36:84/api';
+  //public dotnetapi = 'http://192.168.1.37:84/api';
+ // public dotnetapi = 'http://desktop-bj8t99m:84/api';
   // Emisoft common Test cloud server
   //public dotnetapi = 'http://13.53.118.116:81/api';//
  
@@ -565,6 +567,8 @@ CancelRequests(empcode:string,reqId:any,req_category:string)
 { 
   return this.http.get<any>(`${this.dotnetapi}/LeaveManagement/Cancel_Requests/${empcode}/${reqId}/${req_category}`);
 }
+
+
 Uploadleavedoc(filesup:any,reqid:any)
 {
   return this.http.post<any>(`${this.dotnetapi}/File/LeaveDocUpload/${reqid}`,filesup);
@@ -1841,10 +1845,12 @@ GetBusinestripDocs(fname:any,reqid:any,upflag:any)
 //Request mngmnt
 
 RequestmngmntOnload(empcode:any){  
+//  alert("re")
   return this.http.get<any>(`${this.dotnetapi}/LeaveManagement/BT_ReqMgnt_HR/${empcode}`);
 }
 
 RequestmngmntOnloadfilter(data:any){  
+ // alert("rppp")
   return this.http.post<any>(`${this.dotnetapi}/LeaveManagement/BT_ReqMgnt_FilterHR`,data);
 }
 //Employee master Report
@@ -1956,7 +1962,7 @@ CheckHafzaleave(empcode:any,month:any,flag:any)
 
 WriteExcelFileMonthlyAttendance(month:any,year:any,company:any,empcode:any)
 {
-  return this.http.get<any>(`${this.dotnetapi}/File/WriteExcelFileMonthlyAttendance/${month}/${year}/${company}/${empcode}`);
+  return this.http.get<any>(`${this.dotnetapi}/File/New_WriteExcelMonthlyAttendance/${month}/${year}/${company}/${empcode}`);
 }
 
 // Training management
@@ -3011,6 +3017,12 @@ MenuAccessSetting(data:any)
 Fetch_ExitInterviewAnswers(empcode:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/OffBoarding/Fetch_ExitInterviewAnswers/${empcode}`);
+}
+
+//non ess employees in company access wise
+EmployeeList_NonESS(user:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/MasterManagement/EmployeeList_NonESS/${user}`);
 }
 
 }

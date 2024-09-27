@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-lg-3 pt-2">
                     <h6 class="fs-12 font-type fw-semibold"><span>Employee</span></h6>
-                    <select class="form-select font-type fs-11" aria-label="Default select example"  name="employee" id="employee" [(ngModel)]="employee" (change)="changeValueEmp()">
+                    <select class="form-select font-type fs-11" aria-label="Default select example"  name="employee" id="employee" [(ngModel)]="employee" (change)="changeValueEmp($event)">
                         <option value="-1">Select</option>
                         <option  *ngFor="let EmployeeList of listEmployees" value="{{EmployeeList.EMP_CODE}}" [selected]="EmployeeList.EMP_CODE == empcode">
                             {{EmployeeList.EMP_NAME}}
@@ -41,13 +41,13 @@
                     </select>
                 </div>
                 <div class="col-lg-2">
-                    <div class="pt-4">    
+                    <div class="pt-4" style="display: none;">    
                         <button type="button" class="btn btn-orange font-type fs-12 add-button text-white"><i class="ri-organization-chart me-1"></i>Load</button>
                     </div>
                 </div>  
                 <div class="col-lg-2">
                     <div class="pt-4">    
-                        <button type="button" class="btn btn-info font-type fs-12 add-button"  data-bs-toggle="modal" data-bs-target=".exampleModalFullscreen" (click)="viewfull()" ><i class="ri-eye-fill me-1"></i>View Full Size</button>
+                        <button type="button" class="btn btn-info font-type fs-12 add-button"  data-bs-toggle="modal"  (click)="viewfull()" ><i class="ri-eye-fill me-1"></i>View Full Size</button>
                     </div>
                 </div>   
                         

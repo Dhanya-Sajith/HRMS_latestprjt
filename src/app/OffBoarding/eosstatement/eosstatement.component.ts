@@ -45,6 +45,7 @@ export class EOSStatementComponent implements OnInit {
   EditAdditionForm: FormGroup; 
   EditDeductionForm: FormGroup; 
   sourceflag: any;
+  lastworkdt: any;
 
   constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService,private fb: FormBuilder,private route: ActivatedRoute,private router: Router) { 
     this.AdditionForm = this.fb.group({
@@ -88,6 +89,7 @@ export class EOSStatementComponent implements OnInit {
 
     this.apicall.Fetch_EmpDetails_ExitInterview(this.empcd,this.reqid).subscribe((res) => {  
       this.Empdetails = res
+      this.lastworkdt = this.datePipe.transform(this.Empdetails[0].LAST_WORKING_DATE,'yyyy-MM-dd');
      });
       
      this.apicall.FetchEOS_EmpSal_Details(this.empcd).subscribe((res) => {  
@@ -125,7 +127,6 @@ export class EOSStatementComponent implements OnInit {
     if (this.AdditionForm.valid) {
       const desc = this.AdditionForm.get('adddesc');      
       const amount = this.AdditionForm.get('addamount');    
-      
       const data = {
         reqid:this.reqid,
         empcode: this.empcd,
@@ -133,7 +134,7 @@ export class EOSStatementComponent implements OnInit {
         amount:amount?.value,
         payment_category:desc?.value,
         updatedby:this.empcode,
-        last_workdate:'2024-05-30',
+        last_workdate:this.lastworkdt,
       };
 
       this.apicall.AddOrDeduct_EOSPayments(data).subscribe((res) => {  
@@ -179,7 +180,7 @@ export class EOSStatementComponent implements OnInit {
         amount:amount?.value,
         payment_category:desc?.value,
         updatedby:this.empcode,
-        last_workdate:'2024-05-30',
+        last_workdate:this.lastworkdt,
       };
 
       this.apicall.AddOrDeduct_EOSPayments(data).subscribe((res) => {  

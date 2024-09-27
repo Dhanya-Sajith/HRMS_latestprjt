@@ -3219,6 +3219,7 @@ chnageaccomodationtype(accomtype:any)
     else if(accomtype==2)
     {
       this.accomodationtype=false;
+      this.empBasicForm.controls['accomodation'].setValue("");
     }
 }
 ViewFiles(fpath:any,doctype:any,upflag:any)

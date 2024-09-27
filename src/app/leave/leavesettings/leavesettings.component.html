@@ -184,7 +184,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="">
-                                                                        <select class="form-select h-30 font-type textbox-15" name="empleave" id="empleave"  [(ngModel)]="empleave" (change)="FetchEmployeeAnnualLeaveData()">
+                                                                        <select class="form-select h-30 font-type textbox-15" name="empleave" id="empleave" [(ngModel)]="empleave" (change)="FetchEmployeeAnnualLeaveData()">
                                                                             <option  *ngFor="let listleave of listleaves" value="{{listleave.KEY_ID}}">
                                                                                 {{listleave.DATA_VALUE}}
                                                                             </option> 

@@ -49,12 +49,12 @@ export class ChangeReportingManagerComponent implements OnInit {
     populateTextarea() {
       this.selectedItems = this.employeelist;
   }
-  save(){
+  save(){    
     if (this.oldManager == 0 || this.newManager == 0 || !this.selectedItems || this.selectedItems.length === 0) {
        (<HTMLInputElement>document.getElementById("openModalButton")).click();
         this.showModal = 2;
         this.failed = "Please select all fields!";
-    }else{
+    }else{          
       const data = {
         oldManager: this.oldManager,
         newManager: this.newManager,
@@ -67,7 +67,8 @@ export class ChangeReportingManagerComponent implements OnInit {
       if(res.Errorid==1){
       (<HTMLInputElement>document.getElementById("openModalButton")).click();
         this.showModal = 1;
-        this.success = "Reporting manager updated successfully!";
+        this.success = "Reporting manager updated successfully!When you change the reporting manager, you have to update the approval level also!";  
+       
       }
       else{
         (<HTMLInputElement>document.getElementById("openModalButton")).click();
@@ -76,7 +77,7 @@ export class ChangeReportingManagerComponent implements OnInit {
       }
     });  
     }
-  }
+  } 
   clear(){
     this.oldManager = 0;
     this.newManager = 0;

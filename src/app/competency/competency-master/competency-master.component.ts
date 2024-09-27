@@ -106,13 +106,19 @@ export class CompetencyMasterComponent implements OnInit {
     }
     onDesigSelected(selectedDesig:any){
       this.selectedDesig=selectedDesig;
-     this.apicall.listCompany(69).subscribe((res)=>{
-        this.skillcategory=res;
-        this.apicall.FetchCompetency(this.selectedCompanyid,this.selectedDeptid,this.selectedDesig,1).subscribe((res)=>{
-          this.tabledata=res;
-          console.log(JSON.stringify(this.tabledata))
-         }) 
-     })
+      if(this.selectedCompanyid==-1||this.selectedDeptid==-1||this.selectedDesig==-1){       
+        (<HTMLInputElement>document.getElementById("openModalButton")).click();
+        this.showModal = 2;
+        this.failed = 'Please select all fields!';       
+      }else{        
+        this.apicall.listCompany(69).subscribe((res)=>{
+          this.skillcategory=res;
+          this.apicall.FetchCompetency(this.selectedCompanyid,this.selectedDeptid,this.selectedDesig,1).subscribe((res)=>{
+            this.tabledata=res;
+            console.log(JSON.stringify(this.tabledata))
+           }) 
+       })
+      }   
     }
     onskillcategorySelected(item:any){
      this.selectedSkillCategory=item;
@@ -183,7 +189,7 @@ export class CompetencyMasterComponent implements OnInit {
       this.failed = 'Please enter required qualification!';
       }
     else{
-      tabledata.forEach(data => {               
+      tabledata.forEach(data => {              
                               
         this.updateLevels(data.LEVELS, data.COMPETENCY_ID, data.COMPETENCY_NAME);
           
