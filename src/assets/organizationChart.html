@@ -123,6 +123,7 @@
    const ecount =  localStorage.getItem('chrt_ecount')
    const viewtp =  localStorage.getItem('chrt_viewtp')
    const chart_api =  localStorage.getItem('chart_api')
+   const emprole =  localStorage.getItem('emprole')
   //alert(viewtp)
    if(viewtp==1)
    {
@@ -206,46 +207,78 @@
   d3.csv(
      chart_api+'/Login/GetCSVdata/'+emp+'/'+comp+''
   ).then((data) => {
+  try {
     chart = new d3.OrgChart()
-      .nodeHeight((d) => 50 + 25)
-      .nodeWidth((d) => 140 + 2)
-      .childrenMargin((d) => 45)
-      .compactMarginBetween((d) => 25)
-      .compactMarginPair((d) => 10)
+      .nodeHeight(d => 75)
+      .nodeWidth(d => 142)
+      .childrenMargin(d => 45)
+      .compactMarginBetween(d => 25)
+      .compactMarginPair(d => 10)
       .neighbourMargin((a, b) => 10)
       .initialZoom(0.6)
-      .nodeContent(function (d, i, arr, state) {
-        const color = '#d6eaf8'
-        const imageDiffVert = 25 + 2;
+      .nodeContent(function (d) {
         return `
-                <div style='width:${
-                  d.width
-                }px;height:${d.height}px;padding-left:1px;padding-right:1px'>
-                        <div style="font-family: 'HK Grotesk',sans-serif;font-weight:bold;font-size:15px;background-color:#f3f6f9;width:${d.width - 2}px;height:${d.height}px;border-radius:5px;border: 1px solid black">
-                            <div style="display:flex;justify-content:flex-end;">
-                            </div>
-                            
-                            <div style="font-size:13px;color:#17a2b8;padding-left:8px;padding-top:6px;padding-right:10px;font-family: 'HK Grotesk',sans-serif;">  ${
-                              d.data.name
-                            } </div>
-                            <div style="color:black;padding-left:8px;padding-top:5px;font-size:12px;padding-right:10px;font-family: 'HK Grotesk',sans-serif;"> ${
-                              d.data.positionName
-                            } </div>
-
-                        </div>
-                    </div>
-                            `;
-                        //  chart.collapseAllNodes();
+          <div style='width:${d.width}px;height:${d.height}px;padding:1px;'>
+            <div style="font-family: 'HK Grotesk', sans-serif; font-weight: bold; font-size: 15px; background-color: #f3f6f9; width:${d.width - 2}px; height:${d.height}px; border-radius: 5px; border: 1px solid black;">
+              <div style="display:flex; justify-content:flex-end;"></div>
+              <div style="font-size: 13px; color: #17a2b8; padding: 6px 10px; font-family: 'HK Grotesk', sans-serif;">${d.data.name}</div>
+              <div style="color: black; padding: 5px 10px; font-size: 12px; font-family: 'HK Grotesk', sans-serif;">${d.data.positionName}</div>
+            </div>
+          </div>
+        `;
       })
       .container('.chart-container')
       .data(data)
       .render();
-       // Example translation values
 
-    // Apply zoom transform
-  //  chart.c(initialScale, initialTranslate);
- // chart.fit();
-    chart.expandAll();
+    // Function to apply link styles
+    const applyLinkStyles = () => {
+      d3.selectAll('path') // Select all <path> elements directly
+        .style('stroke', '#17a2b8') // Set link color to red
+        .style('stroke-width', '2'); // Optional: adjust stroke width
+    };
+
+    // Initial application of styles
+    applyLinkStyles();
+
+    // Mutation observer to monitor changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach(() => {
+        applyLinkStyles(); // Reapply styles whenever a mutation occurs
+      });
+    });
+
+    // Start observing the chart container for changes
+    observer.observe(document.querySelector('.chart-container'), {
+      childList: true,
+      subtree: true,
+    });
+
+    // Initial expansion
+    chart.expandAll(); // Start with all nodes expanded
+  } catch (error) {
+    if (emprole.includes('HR')) {
+        console.log('Error value:', error);
+        console.log('Error type:', typeof error);
+
+        // Convert to string if not already a string
+              
+               // Check if the error message matches the expected format
+        const regex = /^Error:\s*missing:\s*(.+)$/; // Regex to capture the employee code
+        const match = regex.exec(error);
+
+        if (match) {
+            const empCode = match[1].trim(); // Get the employee code from the match
+            alert('Failed to render the OrgChart: Employee ' + empCode + ' does not belong to this company');
+           
+        } else {
+            alert('Error format is incorrect. Please check the error message format.');
+        }
+    } else {
+        alert('Failed to render the OrgChart');
+    }
+}
+  
   });
   
 </script>

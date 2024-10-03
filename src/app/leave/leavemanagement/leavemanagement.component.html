@@ -1466,7 +1466,10 @@
                                             <div class="modal-body">
                                                 <input type="hidden" id="id-field" />
                                                 <div class="row">
-                                                    <div *ngIf="validdates" class="text-danger">{{validdates}}</div>
+                                                    <!-- <div *ngIf="validdates" class="text-danger">{{validdates}}</div> -->
+                                                    <div *ngIf="requestForm.get('enddate')?.errors?.['match']" class="text-danger">
+                                                        {{validdates}}
+                                                    </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-2">
                                                             <h3 class="fw-semibold fs-13 font-type">Leave Type <span style="color: red;font-size:14px;">*</span></h3>

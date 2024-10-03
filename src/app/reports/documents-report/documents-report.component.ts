@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallService } from 'src/app/api-call.service';
 import { LoginService } from 'src/app/login.service';
+import { JsonPipe, formatDate,DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-documents-report',
@@ -27,7 +28,7 @@ export class DocumentsReportComponent implements OnInit {
   desiredPage: any;
 documentdata: any;
 
-constructor(private session:LoginService,private apicall:ApiCallService) { }
+constructor(private session:LoginService,private apicall:ApiCallService,private datePipe: DatePipe) { }
 
 ngOnInit(): void {
   this.apicall.FetchCompanyList(this.empcode).subscribe((res)=>{
@@ -55,8 +56,33 @@ DocumentReport()
 }
 download_to_excel()
 { 
+  interface detaildata {
+    RECORDID: string;
+    EMP_NAME: string;
+    DOC_TYPE: string;
+    DOC_NO: string;
+    RENEWAL_DATE: string;
+    EXP_DATE: string;
+    
+  }
+  const Data: any[] = [];
+  const datalength = this.documentdata.length;
+  this.documentdata.forEach((data:detaildata) => { 
+  
+        const details = {
+          ID: data.RECORDID,
+          NAME: data.EMP_NAME,
+          DOCUMENTNAME: data.DOC_TYPE,      
+          DOCUMENTNO: data.DOC_NO ,
+          RENEWALDATE: this.datePipe.transform(data.RENEWAL_DATE, "yyyy-MM-dd") ,
+          EXPIRYDATE: this.datePipe.transform(data.EXP_DATE, "yyyy-MM-dd") ,
+              
+        };
+  
+        Data.push(details);
+  });
 let Excelname:any;
-this.apicall.ExportToExcel(this.documentdata).subscribe((res)=>{
+this.apicall.ExportToExcel(Data).subscribe((res)=>{
 Excelname=res.Errormsg;
 let fileurl=this.apicall.GetExcelFile(Excelname);
 let link = document.createElement("a");

@@ -19,7 +19,7 @@ export class OrgChartComponent implements OnInit {
   authorityflg:any =this.userSession.authorityflg;
   companycode: any=this.userSession.companycode;
   ename:any=this.userSession.name;
-
+  grpname:any=this.userSession.grpname;  
   username: string = '';
   mainjson: any;
   listCompany: any;
@@ -129,6 +129,7 @@ localStorage.setItem("chrt_dd",this.currdate);
 localStorage.setItem("chrt_ename",this.ename);
 localStorage.setItem("chrt_viewtp",tp);
 localStorage.setItem('chart_api',this.apicall.dotnetapi);
+localStorage.setItem("emprole",this.grpname);
 //alert(ecount)
 var port=window.location.port;
 if(port!='')

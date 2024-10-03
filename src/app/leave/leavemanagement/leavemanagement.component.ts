@@ -90,7 +90,7 @@ export class LeavemanagementComponent implements OnInit {
   noofleaves = new FormControl();
   lvduration=new FormControl();
   lvsession=new FormControl();
-  hidedur_div:any;
+  hidedur_div:any = 0;
   sessaction:any;
   anual:any;
   costdoc:any;
@@ -704,7 +704,7 @@ export class LeavemanagementComponent implements OnInit {
         {
           this.anual='0';
         }
-          this.hidedur_div='1';
+          this.hidedur_div='0';
           this.sessaction='0';
           
           (<HTMLInputElement>document.getElementById("startdate")).value='';
@@ -744,6 +744,7 @@ export class LeavemanagementComponent implements OnInit {
       
       if(startdate != '' && enddate != ''){
         if( startdate > enddate){
+          this.requestForm.get('enddate')?.setErrors({ match: true });
           this.validdate="Please enter valid dates";
           this.dateDiff='';
       }  
@@ -785,31 +786,37 @@ export class LeavemanagementComponent implements OnInit {
           }
           if(errno==-2)
           {
+            this.requestForm.get('enddate')?.setErrors({ match: true });
             this.validdates='Another active request for the specified period..!'
             this.dateDiff=''
           }
           else if(errno==-3)
           {
+            this.requestForm.get('enddate')?.setErrors({ match: true });
             this.validdates='Another pending request for the same leave type..!'
             this.dateDiff=''
           }
           else if(errno==-4)
           {
+            this.requestForm.get('enddate')?.setErrors({ match: true });
             this.validdates='Cannot Club annual leave with other leave..!'
             this.dateDiff=''
           }
           else if(errno==-5)
           {
+            this.requestForm.get('enddate')?.setErrors({ match: true });
             this.validdates='Cannot apply for leave before last payroll processed date..!'
             this.dateDiff=''
           }
           else if(errno==-6)
           {
+            this.requestForm.get('enddate')?.setErrors({ match: true });
             this.validdates='Maternity leave of 60 calendar days can only be availed together..!'
             this.dateDiff=''
           }
           else if(errno==-7)
           {
+            this.requestForm.get('enddate')?.setErrors({ match: true });
             this.validdates='Check the available leaves..!'
             this.dateDiff=''
           }
@@ -819,6 +826,7 @@ export class LeavemanagementComponent implements OnInit {
             this.dateDiff=errno;
             if(this.availabledays[0].PERMITTED_DAYS<this.dateDiff)
             {
+              this.requestForm.get('enddate')?.setErrors({ match: true });
               this.validdates='Check the available leaves..!'
               this.dateDiff=''
             }
@@ -826,13 +834,16 @@ export class LeavemanagementComponent implements OnInit {
               // this.requestForm.controls['NoofDaysControl'].setValue(this.dateDiff);
             }
             this.requestForm.controls['NoofDaysControl'].setValue(this.dateDiff);
-            if(this.dateDiff>'1')
-          this.hidedur_div='0'
-          else
-          this.hidedur_div='1'
+              if(this.dateDiff == 1)
+              {
+                this.hidedur_div = 1
+              }else{
+                this.hidedur_div = 0
+              }
           }else{
             this.dateDiff='';
             this.requestForm.controls['NoofDaysControl'].setValue(this.dateDiff);
+            this.requestForm.get('enddate')?.setErrors(null);
         }  
     })
     if(isNaN(this.dateDiff))
@@ -859,17 +870,16 @@ export class LeavemanagementComponent implements OnInit {
     const session= (<HTMLInputElement>document.getElementById("session")).value; 
     if(this.dateDiff == 1){
       if(duration == '0'){
-        // alert('Please, Select Leave Duration')
         this.validdates='Please, Select Leave Duration'
         this.dateDiff = '';
         this.requestForm.controls['NoofDaysControl'].setValue(this.dateDiff);
       }else if(duration == '2'){
         if(session == '0'){
-          // alert('Please, Select Leave Session')
           this.validdates='Please, Select Leave Session'
           this.dateDiff = '';
           this.requestForm.controls['NoofDaysControl'].setValue(this.dateDiff);
         }
+        this.requestForm.get('enddate')?.setErrors(null);
       }
     }
   }
@@ -1128,10 +1138,12 @@ export class LeavemanagementComponent implements OnInit {
     }
     this.requestForm.controls['NoofDaysControl'].setValue(this.dateDiff);
     this.validdates='';
+    this.validation();
   }
 
   diffchange()
   {
+    this.validation();
     this.dateDiff='.5';
     this.requestForm.controls['NoofDaysControl'].setValue(this.dateDiff); 
   }
