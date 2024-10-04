@@ -208,19 +208,13 @@ empid:any =this.userSession.id;
       lastpayrollDate.setMonth(lastpayrollDate.getMonth() + 1);    
       const year = lastpayrollDate.getFullYear();
       const month = (lastpayrollDate.getMonth() + 1).toString().padStart(2, '0');
-      this.NextPayrollMonth = `${year}-${month}`;     
+      this.NextPayrollMonth = `${year}-${month}`;
+         //alert(this.NextPayrollMonth )
       }
       onCompanySelectedAddOnetime() {        
         this.apicall.FetchDepartmentList(this.selectedCompanyidAddOnetime,this.empcode).subscribe((res) => {
           this.deptdata=res;     
-        });    
-        this.apicall.displayGeneralData(this.selectedCompanyidAddOnetime,this.value_type).subscribe((res) => {        
-          
-          this.lastpayrollDate = new Date(res[0].DATA_VALUE);          
-          this.getNextPayrollMonth(this.lastpayrollDate);
-          this.PayrollMonthAddOnetime=this.NextPayrollMonth ;       
-            
-        });          
+        });   
         
        }
        onDeptSelectedAddOnetime(){       
@@ -228,19 +222,42 @@ empid:any =this.userSession.id;
           this.empdata=res;    
           });     
             
-       }         
-       
+       }   
+       onEmpSelectedAddOnetime(){
+        this.apicall.Fetch_EffectiveDate_SalRevision(this.selectedEmpAddOnetime).subscribe((res)=>{
+         const year=res.NEXT_YEAR;
+         //alert(res.NEXT_MONTH)
+         const month=res.NEXT_MONTH.toString().padStart(2, '0');        
+         this.PayrollMonthAddOnetime=`${year}-${month}`;
+         //alert( this.PayrollMonthAddOnetime)
+        })
+       } 
+       onEmpSelectedDedOnetime(){
+        this.apicall.Fetch_EffectiveDate_SalRevision(this.selectedEmpDedOnetime).subscribe((res)=>{
+         const year=res.NEXT_YEAR;
+         const month=res.NEXT_MONTH.toString().padStart(2, '0');        
+         this.PayrollMonthDedOnetime=`${year}-${month}`;
+        })
+       }          
+       onEmpSelectedDedRepeated(){
+        this.apicall.Fetch_EffectiveDate_SalRevision(this.selectedEmpDedRepeated).subscribe((res)=>{
+          const year=res.NEXT_YEAR;
+          const month=res.NEXT_MONTH.toString().padStart(2, '0');        
+          this.EffectivePeriodStartDedRepeated.setValue(`${year}-${month}`);
+         })
+       }
+       onEmpSelectedAddRepeated(){
+        this.apicall.Fetch_EffectiveDate_SalRevision(this.selectedEmpAddRepeated).subscribe((res)=>{
+          const year=res.NEXT_YEAR;
+          const month=res.NEXT_MONTH.toString().padStart(2, '0');        
+          this.EffectivePeriodStartAddRepeated.setValue(`${year}-${month}`);
+         })
+       }
       onCompanySelectedAddRepeated() {        
         this.apicall.FetchDepartmentList(this.selectedcompanyAddRepeated,this.empcode).subscribe((res) => {
           this.deptdataAddRepeated=res;     
         });  
-        this.apicall.displayGeneralData(this.selectedcompanyAddRepeated,this.value_type).subscribe((res) => {        
-          
-          this.lastpayrollDate = new Date(res[0].DATA_VALUE);          
-          this.getNextPayrollMonth(this.lastpayrollDate);
-          this.EffectivePeriodStartAddRepeated.setValue(this.NextPayrollMonth);       
-            
-        });
+        
         
         // this.apicall.displayGeneralData(this.selectedcompanyAddRepeated,this.Value_type).subscribe((res) => {       
           
@@ -258,15 +275,8 @@ empid:any =this.userSession.id;
       onCompanySelectedDedOnetime() {        
         this.apicall.FetchDepartmentList(this.selectedcompanyDedOnetime,this.empcode).subscribe((res) => {
           this.deptdataDedOnetime=res;     
-        });
-        this.apicall.displayGeneralData(this.selectedcompanyDedOnetime,this.value_type).subscribe((res) => {         
-          
-          this.lastpayrollDate = new Date(res[0].DATA_VALUE);          
-          this.getNextPayrollMonth(this.lastpayrollDate);
-          this.PayrollMonthDedOnetime=this.NextPayrollMonth ;        
+        });       
             
-        });   
-             
       }
       onDeptSelectedDedOnetime() {        
         this.apicall.FetchEmployeeList(this.selectedDeptDedOnetime,this.selectedcompanyDedOnetime,this.empcode).subscribe((res) => {
@@ -276,14 +286,7 @@ empid:any =this.userSession.id;
       onCompanySelectedDedRepeated() {        
         this.apicall.FetchDepartmentList(this.selectedcompanyDedRepeated,this.empcode).subscribe((res) => {
           this.deptdataDedRepeated=res;     
-        });
-        this.apicall.displayGeneralData(this.selectedcompanyDedRepeated,this.value_type).subscribe((res) => {        
-          
-          this.lastpayrollDate = new Date(res[0].DATA_VALUE);          
-          this.getNextPayrollMonth(this.lastpayrollDate);
-          this.EffectivePeriodStartDedRepeated.setValue(this.NextPayrollMonth);       
-            
-        });  
+        });      
              
       }
       onDeptSelectedDedRepeated() {        

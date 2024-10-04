@@ -18,6 +18,8 @@ export class SalaryRevisionComponent implements OnInit {
   level:any =this.userSession.level;
   authorityflg:any =this.userSession.authorityflg;
   user: any='individual'
+  grpname:any=this.userSession.grpname;
+  desig:any=this.userSession.desig.split('#', 1);
 
   typeid: any = 12;
   listCompany: any;
@@ -89,9 +91,13 @@ export class SalaryRevisionComponent implements OnInit {
       this.listDepartment=res;
     })
 
-    this.apicall.listEmployee(this.departmentid,this.companyid).subscribe(res =>{
-      this.listEmployee=res;
-    })
+    // this.apicall.listEmployee(this.departmentid,this.companyid).subscribe(res =>{
+    //   this.listEmployee=res;
+    // })
+
+    this.apicall.EmployeefilterComboData_Payroll(this.companyid,this.empcode,this.grpname,this.desig).subscribe(res =>{
+      this.listEmployee=res;  
+    });
 
     this.apicall.listsalarycomp(this.salcompid).subscribe((res)=>{
       this.listsalarycomp=res;

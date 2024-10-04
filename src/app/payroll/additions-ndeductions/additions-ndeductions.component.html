@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="col-lg-4 pt-2">  
                                         <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
-                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpAddOnetime"  aria-label="Default select example" required>
+                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpAddOnetime" (change)="onEmpSelectedAddOnetime()" aria-label="Default select example" required>
                                             <option value="-1" selected disabled>Select</option>
                                             <option *ngFor="let combo of empdata" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
                                         </select>                     
@@ -151,7 +151,7 @@
                                                 </div>
                                                 <div class="col-lg-4 pt-2">  
                                                         <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
-                                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpAddRepeated" aria-label="Default select example" required>
+                                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpAddRepeated"(change)="onEmpSelectedAddRepeated()" aria-label="Default select example" required>
                                                             <option value="-1" selected disabled>Select</option>
                                                             <option *ngFor="let combo of empdataAddRepeated" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
                                                         </select>                     
@@ -552,7 +552,7 @@
                                 </div>
                                 <div class="col-lg-4 pt-2">  
                                         <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
-                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpDedOnetime"  aria-label="Default select example" required>
+                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpDedOnetime" (change)="onEmpSelectedDedOnetime()" aria-label="Default select example" required>
                                             <option value="-1" selected disabled>Select</option>
                                             <option *ngFor="let combo of empdataDedOnetime" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
                                         </select>                     
@@ -607,7 +607,7 @@
                                     </div>
                                     <div class="col-lg-4 pt-2">  
                                             <h6 class="font-type fs-12 fw-semibold"><span>Employee Name </span></h6>
-                                            <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpDedRepeated" aria-label="Default select example" required>
+                                            <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="selectedEmpDedRepeated" aria-label="Default select example"(change)="onEmpSelectedDedRepeated()" required>
                                                 <option value="-1" selected disabled>Select</option>
                                                 <option *ngFor="let combo of empdataDedRepeated" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
                                             </select>                     
