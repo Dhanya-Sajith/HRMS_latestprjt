@@ -126,7 +126,7 @@
                                                             <thead>                                                               
                                                                 <tr class="table-light text-white font-type">
                                                                     <th scope="col" style="text-align: center;">No</th>                                                                    
-                                                                    <th scope="col" style="text-align: center;">ID</th>
+                                                                    <th scope="col" style="text-align: center;"> Emp Id</th>
                                                                     <th scope="col" style="text-align: center;">Name</th>
                                                                     <th scope="col" style="text-align: center;">Document Name</th>
                                                                     <th scope="col" style="text-align: center;">Document No</th>
@@ -138,7 +138,7 @@
                                                             <tbody class="list form-check-all font-type fs-11">
                                                                 <tr class="trstyle fs-11" *ngFor="let data of documentdata | search : searchInput  | pagination: currentPage: itemsPerPage;index as i" >
                                                                     <td>{{i+1}}</td>                                                                    
-                                                                    <td>{{data.RECORDID}}</td>
+                                                                    <td>{{data.EMP_CODE}}</td>
                                                                     <td>{{data.EMP_NAME}}</td>
                                                                     <td>{{data.DOC_TYPE}}</td>
                                                                     <td>{{data.DOC_NO}}</td>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallService } from 'src/app/api-call.service';
-import { FormGroup , FormBuilder , FormControl , Validators } from '@angular/forms';
+import { FormGroup , FormBuilder , FormControl , Validators, FormArray, AbstractControl, ValidatorFn } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { LoginService } from 'src/app/login.service';
 import { Router } from '@angular/router';
@@ -58,7 +58,7 @@ export class SalaryRevisionComponent implements OnInit {
   diffsalary: any;
   EditForm: FormGroup; 
   isValid: boolean=false;
-  listsalarycomp: any;
+  SalaryComponent: any;
   salcompid=44;
   listsalarydtls: any;
   itemData: any;
@@ -66,16 +66,30 @@ export class SalaryRevisionComponent implements OnInit {
   rows: any[] = [];
   validation!: string;
   fileuploadForm: any =  FormGroup;
-  isFormValid: boolean=false;
   submitted = false;
   inputfield: any;
   FROM_DATE: any;
   fetchedData: any;
+
+  effdate:any = -1;
+  searchInput:string = '';
+  SalaryForm: FormGroup;
+  Selectedcompany:any = "";
+  Selectedemployee:any = "";
+  historydtls: any;
+  itemsPerPage=10;
+  currentPage=1;
+  desiredPage: any;
+  statusdata: any;
+
   
   constructor(private apicall:ApiCallService, private datePipe: DatePipe,private fb:FormBuilder,private session:LoginService,private route:Router) {
     this.EditForm = this.fb.group({
       salcomponent: ['', Validators.required],
       // salaryamnt: ['', Validators.required],      
+    });
+    this.SalaryForm = this.fb.group({
+      tableRows: this.fb.array([]) // Initialize the form array
     });
    }
 
@@ -91,22 +105,121 @@ export class SalaryRevisionComponent implements OnInit {
       this.listDepartment=res;
     })
 
-    // this.apicall.listEmployee(this.departmentid,this.companyid).subscribe(res =>{
-    //   this.listEmployee=res;
-    // })
-
     this.apicall.EmployeefilterComboData_Payroll(this.companyid,this.empcode,this.grpname,this.desig).subscribe(res =>{
       this.listEmployee=res;  
     });
 
+    // this.apicall.listEmployee(this.departmentid,this.companyid).subscribe(res =>{
+    //   this.listEmployee=res;
+    // })
+
     this.apicall.listsalarycomp(this.salcompid).subscribe((res)=>{
-      this.listsalarycomp=res;
+      this.SalaryComponent=res;
       })   
 
     this.fileuploadForm = this.fb.group({     
       myFile: ['', [Validators.required]],  
     });
+
+    //salary components
+    let j=0;
+    for(j=0;j<1;j++)
+    {
+      this.addTableRow();
+    }
+
   }
+
+  get tableRows() {
+    return this.SalaryForm.get('tableRows') as FormArray;
+  }
+
+  onAmountChange(i: number) {
+    const control = this.tableRows.at(i) as FormGroup;
+  
+    if (control) {
+      const allowanceId = control.get('allowanceId')?.value;
+      const oldAmount = control.get('oldamount')?.value ?? null;
+      const newAmount = control.get('amount')?.value ?? null;
+
+      if (allowanceId === 1 && (!newAmount || newAmount <= 0)) {
+        control.get('amount')?.setErrors({ zeroAmountForBasic: true });
+        return; 
+      } else {
+        control.get('amount')?.setErrors(null); 
+      }
+  
+      // if (oldAmount && newAmount) {
+        const incrementSalary = newAmount - oldAmount;
+        const percentIncrease = ((incrementSalary / oldAmount) * 100).toFixed(2) + '%';
+  
+        control.get('incrementsalary')?.setValue(incrementSalary);
+        control.get('percentincrease')?.setValue(percentIncrease);
+      // }
+
+       this.updateGrossSalary();
+    }
+  }
+  
+  updateGrossSalary() {
+    this.newgross = 0;
+    this.tableRows.controls.forEach((control: AbstractControl) => {
+      const amount = control.get('amount')?.value ?? 0;
+      this.newgross += amount;
+    });
+  }
+
+  populateForm(Allowance: any) {
+    const control = this.tableRows;
+    control.clear(); // Clear the form array before populating
+  
+    Allowance.forEach((goal: any) => {
+      control.push(this.fb.group({
+        allowanceId: [{ value: goal.ALLOWANCE_ID || '', disabled: true }, Validators.required],
+        oldamount: [{ value: goal.AMOUNT || '', disabled: true }, Validators.required],
+        amount: ['', Validators.required],
+        incrementsalary: [{ value: 0, disabled: true }],
+        percentincrease: [{ value: '0%', disabled: true }]
+      }));
+    });
+    console.log('Form after population:', this.SalaryForm.value);
+  }
+  
+  addTableRow() {
+    this.tableRows.push(this.fb.group({
+      allowanceId: ['', Validators.required],
+      oldamount: [''],
+      amount: ['', Validators.required],
+      incrementsalary: [{ value: 0, disabled: true }],
+      percentincrease: [{ value: '0%', disabled: true }]
+    }));
+  }
+  
+ 
+  FetchSalaryAllowance() {
+    this.apicall.listAllowance(this.emp_code).subscribe(res => {
+      this.Allowance = res;
+      for (let i = 0; i < this.Allowance.length; i++) {
+        this.amount = this.Allowance[i].AMOUNT;
+        this.grosssalary += this.amount;
+      }
+      this.populateForm(this.Allowance);
+    });
+  }
+
+  getAvailableAllowanceOptions(index: number): any[] {
+    const selectedAllowanceIds = this.tableRows.controls
+      .map((control, i) => i !== index ? control.get('allowanceId')?.value : null)
+      .filter(id => id !== null)
+      .map(id => id.toString());
+
+    console.log('Selected Allowance IDs:', selectedAllowanceIds);
+
+    return this.SalaryComponent.filter((allowance: { KEY_ID: any; }) => 
+      !selectedAllowanceIds.includes(allowance.KEY_ID.toString())
+    );
+  }
+  
 
   radioselection(user:any){
     this.user=user;
@@ -205,122 +318,80 @@ export class SalaryRevisionComponent implements OnInit {
       this.currentyear = this.datePipe.transform(this.today,"yyyy");
       this.yearofservice = this.currentyear -this.DOJyear;
     })
-    this.apicall.listAllowance(this.emp_code).subscribe(res =>{
-      this.Allowance=res;
-      for(let i=0;i<this.Allowance.length;i++){
-        this.amount = this.Allowance[i].AMOUNT;
-        this.grosssalary = this.grosssalary + this.amount;
-      }
-    })
     this.apicall.Fetch_EffectiveDate_SalRevision(this.emp_code).subscribe(res =>{
       this.effectivedt=this.datePipe.transform(res.FROM_DATE,"yyyy-MM-dd");
     })
+    this.FetchSalaryAllowance();
   }
 
-  percentagecalc(item:any,rowno:any){
-    this.itemData = item;
-    this.oldsalary = this.itemData.AMOUNT;
-    this.newsalary =  this.itemData.newsalary;
-    if( this.newsalary == ""){
-      (<HTMLInputElement>document.getElementById("diffsalary"+rowno)).value =  "";
-      (<HTMLInputElement>document.getElementById("percent"+rowno)).value = "";
-    }else{
-      this.diffsalary = this.newsalary - this.oldsalary;
-      this.percent = ((this.diffsalary / this.oldsalary)*100).toFixed(2);
-      (<HTMLInputElement>document.getElementById("diffsalary"+rowno)).value =  this.diffsalary;
-      (<HTMLInputElement>document.getElementById("percent"+rowno)).value = this.percent;
-    }
-    const itemData: any[] = [];
-    this.Allowance.forEach((data:any) => { 
-        if(data.newsalary !== undefined){
-          const salary = data.newsalary           
-          itemData.push(salary);
-        }
-    });
-    this.newgross = itemData.reduce((acc, cur) => acc +  Number(cur), 0);
-  }
-
-  validateEditForm() {      
-    if (this.EditForm.valid){
-    this.isValid = true;
-    }
-    else{
-      this.markFormGroupTouched(this.EditForm);   
-    }
-  }
-
-  addsalarydtl(){   
-    if(this.emp_code == undefined){
-      this.showModal = 2;
-      this.failed = "Please, select the Employee.";
-    }else{
-      if (this.EditForm.valid) {
-        const component = this.EditForm.get('salcomponent')?.value;      
-        // const amount = this.EditForm.get('salaryamnt')?.value;     
-
-        const newData = {
-          emp_code: this.emp_code,
-          allow_id: component,
-          updated_by: this.empcode,
-          mflag: 1,
-          effective_date: this.effectivedt,
-          gross_salary: 0,
-        };
-        this.apicall.AddnewAllowance(newData).subscribe((res)=>{
-        this.listsalarydtls=res;
-        if(res.Errorid==1)
-        {
-          this.showModal = 1;
-          this.success = "Added Successfully...";
-          this.EditForm.reset();
-          this.FetchAllowanceDtl(this.emp_code);
-        }
-        else
-          {
-            this.showModal = 2;
-            this.failed = "Failed";
-          }
-        })
-      } else {    
-        this.markFormGroupTouched(this.EditForm);   
-      }
-    }
-    this.newgross = 0;
-  }
-
-  markFormGroupTouched(formGroup: FormGroup) {
-    Object.values(formGroup.controls).forEach(control => {
+  validateSalaryForm() {
+    this.markFormGroupTouched(this.SalaryForm);
+    this.tableRows.controls.forEach((control: AbstractControl) => {
       control.markAsTouched();
     });
   }
-
-  clearEdit(){
-    this.EditForm.reset(); 
+  
+  isFormValid(): boolean {
+    let isValid = true;
+    this.tableRows.controls.forEach((control: AbstractControl) => {
+      if (control.get('allowanceId')?.invalid || control.get('amount')?.invalid) {
+        isValid = false;
+      }
+    });
+    return isValid;
   }
 
-  SaveSalaryRevision(){
-    const basic= (<HTMLInputElement>document.getElementById("newsalary1")).value;
+  // validateTransferForm() {
+  //   alert('inside')
+  //   this.markFormGroupTouched(this.SalaryForm);
+  
+  //   if (this.SalaryForm.valid && this.isFormValid()) {
+  //     this.isValid = true;
+  //   } else {
+  //     this.isValid = false;
+  //   }
+  // }
+
+  amountValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const parent = control.parent;
+      if (!parent) {
+        return null;
+      }
+  
+      const allowanceId = parent.get('allowanceId')?.value;
+      const amount = control.value;
+  
+      if (allowanceId === 1 && amount <= 0) {
+        return { amountZeroForBasic: true }; // Validation error if amount is zero or negative
+      }
+  
+      return null; // No error
+    };
+  }
+  
+
+  validateTransferForm()
+  {
+    if (this.SalaryForm.invalid) {
+      // Mark all fields as touched to trigger validation messages
+      this.SalaryForm.markAllAsTouched();
+      return; // Exit the function if the form is invalid
+    }
+  }
+
+
+  SaveSalaryRevision()
+  {
+    //  this.validateTransferForm(); 
+
     if(this.emp_code == undefined){
       this.showModal = 2;
       this.failed = "Please, select the Employee.";
-    }else if(basic == ""){
-      this.showModal = 2;
-      this.failed = "Please, select the basic salary.";
-    }else{
-      interface detaildata {
-        ALLOWANCE_ID: string;
-        newsalary: string;
-      }
-      const SalaryData: any[] = [];
-      this.Allowance.forEach((data:detaildata) => { 
-        if(!data.hasOwnProperty('newsalary')  ){
-          data.newsalary = '0';
-        }
-          const newdetails = {
-            allowanceid: data.ALLOWANCE_ID,
-            new_amount: data.newsalary
-          };
-          SalaryData.push(newdetails);
+    }else if (this.SalaryForm.valid) {
+
+      this.tableRows.controls.forEach((control: AbstractControl) => {
+        control.get('allowanceId')?.enable();
       });
 
       const Data = {
@@ -328,7 +399,12 @@ export class SalaryRevisionComponent implements OnInit {
         effective_date: this.effectivedt,
         gross_salary: this.newgross,  
         updated_by: this.empcode,
-        AllowanceDetails: SalaryData
+        allowanceArray: {
+          tableRows: this.SalaryForm.value.tableRows.map((row: any) => ({
+              allowanceId: row.allowanceId,
+              amount: row.amount,
+          }))
+        }
       };
       this.apicall.SaveSalaryRevision(Data).subscribe((res) => {
         if(res.Errorid == 1){
@@ -344,9 +420,16 @@ export class SalaryRevisionComponent implements OnInit {
           else{
               this.showModal = 2; 
               this.failed='Failed!';   
-          }              
+          } 
+          this.cancel();             
       });
     }
+  }
+
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+    });
   }
 
   cancel(){
@@ -354,6 +437,12 @@ export class SalaryRevisionComponent implements OnInit {
     (<HTMLInputElement>document.getElementById("company")).value = '-1';
     (<HTMLInputElement>document.getElementById("department")).value = '-1';
     this.FetchAllowanceDtl(-1);
+    this.EmployeeDtl= '';
+    this.EMP_CODE = '';
+    this.EMP_NAME = '';
+    this.DESIGNATION = '';
+    this.yearofservice = '';
+
   }
   
   download_to_excel(){
@@ -368,5 +457,110 @@ export class SalaryRevisionComponent implements OnInit {
            document.body.removeChild(link);
         }
   }
+
+  ViewHistory()
+  {
+    this.apicall.FetchSalaryRevisionDetailsHR(this.Selectedemployee,this.Selectedcompany,this.effdate,this.empcode).subscribe(res =>{
+      this.historydtls=res;
+    })
+  }
+
+  ViewCompoents(code:any,effdate:any)
+  {
+    this.apicall.FetchSalaryComponent_emp(code,effdate).subscribe(res =>{
+      this.statusdata=res;
+    })
+  }
+
+  clearHighlight() {
+    setTimeout(() => {
+    this.statusdata = null;// Reset itemClicked to remove highlight
+    }, 500); 
+  }
+
+  //PaginationTeam
+  getTotalPages(): number {
+    return Math.ceil(this.totalSearchResults / this.itemsPerPage);
+  }
+  
+  goToPage() {
+    const totalPages = Math.ceil(this.totalSearchResults / this.itemsPerPage);
+    if (this.desiredPage >= 1 && this.desiredPage <= totalPages) {
+      this.currentPage = this.desiredPage;
+    } else {  
+      
+      (<HTMLInputElement>document.getElementById("openModalButton")).click();
+      this.showModal = 2; 
+      this.failed='Invalid page number!'; 
+      this.desiredPage=''; 
+    }   
+   
+  }
+  getPageNumbers(currentPage: number): number[] {
+    const totalPages = Math.ceil(this.totalSearchResults / this.itemsPerPage);
+    const maxPageNumbers = 5; 
+    const middlePage = Math.ceil(maxPageNumbers / 2);
+    let startPage = Math.max(currentPage - middlePage, 1);
+    let endPage = Math.min(startPage + maxPageNumbers - 1, totalPages);
+  
+    if (endPage - startPage + 1 < maxPageNumbers) {
+      startPage = Math.max(endPage - maxPageNumbers + 1, 1);
+    }
+  
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+  }
+  
+  get totalSearchResults(): number {
+      const totalResults = this.historydtls.filter((employee: any) => {
+        return Object.values(employee).some((value: any) =>
+          typeof value === 'string' && value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+        );
+      }).length;
+  
+      const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage);  
+  
+      if (this.currentPage > maxPageFiltered) {
+        this.currentPage = 1; 
+      }
+  
+      return totalResults;
+  }
+  
+  changePage(page: number): void { 
+    this.desiredPage = '';   
+    this.currentPage = page;
+    const maxPage = Math.ceil(this.totalSearchResults / this.itemsPerPage);
+    if (this.currentPage > maxPage) {
+      this.currentPage = 1;
+    }        
+  }
+  getEntriesStart(): number {
+  if (this.currentPage === 1) {
+    return 1;
+  }
+  
+  const filteredData = this.historydtls.filter((employee: any) =>
+    Object.values(employee).some((value: any) =>
+      typeof value === 'string' &&
+      value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    )
+  );
+  
+  const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+  return Math.min(start, filteredData.length);
+  }
+  
+  
+  getEntriesEnd(): number {  
+  const filteredData = this.historydtls.filter((employee: any) =>
+    Object.values(employee).some((value: any) =>
+      typeof value === 'string' &&
+      value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    )
+  );
+  const end = this.currentPage * this.itemsPerPage;
+  return Math.min(end, filteredData.length);
+  }
+
 
 }

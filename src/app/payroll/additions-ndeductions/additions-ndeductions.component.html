@@ -244,7 +244,7 @@
                                                 <div class="col-sm-auto">
                                                     <div class="d-flex gap-1 flex-wrap">
                                                         <div class="search-box">
-                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInput" (keyup)="changePageAddOnetime(currentPage)" name="searchInput">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInputAddOnetime" (keyup)="changePageAddOnetime(currentPageAddOnetime)" name="searchInput">
                                                             <i class="ri-search-line search-icon"></i>
                                                         </div>
                                                     </div>
@@ -268,7 +268,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody class="list form-check-all font-type fs-11">
-                                                            <tr class="trstyle fs-11" *ngFor="let item of onetimeadditiondata | search : searchInput | pagination: currentPage: itemsPerPage;index as i">
+                                                            <tr class="trstyle fs-11" *ngFor="let item of onetimeadditiondata | search : searchInputAddOnetime | pagination: currentPageAddOnetime: itemsPerPageAddOnetime;index as i">
                                                                 <td id="td-company">{{item.COMPANY_CODE}}</td>
                                                                 <td id="td-dept">{{item.DEPT_NAME}}</td>
                                                                 <td id="td-emp">{{item.EMP_NAME}}</td>
@@ -332,7 +332,7 @@
                                                             <div class="d-flex gap-1 flex-wrap">
                                                                 <div>
                                                                     <div class="input-group">
-                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPageAddOnetime" tabindex="1">                                                                    
                                                             
                                                            <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageAddOnetime()" tabindex="2">Go</button>
                                                       </div>
@@ -341,15 +341,15 @@
                                                         <div class="col-sm-auto mt-3 mt-sm-0">
                                                           <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
                                                             <li class="page-item">
-                                                              <button class="page-link" (click)="changePageAddOnetime(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                              <button class="page-link" (click)="changePageAddOnetime(currentPageAddOnetime - 1)" [class.disabled-button]="currentPageAddOnetime === 1">←</button>
                                                             </li>
-                                                            <ng-container *ngFor="let pageNumberAddOnetime of getPageNumbersAddOnetime(currentPage)">
+                                                            <ng-container *ngFor="let pageNumberAddOnetime of getPageNumbersAddOnetime(currentPageAddOnetime)">
                                                               <li class="page-item">
-                                                                <button class="page-link" (click)="changePageAddOnetime(pageNumberAddOnetime)" [class.active]="currentPage === pageNumberAddOnetime">{{ pageNumberAddOnetime }}</button>
+                                                                <button class="page-link" (click)="changePageAddOnetime(pageNumberAddOnetime)" [class.active]="currentPageAddOnetime === pageNumberAddOnetime">{{ pageNumberAddOnetime }}</button>
                                                               </li>
                                                             </ng-container>
                                                             <li class="page-item">
-                                                              <button class="page-link" (click)="changePageAddOnetime(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResultsAddOnetime">→</button>
+                                                              <button class="page-link" (click)="changePageAddOnetime(currentPageAddOnetime + 1)" [class.disabled-button]="currentPageAddOnetime * itemsPerPageAddOnetime >= totalSearchResultsAddOnetime">→</button>
                                                             </li>
                                                           </ul>
                                                         </div>
@@ -379,7 +379,7 @@
                                                 <div class="col-sm-auto">
                                                     <div class="d-flex gap-1 flex-wrap">
                                                         <div class="search-box">
-                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInput" (keyup)="changePageAddRepeated(currentPageAddRepeated)" name="searchInput">
+                                                            <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInputAddRepeated" (keyup)="changePageAddRepeated(currentPageAddRepeated)" name="searchInput">
                                                             <i class="ri-search-line search-icon"></i>
                                                         </div>
                                                     </div>
@@ -404,7 +404,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody class="list form-check-all font-type fs-11">
-                                                            <tr class="trstyle fs-11" *ngFor="let repeatedadditem of repeatedadditiondata | search : searchInput | pagination: currentPageAddRepeated: itemsPerPage;index as i">
+                                                            <tr class="trstyle fs-11" *ngFor="let repeatedadditem of repeatedadditiondata | search : searchInputAddRepeated | pagination: currentPageAddRepeated: itemsPerPage;index as i">
                                                                 <td id="td-company">{{repeatedadditem.COMPANY_CODE}}</td>
                                                                 <td id="td-dept">{{repeatedadditem.DEPT_NAME}}</td>
                                                                 <td id="td-emp">{{repeatedadditem.EMP_NAME}}</td>
@@ -471,7 +471,7 @@
                                                             <div class="d-flex gap-1 flex-wrap">
                                                                 <div>
                                                                     <div class="input-group">
-                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPageAddRepeated" tabindex="1">                                                                    
                                                             
                                                            <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageAddRepeated()" tabindex="2">Go</button>
                                                       </div>
@@ -480,15 +480,15 @@
                                                         <div class="col-sm-auto mt-3 mt-sm-0">
                                                           <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
                                                             <li class="page-item">
-                                                              <button class="page-link" (click)="changePageAddRepeated(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                              <button class="page-link" (click)="changePageAddRepeated(currentPageAddRepeated - 1)" [class.disabled-button]="currentPageAddRepeated === 1">←</button>
                                                             </li>
-                                                            <ng-container *ngFor="let pageNumberAddRepeated of getPageNumbersAddRepeated(currentPage)">
+                                                            <ng-container *ngFor="let pageNumberAddRepeated of getPageNumbersAddRepeated(currentPageAddRepeated)">
                                                               <li class="page-item">
-                                                                <button class="page-link" (click)="changePageAddRepeated(pageNumberAddRepeated)" [class.active]="currentPage === pageNumberAddRepeated">{{ pageNumberAddRepeated }}</button>
+                                                                <button class="page-link" (click)="changePageAddRepeated(pageNumberAddRepeated)" [class.active]="currentPageAddRepeated === pageNumberAddRepeated">{{ pageNumberAddRepeated }}</button>
                                                               </li>
                                                             </ng-container>
                                                             <li class="page-item">
-                                                              <button class="page-link" (click)="changePageAddRepeated(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResultsAddRepeated">→</button>
+                                                              <button class="page-link" (click)="changePageAddRepeated(currentPageAddRepeated + 1)" [class.disabled-button]="currentPageAddRepeated * itemsPerPage >= totalSearchResultsAddRepeated">→</button>
                                                             </li>
                                                           </ul>
                                                         </div>
@@ -701,7 +701,7 @@
                                                    <div class="col-sm-auto">
                                                        <div class="d-flex gap-1 flex-wrap">
                                                            <div class="search-box">
-                                                               <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInput" (keyup)="changePageDedOnetime(currentPageDedOnetime)" name="searchInput">
+                                                               <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInputDedOnetime" (keyup)="changePageDedOnetime(currentPageDedOnetime)" name="searchInput">
                                                                <i class="ri-search-line search-icon"></i>
                                                            </div>
                                                        </div>
@@ -725,7 +725,7 @@
                                                                </tr>
                                                            </thead>
                                                            <tbody class="list form-check-all font-type fs-11">
-                                                               <tr class="trstyle fs-11" *ngFor="let dedonetimeitem of onetimedeductiondata | search : searchInput | pagination: currentPageDedOnetime: itemsPerPage;index as i">
+                                                               <tr class="trstyle fs-11" *ngFor="let dedonetimeitem of onetimedeductiondata | search : searchInputDedOnetime | pagination: currentPageDedOnetime: itemsPerPage;index as i">
                                                                    <td id="td-company">{{dedonetimeitem.COMPANY_CODE}}</td>
                                                                    <td id="td-dept">{{dedonetimeitem.DEPT_NAME}}</td>
                                                                    <td id="td-emp">{{dedonetimeitem.EMP_NAME}}</td>
@@ -789,7 +789,7 @@
                                                             <div class="d-flex gap-1 flex-wrap">
                                                                 <div>
                                                                     <div class="input-group">
-                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPageDedOnetime" tabindex="1">                                                                    
                                                             
                                                            <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageDedOnetime()" tabindex="2">Go</button>
                                                       </div>
@@ -798,15 +798,15 @@
                                                         <div class="col-sm-auto mt-3 mt-sm-0">
                                                           <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
                                                             <li class="page-item">
-                                                              <button class="page-link" (click)="changePageDedOnetime(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                              <button class="page-link" (click)="changePageDedOnetime(currentPageDedOnetime - 1)" [class.disabled-button]="currentPageDedOnetime === 1">←</button>
                                                             </li>
-                                                            <ng-container *ngFor="let pageNumberDedOnetime of getPageNumbersDedOnetime(currentPage)">
+                                                            <ng-container *ngFor="let pageNumberDedOnetime of getPageNumbersDedOnetime(currentPageDedOnetime)">
                                                               <li class="page-item">
-                                                                <button class="page-link" (click)="changePageDedOnetime(pageNumberDedOnetime)" [class.active]="currentPage === pageNumberDedOnetime">{{ pageNumberDedOnetime }}</button>
+                                                                <button class="page-link" (click)="changePageDedOnetime(pageNumberDedOnetime)" [class.active]="currentPageDedOnetime === pageNumberDedOnetime">{{ pageNumberDedOnetime }}</button>
                                                               </li>
                                                             </ng-container>
                                                             <li class="page-item">
-                                                              <button class="page-link" (click)="changePageDedOnetime(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResultsDedOnetime">→</button>
+                                                              <button class="page-link" (click)="changePageDedOnetime(currentPageDedOnetime + 1)" [class.disabled-button]="currentPageDedOnetime * itemsPerPage >= totalSearchResultsDedOnetime">→</button>
                                                             </li>
                                                           </ul>
                                                         </div>
@@ -837,7 +837,7 @@
                                                    <div class="col-sm-auto">
                                                        <div class="d-flex gap-1 flex-wrap">
                                                            <div class="search-box">
-                                                               <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInput" (keyup)="changePageDedRepeated(currentPageDedRepeated)" name="searchInput">
+                                                               <input type="text" class="form-control search h-30 textbox-15 font-type" placeholder="Search..."[(ngModel)]="searchInputDedRepeated" (keyup)="changePageDedRepeated(currentPageDedRepeated)" name="searchInput">
                                                                <i class="ri-search-line search-icon"></i>
                                                            </div>
                                                        </div>
@@ -862,7 +862,7 @@
                                                                </tr>
                                                            </thead>
                                                            <tbody class="list form-check-all font-type fs-11">
-                                                            <tr class="trstyle fs-11" *ngFor="let repeateddeditem of repeateddeductiondata | search : searchInput | pagination: currentPageDedRepeated: itemsPerPage;index as i">
+                                                            <tr class="trstyle fs-11" *ngFor="let repeateddeditem of repeateddeductiondata | search : searchInputDedRepeated | pagination: currentPageDedRepeated: itemsPerPage;index as i">
                                                                 <td id="td-company">{{repeateddeditem.COMPANY_CODE}}</td>
                                                                 <td id="td-dept">{{repeateddeditem.DEPT_NAME}}</td>
                                                                 <td id="td-emp">{{repeateddeditem.EMP_NAME}}</td>
@@ -929,7 +929,7 @@
                                                             <div class="d-flex gap-1 flex-wrap">
                                                                 <div>
                                                                     <div class="input-group">
-                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPage" tabindex="1">                                                                    
+                                                            <input type="number" class="form-control h-20 font-type" style="width:100px" aria-describedby="button-addon2" placeholder="Go to Page" [(ngModel)]="desiredPageDedRepeated" tabindex="1">                                                                    
                                                             
                                                            <button class="btn btn-orange text-white font-type fs-12 h-20" type="button" id="button-addon2"(click)="goToPageDedRepeated()" tabindex="2">Go</button>
                                                       </div>
@@ -938,15 +938,15 @@
                                                         <div class="col-sm-auto mt-3 mt-sm-0">
                                                           <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
                                                             <li class="page-item">
-                                                              <button class="page-link" (click)="changePageDedRepeated(currentPage - 1)" [class.disabled-button]="currentPage === 1">←</button>
+                                                              <button class="page-link" (click)="changePageDedRepeated(currentPageDedRepeated - 1)" [class.disabled-button]="currentPageDedRepeated === 1">←</button>
                                                             </li>
-                                                            <ng-container *ngFor="let pageNumberDedRepeated of getPageNumbersDedRepeated(currentPage)">
+                                                            <ng-container *ngFor="let pageNumberDedRepeated of getPageNumbersDedRepeated(currentPageDedRepeated)">
                                                               <li class="page-item">
-                                                                <button class="page-link" (click)="changePageDedRepeated(pageNumberDedRepeated)" [class.active]="currentPage === pageNumberDedRepeated">{{ pageNumberDedRepeated }}</button>
+                                                                <button class="page-link" (click)="changePageDedRepeated(pageNumberDedRepeated)" [class.active]="currentPageDedRepeated === pageNumberDedRepeated">{{ pageNumberDedRepeated }}</button>
                                                               </li>
                                                             </ng-container>
                                                             <li class="page-item">
-                                                              <button class="page-link" (click)="changePageDedRepeated(currentPage + 1)" [class.disabled-button]="currentPage * itemsPerPage >= totalSearchResultsDedRepeated">→</button>
+                                                              <button class="page-link" (click)="changePageDedRepeated(currentPageDedRepeated + 1)" [class.disabled-button]="currentPageDedRepeated * itemsPerPage >= totalSearchResultsDedRepeated">→</button>
                                                             </li>
                                                           </ul>
                                                         </div>

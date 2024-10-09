@@ -17,6 +17,7 @@ export class EmployeeMasterReportComponent implements OnInit {
   userSession:any = this.session.getUserSession();
   empcode: any=this.userSession.empcode;
   empid: any=this.userSession.id;
+  grpname:any=this.userSession.grpname;
   companydata: any;
   deptdata: any;
   empdata: any;

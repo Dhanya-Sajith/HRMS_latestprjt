@@ -15,9 +15,9 @@ export class ApiCallService {
   //Emisoft cloud for customer testing
   //public dotnetapi = 'http://3.111.100.109:81/api';
   //Local host
-//public dotnetapi = 'https://localhost:5001/api';
+  //public dotnetapi = 'https://localhost:5001/api';
   //Live server for Customer intranet//
- // public dotnetapi = 'http://192.168.10.29:81/api';
+  //public dotnetapi = 'http://192.168.10.29:81/api';
   //public hostname='localhost:44381';
   //Live server for Customer Cloud 
    public dotnetapi = 'http://72.167.151.157:81/api';
@@ -3023,6 +3023,17 @@ Fetch_ExitInterviewAnswers(empcode:any)
 EmployeeList_NonESS(user:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/MasterManagement/EmployeeList_NonESS/${user}`);
+}
+
+
+//salary revision
+FetchSalaryRevisionDetailsHR(empcode:any,company:any,date:any,user:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Payroll/FetchSalaryRevisionDetailsHR/${empcode}/${company}/${date}/${user}`);
+}
+FetchSalaryComponent_emp(empcode:any,date:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Payroll/FetchSalaryComponent_emp/${empcode}/${date}`);
 }
 
 }

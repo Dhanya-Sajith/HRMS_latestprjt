@@ -82,6 +82,7 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
   allChecked: boolean = false; 
   statusdata: any;
   user: any='tab1';
+  transformedItems: any;
  
 
   constructor(private apicall:ApiCallService,private session:LoginService,private fb: FormBuilder,private datePipe: DatePipe,private route: ActivatedRoute,private router: Router) { 
@@ -109,9 +110,10 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
     const today = new Date();   
     today.setDate(today.getDate() + 1); // Tomorrow's date
     this.minDate = today.toISOString().split('T')[0];
+    
     this.dropdownSettings = {
       idField: 'EMP_CODE',
-      textField: 'EMP_NAME',
+      textField: 'displayText',
       itemsShowLimit: 3,
       limitSelection: -1,
       allowSearchFilter: true,
@@ -150,8 +152,11 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
     this.selectedEmpcode=this.GoalSettingReqForm.get('company_code')?.value;
     //Employee drop down
     this.apicall.Employees_ForGoalAssign(this.selectedEmpcode,this.empcode).subscribe((res) => {
-      this.empdata=res; 
-     // alert(JSON.stringify(this.empdata))     
+      this.empdata=res;     
+      this.transformedItems = this.empdata.map((item: { EMP_CODE: any; EMP_NAME: any; }) => ({
+        ...item,
+        displayText: `${item.EMP_CODE} - ${item.EMP_NAME}`
+      }));      
     });
    }
    FetchGoalSettingData(mflag:any){
@@ -295,18 +300,26 @@ export class GoalSettingNanalyticsHRComponent implements OnInit {
          const fdata = new FormData();         
          fdata.append('postedFile',input.files[0]);     
          this.apicall.UploadGoal_BulkData(fdata,this.empcode).subscribe((res)=>{
-           const result=res;
+           
            //alert(JSON.stringify(res))
-           if(res==1){
-            (<HTMLInputElement>document.getElementById("openModalButton")).click();
-            this.showModal = 1;
-            this.success = "Document uploaded successfully!";
-          }
+           if(res.returnVal==1){
+            if(res.returntable.length == 0){
+              (<HTMLInputElement>document.getElementById("openModalButton")).click();
+              this.showModal = 1;
+              this.success = "Document uploaded successfully!";
+            }         
+         
           else{
             (<HTMLInputElement>document.getElementById("openModalButton")).click();
-            this.showModal = 2;
-            this.failed = "Failed!";
+            this.showModal = 2;          
+              const employeeCodes = res.returntable.map((emp: { EMP_CODE: any;REMARKS: any; }) => `${emp.EMP_CODE}-${emp.REMARKS}`).join(', ');
+              this.failed = `Error with employees: ${employeeCodes}`;
           }
+        }
+          else {
+              this.failed = "Failed!";
+          }
+          
           this.BulkUploadForm.reset();
           this.FetchGoalSettingData(1);
          })      

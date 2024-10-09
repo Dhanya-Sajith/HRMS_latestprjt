@@ -111,11 +111,19 @@
                                         <table class="table align-middle table-bordered border-orange">
                                             <thead class="table-light text-white font-type">
                                               <tr class="border-orange">
-                                                <th *ngFor="let column of columns"> {{ column }}</th>
+                                                <!-- <th *ngFor="let column of columns"> {{ column }}</th> -->
+                                                <th *ngFor="let column of columns" (click)="sortData(column)" style="cursor: pointer; position: relative;">
+                                                    {{ column }}
+                                                    <span class="sort-icons">
+                                                      <!-- Stack the up and down arrows vertically -->
+                                                      <i class="fa fa-caret-up" [ngClass]="{'active': sortColumn === column && sortDirection === 'desc'}"></i>
+                                                      <i class="fa fa-caret-down" [ngClass]="{'active': sortColumn === column && sortDirection === 'asc'}"></i>
+                                                    </span>
+                                                  </th>
                                               </tr>
                                             </thead>
                                             <tbody class="list form-check-all font-type fs-11">
-                                              <tr class="trstyle fs-12 h1-50" *ngFor="let row of data | search : searchInput | pagination: currentPage: itemsPerPage">
+                                              <tr class="trstyle fs-12 h1-50" *ngFor="let row of sortedData | search : searchInput | pagination: currentPage: itemsPerPage">
                                                 <ng-container *ngFor="let column of columns">
                                                     <td>
                                                       <ng-container *ngIf="column === 'OTHER_ADDITION'">

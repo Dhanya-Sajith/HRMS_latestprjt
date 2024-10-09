@@ -41,6 +41,9 @@
     columns: string[] = [];
     data: Array<{ [key: string]: any }> = [];
     hiddenColumns: string[] = ['PROCESS_DATE', 'PAYROLL_ID'];
+    sortedData: any[] = [];
+    sortColumn: string = '';
+    sortDirection: 'asc' | 'desc' = 'asc';
   
     constructor(private session:LoginService,private apicall:ApiCallService,private datePipe: DatePipe) { }
   
@@ -87,10 +90,34 @@
           }
     
           this.data = this.salarylist;
+          this.sortedData = [...this.data];
           console.log('Data:', this.data); // Log data
         }, error => {
           console.error('Error fetching salary report:', error); // Log any errors
         });
+    }
+
+    sortData(column: string) {
+      if (this.sortColumn == column) {
+        // If the same column is clicked, toggle the sort direction
+        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+      } else {
+        // If a new column is clicked, set it as the sort column and default to ascending order
+        this.sortColumn = column;
+        this.sortDirection = 'asc';
+      }
+  
+      // Sort the data based on the selected column and direction
+      this.sortedData = [...this.data].sort((a, b) => {
+        const valueA = a[column] || '';  // Handle undefined/null values
+        const valueB = b[column] || '';
+  
+        if (this.sortDirection === 'asc') {
+          return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
+        } else {
+          return valueA < valueB ? 1 : valueA > valueB ? -1 : 0;
+        }
+      });
     }
   
     download_to_excel()

@@ -2,3 +2,27 @@
     color: #999; 
     pointer-events: none; 
   }
+
+
+.sort-icons {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 0px; 
+  top: 50%;  
+  transform: translateY(-50%);
+  // padding-left: 10px;
+  // padding-right: 10px;
+}
+
+.fa-angle-up, .fa-angle-down {
+  color: #fff;
+  font-size: 18px;  
+  line-height: 0.8; 
+}
+
+
+.active {
+  color: blue; 
+  font-weight: bold;
+}

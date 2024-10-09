@@ -78,9 +78,13 @@ empid:any =this.userSession.id;
   repeatedadditiondata: any;
   repeateddeductiondata: any;  
   curDate:any;
-  searchInput: string='';
-  itemsPerPage=10;
-  currentPage=1;
+  searchInputAddOnetime: string='';
+  searchInputAddRepeated: string='';
+  searchInputDedOnetime: string='';
+  searchInputDedRepeated: string='';
+  itemsPerPageAddOnetime=10;
+  itemsPerPage=10;  
+  currentPageAddOnetime=1;
   currentPageAddRepeated=1;
   currentPageDedOnetime=1;
   currentPageDedRepeated=1;
@@ -102,6 +106,10 @@ empid:any =this.userSession.id;
   effectiveperiodStartDay: any;
   effectivedate: any;
   desiredPage: any;
+  desiredPageAddOnetime: any;
+  desiredPageAddRepeated: any;
+  desiredPageDedOnetime: any;
+  desiredPageDedRepeated: any;
   currentDate:any=new Date();    
   year = this.currentDate.getFullYear();
   month = String(this.currentDate.getMonth() + 1).padStart(2, '0'); 
@@ -181,26 +189,26 @@ empid:any =this.userSession.id;
     this.addtimes = addtimes;  
     if (this.addtimes === 'addOnetime') {    
       this.fetchOnetimeAddition();  
-      this.desiredPage=''; 
-      this.currentPage=1;  
+      this.desiredPageAddOnetime=''; 
+      this.currentPageAddOnetime=1;  
            
     } else {     
       this.fetchRepeatedAddition();   
-      this.desiredPage=''; 
-      this.currentPage=1;    
+      this.desiredPageAddRepeated=''; 
+      this.currentPageAddRepeated=1;    
     }   
     }
     showDeductions(dedtimes: any) {
       this.dedtimes = dedtimes;      
       if (this.dedtimes == 'dedOnetime') {   
        this.fetchOnetimeDeduction();  
-       this.desiredPage=''; 
-      this.currentPage=1;                   
+       this.desiredPageDedOnetime=''; 
+      this.currentPageDedOnetime=1;                   
       } else {       
        
         this.fetchRepeatedDeduction();
-        this.desiredPage=''; 
-        this.currentPage=1;  
+        this.desiredPageDedRepeated=''; 
+        this.currentPageDedRepeated=1;  
       }   
       }
       getNextPayrollMonth(lastpayrollDate:any){
@@ -218,7 +226,7 @@ empid:any =this.userSession.id;
         
        }
        onDeptSelectedAddOnetime(){       
-        this.apicall.FetchEmployeeList(this.selectedDeptAddOnetime,this.selectedCompanyidAddOnetime,this.empcode).subscribe((res) => {
+        this.apicall.FetchEmployees(this.selectedDeptAddOnetime,this.selectedCompanyidAddOnetime,this.empcode).subscribe((res) => {
           this.empdata=res;    
           });     
             
@@ -267,7 +275,7 @@ empid:any =this.userSession.id;
         // });        
       }
       onDeptSelectedAddRepeated() {         
-        this.apicall.FetchEmployeeList(this.selectedDeptAddRepeated,this.selectedcompanyAddRepeated,this.empcode).subscribe((res) => {
+        this.apicall.FetchEmployees(this.selectedDeptAddRepeated,this.selectedcompanyAddRepeated,this.empcode).subscribe((res) => {
           this.empdataAddRepeated=res;    
           });
           
@@ -279,7 +287,7 @@ empid:any =this.userSession.id;
             
       }
       onDeptSelectedDedOnetime() {        
-        this.apicall.FetchEmployeeList(this.selectedDeptDedOnetime,this.selectedcompanyDedOnetime,this.empcode).subscribe((res) => {
+        this.apicall.FetchEmployees(this.selectedDeptDedOnetime,this.selectedcompanyDedOnetime,this.empcode).subscribe((res) => {
           this.empdataDedOnetime=res;    
           });           
       }     
@@ -290,7 +298,7 @@ empid:any =this.userSession.id;
              
       }
       onDeptSelectedDedRepeated() {        
-        this.apicall.FetchEmployeeList(this.selectedDeptDedRepeated,this.selectedcompanyDedRepeated,this.empcode).subscribe((res) => {
+        this.apicall.FetchEmployees(this.selectedDeptDedRepeated,this.selectedcompanyDedRepeated,this.empcode).subscribe((res) => {
           this.empdataDedRepeated=res;    
           });          
       }    
@@ -885,24 +893,24 @@ StopRepeated(item:any){
 }
 //Pagination Onetime Addition
 getTotalPagesAddOnetime(): number {
-  return Math.ceil(this.totalSearchResultsAddOnetime / this.itemsPerPage);
+  return Math.ceil(this.totalSearchResultsAddOnetime / this.itemsPerPageAddOnetime);
 }
 
 goToPageAddOnetime() {
-  const totalPages = Math.ceil(this.totalSearchResultsAddOnetime / this.itemsPerPage);
-  if (this.desiredPage >= 1 && this.desiredPage <= totalPages) {
-    this.currentPage = this.desiredPage;
+  const totalPages = Math.ceil(this.totalSearchResultsAddOnetime / this.itemsPerPageAddOnetime);
+  if (this.desiredPageAddOnetime >= 1 && this.desiredPageAddOnetime <= totalPages) {
+    this.currentPageAddOnetime = this.desiredPageAddOnetime;
   } else {  
     
     (<HTMLInputElement>document.getElementById("openModalButton")).click();
     this.showModal = 2; 
     this.failed='Invalid page number!'; 
-    this.desiredPage=''; 
+    this.desiredPageAddOnetime=''; 
   }   
  
 }
 getPageNumbersAddOnetime(currentPage: number): number[] {
-  const totalPages = Math.ceil(this.totalSearchResultsAddOnetime / this.itemsPerPage);
+  const totalPages = Math.ceil(this.totalSearchResultsAddOnetime / this.itemsPerPageAddOnetime);
   const maxPageNumbers = 5; // Number of page numbers to show
   const middlePage = Math.ceil(maxPageNumbers / 2);
   let startPage = Math.max(currentPage - middlePage, 1);
@@ -919,14 +927,14 @@ getPageNumbersAddOnetime(currentPage: number): number[] {
 get totalSearchResultsAddOnetime(): number {
 const totalResults = this.onetimeadditiondata.filter((employee: any) => {
   return Object.values(employee).some((value: any) =>
-    typeof value === 'string' && value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    typeof value === 'string' && value.toLowerCase().startsWith(this.searchInputAddOnetime.toLowerCase())
   );
 }).length;
 
-const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage);  
+const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPageAddOnetime);  
 
-if (this.currentPage > maxPageFiltered) {
-  this.currentPage = 1; 
+if (this.currentPageAddOnetime > maxPageFiltered) {
+  this.currentPageAddOnetime = 1; 
 }
 
 return totalResults;
@@ -934,26 +942,26 @@ return totalResults;
 
 // Function to change the current page
 changePageAddOnetime(page: number): void { 
-  this.desiredPage = '';   
-  this.currentPage = page;
-  const maxPage = Math.ceil(this.totalSearchResultsAddOnetime / this.itemsPerPage);
-  if (this.currentPage > maxPage) {
-    this.currentPage = 1;
+  this.desiredPageAddOnetime = '';   
+  this.currentPageAddOnetime = page;
+  const maxPage = Math.ceil(this.totalSearchResultsAddOnetime / this.itemsPerPageAddOnetime);
+  if (this.currentPageAddOnetime > maxPage) {
+    this.currentPageAddOnetime = 1;
   }        
 }
 getEntriesStartAddOnetime(): number {
-if (this.currentPage === 1) {
+if (this.currentPageAddOnetime === 1) {
   return 1;
 }
 
 const filteredData = this.onetimeadditiondata.filter((employee: any) =>
   Object.values(employee).some((value: any) =>
     typeof value === 'string' &&
-    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    value.toLowerCase().startsWith(this.searchInputAddOnetime.toLowerCase())
   )
 );
 
-const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+const start = (this.currentPageAddOnetime - 1) * this.itemsPerPageAddOnetime + 1;
 return Math.min(start, filteredData.length);
 }
 
@@ -962,10 +970,10 @@ getEntriesEndAddOnetime(): number {
 const filteredData = this.onetimeadditiondata.filter((employee: any) =>
   Object.values(employee).some((value: any) =>
     typeof value === 'string' &&
-    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    value.toLowerCase().startsWith(this.searchInputAddOnetime.toLowerCase())
   )
 );
-const end = this.currentPage * this.itemsPerPage;
+const end = this.currentPageAddOnetime * this.itemsPerPageAddOnetime;
 return Math.min(end, filteredData.length);
 }
 //Pagination Onetime Deduction
@@ -975,14 +983,14 @@ getTotalPagesDedOnetime(): number {
 
 goToPageDedOnetime() {
   const totalPages = Math.ceil(this.totalSearchResultsDedOnetime / this.itemsPerPage);
-  if (this.desiredPage >= 1 && this.desiredPage <= totalPages) {
-    this.currentPage = this.desiredPage;
+  if (this.desiredPageDedOnetime >= 1 && this.desiredPageDedOnetime <= totalPages) {
+    this.currentPageDedOnetime = this.desiredPageDedOnetime;
   } else {  
     
     (<HTMLInputElement>document.getElementById("openModalButton")).click();
     this.showModal = 2; 
     this.failed='Invalid page number!'; 
-    this.desiredPage=''; 
+    this.desiredPageDedOnetime=''; 
   }   
  
 }
@@ -1004,14 +1012,14 @@ getPageNumbersDedOnetime(currentPage: number): number[] {
 get totalSearchResultsDedOnetime(): number {
 const totalResults = this.onetimedeductiondata.filter((employee: any) => {
   return Object.values(employee).some((value: any) =>
-    typeof value === 'string' && value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    typeof value === 'string' && value.toLowerCase().startsWith(this.searchInputDedOnetime.toLowerCase())
   );
 }).length;
 
 const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage);  
 
-if (this.currentPage > maxPageFiltered) {
-  this.currentPage = 1; 
+if (this.currentPageDedOnetime > maxPageFiltered) {
+  this.currentPageDedOnetime = 1; 
 }
 
 return totalResults;
@@ -1019,36 +1027,36 @@ return totalResults;
 
 // Function to change the current page
 changePageDedOnetime(page: number): void { 
-  this.desiredPage = '';   
-  this.currentPage = page;
+  this.desiredPageDedOnetime = '';   
+  this.currentPageDedOnetime = page;
   const maxPage = Math.ceil(this.totalSearchResultsDedOnetime / this.itemsPerPage);
-  if (this.currentPage > maxPage) {
-    this.currentPage = 1;
+  if (this.currentPageDedOnetime > maxPage) {
+    this.currentPageDedOnetime = 1;
   }        
 }
 getEntriesStartDedOnetime(): number {
-if (this.currentPage === 1) {
+if (this.currentPageDedOnetime === 1) {
   return 1;
 }
 
 const filteredData = this.onetimedeductiondata.filter((employee: any) =>
   Object.values(employee).some((value: any) =>
     typeof value === 'string' &&
-    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    value.toLowerCase().startsWith(this.searchInputDedOnetime.toLowerCase())
   )
 );
 
-const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+const start = (this.currentPageDedOnetime - 1) * this.itemsPerPage + 1;
 return Math.min(start, filteredData.length);
 }
 getEntriesEndDedOnetime(): number {  
 const filteredData = this.onetimedeductiondata.filter((employee: any) =>
   Object.values(employee).some((value: any) =>
     typeof value === 'string' &&
-    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    value.toLowerCase().startsWith(this.searchInputDedOnetime.toLowerCase())
   )
 );
-const end = this.currentPage * this.itemsPerPage;
+const end = this.currentPageDedOnetime * this.itemsPerPage;
 return Math.min(end, filteredData.length);
 }
 
@@ -1059,14 +1067,14 @@ getTotalPagesDedRepeated(): number {
 
 goToPageDedRepeated() {
   const totalPages = Math.ceil(this.totalSearchResultsDedRepeated / this.itemsPerPage);
-  if (this.desiredPage >= 1 && this.desiredPage <= totalPages) {
-    this.currentPage = this.desiredPage;
+  if (this.desiredPageDedRepeated >= 1 && this.desiredPageDedRepeated <= totalPages) {
+    this.currentPageDedRepeated = this.desiredPageDedRepeated;
   } else {  
     
     (<HTMLInputElement>document.getElementById("openModalButton")).click();
     this.showModal = 2; 
     this.failed='Invalid page number!'; 
-    this.desiredPage=''; 
+    this.desiredPageDedRepeated=''; 
   }   
  
 }
@@ -1088,14 +1096,14 @@ getPageNumbersDedRepeated(currentPage: number): number[] {
 get totalSearchResultsDedRepeated(): number {
 const totalResults = this.repeateddeductiondata.filter((employee: any) => {
   return Object.values(employee).some((value: any) =>
-    typeof value === 'string' && value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    typeof value === 'string' && value.toLowerCase().startsWith(this.searchInputDedRepeated.toLowerCase())
   );
 }).length;
 
 const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage);  
 
-if (this.currentPage > maxPageFiltered) {
-  this.currentPage = 1; 
+if (this.currentPageDedRepeated > maxPageFiltered) {
+  this.currentPageDedRepeated = 1; 
 }
 
 return totalResults;
@@ -1103,26 +1111,26 @@ return totalResults;
 
 // Function to change the current page
 changePageDedRepeated(page: number): void { 
-  this.desiredPage = '';   
-  this.currentPage = page;
+  this.desiredPageDedRepeated = '';   
+  this.currentPageDedRepeated = page;
   const maxPage = Math.ceil(this.totalSearchResultsDedRepeated / this.itemsPerPage);
-  if (this.currentPage > maxPage) {
-    this.currentPage = 1;
+  if (this.currentPageDedRepeated > maxPage) {
+    this.currentPageDedRepeated = 1;
   }        
 }
 getEntriesStartDedRepeated(): number {
-if (this.currentPage === 1) {
+if (this.currentPageDedRepeated === 1) {
   return 1;
 }
 
 const filteredData = this.repeateddeductiondata.filter((employee: any) =>
   Object.values(employee).some((value: any) =>
     typeof value === 'string' &&
-    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    value.toLowerCase().startsWith(this.searchInputDedRepeated.toLowerCase())
   )
 );
 
-const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+const start = (this.currentPageDedRepeated - 1) * this.itemsPerPage + 1;
 return Math.min(start, filteredData.length);
 }
 
@@ -1132,10 +1140,10 @@ getEntriesEndDedRepeated(): number {
 const filteredData = this.repeateddeductiondata.filter((employee: any) =>
   Object.values(employee).some((value: any) =>
     typeof value === 'string' &&
-    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    value.toLowerCase().startsWith(this.searchInputDedRepeated.toLowerCase())
   )
 );
-const end = this.currentPage * this.itemsPerPage;
+const end = this.currentPageDedRepeated * this.itemsPerPage;
 return Math.min(end, filteredData.length);
 }
 //Pagination Repeated Addition
@@ -1145,14 +1153,14 @@ getTotalPagesAddRepeated(): number {
 
 goToPageAddRepeated() {
   const totalPages = Math.ceil(this.totalSearchResultsAddRepeated / this.itemsPerPage);
-  if (this.desiredPage >= 1 && this.desiredPage <= totalPages) {
-    this.currentPage = this.desiredPage;
+  if (this.desiredPageAddRepeated >= 1 && this.desiredPageAddRepeated <= totalPages) {
+    this.currentPageAddRepeated = this.desiredPageAddRepeated;
   } else {  
     
     (<HTMLInputElement>document.getElementById("openModalButton")).click();
     this.showModal = 2; 
     this.failed='Invalid page number!'; 
-    this.desiredPage=''; 
+    this.desiredPageAddRepeated=''; 
   }   
  
 }
@@ -1174,14 +1182,14 @@ getPageNumbersAddRepeated(currentPage: number): number[] {
 get totalSearchResultsAddRepeated(): number {
 const totalResults = this.repeatedadditiondata.filter((employee: any) => {
   return Object.values(employee).some((value: any) =>
-    typeof value === 'string' && value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    typeof value === 'string' && value.toLowerCase().startsWith(this.searchInputAddRepeated.toLowerCase())
   );
 }).length;
 
 const maxPageFiltered = Math.ceil(totalResults / this.itemsPerPage);  
 
-if (this.currentPage > maxPageFiltered) {
-  this.currentPage = 1; 
+if (this.currentPageAddRepeated > maxPageFiltered) {
+  this.currentPageAddRepeated = 1; 
 }
 
 return totalResults;
@@ -1189,26 +1197,26 @@ return totalResults;
 
 // Function to change the current page
 changePageAddRepeated(page: number): void { 
-  this.desiredPage = '';   
-  this.currentPage = page;
+  this.desiredPageAddRepeated = '';   
+  this.currentPageAddRepeated = page;
   const maxPage = Math.ceil(this.totalSearchResultsAddRepeated / this.itemsPerPage);
-  if (this.currentPage > maxPage) {
-    this.currentPage = 1;
+  if (this.currentPageAddRepeated > maxPage) {
+    this.currentPageAddRepeated = 1;
   }        
 }
 getEntriesStartAddRepeated(): number {
-if (this.currentPage === 1) {
+if (this.currentPageAddRepeated === 1) {
   return 1;
 }
 
 const filteredData = this.repeatedadditiondata.filter((employee: any) =>
   Object.values(employee).some((value: any) =>
     typeof value === 'string' &&
-    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    value.toLowerCase().startsWith(this.searchInputAddRepeated.toLowerCase())
   )
 );
 
-const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+const start = (this.currentPageAddRepeated - 1) * this.itemsPerPage + 1;
 return Math.min(start, filteredData.length);
 }
 
@@ -1218,10 +1226,10 @@ getEntriesEndAddRepeated(): number {
 const filteredData = this.repeatedadditiondata.filter((employee: any) =>
   Object.values(employee).some((value: any) =>
     typeof value === 'string' &&
-    value.toLowerCase().startsWith(this.searchInput.toLowerCase())
+    value.toLowerCase().startsWith(this.searchInputAddRepeated.toLowerCase())
   )
 );
-const end = this.currentPage * this.itemsPerPage;
+const end = this.currentPageAddRepeated * this.itemsPerPage;
 return Math.min(end, filteredData.length);
 }
 

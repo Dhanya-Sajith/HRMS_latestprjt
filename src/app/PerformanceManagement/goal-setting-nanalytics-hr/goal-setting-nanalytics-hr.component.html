@@ -571,7 +571,7 @@
                                                                 <ng-multiselect-dropdown #dropdown
                                                                     [settings]="dropdownSettings"
                                                                     formControlName="employee"
-                                                                    [data]="empdata">     
+                                                                    [data]="transformedItems">     
                                                                 </ng-multiselect-dropdown>   
                                                                 <div *ngIf="GoalSettingReqForm.get('employee')?.invalid && GoalSettingReqForm.get('employee')?.touched" class="text-danger">
                                                                     *Required!

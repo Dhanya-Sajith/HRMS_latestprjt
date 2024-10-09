@@ -116,8 +116,21 @@
                                                                 <li *ngIf="data.STATUS_ID >= 0">
                                                                      <a href="salary_report"><button type="button" class="btn btn-outline-success waves-effect waves-light" (click)="setLocalstorage(data.COMPANY_NAME,data.MONTH_ID,data.COMPANY_CODE)">View Salary Report</button></a>
                                                                 </li>
+                                                                <li *ngIf="this.grpname.includes('HR') && this.desig != 54" [hidden]="data.STATUS_ID == 1 || data.STATUS_ID == 9">
+                                                                    <div class="dropdown" style="overflow:visible;" *ngIf="data.STATUS_ID == 0 || data.STATUS_ID == 10">
+                                                                        <a href="javascript:void(0);" class="btn btn-soft-success btn-sm " data-bs-toggle="dropdown" aria-expanded="true"> 
+                                                                            <i class="ri-more-fill"></i>
+                                                                            More Actions
+                                                                        </a>
+                                                                        <ul class="dropdown-menu dropdown-menu-end text-blue">
+                                                                            <li *ngIf="data.STATUS_ID == 10"><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" href="#SuccessRecordModal"  (click)="Salaryprocessing(data.COMPANY_NAME,data.MONTH_ID,data.COMPANY_CODE)"><i class="ri-loop-left-line me-2 align-bottom text-blue fs-14"></i><span class="text-blue">Re-run</span></a></li>
+                                                                            <li class="dropdown-divider"></li>
+                                                                            <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" href="#SuccessRecordModal" (click)="Approve(data,9)"><i class="ri-check-line me-2 align-bottom text-success fs-14"></i><span class="text-success">Approve</span></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
                                                                 <li *ngIf="this.grpname.includes('HR') && this.desig == 54" [hidden]="data.STATUS_ID == 1">
-                                                                    <div class="dropdown" style="overflow:visible;" *ngIf="data.STATUS_ID == 0 || data.STATUS_ID == 3">
+                                                                    <div class="dropdown" style="overflow:visible;" *ngIf="data.STATUS_ID == 0 || data.STATUS_ID == 3 || data.STATUS_ID == 9">
                                                                         <a href="javascript:void(0);" class="btn btn-soft-success btn-sm " data-bs-toggle="dropdown" aria-expanded="true"> 
                                                                             <i class="ri-more-fill"></i>
                                                                             More Actions
@@ -126,6 +139,8 @@
                                                                             <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" href="#SuccessRecordModal"  (click)="Salaryprocessing(data.COMPANY_NAME,data.MONTH_ID,data.COMPANY_CODE)"><i class="ri-loop-left-line me-2 align-bottom text-blue fs-14"></i><span class="text-blue">Re-run</span></a></li>
                                                                             <li class="dropdown-divider"></li>
                                                                             <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" href="#SuccessRecordModal" (click)="Approve(data,1)"><i class="ri-check-line me-2 align-bottom text-success fs-14"></i><span class="text-success">Approve</span></a></li>
+                                                                            <li class="dropdown-divider"></li>
+                                                                            <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" href="#RejectModal" (click)="RejectStatus(data,10)"><i class="ri-check-line me-2 align-bottom text-danger fs-14"></i><span class="text-danger">Reject</span></a></li>
                                                                         </ul>
                                                                     </div>
                                                                 </li>

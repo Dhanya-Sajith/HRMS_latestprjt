@@ -27,7 +27,7 @@ export class ResignationApprovalHRComponent implements OnInit {
   tabledata: any;
   selectedYear: any=new Date().getFullYear();item: any;
   reason: any;
-rejectReason: any;
+  rejectReason: any;
 
   selectedCompanyidEOS: any=-1;
   deptdata: any;
@@ -91,7 +91,7 @@ rejectReason: any;
       releavingType: ['', Validators.required], 
       remarks: ['', Validators.required], 
       date: ['', Validators.required], 
-      checkbox:[''],     
+      checkbox:[false],     
     });
   }
 
