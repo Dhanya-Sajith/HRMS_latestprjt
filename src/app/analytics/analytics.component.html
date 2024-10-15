@@ -1,0 +1,421 @@
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <app-header></app-header>
+
+        <!-- ========== App Menu ========== -->
+        <app-sidemenu></app-sidemenu> 
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!--HEADER-->
+                    <div class="row">
+                        <div class="col">
+                            <div class="h-100">
+                                <div class="row mb-3 pb-1">
+                                    <div class="col-12">
+                                        <div class="d-flex align-items-lg-center flex-lg-row flex-column">
+                                            <div class="flex-grow-1">
+                                                <h4 class="fs-16 mb-1 font-type">Good Morning, {{name}}!</h4>
+                                                <p class="text-muted mb-0 font-type">Here’s what’s driving your company today.</p>
+                                            </div>
+                                            <div class="mt-3 mt-lg-0">
+                                                <form action="javascript:void(0);">
+                                                    <div class="row g-3 mb-0 align-items-center">
+                                                        <div class="col-sm-auto">                                                          
+                                                            <select class="form-select h-30 font-type textbox-15 bg-success-subtle border-0 fs-12"name="company" [(ngModel)]="selectedCompanyid" (change)="onCompanyChange()">
+                                                                <option value="-1" disabled >Company</option>
+                                                                <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                            </select> 
+                                                        </div>
+                                                        <!--end col-->
+                                                    </div>
+                                                    <!--end row-->
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!-- end card header -->
+                                    </div>
+                                    <!--end col-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--END HEADER-->
+
+                    <!--GRAPH-->
+                    <div class="row">
+
+                        <div class="col-xl-6 col-lg-6 col-md-12">
+                            <!--Employee Average Tenure-->
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="card  shadow-lg card-animate me-0 ">
+                                    <div class="card-header align-items-center d-flex p-2">
+                                        <h4 class="card-title mb-0 flex-grow-1 font-type fw-semibold">Employee Average Tenure</h4>
+                                        <div class="d-flex align-items-center">
+                                            <button type="button" class="waves-effect waves-light btn btn-primary btn-sm fs-13 p-1 me-1" title="Download Excel"(click)="DownloadToExcel(1)">
+                                                <i class="ri-file-excel-line"></i>
+                                            </button>
+                                            <select class="form-select form-select-sm font-type fs-11" aria-label="Select Department" style="width:150px" name="dept" [(ngModel)]="selectedDept" (change)="onDeptChangeEmp_Tenure()">
+                                                <option value="" disabled>Department</option>
+                                                <option value="-1">All</option>
+                                                <option *ngFor="let combo of DeptData" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="card-body p-3 pt-0 ">
+                                        <div >
+                                            <div id="divChart" >                                               
+                                                <canvas id="myChart"></canvas>                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end card body -->
+                                </div>
+                                <!-- end card -->
+                            </div>
+                            <!--END Employee Average Tenure-->
+
+                            <!--Employee Turnover-->
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="card shadow-lg card-animate">
+                                    <div class="card-header align-items-center d-flex p-2">
+                                        <h4 class="card-title mb-0 flex-grow-1 font-type fw-semibold">Employee Turnover</h4>
+                                        <div class="d-flex align-items-center">
+                                            <button type="button" class="waves-effect waves-light btn btn-primary btn-sm fs-13 p-1 me-1" title="Download Excel"(click)="DownloadToExcel(5)">
+                                                <i class="ri-file-excel-line"></i>
+                                            </button>
+                                            <div>
+                                            <select class="form-select form-select-sm font-type fs-11"name="yearTurnover" [(ngModel)]="selectedYearTurnover" (change)="FilterTurnover()">
+                                                <option value="-1" disabled>Year</option>                                                    
+                                                <option *ngFor="let combo of yearlist" value="{{combo.DISPLAY_FIELD}}">
+                                                    {{combo.DISPLAY_FIELD}}</option>
+                                            </select>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <!-- end card header -->
+
+                                    <div class="card-body pt-0 font-type pb-3">
+                                        <div id="divTurnoverChart">                                                
+                                            <canvas id="TurnoverChart"></canvas>                                         
+                                        </div> 
+                                    </div>
+                                    <!-- end card-body -->
+                                </div>
+                                <!-- end card -->
+                            </div>
+                            <!--end Employee Turnover-->
+
+                            <!--Average Training Hours-->
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="card card-animate shadow-lg  card-height-100">
+                                    <div class="card-header p-2">
+                                        <div class="row align-items-center gy-3">
+                                            <div class="col-sm">
+                                                <h4 class="card-title mb-0 flex-grow-1 font-type fw-semibold">Average Training Hours</h4>
+                                            </div>
+                                            <div class="col-sm-auto">
+                                                <div class="d-flex gap-1 flex-wrap">
+                                                    <div class="d-flex align-items-center">
+                                                        <button type="button" class="waves-effect waves-light btn btn-primary btn-sm fs-13 p-1 me-1" title="Download Excel"(click)="DownloadToExcel(7)">
+                                                            <i class="ri-file-excel-line"></i>
+                                                        </button>
+                                                    <div>
+                                                        <select class="form-select form-select-sm font-type fs-11" style="width:150px"name="dept" [(ngModel)]="selectedDeptAvgTrainingHrs" (change)="AvgTrainingHrs()">                                              
+                                                            <option value="" disabled >Department</option>
+                                                            <option value="-1">All</option>
+                                                            <option *ngFor="let combo of DeptData" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                        </select>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- end card header -->
+                                    <div class="card-body d-flex justify-content-center align-items-center" style="height: 155px;">
+                                        <ngx-gauge 
+                                            [value]="avgtrainhrs" 
+                                            [min]="0" 
+                                            [max]="10" 
+                                            [type]="'semi'"                                              
+                                            [cap]="'butt'" 
+                                            [thick]="30" 
+                                            [size]="200" 
+                                            [foregroundColor]="'#54b4e4'">
+                                            <ngx-gauge-value style="font-size:medium;font-weight: bold;">
+                                              {{avgtrainhrs}}
+                                            </ngx-gauge-value>
+                                            <ngx-gauge-append style="font-size: small;font-weight: bold;">
+                                               hrs
+                                            </ngx-gauge-append>
+                                        </ngx-gauge>
+                                        
+                                    </div>
+                                    <!-- end card-body -->
+                                </div>
+                                <!-- end card -->
+                            </div>
+                            <!--end Average Training Hours-->
+
+                        <!--Staff House Occupancy-->
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="card card-animate shadow-lg card-height-100">
+                                <div class="card-header p-2 d-flex justify-content-between align-items-center">
+                                    <h4 class="card-title mb-0 fw-semibold">Staff House Occupancy</h4>
+                                    <button type="button" class="waves-effect waves-light btn btn-primary btn-sm fs-13 p-1 me-1" title="Download Excel" (click)="DownloadToExcel(8)">
+                                        <i class="ri-file-excel-line"></i>
+                                    </button>
+                                </div>
+                                <!-- end card header -->
+                        
+                                <div class="card-body pb-2" style="display: flex; justify-content: center; align-items: center; height: 165px;"> 
+                                    <circle-progress
+                                        [percent]="Staff_Occupancy_Data"
+                                        [radius]="60" 
+                                        [outerStrokeWidth]="10"
+                                        [innerStrokeWidth]="5"
+                                        [outerStrokeColor]="'#78C000'"
+                                        [innerStrokeColor]="'#C7E596'"
+                                        [animation]="true"
+                                        [showSubtitle]="false"
+                                        [showInnerStroke]="true"
+                                        [outerStrokeGradient]="false"
+                                        [animationDuration]="300"
+                                        [responsive]="false"
+                                        [space]="2"
+                                        [title]="Staff_Occupancy_Data+'%'"
+                                    >
+                                    </circle-progress>
+                                </div>
+                                
+                                <!-- end card-body -->
+                            </div>
+                            <!-- end card -->
+                        </div>
+                        
+                        <!--end Staff House Occupancy-->
+                        </div>
+                        <!-- end col-->
+                        <div class="col-xl-6 col-lg-6 col-md-12">
+                            <div class="row">
+                               <!-- Active Employees -->
+                        <div class="col-xl-6 col-md-6 col-lg-6">
+                             <!-- card -->
+                            <div class="card card-animate shadow-lg">
+                                <div class="card-body pb-2">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <p class="text-uppercase fw-medium mb-0 text-info">Active Employees</p>
+                                        </div>
+                                        <button type="button" class="waves-effect waves-light btn btn-primary btn-sm fs-13 p-1 me-1" title="Download Excel"(click)="DownloadToExcel(2)">
+                                            <i class="ri-file-excel-line"></i>
+                                        </button>
+                                    </div>
+                                <div class="d-flex align-items-end mt-2">
+                            <div>
+                            <h4 class="fs-22 fw-semibold ff-secondary text-info" style="margin-bottom:10px;">
+                                <span></span>{{ActiveEmployeeCount}}
+                            </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card body -->
+                </div>
+                <!-- end card -->
+            </div>
+            <!-- end Active Employees -->
+
+            <!-- Open Positions -->
+                <div class="col-xl-6 col-md-6 col-lg-6">
+                    <!-- card -->
+                    <div class="card card-animate shadow-lg">
+                    <div class="card-body pb-2">
+                        <div class="d-flex align-items-center justify-content-between">
+                        <div class="flex-grow-1 overflow-hidden">
+                            <p class="text-uppercase fw-medium mb-0 text-orange">Today's Open Positions</p>
+                        </div>
+                        <button type="button" class="waves-effect waves-light btn btn-primary btn-sm fs-13 p-1 me-1" title="Download Excel"(click)="DownloadToExcel(3)">
+                            <i class="ri-file-excel-line"></i>
+                        </button>
+                    </div>
+                    <div class="d-flex align-items-end mt-2">
+                        <div>
+                        <h4 class="fs-22 fw-semibold ff-secondary text-orange" style="margin-bottom:10px;">
+                            <span>{{Open_Positions_Count}}</span>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+                <!-- end card body -->
+            </div>
+            <!-- end card -->
+        </div>
+        <!-- end Open Positions -->
+
+
+                                <!-- New Hires -->
+                                <div class="col-xl-12 col-md-12 col-lg-12">
+                                    <!-- card -->
+                                    <div class="card card-animate shadow-lg  card-height-100">
+                                        <div class="card-header align-items-center d-flex p-2">
+                                            <h4 class="card-title mb-0 flex-grow-1 fw-semibold font-type">New Hires</h4>
+                                            <div class="d-flex align-items-center">                                            
+                                                    <button type="button" class="waves-effect waves-light btn btn-primary btn-sm fs-13 p-1 me-1" title="Download Excel"(click)="DownloadToExcel(4)">
+                                                        <i class="ri-file-excel-line"></i>
+                                                    </button>
+                                                <select class="form-select form-select-sm font-type fs-11 me-1" style="width:150px"name="dept" [(ngModel)]="selectedDeptNewHires" (change)="FilterNewHires()">                                              
+                                                    <option value="" disabled >Department</option>
+                                                    <option value="-1">All</option>
+                                                    <option *ngFor="let combo of DeptData" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                </select>                                            
+                                            <div>
+                                                <select class="form-select form-select-sm font-type fs-11"name="year" [(ngModel)]="selectedYearNewHires" (change)="FilterNewHires()">
+                                                    <option value="-1" disabled>Year</option>                                                    
+                                                    <option *ngFor="let combo of yearlist" value="{{combo.DISPLAY_FIELD}}">
+                                                        {{combo.DISPLAY_FIELD}}</option>
+                                                </select>
+                                            </div>
+                                            </div>
+                                        </div><!-- end card header -->
+                                       
+                                        <div class="card-body p-0 pb-2 pt-0 p-2">
+                                            <div class="w-100 ">
+                                                <div > 
+                                                    <div id="divNewHireChart">                                                
+                                                        <canvas id="NewHireChart"></canvas>                                         
+                                                    </div>  
+                                                </div>
+                                            </div>
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+                                </div>
+                                <!-- end New Hires-->
+
+                                <!-- Average Performance-->
+                                <div class="col-xl-12 col-md-12 col-lg-12">
+                                    <div class="card shadow-lg card-animate">
+                                        <div class="card-header align-items-center d-flex p-2">
+                                            <h4 class="card-title mb-0 flex-grow-1 fw-semibold">Average Performance</h4>
+                                            <button type="button" class="waves-effect waves-light btn btn-primary btn-sm fs-13 p-1 me-1" title="Download Excel"(click)="DownloadToExcel(6)">
+                                                <i class="ri-file-excel-line"></i>
+                                            </button>
+                                        </div>
+                                        <!-- end card header -->
+                                        <div class="card-body px-0 pt-0 pb-1">
+                                            <div id="divPerformanceChart">                                                
+                                                <canvas id="PerformanceChart"></canvas>                                         
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <!-- end card -->
+                                </div>
+                                <!-- end Average Performance -->
+                            </div>
+                            <!-- end row -->
+
+                            <!-- Overtime Hours-->
+                            <div class="col-xl-12 col-md-12 col-lg-12">
+
+                                <div class="card card-animate shadow-lg  card-height-100">
+                                    <div class="card-header p-2 d-flex justify-content-between align-items-center">
+                                        <h4 class="card-title mb-0 font-type fw-semibold">Overtime Hours</h4>
+                                        <button type="button" class="waves-effect waves-light btn btn-primary btn-sm fs-13 p-1" title="Download Excel" (click)="DownloadToExcel(9)">
+                                            <i class="ri-file-excel-line"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- end card header -->
+
+                                    <div class="card-body pt-0 pb-0 p-0">
+                                        <div id="divOvertimeChart">                                                
+                                            <canvas id="OvertimeChart"></canvas>                                         
+                                        </div>
+                                    </div>
+                                    <!-- end card-body -->
+                                </div>
+                                <!-- end card -->
+
+
+                            </div>
+                            <!--Overtime Hours-->
+
+
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row-->
+
+
+
+
+                    <div class="row">
+                        <!--Absenteeism Rate-->
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="card card-animate shadow-lg  card-height-100">
+                                <div class="card-header p-2">
+                                    <div class="row align-items-center gy-3">
+                                        <div class="col-sm">
+                                            <h4 class="card-title mb-0 flex-grow-1 font-type fw-semibold">Absenteeism Rate</h4>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <div class="d-flex align-items-center">                                            
+                                                    <button type="button" class="waves-effect waves-light btn btn-primary btn-sm fs-13 p-1 me-1" title="Download Excel"(click)="DownloadToExcel(10)">
+                                                        <i class="ri-file-excel-line"></i>
+                                                    </button>
+                                                <div>
+                                                    <select class="form-select form-select-sm font-type fs-11 me-1 p-1" style="width:150px"name="dept" [(ngModel)]="selectedDeptAbsenteeism" (change)="onDeptAbsenteeism()">                                              
+                                                        <option value="" disabled >Department</option>
+                                                        <option value="-1">All</option>
+                                                        <option *ngFor="let combo of DeptData" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
+                                                    </select> 
+                                                </div>
+                                                <div>                                                 
+                                                        <select class="form-select form-select-sm font-type fs-11 me-1 " [(ngModel)]="selectedEmp"  aria-label="Default select example"  (change)="FilterAbsenteeism()">
+                                                            <option value=""  disabled>Employee</option>
+                                                            <option value="-1">All</option>
+                                                            <option *ngFor="let combo of empdata" [value]="combo.EMP_CODE">{{ combo.EMP_CODE }}-{{combo.EMP_NAME}}</option>
+                                                        </select>   
+                                                </div>
+                                                <div style="margin-left: 5px;">
+                                                    <select class="form-select form-select-sm font-type fs-11 me-1"name="year" [(ngModel)]="selectedYearAbsenteeism" (change)="FilterAbsenteeism()">
+                                                        <option value="-1" disabled>Year</option>                                                    
+                                                        <option *ngFor="let combo of yearlist" value="{{combo.DISPLAY_FIELD}}">
+                                                            {{combo.DISPLAY_FIELD}}</option>
+                                                    </select>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- end card header -->
+
+                                <div class="card-body pt-0 margin-up-7">
+                                    <div id="divAbsenteeismChart">                                                
+                                        <canvas id="AbsenteeismChart"></canvas>                                         
+                                    </div>
+                                </div><!-- end card-body -->
+                            </div><!-- end card -->
+                        </div>
+                        <!--End Absenteeism Rate-->
+                    </div>
+                </div>
+            </div>
+            <!-- End Page-content -->
+
+          <app-footer></app-footer>
+        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->

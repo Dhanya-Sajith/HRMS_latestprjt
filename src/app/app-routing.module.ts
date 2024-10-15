@@ -151,6 +151,8 @@ import { TrainingPlanReportComponent } from './reports/training-plan-report/trai
 import { UsergroupAccessSettingComponent } from './master-data-management/usergroup-access-setting/usergroup-access-setting.component';
 import { TrainingExpiryReportComponent } from './reports/training-expiry-report/training-expiry-report.component';
 import { RecruitmentReportComponent } from './reports/recruitment-report/recruitment-report.component';
+import { BiometricNewComponent } from './attendance/biometric-new/biometric-new.component';
+import { AnalyticsComponent } from './analytics/analytics.component';
 
 
 
@@ -310,7 +312,11 @@ const routes: Routes = [
   {path:'TrainingPlanReport' , component:TrainingPlanReportComponent},
   {path:'UsergroupAccessSetting',component:UsergroupAccessSettingComponent},
   {path:'training-expiry-report',component:TrainingExpiryReportComponent},
-  {path:'recruitment-report',component:RecruitmentReportComponent}
+  {path:'recruitment-report',component:RecruitmentReportComponent},
+  {path:'biometricNew',component:BiometricNewComponent},
+  {path:'Analytics',component:AnalyticsComponent},
+
+
   
 
 ];

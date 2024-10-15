@@ -166,6 +166,14 @@ import { TrainingPlanReportComponent } from './reports/training-plan-report/trai
 import { TrainingExpiryReportComponent } from './reports/training-expiry-report/training-expiry-report.component';
 import { UsergroupAccessSettingComponent } from './master-data-management/usergroup-access-setting/usergroup-access-setting.component';
 import { RecruitmentReportComponent } from './reports/recruitment-report/recruitment-report.component';
+import { BiometricNewComponent } from './attendance/biometric-new/biometric-new.component';
+import { AnalyticsComponent } from './analytics/analytics.component';
+import { NgxGaugeModule } from 'ngx-gauge';
+import { Chart, registerables } from 'chart.js';
+
+Chart.register(...registerables);
+
+
 
 
 @NgModule({
@@ -329,6 +337,10 @@ import { RecruitmentReportComponent } from './reports/recruitment-report/recruit
     TrainingExpiryReportComponent,
     UsergroupAccessSettingComponent,
     RecruitmentReportComponent,
+    BiometricNewComponent,
+    AnalyticsComponent,
+
+  
     
     
   ],
@@ -341,6 +353,7 @@ import { RecruitmentReportComponent } from './reports/recruitment-report/recruit
     DatePipe,
     NgxMaterialTimepickerModule,
     BrowserAnimationsModule,
+    NgxGaugeModule,
     NgCircleProgressModule.forRoot({
       "radius": 60,
       "space": -5,

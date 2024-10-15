@@ -57,7 +57,7 @@ DocumentReport()
 download_to_excel()
 { 
   interface detaildata {
-    RECORDID: string;
+    EMP_CODE: string;
     EMP_NAME: string;
     DOC_TYPE: string;
     DOC_NO: string;
@@ -70,7 +70,7 @@ download_to_excel()
   this.documentdata.forEach((data:detaildata) => { 
   
         const details = {
-          ID: data.RECORDID,
+          EMPID: data.EMP_CODE,
           NAME: data.EMP_NAME,
           DOCUMENTNAME: data.DOC_TYPE,      
           DOCUMENTNO: data.DOC_NO ,

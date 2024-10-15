@@ -15,12 +15,12 @@ export class ApiCallService {
   //Emisoft cloud for customer testing
   //public dotnetapi = 'http://3.111.100.109:81/api';
   //Local host
-  //public dotnetapi = 'https://localhost:5001/api';
+  public dotnetapi = 'https://localhost:5001/api';
   //Live server for Customer intranet//
   //public dotnetapi = 'http://192.168.10.29:81/api';
   //public hostname='localhost:44381';
   //Live server for Customer Cloud 
-   public dotnetapi = 'http://72.167.151.157:81/api';
+   //public dotnetapi = 'http://72.167.151.157:81/api';
   //public hostnm = 'http://72.167.151.157';
   // Emisoft common Test server
   //public dotnetapi = 'http://192.168.1.37:84/api';
@@ -3034,6 +3034,88 @@ FetchSalaryRevisionDetailsHR(empcode:any,company:any,date:any,user:any)
 FetchSalaryComponent_emp(empcode:any,date:any)
 {
   return this.http.get<any>(`${this.dotnetapi}/Payroll/FetchSalaryComponent_emp/${empcode}/${date}`);
+}
+//Analytics
+Active_Emp_Count(company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Active_Emp_Count/${company}`);
+}
+Open_Positions_Count(company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Open_Positions_Count/${company}`);
+}
+Emp_Tenure_Chart(company:any,dept:any)
+{ 
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Emp_Tenure_Chart/${company}/${dept}`);
+}
+CompanyWise_Department(company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/MasterManagement/CompanyWise_Department/${company}`);
+}
+NewHire_MonthWise_Chart(company:any,dept:any,year:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/NewHire_MonthWise_Chart/${company}/${dept}/${year}`);
+}
+Turnover_MonthWise_Chart(company:any,year:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Turnover_MonthWise_Chart/${company}/${year}`);
+}
+Staff_Occupancy_Chart()
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Staff_Occupancy_Chart`);
+}
+Emp_Tenure_ExcelData(company:any,dept:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Emp_Tenure_ExcelData/${company}/${dept}`);
+}
+Open_Positions_ExcelData(company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Open_Positions_ExcelData/${company}`);
+}
+NewHire_ExcelData(company:any,dept:any,year:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/NewHire_ExcelData/${company}/${dept}/${year}`);
+}
+Turnover_ExcelData(company:any,year:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Turnover_ExcelData/${company}/${year}`);
+}
+Staff_Occupancy_ExcelData(company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Staff_Occupancy_ExcelData/${company}`);
+}
+Average_Performance_Chart(company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Average_Performance_Chart/${company}`);
+}
+Average_Performance_ExcelData(company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/Average_Performance_ExcelData/${company}`);
+}
+AvgTrainingHours_Chart(company:any,dept:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/AvgTrainingHours_Chart/${company}/${dept}`);
+}
+EmpTrainingHours_ExcelData(company:any,dept:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/EmpTrainingHours_ExcelData/${company}/${dept}`);
+}
+AvgOvertime_MonthlyChart(company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/AvgOvertime_MonthlyChart/${company}`);
+}
+MonthlyOvertime_ExcelData(company:any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/MonthlyOvertime_ExcelData/${company}`);
+}
+AbsentRate_Chart(company:any,dept:any,year:any,empcode:any)
+{
+ 
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/AbsentRate_Chart/${company}/${dept}/${year}/${empcode}`);
+}
+EmployeeAbsence_ExcelData(company:any,dept:any,year:any,empcode:any)
+{ 
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/EmployeeAbsence_ExcelData/${company}/${dept}/${year}/${empcode}`);
 }
 
 }

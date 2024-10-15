@@ -383,7 +383,7 @@
   
     if (this.EditShiftForm.valid) {
     const editshiftID = this.EditShiftForm.get('newshift')?.value;
-    if(editshiftID == 0){
+    if(editshiftID == 0 || editshiftID == -2){
       this.shid = editshiftID;
     }else{
       this.shid = editshiftID.VALUE_FIELD;
