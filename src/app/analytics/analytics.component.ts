@@ -155,11 +155,13 @@ export class AnalyticsComponent implements OnInit {
               data: dataValues, // values for the bars
               borderWidth: 1,
               backgroundColor: '#0ab39c', // Green color
-              borderColor: '#0ab39c' // Darker green for border
+              borderColor: '#0ab39c', // Darker green for border
+              barThickness:25
             }]
           },
           options: {
-            // No need for indexAxis for vertical bars
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
               x: {
                 beginAtZero: true
@@ -170,6 +172,9 @@ export class AnalyticsComponent implements OnInit {
             }
           }
         });
+        const chartContainer:any = document.getElementById("NewHireChart")?.parentNode; // Get the parent node of the canvas
+        chartContainer.style.height = "270px";
+        chartContainer.style.width = "100%";
       });
     }
     FilterTurnover() {
@@ -239,10 +244,12 @@ export class AnalyticsComponent implements OnInit {
               borderColor: '#54b4e4', // color for line
               backgroundColor: '#cce6ff', //  for area under the line
               fill: true ,// Fill area under the line
-              pointRadius: 0 // No markers at data points
+              pointRadius: 0 ,// No markers at data points
             }]
           },
           options: {
+            responsive: true,
+            maintainAspectRatio: false, // Prevent aspect ratio constraints
             scales: {
               x: {
                 beginAtZero: true
@@ -252,7 +259,11 @@ export class AnalyticsComponent implements OnInit {
               }
             }
           }
+          
         });
+        const chartContainer:any = document.getElementById("PerformanceChart")?.parentNode; // Get the parent node of the canvas
+        chartContainer.style.height = "250px"; // Set desired height (e.g., 400px)
+        chartContainer.style.width = "100%"; 
       });
     }
     
@@ -316,7 +327,8 @@ export class AnalyticsComponent implements OnInit {
               data: dataValues, // values for the bars
               borderWidth: 1,
               backgroundColor: '#f7b84b', // Green color              
-              borderColor: '#f7b84b' // Darker green for border
+              borderColor: '#f7b84b', // Darker green for border
+              barThickness: 30
             }]
           },
           options: {
@@ -357,10 +369,13 @@ export class AnalyticsComponent implements OnInit {
             data: this.dataValues, // values for the bars
             borderWidth: 1,
             backgroundColor: '#FF8080', // Customize color
-            borderColor: '#FF8080' // Customize border color
+            borderColor: '#FF8080', // Customize border color
+            barThickness: 10
           }]
         },
         options: {
+          responsive: true,
+            maintainAspectRatio: false, // Prevent aspect ratio constraints
           indexAxis: 'y', 
           scales: {
             x: {
@@ -372,6 +387,9 @@ export class AnalyticsComponent implements OnInit {
           }
         }
       });
+      const chartContainer:any = document.getElementById("AbsenteeismChart")?.parentNode; // Get the parent node of the canvas
+        chartContainer.style.height = "250px"; // Set desired height (e.g., 400px)
+        chartContainer.style.width = "100%"; 
     });
       
     }
