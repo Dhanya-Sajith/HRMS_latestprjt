@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiCallService } from 'src/app/api-call.service';
 import { LoginService } from 'src/app/login.service';
 import { JsonPipe, formatDate,DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-documents-report',
@@ -26,11 +27,25 @@ export class DocumentsReportComponent implements OnInit {
   itemsPerPage=10;
   currentPage=1;
   desiredPage: any;
-documentdata: any;
+  documentdata: any;
+  user: any;
+  flag: any = 0;
 
-constructor(private session:LoginService,private apicall:ApiCallService,private datePipe: DatePipe) { }
+constructor(private session:LoginService,private apicall:ApiCallService,private datePipe: DatePipe,private route: ActivatedRoute) { }
 
 ngOnInit(): void {
+
+  this.route.queryParams
+  .subscribe(params => {
+    this.user = params['user'];
+  }
+  );
+
+  if(this.user == 'team')
+  {
+    this.flag = 1;
+    this.DocumentReport();
+  }
   this.apicall.FetchCompanyList(this.empcode).subscribe((res)=>{
     this.company=res;
   });
@@ -43,9 +58,10 @@ this.apicall.listEmployee(-1,this.companycode).subscribe((res)=>{
 this.listemployee=res;
 });
 }
+
 DocumentReport()
 {
-  this.apicall.ViewDocumentReports(this.companycode,this.employee).subscribe((res)=>{
+  this.apicall.ViewDocumentReports(this.companycode,this.employee,this.empcode,this.flag).subscribe((res)=>{
     this.documentdata=res;
     const maxPageFiltered = Math.ceil(this.documentdata.length / this.itemsPerPage);  
 
@@ -54,6 +70,7 @@ DocumentReport()
     } 
   });
 }
+
 download_to_excel()
 { 
   interface detaildata {

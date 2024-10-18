@@ -15,9 +15,9 @@ export class ApiCallService {
   //Emisoft cloud for customer testing
   //public dotnetapi = 'http://3.111.100.109:81/api';
   //Local host
-  public dotnetapi = 'https://localhost:5001/api';
+  //public dotnetapi = 'https://localhost:5001/api';
   //Live server for Customer intranet//
-  //public dotnetapi = 'http://192.168.10.29:81/api';
+  public dotnetapi = 'http://192.168.10.29:81/api';
   //public hostname='localhost:44381';
   //Live server for Customer Cloud 
    //public dotnetapi = 'http://72.167.151.157:81/api';
@@ -2853,9 +2853,9 @@ return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/AssestReportData/${
 }
 
 //DocumentReports
-ViewDocumentReports(comp:any,empcode:any)
+ViewDocumentReports(comp:any,empcode:any,user:any,flag:any)
 {
-return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/DocumentReport/${comp}/${empcode}`);
+ return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/DocumentReport/${comp}/${empcode}/${user}/${flag}`);
 }
 
 //Employee Insurance Reports
