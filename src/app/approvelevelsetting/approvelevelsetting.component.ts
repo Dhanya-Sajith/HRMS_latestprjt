@@ -134,7 +134,7 @@ export class ApprovelevelsettingComponent implements OnInit {
    
     this.apicall.FetchAuthorityDetails(this.empcode).subscribe((res) => {
       this.AuthorityData=res;      
-   //alert(JSON.stringify(this.AuthorityData)) 
+  //alert(JSON.stringify(this.AuthorityData)) 
     this.AuthorityData.forEach((employee: { roleByLevel: number[]; authorityByLevel: number[]; }) => {
       employee.roleByLevel = [defaultRole];
       employee.authorityByLevel = [defaultAuthority];
@@ -151,19 +151,19 @@ export class ApprovelevelsettingComponent implements OnInit {
 
       switch (i) {
         case 0:
-          this.onRoleSelectedBody1(1, roleId, employee);
+          this.onRoleSelectedBody1(1, roleId, employee,0);
           break;
         case 1:
-          this.onRoleSelectedBody2(2, roleId, employee);
+          this.onRoleSelectedBody2(2, roleId, employee,0);
           break;
         case 2:
-          this.onRoleSelectedBody3(3, roleId, employee);
+          this.onRoleSelectedBody3(3, roleId, employee,0);
           break;
         case 3:
-          this.onRoleSelectedBody4(4, roleId, employee);
+          this.onRoleSelectedBody4(4, roleId, employee,0);
           break;
         case 4:
-          this.onRoleSelectedBody5(5, roleId, employee);
+          this.onRoleSelectedBody5(5, roleId, employee,0);
           break;       
       }
     }    
@@ -190,7 +190,7 @@ export class ApprovelevelsettingComponent implements OnInit {
     this.AuthorityData.forEach((employee: any) => {     
         employee.roleByLevel[level-1] = this.selectedRolesH1;
         
-        this.onRoleSelectedBody1(1,this.selectedRolesH1,employee); 
+        this.onRoleSelectedBody1(1,this.selectedRolesH1,employee,1); 
     });  
         this.apicall.FetchAuthorityName(this.selectedRolesH1).subscribe((res) => {       
         this.authority1 = res;       
@@ -203,7 +203,7 @@ export class ApprovelevelsettingComponent implements OnInit {
     this.selectedRolesH2= selectedRole2;
     this.AuthorityData.forEach((employee: any) => {     
       employee.roleByLevel[level-1] = this.selectedRolesH2;
-      this.onRoleSelectedBody2(2,this.selectedRolesH2,employee); 
+      this.onRoleSelectedBody2(2,this.selectedRolesH2,employee,1); 
   });
         this.apicall.FetchAuthorityName(this.selectedRolesH2).subscribe((res) => {       
         this.authority2 = res;        
@@ -215,7 +215,7 @@ export class ApprovelevelsettingComponent implements OnInit {
     this.selectedRolesH3 = selectedRole3;
     this.AuthorityData.forEach((employee: any) => {     
       employee.roleByLevel[level-1] = this.selectedRolesH3;
-      this.onRoleSelectedBody3(3,this.selectedRolesH3,employee); 
+      this.onRoleSelectedBody3(3,this.selectedRolesH3,employee,1); 
   });  
       this.apicall.FetchAuthorityName(this.selectedRolesH3).subscribe((res) => {       
         this.authority3 = res;        
@@ -227,7 +227,7 @@ export class ApprovelevelsettingComponent implements OnInit {
     this.selectedRolesH4 = selectedRole4;
     this.AuthorityData.forEach((employee: any) => {     
       employee.roleByLevel[level-1] = this.selectedRolesH4;
-      this.onRoleSelectedBody4(4,this.selectedRolesH4,employee); 
+      this.onRoleSelectedBody4(4,this.selectedRolesH4,employee,1); 
   });      
       this.apicall.FetchAuthorityName(this.selectedRolesH4).subscribe((res) => {       
         this.authority4 = res;      
@@ -239,7 +239,7 @@ export class ApprovelevelsettingComponent implements OnInit {
     this.selectedRolesH5 = selectedRole5;
     this.AuthorityData.forEach((employee: any) => {     
       employee.roleByLevel[level-1] = this.selectedRolesH5;
-      this.onRoleSelectedBody5(5,this.selectedRolesH5,employee); 
+      this.onRoleSelectedBody5(5,this.selectedRolesH5,employee,1); 
   });     
       this.apicall.FetchAuthorityName(this.selectedRolesH5).subscribe((res) => {       
         this.authority5 = res;      
@@ -280,19 +280,20 @@ export class ApprovelevelsettingComponent implements OnInit {
       employee.authorityByLevel[level-1]=this.selectedAuthorityHeader5;     
     });
   } 
-  onRoleSelectedBody1(level: number,selectedRoleb1:any,employee:any) {
+  onRoleSelectedBody1(level: number,selectedRoleb1:any,employee:any,flag:any) {
      
     employee.authorityByLevel[0]=-1;
     this.selectedRolesbody1 = selectedRoleb1;   
       this.apicall.FetchAuthorityName(this.selectedRolesbody1).subscribe((res) => {      
-        employee.authoritybody1 = res;   
-        if(this.selectedRolesbody1==6){
-          employee.authorityByLevel[0]=employee.LINE_MANAGER;        
+        employee.authoritybody1 = res;
+           console.log(JSON.stringify(res))
+        if(flag==1 && this.selectedRolesbody1==6){
+          employee.authorityByLevel[0]= employee.LINE_MANAGER;        
          } 
-        });  
+        }); 
        
   }
-  onRoleSelectedBody2(level: number,selectedRoleb2:any,employee:any) {   
+  onRoleSelectedBody2(level: number,selectedRoleb2:any,employee:any,flag:any) {   
     employee.authorityByLevel[1]=-1;
     this.selectedRolesbody2 = selectedRoleb2; 
         
@@ -303,7 +304,7 @@ export class ApprovelevelsettingComponent implements OnInit {
         }    
        });    
   }
-  onRoleSelectedBody3(level: number,selectedRoleb3:any,employee:any) {
+  onRoleSelectedBody3(level: number,selectedRoleb3:any,employee:any,flag:any) {
     employee.authorityByLevel[2]=-1;
     this.level=level;
     this.selectedRolesbody3 = selectedRoleb3;
@@ -315,7 +316,7 @@ export class ApprovelevelsettingComponent implements OnInit {
          }      
        });    
   }
-  onRoleSelectedBody4(level: number,selectedRoleb4:any,employee:any) {
+  onRoleSelectedBody4(level: number,selectedRoleb4:any,employee:any,flag:any) {
     employee.authorityByLevel[3]=-1;
      this.selectedRolesbody4 = selectedRoleb4;
      
@@ -326,7 +327,7 @@ export class ApprovelevelsettingComponent implements OnInit {
          }      
        });    
   }
-  onRoleSelectedBody5(level: number,selectedRoleb:any,employee:any) {
+  onRoleSelectedBody5(level: number,selectedRoleb:any,employee:any,flag:any) {
     employee.authorityByLevel[4]=-1;
      this.selectedRolesbody5 = selectedRoleb;  
       
@@ -451,19 +452,19 @@ export class ApprovelevelsettingComponent implements OnInit {
            
       switch (i) {
         case 0:
-          this.onRoleSelectedBody1(1, roleId, employee);
+          this.onRoleSelectedBody1(1, roleId, employee,0);
           break;
         case 1:
-          this.onRoleSelectedBody2(2, roleId, employee);
+          this.onRoleSelectedBody2(2, roleId, employee,0);
           break;
         case 2:
-          this.onRoleSelectedBody3(3, roleId, employee);
+          this.onRoleSelectedBody3(3, roleId, employee,0);
           break;
         case 3:
-          this.onRoleSelectedBody4(4, roleId, employee);
+          this.onRoleSelectedBody4(4, roleId, employee,0);
           break;
         case 4:
-          this.onRoleSelectedBody5(5, roleId, employee);
+          this.onRoleSelectedBody5(5, roleId, employee,0);
           break;       
       }
     }
@@ -539,7 +540,7 @@ export class ApprovelevelsettingComponent implements OnInit {
     if (employeeData.Authority.length > 0 && employeeData.Authority!=undefined ) {
      
       allEmployeesData.push(employeeData);
-      console.log(employeeData) 
+      //console.log(employeeData) 
     }
     }
   // }
@@ -556,7 +557,7 @@ export class ApprovelevelsettingComponent implements OnInit {
       authority: allEmployeesData
     };
   
-     console.log(JSON.stringify(requestData))
+    // console.log(JSON.stringify(requestData))
      //if(this.valid){
     this.apicall.AddApproveLevel(requestData).subscribe((res) => {
       if(res.Errorid==1){      

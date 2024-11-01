@@ -38,10 +38,7 @@ export class BiometricNewComponent implements OnInit {
   itemsPerPage=10;
   currentPage=1;
   desiredPage: any; 
-  
-
-
-  
+    
   constructor(private apicall:ApiCallService,private datePipe: DatePipe,private session:LoginService,private route:Router) { }
 
   ngOnInit(): void {
@@ -51,7 +48,7 @@ export class BiometricNewComponent implements OnInit {
     const NewcurrDate=this.datePipe.transform(this.currentDate,"yyyy-MM-dd");
    //// alert(NewcurrDate)
    // alert(this.empcode)
-    this.apicall.FetchPunchingDetailsofEmployee(NewcurrDate,NewcurrDate,this.empcode).subscribe((res)=>{
+    this.apicall.BiometricDetails(NewcurrDate,NewcurrDate,this.empcode).subscribe((res)=>{
       this.biometricdata=res;
      // alert(JSON.stringify(this.biometricdata))      
     })
@@ -112,7 +109,7 @@ EmployeeListFn(department_code:any,company_code:any): void {
         emp_code:empname,
         user:this.empcode 
       };
-      this.apicall.FetchPunchingDetailsofEmployee_filter(filterdata).subscribe(res=>{
+      this.apicall.BiometricDetails_filter(filterdata).subscribe(res=>{
         this.biometricdata = res;
         const maxPageFiltered = Math.ceil(this.biometricdata.length / this.itemsPerPage);  
 

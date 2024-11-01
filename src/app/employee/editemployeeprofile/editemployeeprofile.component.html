@@ -266,7 +266,7 @@
                                                                             <div class="col-lg-6">
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label font-type" ><span class="mandatoryStar">*</span> Company Name</label>
-                                                                                    <select class="form-select h-30 font-type textbox-15" name="comname" id="comname" #comname (change)="displayempcode(comname.value)" formControlName="comname"   >
+                                                                                    <select class="form-select h-30 font-type textbox-15" name="comname" id="comname" #comname (change)="displayempcode(comname.value)" formControlName="comname"  style="pointer-events: none;background-color: #f1eae3;" >
                                                                                         <option value="" selected disabled>Select</option>
                                                                                         <option  *ngFor="let CompanyList of listsessionCompany" value="{{CompanyList.KEY_ID}}">
                                                                                             {{CompanyList.DATA_VALUE}}
@@ -340,7 +340,7 @@
                                                                             <div class="col-lg-6">
                                                                                 <div class="mb-3">
                                                                                     <label  class="form-label font-type"><span class="mandatoryStar">*</span> Department</label>
-                                                                                    <select class="form-select font-type h-30 textbox-15" name="department" id="department"  formControlName="department">
+                                                                                    <select class="form-select font-type h-30 textbox-15" name="department" id="department"  formControlName="department" style="pointer-events: none;background-color: #f1eae3;">
                                                                                         <option value="" selected disabled>Select</option>
                                                                                         <option  *ngFor="let DepartmentList of listDepartment" value="{{DepartmentList.KEY_ID}}">
                                                                                             {{DepartmentList.DATA_VALUE}}
@@ -368,7 +368,7 @@
                                                                             <div class="col-lg-6">
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label font-type" ><span class="mandatoryStar">*</span> Designation</label>
-                                                                                    <select class="form-select h-30 font-type textbox-15" name="designation" id="designation"  formControlName="designation">
+                                                                                    <select class="form-select h-30 font-type textbox-15" name="designation" id="designation"  formControlName="designation" style="pointer-events: none;background-color: #f1eae3;">
                                                                                         <option value="" selected disabled>Select</option>
                                                                                         <option  *ngFor="let DesignationList of listDesignation" value="{{DesignationList.KEY_ID}}">
                                                                                             {{DesignationList.DATA_VALUE}}
@@ -383,7 +383,7 @@
                                                                                 <!-- <div class="col-lg-6" [hidden]="(designame != '54')"> -->
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label font-type" ><span class="latermandatory">*</span> Grade</label>
-                                                                                    <select class="form-select h-30 font-type textbox-15" name="grade" id="grade"  formControlName="grade"  >
+                                                                                    <select class="form-select h-30 font-type textbox-15" name="grade" id="grade"  formControlName="grade" style="pointer-events: none;background-color: #f1eae3;" >
                                                                                         <option value="" selected disabled>Select</option>
                                                                                         <option  *ngFor="let GradeList of listGrade" value="{{GradeList.KEY_ID}}">
                                                                                             {{GradeList.DATA_VALUE}}
@@ -1241,8 +1241,8 @@
                                          <!--Bank & Salary Tab-->
                                         
                                         <div class="tab-pane" id="Bank-Salary" role="tabpanel">
-                                            <div [hidden]="(designame == '54'  ) || (roleids == '9' && gradeids < 10 ) " ><b style="color: red;">Access restricted</b></div> 
-                                            <form [formGroup]="bankSalaryForm"  (change)="check()" *ngIf="(designame == '54'  ) || (roleids == '9' && gradeids < 10 )">
+                                            <div [hidden]="(designame == '54'  ) || (roleids == '9' && gradeids < 10 ) || (roleids == '18' && gradeids < 10 ) " ><b style="color: red;">Access restricted</b></div> 
+                                            <form [formGroup]="bankSalaryForm"  (change)="check()" *ngIf="(designame == '54'  ) || (roleids == '9' && gradeids < 10 ) || (roleids == '18' && gradeids < 10 )">
                                                 <div id="newlink">
                                                     <div id="1">
                                                         <div class="row">
@@ -1489,7 +1489,7 @@
                                                 </div>
                                                 </div>
                                             </form>
-                                            <div class="col-lg-12" *ngIf="(designame == '54'  ) || (roleids == '9' && gradeids < 10 )">           
+                                            <div class="col-lg-12" *ngIf="(designame == '54'  ) || (roleids == '9' && gradeids < 10 ) || (roleids == '18' && gradeids < 10 )">           
                                                 <div class="hstack gap-2 justify-content-end">
                                                     <button type="submit" class="btn btn-orange font-type" (click)="banksalarySubmit()">Update</button>
                                                     <!-- <button type="button" class="btn btn-blue font-type">Cancel</button> -->
@@ -2798,16 +2798,16 @@
 <!--Family Tab -->
 
 <div class="tab-pane" id="Other" role="tabpanel">
-    <div [hidden]="(designame == '54'  ) || (roleids == '9' && gradeids < 10 ) "><b style="color: red;">Access restricted</b></div>
+    <div [hidden]="(designame == '54'  ) || (roleids == '9' && gradeids < 10 ) || (roleids == '18' && gradeids < 10 ) "><b style="color: red;">Access restricted</b></div>
 
-    <div class="card-body h-30 box-blue" *ngIf="(designame == '54'  ) || (roleids == '9' && gradeids < 10 ) ">
+    <div class="card-body h-30 box-blue" *ngIf="(designame == '54'  ) || (roleids == '9' && gradeids < 10 ) || (roleids == '18' && gradeids < 10 ) ">
         <a class="d-flex align-items-center" role="button" aria-expanded="false">
             <div class="flex-grow-1">
                 <h5 class="mb-sm-0 font-type card-title fw-semibold margin-up-7 text-uppercase">Family Status Eligibility</h5>
             </div>
         </a>
     </div>
-    <form [formGroup]="empOtherForm"  (change)="check()" *ngIf="(designame == '54'  ) || (roleids == '9' && gradeids < 10 ) ">
+    <form [formGroup]="empOtherForm"  (change)="check()" *ngIf="(designame == '54'  ) || (roleids == '9' && gradeids < 10 ) || (roleids == '18' && gradeids < 10 ) ">
         <div class="mb-4">
             <div class="card mb-0" style="background-color: #e9f3f7;box-shadow: rgba(100, 100, 111, 0.2) 0px 3px 3px 0px;">
                 <div class="card-body">

@@ -161,6 +161,7 @@
                                         <th>Payment Type</th>
                                         <th>Bank</th>
                                         <th>Report Type</th>
+                                        <th>Generated Date</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -171,6 +172,7 @@
                                     <td>{{data.PAYMENT_TYPE_VAL}}</td>
                                     <td>{{data.BANK_NAME}}</td>
                                     <td>{{data.REPORT_TYPE_VAL}}</td>
+                                    <td>{{data.GENERATED_DATE  | date:'dd-MM-yyyy HH:mm'}}</td>
                                     <td>
                                         <button type="button" class="btn bg-info-subtle btn-sm text-info" (click)="Get_WPS_File(data)"><i class="ri-file-excel-fill fs-20"></i></button>
                                     </td>

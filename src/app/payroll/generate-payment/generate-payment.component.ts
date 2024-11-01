@@ -117,7 +117,7 @@ export class GeneratePaymentComponent implements OnInit {
   Get_WPS_File(data:any)
   {
     let Excelname:any;
-    this.apicall.Get_WPS_File(data.COMPANY,data.MONTH_ID,data.BANK,data.REPORT_TYPE,data.PAYMENT_TYPE).subscribe((res)=>{
+    this.apicall.Get_WPS_File(data.COMPANY,data.MONTH_ID,data.BANK,data.REPORT_TYPE,data.PAYMENT_TYPE,data.VER_ID).subscribe((res)=>{
     // alert(res.Errormsg)
      Excelname=res.Errormsg;
      let fileurl=this.apicall.GetExcelFile(Excelname);

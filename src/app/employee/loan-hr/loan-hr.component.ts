@@ -401,8 +401,9 @@ isFormValid:boolean=false;
   Fetchloanpayments(item:any)
   {
     this.apicall.LoanPaymentDetails(item.EMP_CODE,item.REQ_ID).subscribe((res)=>{
+     // alert(JSON.stringify(res))
       this.paymentdetails=res;
-      this.DISBURSEMENT_DATE=this.paymentdetails[0].this.DISBURSEMENT_DATE;
+      this.DISBURSEMENT_DATE=this.paymentdetails[0].DISBURSEMENT_DATE;
     })
   }
   cancel(){

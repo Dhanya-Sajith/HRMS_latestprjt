@@ -33,20 +33,20 @@
                                
                                           <div class="col-lg-2 pt-2"style="margin-left: 85px;">
                                                   <h6 class="fs-12 font-type"><span>Company</span></h6>
-                                                  <select class="form-select font-type fs-11" name="company" [(ngModel)]="selectedCompanyid"  required>
+                                                  <select class="form-select font-type fs-11" name="company" [(ngModel)]="selectedCompanyid" [ngModelOptions]="{standalone: true}" required>
                                                     <option value="-1" selected >All</option>
                                                     <option *ngFor="let combo of companydata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
                                                     </select>       
                                           </div>
                                           <div class="col-lg-2 pt-2" style="margin-left: 10px;">  
                                               <h6 class="font-type fs-12"><span>Functionality</span></h6>
-                                              <select class="form-select font-type fs-11" name="functionality" [(ngModel)]="selectedfunctionality" required >
+                                              <select class="form-select font-type fs-11" name="functionality" [(ngModel)]="selectedfunctionality" [ngModelOptions]="{standalone: true}"required >
                                                   <option *ngFor="let combo of functionality" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
                                                 </select>                      
                                       </div>
                                           <div class="col-lg-2 pt-2"style="margin-left: 10px;">
                                                   <h6 class="font-type fs-12"><span>Department </span></h6>
-                                                  <select class="form-select font-type fs-11"  name="dept"[(ngModel)]="selectedDept" required>
+                                                  <select class="form-select font-type fs-11"  name="dept"[(ngModel)]="selectedDept"[ngModelOptions]="{standalone: true}" required>
                                                     <option value="-1" selected >All</option>
                                                     <option *ngFor="let combo of deptdata" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
                                                     </select> 
@@ -54,7 +54,7 @@
                                           
                                           <div class="col-lg-2 pt-2"style="margin-left: 10px;">
                                             <h6 class="font-type fs-12"><span>Status </span></h6>
-                                            <select class="form-select font-type fs-11"  name="status"[(ngModel)]="selectedStatus" required>
+                                            <select class="form-select font-type fs-11"  name="status"[(ngModel)]="selectedStatus"[ngModelOptions]="{standalone: true}" required>
                                               <option value="-1">All</option>
                                               <option value="1">Assigned</option>
                                               <option value="2">Unassigned</option>
@@ -75,13 +75,13 @@
                                         
                                         <div class="col-md-2">
                                           <div class="pt-4">                                            
-                                          <span class="general">Set for All </span><input type="checkbox" id="checkbox" [(ngModel)]="showRoleAndAuthority" (click)="toggleRoleAndAuthority()">
+                                          <span class="general">Set for All </span><input type="checkbox" id="checkbox" [(ngModel)]="showRoleAndAuthority" [ngModelOptions]="{standalone: true}"(click)="toggleRoleAndAuthority()">
                                           </div> 
                                         </div>
                                         <div class="col-lg-7 pt-2"></div>
                                     <div class="col-lg-3 pt-2">
                                         <div class="search-box" style="margin-bottom:10px;">
-                                            <input type="text" class="form-control searchInput" id="searchInput" [(ngModel)]="searchInput" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search Employee Name" aria-label="search" aria-describedby="search_icon">
+                                            <input type="text" class="form-control searchInput" id="searchInput" [(ngModel)]="searchInput"[ngModelOptions]="{standalone: true}" (keyup)="changePage(currentPage)" name="searchInput" placeholder="Search Employee Name" aria-label="search" aria-describedby="search_icon">
                                             <i class="ri-search-line search-icon"></i>
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
                                                                 <tr>
                                                                   <td style="width: 3%;"> 
     
-                                                                    <select class="form-select font-type fs-11"  name="maxlevelh" [(ngModel)]="maxlevelh" #selectedmaxlevelHeader (change)="onmaxlevelSelectedHeader(selectedmaxlevelHeader.value)"[disabled]="!showRoleAndAuthority">
+                                                                    <select class="form-select font-type fs-11"  name="maxlevelh" [(ngModel)]="maxlevelh"[ngModelOptions]="{standalone: true}" #selectedmaxlevelHeader (change)="onmaxlevelSelectedHeader(selectedmaxlevelHeader.value)"[disabled]="!showRoleAndAuthority">
                                                                       <option value="-1" selected disabled>Select</option>
                                                                       <option value="1">1</option>
                                                                       <option value="2">2</option>
@@ -118,13 +118,13 @@
                                                                 <tr >
                                                                   
                                                                   <td style="width: 9%;" >Role  
-                                                                    <select class="form-select font-type fs-11" id="sel1" name="roleh1" [(ngModel)]="selectedRolesH1" #selectedRoleH1 (change)="onRoleSelectedHeader1(1,selectedRoleH1.value)" [disabled]="!showRoleAndAuthority">
+                                                                    <select class="form-select font-type fs-11" id="sel1" name="roleh1" [ngModelOptions]="{standalone: true}"[(ngModel)]="selectedRolesH1" #selectedRoleH1 (change)="onRoleSelectedHeader1(1,selectedRoleH1.value)" [disabled]="!showRoleAndAuthority">
                                                                       <option  value="-1" selected disabled>Select</option>
                                                                       <option *ngFor="let combo of role" [value]="combo.KEY_ID" >{{ combo.DATA_VALUE }}</option>
                                                                     </select> 
                                                                   </td>
                                                                         <td style="width: 10%;">Authority
-                                                                          <select class="form-select font-type fs-11" id="auth1" name="authh1" [(ngModel)]="selectedAuthorityHeader1" [disabled]="!showRoleAndAuthority||selectedRoleH1.value=='6'" #selectedAuthorityH1 (change)="onAuthoritySelectedHeader1(1,selectedAuthorityH1.value)">
+                                                                          <select class="form-select font-type fs-11" id="auth1" name="authh1"[ngModelOptions]="{standalone: true}" [(ngModel)]="selectedAuthorityHeader1" [disabled]="!showRoleAndAuthority" #selectedAuthorityH1 (change)="onAuthoritySelectedHeader1(1,selectedAuthorityH1.value)">
                                                                             <option  value="-1" selected disabled>Select</option>
                                                                             <option  *ngFor="let combo of authority1" [value]="combo.EMP_CODE">{{ combo.EMP_NAME }}</option>
                                                                             </select>                                                                     
@@ -136,13 +136,13 @@
                                                                  
                                                             <tr >
                                                               <td style="width: 9%;" >Role  
-                                                                <select class="form-select font-type fs-11" id="sel2" name="roleh2" [(ngModel)]="selectedRolesH2" #selectedRoleH2 (change)="onRoleSelectedHeader2(2,selectedRoleH2.value)" [disabled]="!showRoleAndAuthority">
+                                                                <select class="form-select font-type fs-11" id="sel2" name="roleh2" [ngModelOptions]="{standalone: true}"[(ngModel)]="selectedRolesH2" #selectedRoleH2 (change)="onRoleSelectedHeader2(2,selectedRoleH2.value)" [disabled]="!showRoleAndAuthority">
                                                                   <option  value="-1" selected disabled>Select</option>
                                                                   <option  *ngFor="let combo of role" [value]="combo.KEY_ID" >{{ combo.DATA_VALUE }}</option>
                                                                 </select> 
                                                               </td>
                                                                     <td style="width: 10%;">Authority
-                                                                      <select class="form-select font-type fs-11" id="auth2" name="authh2" [(ngModel)]="selectedAuthorityHeader2" [disabled]="!showRoleAndAuthority||selectedRoleH2.value=='6'" #selectedAuthorityH2 (change)="onAuthoritySelectedHeader2(2,selectedAuthorityH2.value)">
+                                                                      <select class="form-select font-type fs-11" id="auth2" name="authh2"[ngModelOptions]="{standalone: true}" [(ngModel)]="selectedAuthorityHeader2" [disabled]="!showRoleAndAuthority" #selectedAuthorityH2 (change)="onAuthoritySelectedHeader2(2,selectedAuthorityH2.value)">
                                                                         <option  value="-1" selected disabled>Select</option>
                                                                         <option  *ngFor="let combo of authority2" [value]="combo.EMP_CODE">{{ combo.EMP_NAME }}</option>
                                                                         </select>                                                                     
@@ -154,13 +154,13 @@
                                                                  
                                                         <tr >
                                                           <td style="width: 9%;" >Role  
-                                                            <select class="form-select font-type fs-11" id="sel3"name="roleh3" [(ngModel)]="selectedRolesH3" #selectedRoleH3 (change)="onRoleSelectedHeader3(3,selectedRoleH3.value)" [disabled]="!showRoleAndAuthority">
+                                                            <select class="form-select font-type fs-11" id="sel3"name="roleh3" [ngModelOptions]="{standalone: true}"[(ngModel)]="selectedRolesH3" #selectedRoleH3 (change)="onRoleSelectedHeader3(3,selectedRoleH3.value)" [disabled]="!showRoleAndAuthority">
                                                               <option value="-1" selected disabled>Select</option>
                                                               <option *ngFor="let combo of role" [value]="combo.KEY_ID" >{{ combo.DATA_VALUE }}</option>
                                                             </select> 
                                                           </td>
                                                                 <td style="width: 10%;">Authority
-                                                                  <select class="form-select font-type fs-11" id="auth3" name="authh3" [(ngModel)]="selectedAuthorityHeader3" [disabled]="!showRoleAndAuthority||selectedRoleH3.value=='6'" #selectedAuthorityH3 (change)="onAuthoritySelectedHeader3(3,selectedAuthorityH3.value)">
+                                                                  <select class="form-select font-type fs-11" id="auth3" name="authh3"[ngModelOptions]="{standalone: true}" [(ngModel)]="selectedAuthorityHeader3" [disabled]="!showRoleAndAuthority" #selectedAuthorityH3 (change)="onAuthoritySelectedHeader3(3,selectedAuthorityH3.value)">
                                                                     <option  value="-1" selected disabled>Select</option>
                                                                     <option  *ngFor="let combo of authority3" [value]="combo.EMP_CODE">{{ combo.EMP_NAME }}</option>
                                                                     </select>                                                                     
@@ -172,13 +172,13 @@
                                                                  
                                                     <tr >
                                                       <td style="width: 9%;" >Role  
-                                                        <select class="form-select font-type fs-11" id="sel4" name="roleh4" [(ngModel)]="selectedRolesH4" #selectedRoleH4 (change)="onRoleSelectedHeader4(4,selectedRoleH4.value)" [disabled]="!showRoleAndAuthority">
+                                                        <select class="form-select font-type fs-11" id="sel4" name="roleh4"[ngModelOptions]="{standalone: true}" [(ngModel)]="selectedRolesH4" #selectedRoleH4 (change)="onRoleSelectedHeader4(4,selectedRoleH4.value)" [disabled]="!showRoleAndAuthority">
                                                           <option value="-1" selected disabled>Select</option>
                                                           <option *ngFor="let combo of role" [value]="combo.KEY_ID" >{{ combo.DATA_VALUE }}</option>
                                                         </select> 
                                                       </td>
                                                             <td style="width: 10%;">Authority
-                                                              <select class="form-select font-type fs-11" id="auth4" name="authh4" [(ngModel)]="selectedAuthorityHeader4" [disabled]="!showRoleAndAuthority||selectedRoleH4.value=='6'" #selectedAuthorityH4 (change)="onAuthoritySelectedHeader4(4,selectedAuthorityH4.value)">
+                                                              <select class="form-select font-type fs-11" id="auth4" name="authh4"[ngModelOptions]="{standalone: true}" [(ngModel)]="selectedAuthorityHeader4" [disabled]="!showRoleAndAuthority" #selectedAuthorityH4 (change)="onAuthoritySelectedHeader4(4,selectedAuthorityH4.value)">
                                                                 <option value="-1" selected disabled>Select</option>
                                                                 <option *ngFor="let combo of authority4" [value]="combo.EMP_CODE">{{ combo.EMP_NAME }}</option>
                                                                 </select>                                                                     
@@ -190,13 +190,13 @@
                                                                  
                                                 <tr >
                                                   <td style="width: 9%;" >Role  
-                                                    <select class="form-select font-type fs-11" id="sel5" name="roleh5" [(ngModel)]="selectedRolesH5" #selectedRoleH5 (change)="onRoleSelectedHeader5(5,selectedRoleH5.value)" [disabled]="!showRoleAndAuthority">
+                                                    <select class="form-select font-type fs-11" id="sel5" name="roleh5"[ngModelOptions]="{standalone: true}" [(ngModel)]="selectedRolesH5" #selectedRoleH5 (change)="onRoleSelectedHeader5(5,selectedRoleH5.value)" [disabled]="!showRoleAndAuthority">
                                                       <option value="-1" selected disabled>Select</option>
                                                       <option *ngFor="let combo of role" [value]="combo.KEY_ID" >{{ combo.DATA_VALUE }}</option>
                                                     </select> 
                                                   </td>
                                                         <td style="width: 10%;">Authority
-                                                          <select class="form-select font-type fs-11" id="auth5" name="authh5" [(ngModel)]="selectedAuthorityHeader5"[disabled]="!showRoleAndAuthority||selectedRoleH5.value=='6'" #selectedAuthorityH5 (change)="onAuthoritySelectedHeader5(5,selectedAuthorityH5.value)">
+                                                          <select class="form-select font-type fs-11" id="auth5" name="authh5" [ngModelOptions]="{standalone: true}"[(ngModel)]="selectedAuthorityHeader5"[disabled]="!showRoleAndAuthority" #selectedAuthorityH5 (change)="onAuthoritySelectedHeader5(5,selectedAuthorityH5.value)">
                                                             <option value="-1" selected disabled>Select</option>
                                                             <option *ngFor="let combo of authority5" [value]="combo.EMP_CODE">{{ combo.EMP_NAME }}</option>
                                                             </select>                                                                     
@@ -215,7 +215,7 @@
                                                             
                                                             <td>{{ employee.EMP_NAME }}</td>
                                                             <td>
-                                                              <select class="form-select font-type fs-11" name="MAXLEVEL" [(ngModel)]="employee.MAX_LEVEL"  #selectedmaxlevelBody (change)="onmaxlevelSelected(selectedmaxlevelBody.value,employee);selectEmployeeForEditing(employee)"[hidden]="this.showmaxlevel&&this.showRoleAndAuthority">
+                                                              <select class="form-select font-type fs-11" name="MAXLEVEL" [ngModelOptions]="{standalone: true}"[(ngModel)]="employee.MAX_LEVEL"  #selectedmaxlevelBody (change)="onmaxlevelSelected(selectedmaxlevelBody.value,employee);selectEmployeeForEditing(employee)"[hidden]="this.showmaxlevel&&this.showRoleAndAuthority">
                                                                       <option value="6"  selected disabled >Select</option>
                                                                       <option value="1">1</option>
                                                                       <option value="2">2</option>
@@ -237,14 +237,14 @@
                                                                 <ng-container  >
                                                                   
                                                                     <td style="width: 9%;">
-                                                                      <select class="form-select font-type fs-11" id="role{{j}}" name="ROLE" [(ngModel)]="employee.roleByLevel[0]" #selectedRoleb1 (change)="onRoleSelectedBody1(1,selectedRoleb1.value,employee)">
+                                                                      <select class="form-select font-type fs-11" id="role{{j}}" name="ROLE" [(ngModel)]="employee.roleByLevel[0]"[ngModelOptions]="{standalone: true}" #selectedRoleb1 (change)="onRoleSelectedBody1(1,selectedRoleb1.value,employee,1)">
                                                                         <option style="width: 100%;"value="-1" selected disabled>Select</option>
                                                                         <option style="width: 100%;"*ngFor="let combo of role" [value]="combo.KEY_ID" >{{ combo.DATA_VALUE }}</option>
                                                                       </select>
                                                                       <div class="text-danger" *ngIf="showmessage[0]">{{message[0]}}</div>
                                                                     </td>
                                                                     <td style="width: 10%;">
-                                                                      <select class="form-select font-type fs-11" id="authb{{j}}" name="authority" [(ngModel)]="employee.authorityByLevel[0]" #selectedAuthority1 (change)="onAuthoritySelectedBody1(1,selectedAuthority1.value)" [disabled]="employee.showauthority1||selectedRoleb1.value=='6'">
+                                                                      <select class="form-select font-type fs-11" id="authb{{j}}" name="authority" [(ngModel)]="employee.authorityByLevel[0]"[ngModelOptions]="{standalone: true}" #selectedAuthority1 (change)="onAuthoritySelectedBody1(1,selectedAuthority1.value)" [disabled]="employee.showauthority1">
                                                                         <option style="width: 100%;"value="-1" selected disabled>Select</option>
                                                                         <option style="width: 100%;"*ngFor="let combo of employee.authoritybody1" [value]="combo.EMP_CODE">{{ combo.EMP_NAME }}</option>
                                                                       </select>
@@ -259,14 +259,14 @@
                                                              <ng-container  >
                                                               
                                                                  <td style="width: 9%;">
-                                                                   <select class="form-select font-type fs-11" ng-reflect-model="-1" id="role{{j}}"name="role"[(ngModel)]="employee.roleByLevel[1]"  #selectedRoleb2 (change)="onRoleSelectedBody2(2,selectedRoleb2.value,employee)">
+                                                                   <select class="form-select font-type fs-11" ng-reflect-model="-1" id="role{{j}}"name="role"[(ngModel)]="employee.roleByLevel[1]"[ngModelOptions]="{standalone: true}"  #selectedRoleb2 (change)="onRoleSelectedBody2(2,selectedRoleb2.value,employee,1)">
                                                                      <option style="width: 100%;"value="-1" selected disabled>Select</option>
                                                                      <option style="width: 100%;"*ngFor="let combo of role" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
                                                                    </select>
                                                                    <div class="text-danger" *ngIf="showmessage[1]">{{message[1]}}</div>
                                                                  </td>
                                                                  <td style="width: 10%;">
-                                                                   <select class="form-select font-type fs-11" id="authb{{j}}" name="authority"[(ngModel)]="employee.authorityByLevel[1]" #selectedAuthority2 (change)="onAuthoritySelectedBody2(2,selectedAuthority2.value)" [disabled]="employee.showauthority2||selectedRoleb2.value=='6'">
+                                                                   <select class="form-select font-type fs-11" id="authb{{j}}" name="authority"[(ngModel)]="employee.authorityByLevel[1]"[ngModelOptions]="{standalone: true}" #selectedAuthority2 (change)="onAuthoritySelectedBody2(2,selectedAuthority2.value)" [disabled]="employee.showauthority2">
                                                                      <option style="width: 100%;"value="-1" selected disabled>Select</option>
                                                                      <option style="width: 100%;"*ngFor="let combo of employee.authoritybody2"  [value]="combo.EMP_CODE">{{ combo.EMP_NAME }}</option>
                                                                    </select>
@@ -281,14 +281,14 @@
                                                          <ng-container  >
                                                           
                                                              <td style="width: 9%;">
-                                                               <select class="form-select font-type fs-11" id="role{{j}}" [(ngModel)]="employee.roleByLevel[2]" #selectedRoleb3 (change)="onRoleSelectedBody3(3,selectedRoleb3.value,employee)">
+                                                               <select class="form-select font-type fs-11" id="role{{j}}" [(ngModel)]="employee.roleByLevel[2]" [ngModelOptions]="{standalone: true}" #selectedRoleb3 (change)="onRoleSelectedBody3(3,selectedRoleb3.value,employee,1)">
                                                                  <option style="width: 100%;"value="-1" selected disabled>Select</option>
                                                                  <option style="width: 100%;"*ngFor="let combo of role" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
                                                                </select>
                                                                <div class="text-danger" *ngIf="showmessage[2]">{{message[2]}}</div>
                                                              </td>
                                                              <td style="width: 10%;">
-                                                               <select class="form-select font-type fs-11" id="authb{{j}}" name="authority"[(ngModel)]="employee.authorityByLevel[2]" #selectedAuthority3 (change)="onAuthoritySelectedBody3(3,selectedAuthority3.value)" [disabled]="employee.showauthority3||selectedRoleb3.value=='6'">
+                                                               <select class="form-select font-type fs-11" id="authb{{j}}" name="authority"[(ngModel)]="employee.authorityByLevel[2]"[ngModelOptions]="{standalone: true}" #selectedAuthority3 (change)="onAuthoritySelectedBody3(3,selectedAuthority3.value)" [disabled]="employee.showauthority3">
                                                                  <option style="width: 100%;"value="-1" selected disabled>Select</option>
                                                                  <option style="width: 100%;"*ngFor="let combo of employee.authoritybody3"  [value]="combo.EMP_CODE">{{ combo.EMP_NAME }}</option>
                                                                </select>
@@ -303,14 +303,14 @@
                                                      <ng-container >
                                                        
                                                          <td style="width: 9%;">
-                                                           <select class="form-select font-type fs-11" id="role{{j}}"[(ngModel)]="employee.roleByLevel[3]"  #selectedRoleb4 (change)="onRoleSelectedBody4(4,selectedRoleb4.value,employee)">
+                                                           <select class="form-select font-type fs-11" id="role{{j}}"[(ngModel)]="employee.roleByLevel[3]"[ngModelOptions]="{standalone: true}"  #selectedRoleb4 (change)="onRoleSelectedBody4(4,selectedRoleb4.value,employee,1)">
                                                              <option value="-1" selected disabled>Select</option>
                                                              <option *ngFor="let combo of role" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
                                                            </select>
                                                            <div class="text-danger" *ngIf="showmessage[3]">{{message[3]}}</div>
                                                          </td>
                                                          <td style="width: 10%;">
-                                                           <select class="form-select font-type fs-11" id="authb{{j}}" name="authority" [(ngModel)]="employee.authorityByLevel[3]" #selectedAuthority4 (change)="onAuthoritySelectedBody4(4,selectedAuthority4.value)" [disabled]="employee.showauthority4||selectedRoleb4.value=='6'">
+                                                           <select class="form-select font-type fs-11" id="authb{{j}}" name="authority" [ngModelOptions]="{standalone: true}"[(ngModel)]="employee.authorityByLevel[3]" #selectedAuthority4 (change)="onAuthoritySelectedBody4(4,selectedAuthority4.value)" [disabled]="employee.showauthority4">
                                                              <option value="-1" selected disabled>Select</option>
                                                              <option *ngFor="let combo of employee.authoritybody4"  [value]="combo.EMP_CODE">{{ combo.EMP_NAME }}</option>
                                                            </select>
@@ -325,14 +325,14 @@
                                                  <ng-container  >
                                                    
                                                      <td style="width: 9%;">
-                                                       <select class="form-select font-type fs-11" id="role{{j}}" [(ngModel)]="employee.roleByLevel[4]"  #selectedRoleb5 (change)="onRoleSelectedBody5(5,selectedRoleb5.value,employee)">
+                                                       <select class="form-select font-type fs-11" id="role{{j}}"[ngModelOptions]="{standalone: true}" [(ngModel)]="employee.roleByLevel[4]"  #selectedRoleb5 (change)="onRoleSelectedBody5(5,selectedRoleb5.value,employee,1)">
                                                          <option value="-1" selected disabled>Select</option>
                                                          <option *ngFor="let combo of role" [value]="combo.KEY_ID">{{ combo.DATA_VALUE }}</option>
                                                        </select>
                                                        <div class="text-danger" *ngIf="showmessage[4]">{{message[4]}}</div>
                                                      </td>
                                                      <td style="width: 10%;">
-                                                       <select class="form-select font-type fs-11" id="authb{{j}}" name="authority" [(ngModel)]="employee.authorityByLevel[4]" #selectedAuthority5 (change)="onAuthoritySelectedBody5(5,selectedAuthority5.value)" [disabled]="employee.showauthority5||selectedRoleb5.value=='6'">
+                                                       <select class="form-select font-type fs-11" id="authb{{j}}" name="authority"[ngModelOptions]="{standalone: true}" [(ngModel)]="employee.authorityByLevel[4]" #selectedAuthority5 (change)="onAuthoritySelectedBody5(5,selectedAuthority5.value)" [disabled]="employee.showauthority5">
                                                          <option value="-1" selected disabled>Select</option>
                                                          <option *ngFor="let combo of employee.authoritybody5" [value]="combo.EMP_CODE">{{ combo.EMP_NAME }}</option>
                                                        </select>

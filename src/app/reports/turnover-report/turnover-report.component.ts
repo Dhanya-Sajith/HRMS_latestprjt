@@ -67,7 +67,6 @@ export class TurnoverReportComponent implements OnInit {
 
         this.apicall.viewTurnoverReport(cmpny,startmnth,endmnth,this.startyr,this.endyear).subscribe((res)=>{
         this.turnoverlist=res; 
-        alert(JSON.stringify(this.turnoverlist))
         const maxPageFiltered = Math.ceil(this.turnoverlist.length / this.itemsPerPage);  
           if (this.currentPage > maxPageFiltered) {
             this.currentPage = 1; 

@@ -208,7 +208,7 @@
                         <div class="col-md-4">
                             <div class="d-flex align-items-center gap-4">
                             <span class="font-type fs-13 fw-semibold">Week: </span>
-                            <input type="week" class="form-control font-type fs-11 mb-0" id="week" name="week" [(ngModel)]="week" (change)="listweekdays()">
+                            <input type="week" class="form-control font-type fs-11 mb-0" id="week" name="week" [(ngModel)]="week" (change)="listweekdays()"  min="{{effectivedt}}">
                             </div>
                         </div>
                     </div>
@@ -227,7 +227,8 @@
                     </div><!-- end card header -->
 
                     <div class="card-body">
-                        <div class="live-preview">
+                        <div *ngIf="failedMsg" class="alert alert-danger mt-2">{{ failedMsg }}</div>
+                        <div class="live-preview">                           
                             <div class="table-responsive">
                                 <table class="table align-middle table-nowrap mb-0">
                                     <thead class="table-blue text-white font-type">
@@ -247,7 +248,7 @@
                                             <td>{{reqdtl.WORKEDHOURS}}</td>
                                             <td><input type="hidden" name="rowno" #rowno value="i+1"> 
                                                 <!-- <input type="time" id="newothrs{{i+1}}" class="form-control font-type fs-12 col-lg-4 h-20 textbox-15" name="newothrs" [(ngModel)]="reqdtl.newothrs" (change)="calculateOT(reqdtl,i+1)" /> -->
-                                                <ngx-timepicker-field [format]="24" [(ngModel)]="reqdtl.newothrs" id="newothrs{{i+1}}" (ngModelChange)="calculateOT(reqdtl,i+1)"></ngx-timepicker-field>
+                                                <ngx-timepicker-field *ngIf="reqdtl.INDATE > vailddate" [format]="24" [(ngModel)]="reqdtl.newothrs" id="newothrs{{i+1}}" (ngModelChange)="calculateOT(reqdtl,i+1)"></ngx-timepicker-field>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -266,7 +267,7 @@
                         <br/>
                         <div class="col-lg-12">
                             <div class="hstack gap-2 justify-content-end">
-                                <button type="submit" class="btn btn-orange font-type" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="OTRequestSave()">Submit</button>
+                                <button type="submit" class="btn btn-orange font-type" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" (click)="OTRequestSave()"[disabled]="failedMsg">Submit</button>
                             </div>
                         </div>
                       <!-- </form> -->

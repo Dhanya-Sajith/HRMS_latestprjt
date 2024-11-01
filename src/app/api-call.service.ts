@@ -15,16 +15,16 @@ export class ApiCallService {
   //Emisoft cloud for customer testing
   //public dotnetapi = 'http://3.111.100.109:81/api';
   //Local host
-  //public dotnetapi = 'https://localhost:5001/api';
+  public dotnetapi = 'https://localhost:44381/api';
   //Live server for Customer intranet//
-  public dotnetapi = 'http://192.168.10.29:81/api';
+  //public dotnetapi = 'http://192.168.10.29:81/api';
   //public hostname='localhost:44381';
   //Live server for Customer Cloud 
    //public dotnetapi = 'http://72.167.151.157:81/api';
   //public hostnm = 'http://72.167.151.157';
   // Emisoft common Test server
   //public dotnetapi = 'http://192.168.1.37:84/api';
-  //public dotnetapi = 'http://desktop-bj8t99m:84/api';
+ //public dotnetapi = 'http://desktop-bj8t99m:84/api';
   // Emisoft common Test cloud server
   //public dotnetapi = 'http://13.53.118.116:81/api';//
  
@@ -58,6 +58,15 @@ export class ApiCallService {
     // alert(deptypeid);
     return this.http.get<any>(`${this.dotnetapi}/MasterManagement/MasterComboData/${deptypeid}`);
   }
+  CheckforAuthorities(ecode:any,functionality:any)
+{ 
+  return this.http.get<any>(`${this.dotnetapi}/EmployeeManagement/CheckforAuthorities/${ecode}/${functionality}`);
+}
+UpdateDocPathOnReupload(data:any,category:any)
+{
+  //alert(category)
+  return this.http.post<any>(`${this.dotnetapi}/Payroll/UpdateDocPathOnReupload/${category}`,data);
+}
 
   //Login
 
@@ -171,8 +180,20 @@ export class ApiCallService {
     return this.http.get<any>(`${this.dotnetapi}/Attendance/CancelRegularizationReq_ByEmp/${request_Id}/${empcode}`);
   }
 
- 
-
+ // New Biometric Data start
+BiometricDetails(fromdate:any,todate:any,empcode:any)
+{
+return this.http.get<any>(`${this.dotnetapi}/Attendance/Bio_MetricDetails/${fromdate}/${todate}/${empcode}`);
+}
+BiometricDetails_filter(data:any)
+{
+return this.http.post<any>(`${this.dotnetapi}/Attendance/Bio_MetricDetails_Filter`,data);
+}
+UploadbiometricdataNew(data:any,empcode:any)
+{
+  
+  return this.http.post<any>(`${this.dotnetapi}/File/Uploadcsvnew/${empcode}`,data);
+}
 
  // For compoff component start
  listCompoffReqdt(empcode:any)
@@ -1226,7 +1247,7 @@ updatebasicdtls(data:any)
 
 deleteemployeedtls(empcode:any,record_id:any,Sflag:any)
 {
-  //alert("SDf")
+ 
     return this.http.get<any>(`${this.dotnetapi}/EmployeeManagement/Delete_EmployeeDetails/${empcode}/${record_id}/${Sflag}`);
 }
 //Leave Management
@@ -1775,9 +1796,9 @@ GeneratePayment(data:any)
 {
   return this.http.post<any>(`${this.dotnetapi}/Payroll/GeneratePayment`,data);
 }
-Get_WPS_File(company:any,month:any,bank:any,report_type:any,paytype:any)
+Get_WPS_File(company:any,month:any,bank:any,report_type:any,paytype:any,ver_id:any)
 {
-  return this.http.get<any>(`${this.dotnetapi}/File/Get_WPS_File/${company}/${month}/${bank}/${report_type}/${paytype}`);
+  return this.http.get<any>(`${this.dotnetapi}/File/Get_WPS_File/${company}/${month}/${bank}/${report_type}/${paytype}/${ver_id}`);
 }
 //Master data management
 FetchMasterData()
@@ -2998,10 +3019,7 @@ CheckDocExists(data:any)
   return this.http.post<any>(`${this.dotnetapi}/File/CheckDocExists`,data);
 }
 //Expense Claim
-updateExpenseClaimDoc(data:any)
-{
-  return this.http.post<any>(`${this.dotnetapi}/Payroll/UpdateExpenseClaimDoc`,data);
-}
+
 
 //loan Disbursment Month validation
 FetchDisbursmentMonth(empcode:any)

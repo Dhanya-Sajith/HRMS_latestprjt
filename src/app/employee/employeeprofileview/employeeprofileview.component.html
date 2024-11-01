@@ -142,7 +142,13 @@
                                         <i class="ri-edit-box-line align-bottom"></i> Edit Details
                                     </a>
                                 </div> 
-
+                                <div class="col-lg-2" style="margin-left: 4px;">
+                                    <div class="search-box me-2 mb-2 d-inline-block">
+                                        <div class="position-relative">
+                                            <button type="button" class="btn btn-blue btn-rounded waves-effect waves-light mb-2 me-2 h-30 font-type" (click)="viewChart()"><i class="ri-user-add-line p-1"></i>Organization Chart</button>
+                                        </div>
+                                    </div>
+                                </div>
                                 </div>
                             <!-- Tab panes -->
 
@@ -587,10 +593,10 @@
                                        
                                             <div class="tab-pane" id="Bank-Salary" role="tabpanel">
   
-                                                <div [hidden]="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')"><b style="color: red;">Access restricted</b></div>
+                                                <div [hidden]="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '18' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')"><b style="color: red;">Access restricted</b></div>
                                                  <!-- Bank Details--> 
                                                 <div class="row" *ngFor="let salary of salarylist">
-                                                    <ng-container *ngIf="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')">
+                                                    <ng-container *ngIf="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '18' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')">
                                                     <div class="col-md-12 col-lg-12">
                                                         <div class="card" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
                                                             <div class="card-body b1-h1">
@@ -1104,8 +1110,8 @@
 <!--Tab family Info-->   
 
 <div class="tab-pane fade" id="famdet" role="tabpanel">
-    <div [hidden]="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')"><b style="color: red;">Access restricted</b></div>
-    <div class="card" *ngIf="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')">
+    <div [hidden]="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '18' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')"><b style="color: red;">Access restricted</b></div>
+    <div class="card" *ngIf="(designame == '54' && urlval === 'emp_profile_view_from_directory' ) || (roleid == '18' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (roleid == '9' && gradeids < 10 && urlval === 'emp_profile_view_from_directory') || (urlval === 'employee_profile_view')">
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-12">

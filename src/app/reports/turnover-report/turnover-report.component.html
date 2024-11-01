@@ -31,7 +31,7 @@
                                      
                                         <div class="card-body border-bottom-dashed border-bottom">
                                             <form>
-                                                <div class="row g-3">
+                                                <div class="row">
                                                     <div class="col-lg-3 col-sm-6">
                                                         <h3 class="font-type fs-12"><span>Company</span></h3>
                                                         <select class="form-select font-type fs-11" aria-label="Default select example"  name="comcode" id="comcode">
@@ -54,16 +54,16 @@
                                                         </div>
                                                     </div>
                                                     <!--end col-->
-                                                    <div class="col-lg-1 col-sm-6">
+                                                    <div class="col-lg-2 col-sm-6">
                                                         <h3 class="font-type fs-12"><span>Start year</span></h3>
                                                         
-                                                        <div>
+                                                   
                                                             <select class="form-select font-type fs-11" aria-label="Default select example"  name="startyr" id="startyr" [(ngModel)]="startyr">
                                                                 <option *ngFor="let YearList of listYear" value="{{YearList.DISPLAY_FIELD}}" >
                                                                     {{YearList.DISPLAY_FIELD}}</option> 
                                                                
                                                             </select>
-                                                        </div>
+                                                    
                                                     </div>
                                                     <div class="col-lg-2 col-sm-6">
                                                         <div>
@@ -77,26 +77,23 @@
                                                         </div>
                                                     </div>
                                                     <!--end col-->
-                                                    <div class="col-lg-1 col-sm-6">
+                                                    <div class="col-lg-2 col-sm-6">
                                                         <h3 class="font-type fs-12"><span>End year</span></h3>
-                                                        
-                                                        <div>
+                                                    
                                                             <select class="form-select font-type fs-11" aria-label="Default select example"  name="endyr" id="endyr" [(ngModel)]="endyear">
                                                                 <option *ngFor="let YearList of listYear" value="{{YearList.DISPLAY_FIELD}}" >
                                                                     {{YearList.DISPLAY_FIELD}}</option>   
                                                                
                                                             </select>
-                                                        </div>
+                                                    
                                                     </div>
-                                                    <div class="col-lg-2 col-sm-3" >
-                                                        <label></label>
-                                                        <div>
-                                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-12 add-button text-white"  (click)="GenerateReport()"> <i class="ri-file-text-line"></i>
+                                                    <div class="col-lg-1 col-sm-3" >
+                                                        
+                                                        <div class="pt-3">
+                                                            <label></label>
+                                                            <button type="submit" style="margin-top: 4px!important;" class="btn btn-orange font-type fs-11 add-button text-white"  (click)="GenerateReport()"> <i class="ri-file-text-line"></i>
                                                                 View Report
                                                             </button>
-                                                        </div>
-                                                        <div class="col-sm-auto">
-                                                            
                                                         </div>
                                                     </div>
                                                     <!--end col-->

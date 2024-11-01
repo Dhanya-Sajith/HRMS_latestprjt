@@ -75,6 +75,7 @@ export class LeavemanagementComponent implements OnInit {
   listpersonal: any;
   pstatus: any = 0;
   requestForm: FormGroup;
+  ReuploadForm: FormGroup;
   isFormValid: boolean=false;
   validdate!: string;
   validdates: any;
@@ -140,6 +141,9 @@ export class LeavemanagementComponent implements OnInit {
   data: any; 
   desiredPage: any; 
   bookedstatus: any;
+  setRequestID: any;
+  docname: any;
+  updatedoc: any;
 
   constructor(private fb: FormBuilder,private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private route: ActivatedRoute)
    { 
@@ -161,6 +165,9 @@ export class LeavemanagementComponent implements OnInit {
       session: ['', Validators.required],
       duration: ['', [Validators.required, this.durationValidator.bind(this)]],
       reason: ['', Validators.required]
+    });
+    this.ReuploadForm = this.fb.group({     
+      DocControl: ['', Validators.required],      
     });
   }
 
@@ -357,12 +364,16 @@ export class LeavemanagementComponent implements OnInit {
         this.listmatrix=res;   
       })
   }
-
+SetSelectedReqId(requestID: any)
+{
+  this.setRequestID = requestID;
+}
   // Leave team and personal on load View Listing
   ListLeaveRequests()
   {  
     this.apicall.listLeaveRequest(this.empcode,0,this.viewflag,this.firstDay,this.lastDay).subscribe((res)=>{ 
       this.listleaveRequest=res;
+    //alert(JSON.stringify(res))
     })
   }
 
@@ -393,7 +404,7 @@ export class LeavemanagementComponent implements OnInit {
       if(this.Activetype == 'Leave')
       {
         this.apicall.FetchLeaveReq_Filterapi(fillData).subscribe(res=>{
-         this.listleaveRequest=res;
+         this.listleaveRequest=res;         
          const maxPageFiltered = Math.ceil(this.listleaveRequest.length / this.itemsPerPage);  
 
          if (this.currentPage > maxPageFiltered) {
@@ -450,7 +461,8 @@ export class LeavemanagementComponent implements OnInit {
       if(this.Activetype == 'Leave')
       {
         this.apicall.listLeaveRequest(this.empcode,this.pstatus,this.viewflag,this.pl_fromdate,this.pl_todate).subscribe((res)=>{
-          this.listleaveRequest=res;   
+          this.listleaveRequest=res;  
+         // alert(JSON.stringify(res)) 
           const maxPageFiltered = Math.ceil(this.listleaveRequest.length / this.itemsPerPage);  
 
           if (this.currentPage > maxPageFiltered) {
@@ -502,8 +514,9 @@ export class LeavemanagementComponent implements OnInit {
     })
   }
   
-  ActivereqID(reqid:any){
-    this.activereqid = reqid;
+  ActivereqID(item:any){
+    this.activereqid = item.REQ_ID;
+    this.docname=item.DOCUMENT;
   }
 
   setSelectedRequestID(requestID: any,empCode:any) {
@@ -652,22 +665,31 @@ export class LeavemanagementComponent implements OnInit {
 
   //Leave Add new Request Start
   LeaveRequestLoad(){
-    // this.clearaddreq();
-    this.apicall.FetchLeaveTypes_CompanyWise(this.empcode).subscribe((res)=>{
-      this.listleavetype=res;
+    this.apicall.CheckforAuthorities(this.empcode,'L').subscribe((res)=>{
+      //alert(JSON.stringify(res));
+      if(res[0].Errorid==0){
+        
+        (<HTMLInputElement>document.getElementById("openModalButton")).click();
+        this.showModal = 2; 
+        this.failed='No approver assigned.Please contact HR!'; 
+      }else{
+        (<HTMLInputElement>document.getElementById("AddLeaveRequestModalButton")).click();
+        // this.clearaddreq();
+        this.apicall.FetchLeaveTypes_CompanyWise(this.empcode).subscribe((res)=>{
+        this.listleavetype=res;
+        })
+
+       this.apicall.LeaveDuration(this.dur_typeid).subscribe((res)=>{
+           this.listduration=res;          
+       })
+
+      this.apicall.LeaveSession(this.LvSession_typeid).subscribe((res)=>{
+        this.listsession=res;          
       })
 
-    this.apicall.LeaveDuration(this.dur_typeid).subscribe((res)=>{
-      this.listduration=res;          
-    })
-
-    this.apicall.LeaveSession(this.LvSession_typeid).subscribe((res)=>{
-      this.listsession=res;          
-    })
-
-    this.apicall.CountryDetails().subscribe((res)=>{
-      this.listcountry=res;          
-    })
+      this.apicall.CountryDetails().subscribe((res)=>{
+        this.listcountry=res;          
+      })
 
     //Airticket Booked By
     this.apicall.listRegStatus(87).subscribe((res)=>{
@@ -679,6 +701,9 @@ export class LeavemanagementComponent implements OnInit {
     this.airticketstatus='1';  
     this.sessaction='0';
     (<HTMLInputElement>document.getElementById("reqleavetype")).value='0';
+
+    }
+    })    
   }
 
   FetchAvailableLeaves()
@@ -1075,22 +1100,26 @@ export class LeavemanagementComponent implements OnInit {
       data.value=null;
     }
   }
-
   upload(reqid:any,flag:any)
-  {
+  {   
     let input:any;
-    if(flag=1)
+    if(flag==1)
     {
-      input=document.getElementById("formFile");
-      const fdata = new FormData();
+      input=document.getElementById("formFile");      
       this.onFileSelect(input,reqid);
-    }
-    if(flag=2)
+    }else if(flag==2)
     {    
-      input=document.getElementById("airformFile");
-      const fdata = new FormData();
+      input=document.getElementById("airformFile");   
       this.onFileSelect(input,reqid);
-    }
+    }else 
+    {       
+      if (this.ReuploadForm.valid){         
+           input=document.getElementById("DocControl");          
+           this.onFileSelect(input,reqid);
+      } else{           
+           this.ReuploadForm.markAllAsTouched();
+      }
+    }  
   }
 
   onFileSelect(input:any,reqid:any) {
@@ -1100,18 +1129,39 @@ export class LeavemanagementComponent implements OnInit {
     
       fdata.append('filesup',input.files[0]);
      
-      this.apicall.Uploadleavedoc(fdata,reqid).subscribe((res)=>{
-        const result=res;
+      this.apicall.Uploadleavedoc(fdata,reqid).subscribe((res)=>{       
         if(res==0)
         { 
+          (<HTMLInputElement>document.getElementById("openModalButton")).click();
           this.showModal = 2;
-        this.failed = "Leave document uploading failed";
+          this.failed = "Leave document uploading failed";
+        }else{
+          (<HTMLInputElement>document.getElementById("openModalButton")).click();
+          this.showModal = 1;
+          this.success = "Leave document uploaded successfully!";
+          this.ListLeaveRequests();
         }
-        
+        this.ReuploadForm.reset();
       })
     }
   }
-
+  ReuploadDoc(type:any)
+  {
+    if((this.ReuploadForm.valid))
+    {
+    const doc = this.ReuploadForm.get('DocControl');
+    const datavalue = {
+      docpath:doc?.value,
+      req_id:this.setRequestID,    
+    };
+      this.apicall.UpdateDocPathOnReupload(datavalue,'L').subscribe((res)=>{
+      this.updatedoc=res;
+      this.upload(this.setRequestID,type);
+      })
+    }else{           
+    this.ReuploadForm.markAllAsTouched();
+    }    
+  } 
   enable(){ 
     if(this.airticket.value==null||this.airticket.value==false){  
       this.airticketstatus=0;     
@@ -1148,9 +1198,9 @@ export class LeavemanagementComponent implements OnInit {
     this.requestForm.controls['NoofDaysControl'].setValue(this.dateDiff); 
   }
 
-  download_documents(){
-    let fileurl=this.apicall.DownloadLeaveDocuments(this.activereqid);
-    let link = document.createElement("a");
+  download_documents(){ 
+    let fileurl=this.apicall.DownloadLeaveDocuments(this.activereqid);    
+    let link = document.createElement("a");   
       
        if (link.download !== undefined) {
           link.setAttribute("href", fileurl);
@@ -1899,9 +1949,19 @@ return Math.min(end, filteredData.length);
 
   // on load the request button click
   CompoffRequestLoad(){
-    this.apicall.compoffdate(this.empcode).subscribe((res)=>{
-      this.listCompoffDates=res;
-    })
+    this.apicall.CheckforAuthorities(this.empcode,'F').subscribe((res)=>{
+      //alert(JSON.stringify(res));
+      if(res[0].Errorid==0){        
+        (<HTMLInputElement>document.getElementById("openModalButton")).click();
+        this.showModal = 2; 
+        this.failed='No approver assigned.Please contact HR!'; 
+      }else{
+        (<HTMLInputElement>document.getElementById("AddCompoffRequestModalButton")).click();
+        this.apicall.compoffdate(this.empcode).subscribe((res)=>{
+        this.listCompoffDates=res;
+     })
+      }
+    });
   }
 
   // Add compoff request
@@ -2094,6 +2154,14 @@ return Math.min(end, filteredData.length);
   }
 
   BusinessTriponLoad(){
+    this.apicall.CheckforAuthorities(this.empcode,'P').subscribe((res)=>{
+      //alert(JSON.stringify(res));
+      if(res[0].Errorid==0){        
+        (<HTMLInputElement>document.getElementById("openModalButton")).click();
+        this.showModal = 2; 
+        this.failed='No approver assigned.Please contact HR!'; 
+      }else{
+        (<HTMLInputElement>document.getElementById("AddPermissionRequestModalButton")).click();
       //list leave session
       this.apicall.listStatus(this.session_typeid).subscribe((res) => {
         this.sessiondata=res;     
@@ -2102,6 +2170,8 @@ return Math.min(end, filteredData.length);
       this.apicall.displayGeneralData(this.company,this.value_type).subscribe((res) => {
         this.permissionlimit=res[0].DATA_VALUE;
       });
+    }
+  });
   }
 
   onsessionSelected(value:string){

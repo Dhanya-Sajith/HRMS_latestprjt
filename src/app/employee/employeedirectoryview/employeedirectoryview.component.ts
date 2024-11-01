@@ -16,12 +16,17 @@ import { formatDate } from '@angular/common';
 export class EmployeedirectoryviewComponent implements OnInit {
 
   userSession:any = this.session.getUserSession();
-  empcd = localStorage.getItem('employee_code');
+  empcd:any = localStorage.getItem('employee_code');
   grpname:any=this.userSession.grpname;  
+  comcode:any=this.userSession.companycode;
   fetchempviewdirectoylist: any;
   hostname:any;
   photo:any;
+  ename:any;
+  chartUrl: any;
   urlval: any;
+  currdate: any;
+  
   constructor(private router: ActivatedRoute,private session:LoginService,private apicall:ApiCallService,private route:Router,private fb: FormBuilder,private datePipe: DatePipe) { }
 
   ngOnInit(): void {
@@ -39,7 +44,34 @@ export class EmployeedirectoryviewComponent implements OnInit {
 
   this.fetchemployeedirView(this.empcd);
 
+  this.apicall.GetCurrentDate(this.comcode).subscribe((res)=>{
+    this.currdate=res[0].WORK_DATE;
+  
+       });
 
+
+  }
+  viewChart()
+  {
+    var port=window.location.port;
+if(port!='')
+{
+  var hostname = window.location.hostname+':'+window.location.port;
+}
+else{
+  var hostname = window.location.hostname;
+}
+localStorage.setItem("chrt_empcode",this.empcd);
+localStorage.setItem("chrt_company",'MJ');
+localStorage.setItem("chrt_ecount",'0');
+localStorage.setItem("chrt_dd",this.currdate);
+localStorage.setItem("chrt_ename",this.ename);
+localStorage.setItem("chrt_viewtp",'0');
+localStorage.setItem('chart_api',this.apicall.dotnetapi);
+localStorage.setItem("emprole",this.grpname);
+this.chartUrl=new URL('http://'+hostname+'/assets/organizationChart.html');
+window.location.href = this.chartUrl;
+       
   }
 
   fetchemployeedirView(empcd:any)
@@ -48,6 +80,7 @@ export class EmployeedirectoryviewComponent implements OnInit {
     this.apicall.fetchempviewdirectoylist(empcd).subscribe((res)=>{
     this.fetchempviewdirectoylist=res;
     this.photo=res[0].PHOTO_PATH;
+    this.ename=res[0].EMP_NAME;
    // alert(this.photo);
     const parts = this.photo.split('/');
     //alert(parts[6]);

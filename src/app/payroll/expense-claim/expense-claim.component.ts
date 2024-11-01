@@ -189,16 +189,24 @@ ListCompany()
   }
   ListExpenseCategory()
   {
-    this.apicall.listExpenseCategory(this.expensetypeid).subscribe((res)=>{
-      this.listexpense=res;
+    this.apicall.CheckforAuthorities(this.empcode,'E').subscribe((res)=>{
+      //alert(JSON.stringify(res));
+      if(res[0].Errorid==0){        
+        (<HTMLInputElement>document.getElementById("openModalButton")).click();
+        this.showModal = 2; 
+        this.failed='No approver assigned.Please contact HR!'; 
+      }else{
+        (<HTMLInputElement>document.getElementById("AddRequestModalButton")).click();
+        this.apicall.listExpenseCategory(this.expensetypeid).subscribe((res)=>{
+        this.listexpense=res;
       })
+      this.apicall.listCurrency().subscribe((res)=>{
+        this.listcurrency=res;
+        })
+      }
+    });
   }
-  ListcurrencyData()
-  {
-    this.apicall.listCurrency().subscribe((res)=>{
-      this.listcurrency=res;
-      })
-    }
+ 
     validateForm() {
       if (this.requestForm.valid){
       this.isFormValid = true;
@@ -744,7 +752,7 @@ ReuploadDoc()
     docpath:doc?.value,
     req_id:this.setRequestID,    
   };
-    this.apicall.updateExpenseClaimDoc(datavalue).subscribe((res)=>{
+    this.apicall.UpdateDocPathOnReupload(datavalue,'E').subscribe((res)=>{
     this.updatedoc=res;
     this.Reupload(this.setRequestID)
     })

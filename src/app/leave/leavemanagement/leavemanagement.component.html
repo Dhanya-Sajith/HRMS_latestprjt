@@ -74,7 +74,7 @@
                                     <div class="card-body p1-10">
                                         <div class="d-flex align-items-center">
                                             <div class="flex-grow-1 overflow-hidden">
-                                                <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold text-center">compo off</p>
+                                                <p class="text-uppercase fw-medium text-truncate mb-0 font-type fw-semibold text-center">comp off</p>
                                                 <h4 class="text-blue fs-20 mb-0 font-type text-center">{{COMPOFF}}</h4>
                                             </div>
                                         </div>
@@ -336,7 +336,7 @@
                                                       
                                                         <td id="td-ViewDocModal">
                                                             <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Document" [hidden]="LeaveRequestList.DOCUMENT ==''">
-                                                                <a href="#ViewDocModal" data-bs-toggle="modal" class="bar-text d-inline-block edit-item-btn" (click)="ActivereqID(LeaveRequestList.REQ_ID)">
+                                                                <a href="#ViewDocModal" data-bs-toggle="modal" class="bar-text d-inline-block edit-item-btn" (click)="ActivereqID(LeaveRequestList)">
                                                                 View <i class="ri-eye-line"></i>
                                                                 </a>
                                                             </li>
@@ -723,7 +723,7 @@
                                                             <h4 class="text-blue fs-20 mb-0 font-type text-center">{{LEAVE}}</h4>
                                                         </div>
                                                         <div class="flex-shrink-0">
-                                                            <button class="btn btn-blue text-muted btn-sm fs-12" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:25px;"  title="Add Request"  data-bs-toggle="modal" id="create-btn" data-bs-target="#AddLeaveRequestModal" (click)="LeaveRequestLoad()">
+                                                            <button class="btn btn-blue text-muted btn-sm fs-12" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:25px;"  title="Add Request"   id="create-btn"  (click)="LeaveRequestLoad()">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15"><path d="M11 11V7H13V11H17V13H13V17H11V13H7V11H11ZM12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" fill="rgba(255,255,255,1)"></path></svg>
                                                             </button>
                                                         </div>
@@ -740,11 +740,11 @@
                                                 <div class="card-body p1-10">
                                                     <div class="d-flex align-items-center">
                                                         <div class="flex-grow-1 overflow-hidden">
-                                                            <p class="text-uppercase fw-medium text-truncate mb-1 font-type fw-semibold text-center">Compo Off</p>
+                                                            <p class="text-uppercase fw-medium text-truncate mb-1 font-type fw-semibold text-center">Comp Off</p>
                                                             <h4 class="text-blue fs-20 mb-0 font-type text-center">{{COMPOFF}}</h4>
                                                         </div>
                                                         <div class="flex-shrink-0">
-                                                            <button class="btn btn-blue text-muted btn-sm fs-12" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:25px;"  title="Add Request" data-bs-toggle="modal" id="create-btn" data-bs-target="#AddCompoffRequestModal" (click)="CompoffRequestLoad()">
+                                                            <button class="btn btn-blue text-muted btn-sm fs-12" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:25px;"  title="Add Request" data-bs-toggle="modal" id="create-btn"  (click)="CompoffRequestLoad()">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15"><path d="M11 11V7H13V11H17V13H13V17H11V13H7V11H11ZM12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" fill="rgba(255,255,255,1)"></path></svg>
                                                             </button>
                                                         </div>
@@ -785,7 +785,7 @@
                                                             <h4 class="text-blue fs-20 mb-0 font-type text-center">{{PERMISSION}}</h4>
                                                         </div>
                                                         <div class="flex-shrink-0">
-                                                            <button class="btn btn-blue text-muted btn-sm fs-12" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:25px;"  title="Add Request" data-bs-toggle="modal" id="create-btn" data-bs-target="#AddPermissionRequestModal" (click)="BusinessTriponLoad()">
+                                                            <button class="btn btn-blue text-muted btn-sm fs-12" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:25px;"  title="Add Request" data-bs-toggle="modal" id="create-btn" (click)="BusinessTriponLoad()">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15"><path d="M11 11V7H13V11H17V13H13V17H11V13H7V11H11ZM12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" fill="rgba(255,255,255,1)"></path></svg>
                                                             </button>
                                                         </div>
@@ -928,8 +928,11 @@
                                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel" >
                                                                <button type="button" data-bs-toggle="modal" href="#CancelModal" class="btn btn-danger btn-sm" id="buttoncancel" [disabled]="LeaveReqListEmp.STATUS_VAL!='Pending for Approval'" (click)="setSelectedRequestID(LeaveReqListEmp.REQ_ID,LeaveReqListEmp.EMP_CODE)"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
                                                             </li>
+                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reupload">
+                                                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonApprove" href="#UploadModal" (click)="SetSelectedReqId(LeaveReqListEmp.REQ_ID)" [disabled]="LeaveReqListEmp.STATUS_VAL!='Pending for Approval'" ><i class="fa fas fa-upload fs-16"></i></button>
+                                                             </li>
                                                             <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Document" [hidden]="LeaveReqListEmp.AIRTICKET ==''">
-                                                                <a href="#AirDocModal" data-bs-toggle="modal" class="bar-text d-inline-block edit-item-btn" (click)="ActivereqID(LeaveReqListEmp.REQ_ID)">
+                                                                <a href="#AirDocModal" data-bs-toggle="modal" class="bar-text d-inline-block edit-item-btn" (click)="ActivereqID(LeaveReqListEmp)">
                                                                 View <i class="ri-eye-line"></i>
                                                                 </a>
                                                             </li>
@@ -1454,7 +1457,7 @@
                                 </div>
                             </div>
                             <!-- End Reason Model-->
-
+                            <button id="AddLeaveRequestModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#AddLeaveRequestModal">Open Modal</button> 
                             <!--Add Request Model-->
                             <div class="modal fade" id="AddLeaveRequestModal" tabindex="-1" aria-labelledby="AddLeaveRequestModal" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -1644,6 +1647,46 @@
                                 </div>
                             </div>                
                             <!--End Add Request Model-->
+                             <!--start Upload Model-->     
+     <div class="modal fade" id="UploadModal" tabindex="-1" aria-labelledby="UploadModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">           
+            <div class="modal-content">
+                <form class="tablelist-form" autocomplete="off" [formGroup]="ReuploadForm" (ngSubmit)="ReuploadDoc(3)">
+                <div class="modal-header bg-orange padding-up-5">
+                    <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" ></button>
+                </div>                             
+                    <div class="modal-body">
+                        <input type="hidden" id="id-field" />
+                        
+                        <div class="row">
+                            
+                            <div class="col-lg-12">
+                                <div class="mb-2">
+                                <h3 class="font-type fs-12 fw-semibold"><span>Upload Document</span></h3>
+                                <input class="form-control font-type fs-12 " type="file" id="DocControl" formControlName="DocControl">          
+                                <div *ngIf="ReuploadForm.get('DocControl')!.hasError('required') && ReuploadForm.get('DocControl')!.touched" class="text-danger">
+                                    Please upload the Document!
+                                </div>  
+                                </div>
+                            </div>
+                        </div>                                       
+                        
+                    <div class="modal-footer" style="margin-left: 446px;">                   
+                    
+                        <div class="hstack gap-2" >
+                            <button type="submit" class="btn btn-soft-success" id="add-btn">Upload</button>
+                        </div>
+                    </div>
+                    </div>
+                
+
+                </form>  
+            </div>
+       
+        </div> 
+    </div>   
+    <!--End Upload Model-->
+                            <button id="AddCompoffRequestModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#AddCompoffRequestModal">Open Modal</button> 
                             <!--Add Compoff Request Modal Start-->
                             <div class="modal fade" id="AddCompoffRequestModal" tabindex="-1" aria-labelledby="AddCompoffRequestModal" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -1750,6 +1793,7 @@
                             </div>
                         </div>                
                         <!--Add Business trip Request Model end-->
+                        <button id="AddPermissionRequestModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#AddPermissionRequestModal">Open Modal</button> 
                         <!--Add Permission Request Model-->
                         <div class="modal fade" id="AddPermissionRequestModal" tabindex="-1" aria-labelledby="AddPermissionRequestModal" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">

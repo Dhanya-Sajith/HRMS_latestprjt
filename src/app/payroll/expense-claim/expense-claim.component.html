@@ -246,7 +246,7 @@
                                     
                                     <div class="col-lg-3">
                                         <div class="pt-4">    
-                                            <button type="button" class="btn btn-orange font-type fs-12 add-button text-white" data-bs-toggle="modal" id="create-btn" data-bs-target="#AddRequestModal" (click)="ListExpenseCategory();ListcurrencyData()"><span>Add Requests</span></button>
+                                            <button type="button" class="btn btn-orange font-type fs-12 add-button text-white"  id="create-btn"  (click)="ListExpenseCategory();"><span>Add Requests</span></button>
                                         </div>
                                     </div>
                                     </div>
@@ -485,7 +485,8 @@
             </div>
         </div> 
     </div>   
-    <!--End Upload Model--> 
+    <!--End Upload Model-->
+    <button id="AddRequestModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#AddRequestModal">Open Modal</button>  
                     <!--Add Request Model-->
                     <div class="modal fade" id="AddRequestModal" tabindex="-1" aria-labelledby="AddRequestModal" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">

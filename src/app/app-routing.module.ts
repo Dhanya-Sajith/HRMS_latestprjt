@@ -153,7 +153,7 @@ import { TrainingExpiryReportComponent } from './reports/training-expiry-report/
 import { RecruitmentReportComponent } from './reports/recruitment-report/recruitment-report.component';
 import { BiometricNewComponent } from './attendance/biometric-new/biometric-new.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
-
+import { FileuploadingNewComponent } from './attendance/fileuploadingnew/fileuploadingnew.component';
 
 
 const routes: Routes = [
@@ -315,7 +315,7 @@ const routes: Routes = [
   {path:'recruitment-report',component:RecruitmentReportComponent},
   {path:'biometricNew',component:BiometricNewComponent},
   {path:'Analytics',component:AnalyticsComponent},
-
+  {path:'fileuploadingNew',component:FileuploadingNewComponent},
 
   
 

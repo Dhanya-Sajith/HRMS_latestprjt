@@ -170,6 +170,8 @@ import { BiometricNewComponent } from './attendance/biometric-new/biometric-new.
 import { AnalyticsComponent } from './analytics/analytics.component';
 import { NgxGaugeModule } from 'ngx-gauge';
 import { Chart, registerables } from 'chart.js';
+import { FileuploadingNewComponent } from './attendance/fileuploadingnew/fileuploadingnew.component';
+//import { FileuploadingnewComponent } from './attendance/fileuploadingnew/fileuploadingnew.component';
 
 Chart.register(...registerables);
 
@@ -339,6 +341,7 @@ Chart.register(...registerables);
     RecruitmentReportComponent,
     BiometricNewComponent,
     AnalyticsComponent,
+    FileuploadingNewComponent
 
   
     

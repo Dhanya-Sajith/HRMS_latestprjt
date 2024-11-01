@@ -20,6 +20,7 @@ export class EmployeeprofileviewComponent implements OnInit {
   empcd = localStorage.getItem('employee_code');
   roleid:any =this.userSession.level;
   grade:any =this.userSession.gradeid;
+  comcode:any=this.userSession.companycode;
   hostname:any;
   nomineelist: any;
   assetlist: any;
@@ -38,7 +39,7 @@ export class EmployeeprofileviewComponent implements OnInit {
   listvalues: any;
   latest: any;
   empcodes: any;
-
+ename:any;
   gradeids:any;
   desig:any=this.userSession.desig.split('#', 2); 
   designame:any= this.desig[0];  
@@ -48,7 +49,8 @@ export class EmployeeprofileviewComponent implements OnInit {
   famlist: any;
   famsts: any;
   gradevw: any;
-
+chartUrl:any;
+  currdate: any;
 
   constructor(private router: ActivatedRoute,private route: Router,private session:LoginService,private apicall:ApiCallService,private datePipe:DatePipe) {
 
@@ -58,7 +60,7 @@ export class EmployeeprofileviewComponent implements OnInit {
   ngOnInit(): void {
 
   // alert(this.empcd);
-  // alert(this.designame);
+  // alert(this.roleid);
 
   //this.fetchbasicdetails(this.empcd);
 
@@ -106,6 +108,11 @@ export class EmployeeprofileviewComponent implements OnInit {
     this.LanuageDetails();
     this.EducationDetails();
     this.fetchbasicdetails();
+
+    this.apicall.GetCurrentDate(this.comcode).subscribe((res)=>{
+      this.currdate=res[0].WORK_DATE;
+    
+         });
 
     
   }
@@ -264,7 +271,7 @@ export class EmployeeprofileviewComponent implements OnInit {
   this.apicall.EmployeeProfileBasicdetails(this.empcodes).subscribe((res)=>{
   this.dispbasicdet=res;
   this.gradeids=this.dispbasicdet[0].GRADE_ID;
-
+  this.ename=res[0].EMP_NAME;
   //alert(this.gradeids);
 
   })
@@ -285,6 +292,30 @@ export class EmployeeprofileviewComponent implements OnInit {
    localStorage.setItem('empl_code', code);
    localStorage.setItem('myprof', 'frommyprofile');
 
+  }
+  viewChart()
+  {
+    var port=window.location.port;
+if(port!='')
+{
+  var hostname = window.location.hostname+':'+window.location.port;
+}
+else{
+  var hostname = window.location.hostname;
+}
+
+
+localStorage.setItem("chrt_empcode",this.empcodes);
+localStorage.setItem("chrt_company",'MJ');
+localStorage.setItem("chrt_ecount",'0');
+localStorage.setItem("chrt_dd",this.currdate);
+localStorage.setItem("chrt_ename",this.ename);
+localStorage.setItem("chrt_viewtp",'0');
+localStorage.setItem('chart_api',this.apicall.dotnetapi);
+localStorage.setItem("emprole",this.grpname);
+this.chartUrl=new URL('http://'+hostname+'/assets/organizationChart.html');
+window.location.href = this.chartUrl;
+       
   }
 
   ViewFiles(fpath:any,doctype:any,upflag:any)

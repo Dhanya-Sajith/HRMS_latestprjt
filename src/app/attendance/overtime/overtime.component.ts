@@ -95,6 +95,9 @@ export class OvertimeComponent implements OnInit {
   desiredPagePersonal: any;
   currentPagePersonal=1;
   searchInput: any='';
+  failedMsg: string='';
+  effectivedt: any;
+  vailddate: any;
 
   constructor(private apicall:ApiCallService,private session:LoginService,private datepipe:DatePipe,private fb:FormBuilder,private router:Router,private route: ActivatedRoute,private cdr: ChangeDetectorRef) {}
 
@@ -104,7 +107,7 @@ export class OvertimeComponent implements OnInit {
     .subscribe(params => {
       this.user = params['user']; 
     }
-  );
+   );
 
   this.listFromToDates();
 
@@ -119,6 +122,18 @@ export class OvertimeComponent implements OnInit {
   }else{
     this.user = 'team';
   }
+
+   //payroll date validation
+   this.apicall.Fetch_EffectiveDate_SalRevision(this.empcode).subscribe(res =>{
+    const fromDate = new Date(res.FROM_DATE);
+    const prevMonthLastDate = new Date(fromDate.getFullYear(), fromDate.getMonth(), 0);  
+    const formattedDate = this.datepipe.transform(prevMonthLastDate, 'yyyy-MM-dd') + 'T00:00:00';
+    this.vailddate = formattedDate;
+    this.week = parseInt(this.datepipe.transform(prevMonthLastDate, 'w') || '0', 10); 
+    this.year=this.datepipe.transform(prevMonthLastDate, 'Y');
+    // this.week = (this.week - 1);
+    this.effectivedt = `${this.year}-W${this.week}`;
+  })
   
   this.GetCompanyData(); 
   this.apicall.FetchDepartmentList(-1,this.empcode).subscribe(res =>{
@@ -137,6 +152,15 @@ export class OvertimeComponent implements OnInit {
   this.year=this.datepipe.transform(new Date(), 'Y');
   this.weekdays = this.getDateOfWeek(this.week, this.year);
   this.fetchotweeklylist();
+  this.apicall.CheckforAuthorities(this.empcode,'O').subscribe((res)=>{
+    //alert(JSON.stringify(res));
+    if(res[0].Errorid==0){  
+     
+      this.failedMsg='You cannot submit a request at this time because no approver is assigned. Please reach out to HR for assistance!'; 
+    }else{
+      this.failedMsg='';
+    }
+  });
   } 
  
   GetCompanyData(){ 

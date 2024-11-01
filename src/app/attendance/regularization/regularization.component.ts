@@ -99,6 +99,8 @@ export class RegularizationComponent implements OnInit  {
 
   NewInTime = new FormControl();
   NewOuTTime= new FormControl();
+  effectivedt: any;
+  errorMessage: any = null;
 
 
   constructor(private fb: FormBuilder,private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private router:Router,private route: ActivatedRoute) {
@@ -140,6 +142,15 @@ export class RegularizationComponent implements OnInit  {
   {
       // alert(selectedlogindate);
       const NewloginDate=this.datePipe.transform(selectedlogindate,"yyyy-MM-dd");
+      if(NewloginDate){
+        if(NewloginDate > this.effectivedt)
+        {
+          this.inDate.setErrors({ match: true });
+          this.errorMessage = "Payroll processing for this date has already been completed.";
+        } else {
+          this.inDate.setErrors(null);
+          this.errorMessage = null;
+        }
       this.apicall.RegLoginTimeData(this.userSession.empcode,NewloginDate).subscribe((res) => {
       this.RegloginTime=res; 
       if (this.RegloginTime.length > 0) {
@@ -151,6 +162,10 @@ export class RegularizationComponent implements OnInit  {
 
       }
     });
+    } else {
+      this.errorMessage = "Invalid login date selected.";
+      this.inDate.setErrors({ match: true });
+    }
   }
 
 // add regularization request - personal
@@ -736,7 +751,10 @@ else {
       };
     })
 
-
+    //payroll date validation
+    this.apicall.Fetch_EffectiveDate_SalRevision(this.empcode).subscribe(res =>{
+      this.effectivedt=this.datePipe.transform(res.FROM_DATE,"yyyy-MM-dd");
+    })
 
   }
 
