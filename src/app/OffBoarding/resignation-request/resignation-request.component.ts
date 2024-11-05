@@ -32,6 +32,7 @@ export class ResignationRequestComponent implements OnInit {
   isWithinTenDaysBefore!: boolean;
   assetid: any;
   EosProcessStatus: any;
+  failedMsg: string='';
 
   constructor(private apicall:ApiCallService,private session:LoginService,private formBuilder: FormBuilder) { 
     this.AddReqForm = this.formBuilder.group({      
@@ -41,6 +42,15 @@ export class ResignationRequestComponent implements OnInit {
   ngOnInit(): void {
     this.fetchRequests();
     this.fetchAccounts();
+    this.apicall.CheckforAuthorities(this.empcode,'G').subscribe((res)=>{
+      //alert(JSON.stringify(res));
+      if(res[0].Errorid==0){  
+        this.AddReqForm.disable();  
+        this.failedMsg='You cannot submit a request at this time because no approver is assigned. Please reach out to HR for assistance!'; 
+      }else{
+        this.failedMsg='';
+      }
+    });
     
   }
   fetchRequests(){

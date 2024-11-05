@@ -92,7 +92,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-auto" style="margin-top: 40px;">
-                                                        <a href="#" class="btn btn-orange btn-sm font-type fs-13 font-type text-white" data-bs-toggle="modal" id="AddRequestModalPersonal-btn" data-bs-target="#AddRequestModalPersonal"  (click)="clearreq_datas()"><i class="ri-file-add-line align-middle me-1"></i>New Request</a>
+                                                        <a href="#" class="btn btn-orange btn-sm font-type fs-13 font-type text-white"  id="AddRequestModalPersonal-btn"   (click)="clearreq_datas()"><i class="ri-file-add-line align-middle me-1"></i>New Request</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -532,7 +532,7 @@
                     <!-- End Page-content -->
     
                     <!--PERSONAL MODEL BOXES-->
-    
+                    <button id="AddRequestModalPersonalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#AddRequestModalPersonal">Open Modal</button> 
                      <!--Add Business Request Model-->
                      <div class="modal fade zoomIn " id="AddRequestModalPersonal" tabindex="-1" aria-labelledby="AddRequestModalPersonal" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -1226,12 +1226,16 @@
                                                         <div class="row mb-3">
                                                             <div class="col-lg-2 pt-2">  
                                                                 <h6 class="font-type fs-12 fw-semibold text-info"><span>Employee</span></h6>
-                                                                <select class="form-select font-type fs-12 textbox-15 mb-1" id="emp_code" name="emp_code"  formControlName="emp_code">
-                                                                    <option value="-1">Select</option>
+                                                                <select class="form-select font-type fs-12 textbox-15 mb-1" id="emp_code" name="emp_code"  formControlName="emp_code"(change)="AthorityCheck();">
+                                                                    <option value="" selected disabled>Select</option>
                                                                     <option  *ngFor="let EmployeeListrep of listEmployeerep" value="{{EmployeeListrep.EMP_CODE}}" >
                                                                     {{EmployeeListrep.EMP_NAME}}
                                                                     </option>
-                                                                </select>                
+                                                                </select>    
+                                                                <div *ngIf="failedMsg" class="err font-type"><i>{{ failedMsg }}</i></div> 
+                                                                <div class="err font-type" *ngIf="submitted && a['emp_code'].errors">
+                                                                    <div *ngIf="a['emp_code'].errors['required']"><i>Employee is required</i></div>
+                                                                </div>               
                                                             </div>
                                                             <div class="col-lg-2 pt-2">
                                                                 <h6 class="font-type fs-12 fw-semibold text-info"><span>Trip Start Date </span></h6>
@@ -1472,7 +1476,7 @@
                                                     </div>
                                                 <div class="col-lg-12">
                                                     <div class="hstack gap-2 justify-content-end ma-10">
-                                                    <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" (click)="SelfBussTripSubmit()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Save</button>
+                                                    <button type="submit" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type" (click)="SelfBussTripSubmit()"[disabled]="failedMsg" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Save</button>
                                                     <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type " (click)="clearfn()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
                                                     </div>
                                                 </div>

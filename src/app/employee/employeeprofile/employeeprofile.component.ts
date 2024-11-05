@@ -824,6 +824,8 @@ export class EmployeeprofileComponent implements OnInit {
   
   displayempcode(company_id:any)
   {
+
+   // alert(company_id)
     this.apicall.employeecodedisplay(company_id).subscribe((res)=>{
       this.employeecodedisp=res;
 

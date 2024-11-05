@@ -343,7 +343,8 @@
                                                                 <td><a href="#DetailedDescriptionModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-12" style="text-decoration: underline;" (click)="viewremarks(applicantsdata.REMARKS)">View Details</a></td>
                                                                 <td>{{applicantsdata.ENTER_DATE | date:"dd-MM-yyyy"}}</td>
                                                                 <td>{{applicantsdata.SOURCE_TYPE}}</td>
-                                                                <td><button type="button" class="btn bg-info-subtle" (click)="download_documents(applicantsdata.CANDIDATE_ID)"><i class="ri-file-pdf-fill fs-16 text-blue"></i></button></td>                                                     
+                                                                <td><button type="button" class="btn bg-info-subtle" (click)="download_documents(applicantsdata.CANDIDATE_ID)"><i class="ri-file-pdf-fill fs-16 text-blue"></i></button>                                                                   
+                                                                </td>                                                     
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -746,7 +747,45 @@
                             </div>
                         </div>
                         <!-- End Detailed Description  Modal--> 
+  <!--start Upload Model-->     
+  <div class="modal fade" id="UploadModal" tabindex="-1" aria-labelledby="UploadModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">           
+        <div class="modal-content">
+            <form class="tablelist-form" autocomplete="off" [formGroup]="ReuploadForm" (ngSubmit)="ReuploadDoc()">
+            <div class="modal-header bg-orange padding-up-5">
+                <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" ></button>
+            </div>                             
+                <div class="modal-body">
+                    <input type="hidden" id="id-field" />
+                    
+                    <div class="row">
+                        
+                        <div class="col-lg-12">
+                            <div class="mb-2">
+                            <h3 class="font-type fs-12 fw-semibold"><span>Upload Document</span></h3>
+                            <input class="form-control font-type fs-12 " type="file" id="DocContol" formControlName="DocControl">          
+                            <div *ngIf="ReuploadForm.get('DocControl')!.hasError('required') && ReuploadForm.get('DocControl')!.touched" class="text-danger">
+                                Please upload the Document!
+                            </div>  
+                            </div>
+                        </div>
+                    </div>                                       
+                    
+                <div class="modal-footer" style="margin-left: 446px;">                   
+                
+                    <div class="hstack gap-2" >
+                        <button type="submit" class="btn btn-soft-success" id="add-btn">Upload</button>
+                    </div>
+                </div>
+                </div>
+            
 
+            </form>  
+        </div>
+   
+    </div> 
+</div>   
+<!--End Upload Model-->
 
                         <!-- Status Modal-->
                         <div class="modal fade zoomIn" id="statusModal" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true">
@@ -1012,7 +1051,12 @@
                                                         <td style="white-space: pre-wrap;">{{candata.CANDIDATE_NAME}}</td>
                                                         <td style="white-space: pre-wrap;">{{candata.INTERVIEWERS}}</td>
                                                         <td>{{candata.SOURCE_TYPE}}</td>
-                                                        <td><button type="button" class="btn bg-info-subtle" (click)="download_documents_cand(candata.CANDIDATE_ID)"><i class="ri-file-pdf-fill fs-14 text-blue"></i></button></td>
+                                                        <td><button type="button" class="btn bg-info-subtle me-2" (click)="download_documents_cand(candata.CANDIDATE_ID)"><i class="ri-file-pdf-fill fs-14 text-blue"></i></button>                                                           
+                                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reupload">
+                                                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonApprove" href="#UploadModal" (click)="SetSelectedReqId(candata.CANDIDATE_ID)" ><i class="fa fas fa-upload fs-16"></i></button>
+                                                             </li>
+                                                           
+                                                        </td>
                                                         <td>
                                                             <ul class="list-inline hstack gap-1 mb-0" *ngIf="candata.STATUS == 0">
                                                                 <li class="list-inline-item text-danger d-inline-block remove-item-btn" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove" (click)="DeleteCand(candata.REQID,candata.CANDIDATE_ID)">

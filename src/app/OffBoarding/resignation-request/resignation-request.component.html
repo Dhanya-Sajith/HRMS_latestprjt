@@ -51,6 +51,7 @@
                 <div class="card topbar-up shadow-lg">
                     <div class="card-body">
                     <div class="border border-dashed rounded p-3 pa-0 mb-2">
+                        <div *ngIf="failedMsg" class="alert alert-danger mt-2">{{ failedMsg }}</div>
                         <form action="" [formGroup]="AddReqForm">
                         <div class="row">
                             <div class="col-md-12 col-lg-12"[class.has-error]="AddReqForm.get('reason')?.invalid && AddReqForm.get('reason')?.touched">

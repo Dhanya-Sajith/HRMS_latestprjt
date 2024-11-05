@@ -99,8 +99,6 @@ export class RegularizationComponent implements OnInit  {
 
   NewInTime = new FormControl();
   NewOuTTime= new FormControl();
-  effectivedt: any;
-  errorMessage: any = null;
 
 
   constructor(private fb: FormBuilder,private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private router:Router,private route: ActivatedRoute) {
@@ -123,7 +121,18 @@ export class RegularizationComponent implements OnInit  {
     this.listDepartment=res;
     })
   }
-
+  AuthorityCheck(){
+    this.apicall.CheckforAuthorities(this.empcode,'R').subscribe((res)=>{
+      //alert(JSON.stringify(res));
+      if(res[0].Errorid==0){        
+        (<HTMLInputElement>document.getElementById("openModalButton")).click();
+        this.showModal = 2; 
+        this.failed='No approver assigned.Please contact HR!'; 
+      }else{
+        (<HTMLInputElement>document.getElementById("AddRequestModalButton")).click();      
+      }
+    });
+  }
 // employee based company and department - team
 
   ListEmpByComIdandDep()
@@ -142,15 +151,6 @@ export class RegularizationComponent implements OnInit  {
   {
       // alert(selectedlogindate);
       const NewloginDate=this.datePipe.transform(selectedlogindate,"yyyy-MM-dd");
-      if(NewloginDate){
-        if(NewloginDate > this.effectivedt)
-        {
-          this.inDate.setErrors({ match: true });
-          this.errorMessage = "Payroll processing for this date has already been completed.";
-        } else {
-          this.inDate.setErrors(null);
-          this.errorMessage = null;
-        }
       this.apicall.RegLoginTimeData(this.userSession.empcode,NewloginDate).subscribe((res) => {
       this.RegloginTime=res; 
       if (this.RegloginTime.length > 0) {
@@ -162,10 +162,6 @@ export class RegularizationComponent implements OnInit  {
 
       }
     });
-    } else {
-      this.errorMessage = "Invalid login date selected.";
-      this.inDate.setErrors({ match: true });
-    }
   }
 
 // add regularization request - personal
@@ -751,10 +747,7 @@ else {
       };
     })
 
-    //payroll date validation
-    this.apicall.Fetch_EffectiveDate_SalRevision(this.empcode).subscribe(res =>{
-      this.effectivedt=this.datePipe.transform(res.FROM_DATE,"yyyy-MM-dd");
-    })
+
 
   }
 

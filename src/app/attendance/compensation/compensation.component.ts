@@ -149,7 +149,18 @@ export class CompensationComponent implements OnInit {
     }  
     this.CompanyList();
   }
-  
+  AuthorityCheck(){
+    this.apicall.CheckforAuthorities(this.empcode,'C').subscribe((res)=>{
+      //alert(JSON.stringify(res));
+      if(res[0].Errorid==0){        
+        (<HTMLInputElement>document.getElementById("openModalButton")).click();
+        this.showModal = 2; 
+        this.failed='No approver assigned.Please contact HR!'; 
+      }else{
+        (<HTMLInputElement>document.getElementById("AddRequestModalButton")).click();      
+      }
+    });
+  }
   // Company List
   CompanyList(){
     this.apicall.FetchCompanyList(this.empcode).subscribe((res)=>{

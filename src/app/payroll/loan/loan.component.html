@@ -240,6 +240,7 @@
                                         <div class="row g-3"> 
                                             
                                            <div class="col-lg-12">
+                                            <div *ngIf="failedMsg" class="alert alert-danger mt-2">{{ failedMsg }}</div>
                                             <form autocomplete="off"  [formGroup]="requestForm" (ngSubmit)="validateForm()"> 
                                                 <div class="card ribbon-box border shadow-none mb-lg-3">
                                                     <div class="card-body">

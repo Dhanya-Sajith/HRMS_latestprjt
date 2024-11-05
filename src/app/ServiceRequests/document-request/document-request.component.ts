@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ApiCallService } from 'src/app/api-call.service';
 import { LoginService } from 'src/app/login.service';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/general.service';
-import { filter } from 'rxjs/operators'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-document-request',
@@ -13,7 +13,7 @@ import { filter } from 'rxjs/operators'
 })
 export class DocumentRequestComponent implements OnInit { 
 
-  
+  ReuploadForm: FormGroup;
   userSession:any = this.session.getUserSession();
   empcode: any=this.userSession.empcode;
   level: any=this.userSession.level;
@@ -58,8 +58,15 @@ export class DocumentRequestComponent implements OnInit {
   address: any;
   validationremarksAdd: any;
   Status: any;
+  setRequestID: any;
+  flag: any=0;
+  updatedoc: any; 
 
-  constructor(private apicall:ApiCallService,private session:LoginService,private datepipe:DatePipe,private route: ActivatedRoute,private general:GeneralService,private router:Router) { }
+  constructor(private apicall:ApiCallService,private session:LoginService,private datepipe:DatePipe,private route: ActivatedRoute,private general:GeneralService,private router:Router,private fb: FormBuilder) { 
+    this.ReuploadForm = this.fb.group({     
+      DocControl: ['', Validators.required],      
+    });
+  }
 
   ngOnInit(): void {  
 
@@ -212,7 +219,8 @@ export class DocumentRequestComponent implements OnInit {
     return styles;
   }
   
-  selecteditem(item:any){
+  selecteditem(item:any,flag:any){
+    this.flag=flag;
     this.item=item; 
     this.req_id=item.REQ_ID;
     this.Remarks=item.REMARKS; 
@@ -279,17 +287,12 @@ export class DocumentRequestComponent implements OnInit {
         this.filter();
       });
   }
-  Approve(item:any){
-    if(!this.doc){
-      (<HTMLInputElement>document.getElementById("openModalButton")).click();
-      this.showModal = 2;
-      this.Failed = "Please select a document!";
-    }
-    else{
+  Approve(item:any){   
+  if (this.ReuploadForm.valid){       
    const data={
     empcode:item.EMP_CODE,
     verified_by:this.empcode,
-    docpath:this.doc,
+    docpath:this.ReuploadForm.get('DocControl')?.value,
     req_id:item.REQ_ID,
     reason:'Approved',
     mflag:1  
@@ -307,15 +310,18 @@ export class DocumentRequestComponent implements OnInit {
         this.showModal = 2;
         this.Failed = "Failed!";
       }    
-      this.doc='';    
+      this.ReuploadForm.reset();    
       this.filter();
     });
+  
+  }else{
+    this.ReuploadForm.markAllAsTouched();
   }
   }
   filter(){
     this.apicall.FetchDocumentRequests_Team(this.empcode,this.selectedStatus,this.selectedCompany,this.desigid).subscribe((res)=>{
       this.docreqTeam=res;  
-      //alert(JSON.stringify(this.docreqTeam))
+     //alert(JSON.stringify(this.docreqTeam))
       const maxPageFiltered = Math.ceil(this.docreqTeam.length / this.itemsPerPage);  
 
       if (this.currentPage > maxPageFiltered) {
@@ -380,29 +386,52 @@ export class DocumentRequestComponent implements OnInit {
       }        
       this.filterPersonal();  
     });
-  }
-  upload(reqid:any)
-  {   
-       let input:any;
-       input=document.getElementById("formFile");
-       const fdata = new FormData();
-       this.onFileSelect(input,reqid);
-   }
-   onFileSelect(input:any,reqid:any) {    
+  }  
+   upload(reqid:any) {
+    let input:any;    
+    input=document.getElementById("formFile");
     if (input.files && input.files[0]) {      
      const fdata = new FormData();    
      fdata.append('filesup',input.files[0]);     
      this.apicall.DocumentRequestDocUpload(fdata,reqid).subscribe((res)=>{
-       const result=res;
-       if(res==0)
-       { 
-         this.showModal = 2;
-        this.Failed = "Document uploading failed";
-       }
+      if(res==0)
+        { 
+          (<HTMLInputElement>document.getElementById("openModalButton")).click();
+          this.showModal = 2;
+          this.Failed = "Document uploading failed";
+        }else{
+          (<HTMLInputElement>document.getElementById("openModalButton")).click();
+          this.showModal = 1;
+          this.success = "Document uploaded successfully!";          
+        }
+        this.ReuploadForm.reset();
+        this.filter();
      })
   
    }
   }
+  ReuploadDoc(item:any)
+  {
+    if((this.ReuploadForm.valid))
+    {
+     if(this.flag==2){  
+        
+    const doc = this.ReuploadForm.get('DocControl');
+    const datavalue = {
+      docpath:doc?.value,
+      req_id:item.REQ_ID,    
+    };
+      this.apicall.UpdateDocPathOnReupload(datavalue,'D').subscribe((res)=>{
+      this.updatedoc=res;
+      this.upload(item.REQ_ID);
+      })
+    }else if(this.flag==1) {       
+      this.Approve(item);
+    }
+    }else{           
+    this.ReuploadForm.markAllAsTouched();
+    }    
+  } 
     download_to_excel()
       {        
         let fileurl=`${this.apicall.dotnetapi}/File/GetDocumentRequestDocs/${this.item.REQ_ID}`;
@@ -419,7 +448,7 @@ export class DocumentRequestComponent implements OnInit {
     }  
   
     clearApproveModal(){
-      this.doc='';
+      this.ReuploadForm.reset();
     }
     clearRejectmodal(){
       this.reason='';   

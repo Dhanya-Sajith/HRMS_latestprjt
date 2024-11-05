@@ -81,6 +81,8 @@ export class BusinessTripRequestComponent implements OnInit {
   approvelist: any;
   reqID: any;
   listEmployeerep: any;
+  selectedempCode: any;
+  failedMsg: string='';
 
 
 constructor(private fb: FormBuilder,private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private router:Router,private route: ActivatedRoute) {
@@ -103,7 +105,7 @@ this.BussTripSelfForm = this.fb.group({
   cash_advance_status:new FormControl ('', [Validators.required]),
   advance_amount:new FormControl ('', [Validators.required]),
   currency:new FormControl ('', [Validators.required]),
-  emp_code:new FormControl (this.userSession.empcode),
+  emp_code:new FormControl ('', [Validators.required]),
   requested_by:new FormControl (this.userSession.empcode),
 
 });
@@ -277,8 +279,9 @@ fetchpersonaldata()
   }
 
   SelfBussTripSubmit() 
-  {
+  {    
     this.submitted=true;
+    
     if(this.BussTripSelfForm.invalid) 
     {  
         return;
@@ -318,6 +321,7 @@ fetchpersonaldata()
       }
       })
     }
+ 
   }
 
 
@@ -785,6 +789,14 @@ Reject(requestID:any,Empcode:any,Reason:string ){
     }
   clearreq_datas()
   {
+    this.apicall.CheckforAuthorities(this.empcode,'B').subscribe((res)=>{
+      //alert(JSON.stringify(res));
+      if(res[0].Errorid==0){        
+        (<HTMLInputElement>document.getElementById("openModalButtonForalert")).click();
+        this.showModal = 2; 
+        this.failed='No approver assigned.Please contact HR!'; 
+      }else{
+        (<HTMLInputElement>document.getElementById("AddRequestModalPersonalButton")).click();
     this.airtick='null';
     this.accommodation='null';
     this.certificate='null';
@@ -795,8 +807,24 @@ Reject(requestID:any,Empcode:any,Reason:string ){
     this.cashenable=0;   
     this.transportation='null';
     this.simcard='null';
+      }
+    });
   }
-
+  AthorityCheck(){
+    this.selectedempCode = this.BussTripSelfForm.get('emp_code')?.value;   
+    if(this.selectedempCode!=-1){
+      this.apicall.CheckforAuthorities(this.selectedempCode,'B').subscribe((res)=>{
+        //alert(JSON.stringify(res));
+        if(res[0].Errorid==0){          
+          this.failedMsg='No approver assigned.Please contact HR!'; 
+         
+        }else{
+          this.failedMsg=''; 
+        }
+      });
+    }
+   
+  }
 
 
   //Pagination

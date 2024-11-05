@@ -2,3 +2,9 @@
 {
     color: red;
 }
+button:disabled {
+    background-color: rgb(246, 186, 83);
+    color: white;
+    cursor: not-allowed;
+  }
+  

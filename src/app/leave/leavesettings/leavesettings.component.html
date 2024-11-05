@@ -229,15 +229,18 @@
                                                                             <td hidden>{{Employeeleave.LEAVE_TYPE}}</td>
                                                                             <td>
                                                                                 <ng-container *ngIf="Employeeleave.isEditing">
-                                                                                   <ng-container *ngIf="this.company_code == 'MH'">
-                                                                                    <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 18px;" data-bs-toggle="modal" data-bs-target="#YearlyLeaveHAFZAModal" [hidden]="!Employeeleave.isEditing"  [hidden]="Employeeleave.isYearlyclicked" (click)="FetchYearlyDays(Employeeleave)"></i>
-                                                                                    
-                                                                                    <input type="number" value="Employeeleave.yearlyleave"  [(ngModel)]="Employeeleave.yearlyleave" [hidden]="!Employeeleave.isYearlyclicked" readonly/>                                                    
+                                                                                   <ng-container *ngIf="this.company_code == 'MH' && Employeeleave.FLAG == 0">
+                                                                                        <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 18px;" data-bs-toggle="modal" data-bs-target="#YearlyLeaveHAFZAModal" [hidden]="!Employeeleave.isEditing"  [hidden]="Employeeleave.isYearlyclicked" (click)="FetchYearlyDays(Employeeleave)"></i>
+                                                                                        
+                                                                                        <input type="number" value="Employeeleave.yearlyleave"  [(ngModel)]="Employeeleave.yearlyleave" [hidden]="!Employeeleave.isYearlyclicked" readonly/>                                                    
                                                                                    </ng-container>
-                                                                                 </ng-container>
-                                                                                 <ng-container *ngIf="!Employeeleave.isEditing || this.company_code != 'MH'">
-                                                                                   {{Employeeleave.YEARLY_LEAVE}}
-                                                                                 </ng-container>
+                                                                                   <ng-container *ngIf="this.company_code == 'MH' && Employeeleave.FLAG == 1">
+                                                                                         {{Employeeleave.YEARLY_LEAVE}}
+                                                                                   </ng-container>
+                                                                                </ng-container>
+                                                                                <ng-container *ngIf="!Employeeleave.isEditing || this.company_code != 'MH'">
+                                                                                    {{Employeeleave.YEARLY_LEAVE}}
+                                                                                </ng-container>
                                                                             </td>
                                                                             <td *ngIf="empleave == 10">
                                                                                 <ng-container *ngIf="Employeeleave.isEditing" >
@@ -250,23 +253,34 @@
                                                                                 
                                                                               </td>
                                                                             <td style="text-align: center;" *ngIf="empleave == 10">
-                                                                                <ng-container *ngIf="Employeeleave.isEditing">
+                                                                                <ng-container *ngIf="Employeeleave.isEditing" >
                                                                                     <ng-container *ngIf="this.company_code != 'MH'">
                                                                                     <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 18px;" [hidden]="!Employeeleave.isEditing"  [hidden]="Employeeleave.isclicked" (click)="FetchPermittedDays(Employeeleave)"></i>
                                                                                     
                                                                                     <input type="number" value="Employeeleave.advncelve"   [(ngModel)]="Employeeleave.advncelve" [hidden]="!Employeeleave.isclicked" readonly/>                                                   
                                                                                    </ng-container>
-                                                                                   <ng-container *ngIf="this.company_code == 'MH'">
+                                                                                   <ng-container *ngIf="this.company_code == 'MH' && Employeeleave.FLAG == 1">
                                                                                     <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 18px;" data-bs-toggle="modal" data-bs-target="#AddLeaveHAFZAModal" [hidden]="!Employeeleave.isEditing"  [hidden]="Employeeleave.isclicked" (click)="FetchAdvanceLeave(Employeeleave)"></i>
                                                                                     
                                                                                     <input type="number"  value="Employeeleave.advncelve"  [(ngModel)]="Employeeleave.advncelve"  [hidden]="!Employeeleave.isclicked" readonly/>                                                   
                                                                                    </ng-container>
+                                                                                   <ng-container *ngIf="this.company_code == 'MH' && Employeeleave.FLAG == 0">
+                                                                                    {{Employeeleave.ADVANCE_LEAVE}}
+                                                                                   </ng-container>
                                                                                  </ng-container>
                                                                                  <ng-container *ngIf="!Employeeleave.isEditing">
-                                                                                   {{Employeeleave.ADVANCE_LEAVE}}
+                                                                                    <ng-container *ngIf="this.company_code != 'MH'">
+                                                                                        {{Employeeleave.ADVANCE_LEAVE}}
+                                                                                    </ng-container>
+                                                                                    <ng-container *ngIf="this.company_code == 'MH' && Employeeleave.FLAG == 0">
+                                                                                        {{Employeeleave.ADVANCE_LEAVE}}
+                                                                                    </ng-container>
+                                                                                    <ng-container *ngIf="this.company_code == 'MH' && Employeeleave.FLAG == 1">
+                                                                                        {{Employeeleave.ADVANCE_LEAVE}}
+                                                                                    </ng-container>
                                                                                  </ng-container>
 
-                                                                              </td>
+                                                                            </td>
                                                                             <td>{{Employeeleave.AVAILED_LEAVES}}</td>
                                                                            
                                                                             <td>{{Employeeleave.CURRENTBALANCE}}</td>

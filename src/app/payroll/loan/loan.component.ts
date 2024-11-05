@@ -91,6 +91,7 @@ export class LoanComponent implements OnInit {
   gratuity: any;
   validateMonth: any;
   month: any;
+  failedMsg: string='';
 
   constructor(private session:LoginService,private apicall:ApiCallService,private router:Router,private fb: FormBuilder,private datepipe:DatePipe,private route: ActivatedRoute) { 
     this.requestForm = this.fb.group({
@@ -152,6 +153,15 @@ export class LoanComponent implements OnInit {
       
     });
     this.currentdate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
+    this.apicall.CheckforAuthorities(this.empcode,'N').subscribe((res)=>{
+      //alert(JSON.stringify(res));
+      if(res[0].Errorid==0){  
+        this.requestForm.disable();  
+        this.failedMsg='You cannot submit a loan request at this time because no approver is assigned. Please reach out to HR for assistance!'; 
+      }else{
+        this.failedMsg='';
+      }
+    });
   }
 
   SelectTeamorpersonal(selectuser:any){

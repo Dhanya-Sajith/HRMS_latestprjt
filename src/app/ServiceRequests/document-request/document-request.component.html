@@ -90,7 +90,7 @@
                                             <td>{{item.COMPANY_CODE}}</td>
                                             <td>{{item.DOCUMENT_TYPE}}</td>
                                             <td>{{item.REQUEST_DATE | date: 'dd-MM-yyyy'}}</td>
-                                            <td>{{item.REMARKS.substring(0,4)}}...<a href="#RemarksModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-11" style="text-decoration: underline;"(click)="selecteditem(item)">View More</a></td>
+                                            <td>{{item.REMARKS.substring(0,4)}}...<a href="#RemarksModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-11" style="text-decoration: underline;"(click)="selecteditem(item,0)">View More</a></td>
                                             <td >
                                                 <span [ngStyle]="getStatusStyles(item.STATUS_VAL)" style="width:100%" class="badge fs-11 fw-medium">{{ item.STATUS_VAL }}</span>
                                             </td>                                            
@@ -98,7 +98,7 @@
                                                 <ul class="list-inline hstack gap-1 mb-0">
                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve"*ngIf="item.STATUS_VAL === 'Pending for Approval' && ![1, 3, 4].includes(item.DOC_TYPE_ID)">
                                                         <a href="#ApproveRecordModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn">
-                                                        <button type="button" class="btn btn-soft-success btn-sm" id="buttonApprove" (click)="selecteditem(item)"><i class="ri-checkbox-circle-line fs-18"></i></button>
+                                                        <button type="button" class="btn btn-soft-success btn-sm" id="buttonApprove" (click)="selecteditem(item,1)"><i class="ri-checkbox-circle-line fs-18"></i></button>
                                                         </a>
                                                         </li>
                                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approve"*ngIf="item.STATUS_VAL === 'Pending for Approval' && [1, 3, 4].includes(item.DOC_TYPE_ID)">
@@ -108,21 +108,25 @@
                                                             </li>
                                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reject"*ngIf="item.STATUS_VAL=='Pending for Approval'">
                                                             <a class="remove-item-btn" data-bs-toggle="modal" href="#RejectModal">
-                                                            <button type="button" class="btn btn-soft-danger btn-sm" id="buttonReject" (click)="selecteditem(item)"><i class="ri-close-line fs-18"></i></button>
+                                                            <button type="button" class="btn btn-soft-danger btn-sm" id="buttonReject" (click)="selecteditem(item,0)"><i class="ri-close-line fs-18"></i></button>
                                                             </a>
                                                         </li>
-                                                        <button type="button"*ngIf="item.STATUS_VAL=='Approved & Processed'&& ![1, 3, 4].includes(item.DOC_TYPE_ID)" class="btn btn-sm btn-soft-success font-type fs-12" title="View Document" data-bs-toggle="modal" data-bs-target="#ViewDocModal" (click)="selecteditem(item)"><i class="ri-eye-line align-middle fs-18"></i></button>
+                                                        <button type="button"*ngIf="item.STATUS_VAL=='Approved & Processed'&& ![1, 3, 4].includes(item.DOC_TYPE_ID)" class="btn btn-sm btn-soft-success font-type fs-12" title="View Document" data-bs-toggle="modal" data-bs-target="#ViewDocModal" (click)="selecteditem(item,0)"><i class="ri-eye-line align-middle fs-18"></i></button>
                                                         <button type="button"*ngIf="item.STATUS_VAL=='Approved & Processed'&& [1, 3, 4].includes(item.DOC_TYPE_ID)" class="btn btn-sm btn-soft-success font-type fs-12" title="View Document" (click)="viewDocSpecialCat(item)"><i class="ri-eye-line align-middle fs-18"></i></button>
                                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Reason"*ngIf="item.STATUS_VAL=='Rejected'">
                                                             <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#RejectReasonModal">
-                                                                <button type="button" class="btn btn-sm btn-soft-danger font-type fs-12" (click)="selecteditem(item)"><i class="ri-question-mark fs-18"></i></button>
+                                                                <button type="button" class="btn btn-sm btn-soft-danger font-type fs-12" (click)="selecteditem(item,0)"><i class="ri-question-mark fs-18"></i></button>
                                                             </a>
-                                                        </li>
+                                                        </li> 
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reupload">
+                                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" id="buttonApprove" href="#ApproveRecordModal" [hidden]="item.DOC_TYPE_ID==1||item.DOC_TYPE_ID==3||item.DOC_TYPE_ID==4 || item.STATUS!=2"(click)="selecteditem(item,2)"><i class="fa fas fa-upload fs-16"></i></button>
+                                                         </li>                                                     
                                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Addressed To"*ngIf="item.DOC_TYPE_ID==1">
                                                             <a class="text-blue d-inline-block remove-item-btn" data-bs-toggle="modal" href="#RemarksModal" (click)="Address(item)">
                                                                 <i class="fa fa-address-card fs-16"></i>
                                                             </a>
                                                         </li>
+                                                       
                                                     </ul>
                                             </td>                                           
                                            
@@ -270,18 +274,18 @@
                                         <tr class="font-type" *ngFor="let data of docreqPersonal | pagination: currentPagePersonal: itemsPerPage">
                                             <td>{{data.DOCUMENT_TYPE}}</td>
                                             <td>{{data.REQUEST_DATE | date: 'dd-MM-yyyy'}}</td>
-                                            <td>{{data.REMARKS.substring(0,4)}}...<a href="#RemarksModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-11" style="text-decoration: underline;" (click)="selecteditem(data)">View More</a></td>
+                                            <td>{{data.REMARKS.substring(0,4)}}...<a href="#RemarksModal" data-bs-toggle="modal" class="text-orange d-inline-block edit-item-btn ms-1 fs-11" style="text-decoration: underline;" (click)="selecteditem(data,0)">View More</a></td>
                                             <td >
                                                 <span [ngStyle]="getStatusStyles(data.STATUS_VAL)" style="width:100%" class="badge fs-11 fw-medium">{{ data.STATUS_VAL }}</span>
                                             </td> 
                                                 <td>
                                                     <ul class="list-inline hstack gap-2 mb-0">
                                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Cancel"*ngIf="data.STATUS_VAL=='Pending for Approval'">
-                                                            <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#CancelModal" (click)="selecteditem(data)">
+                                                            <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#CancelModal" (click)="selecteditem(data,0)">
                                                                 <i class="ri-delete-bin-5-fill fs-16"></i>
                                                             </a>
                                                         </li>                                                        
-                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Document"data-bs-toggle="modal" data-bs-target="#ViewDocModal" (click)="selecteditem(data)"*ngIf="data.STATUS_VAL=='Approved & Processed'&& ![1, 3, 4].includes(data.DOC_TYPE_ID)">
+                                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View Document"data-bs-toggle="modal" data-bs-target="#ViewDocModal" (click)="selecteditem(data,0)"*ngIf="data.STATUS_VAL=='Approved & Processed'&& ![1, 3, 4].includes(data.DOC_TYPE_ID)">
                                                             <a class="text-success d-inline-block">
                                                                 <i class="ri-eye-fill fs-16"></i>
                                                             </a>
@@ -293,7 +297,7 @@
                                                         </li>
                                                         
                                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reason"*ngIf="data.STATUS_VAL=='Rejected'">
-                                                            <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#RejectReasonModal" (click)="selecteditem(data)">
+                                                            <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#RejectReasonModal" (click)="selecteditem(data,0)">
                                                                 <i class="ri-question-mark fs-16"></i>
                                                             </a>
                                                         </li>
@@ -364,23 +368,27 @@
                 <div class="modal fade zoomIn" id="ApproveRecordModal" tabindex="-1" aria-labelledby="deleteRecordLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="ReuploadForm" (ngSubmit)="ReuploadDoc(item)">
                             <div class="modal-header bg-orange padding-up-5">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="clearApproveModal()"></button>
+                                <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" ></button>
                             </div>
                             <div class="modal-body text-center padding-down-5">
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label font-type">Upload Document</label>
-                                        <input class="form-control font-type fs-12 textbox-15"type="file" id="formFile" [(ngModel)]="doc" accept="application/pdf">
-
+                                        <input class="form-control font-type fs-12 textbox-15"type="file" id="formFile" formControlName="DocControl" accept="application/pdf">
+                                        <div *ngIf="ReuploadForm.get('DocControl')!.hasError('required') && ReuploadForm.get('DocControl')!.touched" class="text-danger">
+                                            Please upload the Document!
+                                        </div> 
                                     </div>
                                 </div>
                                 <div class="text-center pa-6-8">
-                                    <button type="submit" class="btn btn-orange font-type"(click)="Approve(item)">Submit</button>
+                                    <button type="submit" class="btn btn-orange font-type">Submit</button>
                                     <button type="button" class="btn btn-blue font-type" style="margin-left:10px"(click)="clearApproveModal()">Cancel</button>
                                      
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -478,7 +486,7 @@
                     </div>
                 </div>
                 <!-- End Reject Model-->
-
+ 
                     <!--Cancel Request Model-->
                     <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">

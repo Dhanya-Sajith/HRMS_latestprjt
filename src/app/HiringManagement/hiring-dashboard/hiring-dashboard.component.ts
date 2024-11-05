@@ -72,7 +72,7 @@ export class HiringDashboardComponent implements OnInit {
   candcompany: any = -1;
   candlist: any;
   candstatusdata: any;
-
+  ReuploadForm: FormGroup;
   EvaluatorForm: FormGroup; 
   Acivecandreqid: any;
   emplist: any;
@@ -85,6 +85,8 @@ export class HiringDashboardComponent implements OnInit {
   user: any;
   offerstatus: any;
   jobid: any;
+  setRequestID: any;
+  updatedoc: any;
 
   constructor(private apicall:ApiCallService,private session:LoginService,private fb:FormBuilder,private datePipe: DatePipe,private route: ActivatedRoute, private cdr: ChangeDetectorRef) { 
     this.PushForm = this.fb.group({
@@ -114,6 +116,9 @@ export class HiringDashboardComponent implements OnInit {
       designation: [''],
       department: [''],
       effectdt: ['', Validators.required],
+    });
+    this.ReuploadForm = this.fb.group({     
+      DocControl: ['', Validators.required],      
     });
   }
 
@@ -393,7 +398,7 @@ export class HiringDashboardComponent implements OnInit {
   }
 
   onFileSelect(input:any,id:any)
-  {   
+  {    
     if (input.files && input.files[0]) {
       const fdata = new FormData();
       fdata.append('filesup',input.files[0]);
@@ -402,15 +407,23 @@ export class HiringDashboardComponent implements OnInit {
         {   
           this.inputfield = document.getElementById("formFile");
           this.inputfield.selectedIndex = 0;
+          (<HTMLInputElement>document.getElementById("openModalButton")).click();
+          this.showModal = 1;
+          this.success = "Document uploaded successfully!";   
           // this.ApplyForm.reset(); 
           this.HireRequestCandidates();
-          this.ApplyForm.reset(); 
+          this.ApplyForm.reset();
+          this.ReuploadForm.reset(); 
         }
-        else{          
+        else{ 
+          (<HTMLInputElement>document.getElementById("openModalButton")).click();
+          this.showModal = 2;
+          this.failed = "Document uploading failed";         
           // this.ApplyForm.reset(); 
           this.HireRequestCandidates();    
         }
         this.ApplyForm.reset(); 
+        this.ReuploadForm.reset(); 
         this.ApplyForm.controls['designation'].setValue(this.selectdesig);
       })
     }
@@ -552,7 +565,29 @@ export class HiringDashboardComponent implements OnInit {
   {
     this.remarks = remark;
   }
-
+  SetSelectedReqId(candidate_id: any)
+  {
+    this.setRequestID = candidate_id;   
+  }
+  ReuploadDoc()
+  {
+    if((this.ReuploadForm.valid))
+    {
+      
+    const doc = this.ReuploadForm.get('DocControl');
+    const input=document.getElementById("DocContol"); 
+    const datavalue = {
+      docpath:doc?.value,
+      req_id:this.setRequestID,    
+    };
+      this.apicall.UpdateDocPathOnReupload(datavalue,'H').subscribe((res)=>{
+      this.updatedoc=res;
+      this.onFileSelect(input,this.setRequestID);     
+      })
+    }else{                 
+    this.ReuploadForm.markAllAsTouched();
+    }    
+  } 
   download_documents(req_id:any){
     let fileurl=this.apicall.GetCandidateCV(req_id,'J');
     let link = document.createElement("a");
