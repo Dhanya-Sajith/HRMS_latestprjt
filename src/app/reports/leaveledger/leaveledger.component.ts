@@ -135,7 +135,8 @@ export class LeaveledgerComponent implements OnInit {
         this.LeaveAddition=this.LeaveAddition+this.adding;
         this.LeaveDeduction = this.LeaveDeduction + this.deduction;
       }
-      this.Closingbalance = (this.LeaveAddition-this.LeaveDeduction)+this.OpeningLeavebalance;
+      this.LeaveAddition=(this.LeaveAddition+this.OpeningLeavebalance).toFixed(2);
+      this.Closingbalance = (this.LeaveAddition-this.LeaveDeduction).toFixed(2);
       this.totalslno = this.totalslno+this.slno;
     } 
     

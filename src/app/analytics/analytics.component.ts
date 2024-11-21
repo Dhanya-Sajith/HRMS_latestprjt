@@ -404,8 +404,8 @@ export class AnalyticsComponent implements OnInit {
                   TARGET_DATE, 
                   FEEDBACK_STATUS 
               }: EmployeeTenureData) => ({ 
-                  EMP_NAME, 
-                  EMP_CODE, 
+                  'EMPLOYEE NAME':EMP_NAME, 
+                  'EMPLOYEE CODE':EMP_CODE, 
                   DEPARTMENT, 
                   'DATE OF JOINING': this.datePipe.transform(TARGET_DATE, 'dd-MM-yyyy'),  
                   'TENURE': FEEDBACK_STATUS       
@@ -423,8 +423,8 @@ export class AnalyticsComponent implements OnInit {
                   DEPARTMENT, 
                   TARGET_DATE 
               }: ActiveEmployeeData) => ({ 
-                  EMP_NAME, 
-                  EMP_CODE, 
+                  'EMPLOYEE NAME':EMP_NAME, 
+                  'EMPLOYEE CODE':EMP_CODE, 
                   DEPARTMENT,
                   'DATE OF JOINING': this.datePipe.transform(TARGET_DATE, 'dd-MM-yyyy') 
               }));
@@ -442,7 +442,7 @@ export class AnalyticsComponent implements OnInit {
                 FEEDBACK_STATUS 
             }: OpenPositionData) => ({ 
                 'DESIGNATION':EMP_NAME, 
-                'JOBE ID':EMP_CODE, 
+                'JOB ID':EMP_CODE, 
                  DEPARTMENT,
                 'OPEN POSITIONS':FEEDBACK_STATUS,                
             }));
@@ -459,8 +459,8 @@ export class AnalyticsComponent implements OnInit {
               MANAGER,  
               TARGET_DATE
           }: NewHireData) => ({ 
-              EMP_NAME, 
-              EMP_CODE, 
+              'EMPLOYEE NAME':EMP_NAME, 
+              'EMPLOYEE CODE':EMP_CODE, 
               DEPARTMENT,
               'DATE OF JOINING': this.datePipe.transform(TARGET_DATE, 'dd-MM-yyyy'), 
               'MONTH':MANAGER,                
@@ -474,9 +474,30 @@ export class AnalyticsComponent implements OnInit {
             delete item.attiritionRate;           
             item.Month = item.MonthID;
             delete item.MonthID; 
-        });    
-        this.TurnoverExcelData = res;      
-        this.WritetoExcel(res);    
+        });        
+       
+      this.TurnoverExcelData = res; 
+    
+      this.TurnoverExcelData = this.TurnoverExcelData.map(({ 
+        NoEmployee, 
+        NoResignees, 
+        NoNewjoinees, 
+        NoTerminations,  
+        currentEmployee,
+        TurnoverRate,
+        Month
+    }: TurnoverData) => ({ 
+        'Total Employees':NoEmployee, 
+        'Employees Resigned':NoResignees, 
+        'New Joinees':NoNewjoinees,
+        'Terminations': NoTerminations, 
+        'Current Employees':currentEmployee, 
+        'Turnover Rate':TurnoverRate, 
+        Month,                
+    }));      
+        
+        console.log(JSON.stringify((res)))      
+        this.WritetoExcel(this.TurnoverExcelData);    
       }); 
      }else if (category == 6) { // Average Performance
       this.apicall.Average_Performance_ExcelData(this.selectedCompanyid).subscribe((res) => {       
@@ -573,5 +594,14 @@ interface NewHireData {
   DEPARTMENT: string;
   MANAGER: string;  
   TARGET_DATE: string;
+}
+interface TurnoverData  {
+  NoEmployee: number;
+  NoResignees: number;
+  NoNewjoinees: number;
+  NoTerminations: number;
+  currentEmployee: number;
+  TurnoverRate: number;
+  Month: string;
 }
 

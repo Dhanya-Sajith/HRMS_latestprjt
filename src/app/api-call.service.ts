@@ -15,16 +15,16 @@ export class ApiCallService {
   //Emisoft cloud for customer testing
   //public dotnetapi = 'http://3.111.100.109:81/api';
   //Local host
-  public dotnetapi = 'https://localhost:44381/api';
+ // public dotnetapi = 'https://localhost:44381/api';
   //Live server for Customer intranet//
   //public dotnetapi = 'http://192.168.10.29:81/api';
   //public hostname='localhost:44381';
   //Live server for Customer Cloud 
-  // public dotnetapi = 'http://72.167.151.157:81/api';
+ //public dotnetapi = 'http://72.167.151.157:81/api';
   //public hostnm = 'http://72.167.151.157';
   // Emisoft common Test server
   //public dotnetapi = 'http://192.168.1.37:84/api';
- //public dotnetapi = 'http://desktop-bj8t99m:84/api';
+public dotnetapi = 'http://desktop-bj8t99m:84/api';
   // Emisoft common Test cloud server
   //public dotnetapi = 'http://13.53.118.116:81/api';//
  
@@ -613,9 +613,9 @@ AttendanceProcessingFnApi(data:any){
 
 //YearlyLeaveReport
  
-ListYearlyLeaveReport(year:any,leavetype:any,empcode:any)
+ListYearlyLeaveReport(year:any,leavetype:any,empcode:any,company:any)
 {
-  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/YearlyLeaveReport/${year}/${leavetype}/${empcode}`);
+  return this.http.get<any>(`${this.dotnetapi}/ReportDashboard/YearlyLeaveReport/${year}/${leavetype}/${empcode}/${company}`);
 }
 
 //Status Approve list 
@@ -878,7 +878,13 @@ FetchLeaveBalance(empcode:any)
 }
 ExportToExcel(data:any)
 {
+ 
   return this.http.post<any>(`${this.dotnetapi}/File/WriteExcelFile`,data);
+}
+Subcontract_ExportToExcel(month:any,year:any,company:any,ecode:any)
+{
+ //alert('api')
+  return this.http.get<any>(`${this.dotnetapi}/File/WriteExcel_SubcontractorTimesheet/${month}/${year}/${ecode}/${company}`);
 }
 GetExcelFile(filename:any)
 {

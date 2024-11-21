@@ -79,20 +79,77 @@ export class OvertimereportComponent implements OnInit {
   }));
 }
 
-exportexcel(): void 
-{
-   /* table id is passed over here */   
-   let element = document.getElementById('excel-table'); 
-   const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+// exportexcel(): void 
+// {
+//    /* table id is passed over here */   
+//    let element = document.getElementById('excel-table'); 
+//    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
 
-   /* generate workbook and add the worksheet */
-   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+//    /* generate workbook and add the worksheet */
+//    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+//    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-   /* save to file */
-   XLSX.writeFile(wb, this.fileName);
+//    /* save to file */
+//    XLSX.writeFile(wb, this.fileName);
   
+// }
+
+exportexcel(): void {
+  // Get the table element by its ID
+  const element = document.getElementById('excel-table');
+
+  // Check if the element is null before proceeding
+  if (!element) {
+    console.error('Element not found!');
+    return;  // Exit the function if element is null
+  }
+
+  // Convert the HTML table to a worksheet
+  const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+  // Iterate over all cells and convert time-like strings to Excel time format
+  for (const cell in ws) {
+    if (ws.hasOwnProperty(cell)) {
+      const cellValue = ws[cell].v;
+
+      // Check if the value is a string and matches the time format 'hh:mm' or 'hh:mm:ss'
+      const timeRegex = /^([0-9]{1,3}):([0-9]{2})(?::([0-9]{2}))?$/; // Allow up to 3 digits for hours
+      const match = typeof cellValue === 'string' && timeRegex.test(cellValue);
+
+      if (match) {
+        // Extract hours, minutes, and seconds (if available)
+        const [hours, minutes, seconds] = cellValue.split(':').map(Number);
+        const finalSeconds = seconds || 0; // If no seconds part, set to 0
+
+        let excelTime: number;
+
+        if (hours >= 24) {
+          // For hours >= 24, calculate the total fraction of a day
+          excelTime = (hours * 60 + minutes + finalSeconds / 60) / (24 * 60);  // Total hours converted to fraction of a day
+          // Apply a custom format to allow hours to exceed 24 (handles up to 3-digit hours)
+          ws[cell] = { t: 'n', v: excelTime, z: '[h]:mm' };  // Total accumulated hours format
+        } else {
+          // For regular time (within 24 hours), convert to Excel time
+          excelTime = (hours * 60 + minutes + finalSeconds / 60) / (24 * 60); // Fraction of a 24-hour day
+          ws[cell] = { t: 'n', v: excelTime, z: 'hh:mm' };  // Standard time format (within 24 hours)
+        }
+      }
+    }
+  }
+
+  // Create a new workbook and append the worksheet
+  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+  // Save the Excel file
+  XLSX.writeFile(wb, this.fileName);
 }
+
+
+// Helper function to dynamically set column widths based on table content
+
+
+
 
 viewReport(year: any, month: any, company: any) {
   this.uniqueDates = [];

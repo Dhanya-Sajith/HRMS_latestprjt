@@ -203,8 +203,21 @@ export class SalaryTransferCertificateComponent implements OnInit {
           ],
           margin: [0, 10, 0, 10]
         },
-        { text: 'Sincerely Yours,', style: 'normal',margin: [0, 20, 0, 20] },
-        { text: 'MERLIN VATHANA', style: 'normal', bold: true,margin: [0, 20, 0, 0] },
+        { text: 'Sincerely Yours,', style: 'normal',margin: [0, 10, 0, 30] },
+        {
+          canvas: [
+              {
+                  type: 'line',
+                  x1: 0,
+                  y1: 0,
+                  x2: 200, // Adjust width as needed
+                  y2: 0,
+                  lineWidth: 1
+              }
+          ],
+          margin: [0, 30, 0, 20] // Adjust margin as needed
+        },
+        { text: 'MERLIN VATHANA', style: 'normal', bold: true,margin: [0, 0, 0, 0] },
         { text: 'HR Manager', style: 'normal' }
       ],
       styles: {

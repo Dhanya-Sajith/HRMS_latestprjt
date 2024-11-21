@@ -27,22 +27,18 @@ export class YearlyleaveReportComponent implements OnInit {
   empexistance: any;
   showModal: any;
   failed: any;
+  companydata: any;
 
   constructor(private apicall:ApiCallService,private session:LoginService) { }
 
   ngOnInit(): void {
     this.currentPage = 1; 
-    
+    this.apicall.FetchCompanyList(this.empcode).subscribe((res) => {
+      this.companydata=res;
+    });
     this.ListYear();
     this.ListLeaveTypes();
-    // const year = (<HTMLInputElement>document.getElementById("year")).value;
-    // const leavetype = (<HTMLInputElement>document.getElementById("leavetype")).value;
-    //   this.apicall.ListYearlyLeaveReport(year,leavetype,this.empcode).subscribe((res)=>{
-    //     this.ListYrleaveReport=res;
-    //     this.totaldata = this.ListYrleaveReport.length;  
-    //     const totalPages = Math.ceil(this.totaldata / 10);
-    //     this.totalPages = Array(totalPages).fill(0).map((_, index) => index + 1);
-    //   })
+
   }
 
   ListYear()
@@ -59,29 +55,21 @@ export class YearlyleaveReportComponent implements OnInit {
     }) 
   }
 
-  ListYearlyLeaveReport(){
+  ListYearlyLeaveReport()
+  {
+    const cmpny=(<HTMLInputElement>document.getElementById("company")).value;
     const year = (<HTMLInputElement>document.getElementById("year")).value;
     const leavetype = (<HTMLInputElement>document.getElementById("leavetype")).value;
-    
-    if(year=="-1")
-    {
-      this.empexistance="Please Select Year";
-      //alert("Please Select Year")
-      // this.apicall.ListYearlyLeaveReport(year,leavetype,this.empcode).subscribe((res)=>{
-      //   this.ListYrleaveReport=res;
-      //   const maxPageFiltered = Math.ceil(this.ListYrleaveReport.length / this.itemsPerPage);  
-
-      //   if (this.currentPage > maxPageFiltered) {
-      //     this.currentPage = 1;     
-      //   }   
-       
-      // })
-    }
+   if(year=="-1" )
+      {
+        this.empexistance="Please Select Year";
+      }
     else{
         this.empexistance="" ;
     
-        this.apicall.ListYearlyLeaveReport(year,leavetype,this.empcode).subscribe((res)=>{
+        this.apicall.ListYearlyLeaveReport(year,leavetype,this.empcode,cmpny).subscribe((res)=>{
           this.ListYrleaveReport=res;
+       //   alert(this.ListYearlyLeaveReport.length)
           this.totaldata = this.ListYrleaveReport.length;  
           const totalPages = Math.ceil(this.totaldata / 10);
           this.totalPages = Array(totalPages).fill(0).map((_, index) => index + 1);  
@@ -102,9 +90,11 @@ export class YearlyleaveReportComponent implements OnInit {
         //   let url = URL.createObjectURL(blob);
            link.setAttribute("href", fileurl);
            link.setAttribute("download", "ReportFile.xlsx");
-           document.body.appendChild(link);
+           document.body.appendChild(link)
+;
            link.click();
-           document.body.removeChild(link);
+           document.body.removeChild(link)
+;
     }
    });
    

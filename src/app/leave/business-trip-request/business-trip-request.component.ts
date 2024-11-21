@@ -278,10 +278,12 @@ fetchpersonaldata()
     return this.BussTripSelfForm.controls;
   }
 
-  SelfBussTripSubmit() 
+  SelfBussTripSubmit(flag:any) 
   {    
     this.submitted=true;
-    
+    if(flag==1){
+    this.BussTripSelfForm.get('emp_code')?.setValue(this.empcode);
+    }
     if(this.BussTripSelfForm.invalid) 
     {  
         return;

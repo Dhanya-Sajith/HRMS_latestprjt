@@ -96,7 +96,26 @@ processDates() {
     });
   });
 }
-      
+download_to_excel(year:any,month:any,company:any)
+{ 
+ // alert('fdf')
+ let Excelname:any;
+ this.apicall.Subcontract_ExportToExcel(month,year,company,this.empcode).subscribe((res)=>{
+  Excelname=res.Errormsg;
+  let fileurl=this.apicall.GetExcelFile(Excelname);
+  let link = document.createElement("a");
+    
+      if (link.download !== undefined) {
+     //   let url = URL.createObjectURL(blob);
+        link.setAttribute("href", fileurl);
+        link.setAttribute("download", "ReportFile.xlsx");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+ }
+});
+
+}   
     
     hasAttendance(employee: any, date: string): boolean {
       return employee.Attendance.some((a: Attendance) => a.IN_DATE === date);

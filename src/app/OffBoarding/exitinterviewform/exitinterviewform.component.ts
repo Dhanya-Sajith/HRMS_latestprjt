@@ -255,7 +255,16 @@ export class ExitinterviewformComponent implements OnInit {
               this.FetchQuestions(this.empcd);
               this.isDisabled = true;
             }
-            else        
+            else if(res.Errorid == 3)
+            {
+              this.showModal = 2; 
+              this.failed = "The exit interview has already been saved.";
+              this.Clear();
+              this.action = 1;
+              this.FetchQuestions(this.empcd);
+              this.isDisabled = true;
+            } 
+            else       
             {
               this.showModal = 2; 
               this.failed = "Failed";
