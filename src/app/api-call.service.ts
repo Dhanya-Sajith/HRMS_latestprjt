@@ -1807,6 +1807,10 @@ Get_WPS_File(company:any,month:any,bank:any,report_type:any,paytype:any,ver_id:a
 {
   return this.http.get<any>(`${this.dotnetapi}/File/Get_WPS_File/${company}/${month}/${bank}/${report_type}/${paytype}/${ver_id}`);
 }
+DeleteWPSRecords(ver_id: any, user: any)
+{
+  return this.http.get<any>(`${this.dotnetapi}/Payroll/DeleteWPSRecords/${ver_id}/${user}`);
+}
 //Master data management
 FetchMasterData()
 {

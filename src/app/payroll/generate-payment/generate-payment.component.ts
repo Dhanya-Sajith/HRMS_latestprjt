@@ -34,6 +34,7 @@ export class GeneratePaymentComponent implements OnInit {
   itemsPerPage=10;
   currentPage=1;
   desiredPage: any;
+  delVerId: any;
   
   constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService) { }
 
@@ -112,6 +113,26 @@ export class GeneratePaymentComponent implements OnInit {
     this.report_type = -1;
     this.bank = -1;
     this.payment_type = -1;
+  }
+
+  setDeleteVerID(verId: any){
+    this.delVerId = verId;
+  }
+
+  DeleteRecord(verId: any){
+    this.apicall.DeleteWPSRecords(verId, this.empcode).subscribe((res)=>{
+      if(res.Errorid == 1)
+      {
+        this.showModal = 1;
+        this.success = "Deleted Successfully";
+      }
+      else
+        {
+          this.showModal = 2;
+          this.failed = "Failed";
+        }
+      })
+      this.FetchPayment_Reports_Summary();
   }
 
   Get_WPS_File(data:any)

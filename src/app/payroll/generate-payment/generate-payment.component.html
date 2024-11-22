@@ -73,41 +73,41 @@
                                     </div>
                                     
                                     <div class="col-lg-3 pt-2">
-                                                    <h6 class="fs-12 font-type fw-semibold"><span>Payment Type</span></h6>
-                                                    <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="payment_type">
-                                                        <option value="-1">Select</option>
-                                                        <option *ngFor="let paytype of listpaytype" value="{{paytype.KEY_ID}}">
-                                                            {{paytype.DATA_VALUE}}
-                                                        </option>
-                                                    </select>       
+                                        <h6 class="fs-12 font-type fw-semibold"><span>Payment Type</span></h6>
+                                        <select class="form-select font-type fs-11 textbox-15" [(ngModel)]="payment_type">
+                                            <option value="-1">Select</option>
+                                            <option *ngFor="let paytype of listpaytype" value="{{paytype.KEY_ID}}">
+                                                {{paytype.DATA_VALUE}}
+                                            </option>
+                                        </select>       
                                     </div>
                                 </div>
                                 <div class="row mb-1 margin-up-7">
-                                            <div class="col-lg-3 pt-2">
-                                                    <h6 class="font-type fs-12 fw-semibold"><span>Bank</span></h6>
-                                                    <select class="form-select h-30 font-type textbox-15" [(ngModel)]="bank">
-                                                        <option value="-1">Select</option>
-                                                        <option *ngFor="let bank of listbank" value="{{bank.KEY_ID}}">
-                                                            {{bank.DATA_VALUE}}
-                                                        </option>
-                                                    </select>
-                                            
-                                            </div>
-                                            <div class="col-lg-3 pt-2">  
-                                                    <h6 class="font-type fs-12 fw-semibold"><span>Report Type </span></h6>
-                                                    <select class="form-select font-type fs-12 textbox-15" [(ngModel)]="report_type">
-                                                        <option value="-1">Select</option>
-                                                        <option value="WPS">WPS</option>
-                                                        <option value="N_WPS">Non-WPS</option>
-                                                        <!-- <option value="">Wire Transfer</option> -->
-                                                    </select>                      
-                                            </div>
-                                            <div class="col-lg-6 pt-4 ma-10">
-                                                <div class="hstack gap-1 justify-content-end">
-                                                    <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type h-30 " (click)="GenerateReport()" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" ><i class="ri-add-circle-line label-icon align-middle fs-16 ms-2"></i>Generate</button>
-                                                    <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type h-30 " (click)="Clear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
-                                                </div>
-                                            </div>
+                                    <div class="col-lg-3 pt-2">
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Bank</span></h6>
+                                            <select class="form-select h-30 font-type textbox-15" [(ngModel)]="bank">
+                                                <option value="-1">Select</option>
+                                                <option *ngFor="let bank of listbank" value="{{bank.KEY_ID}}">
+                                                    {{bank.DATA_VALUE}}
+                                                </option>
+                                            </select>
+                                    
+                                    </div>
+                                    <div class="col-lg-3 pt-2">  
+                                            <h6 class="font-type fs-12 fw-semibold"><span>Report Type </span></h6>
+                                            <select class="form-select font-type fs-12 textbox-15" [(ngModel)]="report_type">
+                                                <option value="-1">Select</option>
+                                                <option value="WPS">WPS</option>
+                                                <option value="N_WPS">Non-WPS</option>
+                                                <!-- <option value="">Wire Transfer</option> -->
+                                            </select>                      
+                                    </div>
+                                    <div class="col-lg-6 pt-4 ma-10">
+                                        <div class="hstack gap-1 justify-content-end">
+                                            <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type h-30 " (click)="GenerateReport()" data-bs-toggle="modal" data-bs-target="#SuccessRecordModal" ><i class="ri-add-circle-line label-icon align-middle fs-16 ms-2"></i>Generate</button>
+                                            <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type h-30 " (click)="Clear()"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                        </div>
+                                    </div>
                                 </div>
                         </div>
                     </div>
@@ -174,7 +174,14 @@
                                     <td>{{data.REPORT_TYPE_VAL}}</td>
                                     <td>{{data.GENERATED_DATE  | date:'dd-MM-yyyy HH:mm'}}</td>
                                     <td>
-                                        <button type="button" class="btn bg-info-subtle btn-sm text-info" (click)="Get_WPS_File(data)"><i class="ri-file-excel-fill fs-20"></i></button>
+                                        <ul class="list-inline hstack gap-2 mb-0">
+                                            <li title="Download Excel">
+                                                <button type="button" class="btn bg-info-subtle btn-sm text-info" (click)="Get_WPS_File(data)"><i class="ri-file-excel-fill fs-20"></i></button>
+                                            </li>
+                                            <li title="Delete">
+                                                <button type="button" class="btn btn-danger btn-sm" (click)="setDeleteVerID(data.VER_ID)" data-bs-toggle="modal" href="#CancelModal" ><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size: 18px;"></i></button>
+                                            </li>
+                                        </ul>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -250,22 +257,44 @@
             </div>
             <!--Modal For Success Message End-->
            <!-- Message Model-->
-           <div class="modal fade zoomIn" id="MsgModal" tabindex="-1" aria-labelledby="MsgModal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-orange padding-up-5">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <div class="text-center">
-                            <h5 class="bar-text fs-13 font-type">Report Generated!</h5>  
-                            <button class="btn btn-orange font-type ma-5 text-uppercase fs-12">Download Now</button>
+            <div class="modal fade zoomIn" id="MsgModal" tabindex="-1" aria-labelledby="MsgModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <div class="text-center">
+                                <h5 class="bar-text fs-13 font-type">Report Generated!</h5>  
+                                <button class="btn btn-orange font-type ma-5 text-uppercase fs-12">Download Now</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-          <!-- End Message Model-->
+            <!-- End Message Model-->
+            <!--Cancel Request Model-->
+            <div class="modal fade zoomIn" id="CancelModal" tabindex="-1" aria-labelledby="CancelModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-orange padding-up-5">
+                            <h5 class="modal-title">&nbsp;</h5>
+                            <button type="button" #cancelclosebutton class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <div class="text-center">
+                                <h5 class="fs-14">You are about to delete the record?</h5>
+                                <p class="text-muted fs-12 mb-4 pt-1">Do you want to continue?</p>
+                                <div class="hstack gap-2 justify-content-center remove">
+                                    <button class="btn btn-danger" id="delete-record"  data-bs-toggle="modal" (click)="DeleteRecord(delVerId)"  data-bs-target="#SuccessRecordModal">Yes</button>
+                                    <button class="btn btn-success"  data-bs-dismiss="modal" aria-label="Close" id="btn-close">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End cancel Request Model-->
         </div>
       </div>
      <app-footer></app-footer>
