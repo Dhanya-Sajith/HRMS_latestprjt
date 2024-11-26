@@ -84,6 +84,12 @@ export class TrainingPlanComponent implements OnInit {
   totalcost: any;
   today: any;
   scheDuration: any;
+  nocost: boolean = false;
+  disablefields: number = 0;
+  todaydate:any = new Date();
+  mindate = this.datePipe.transform(this.todaydate,"yyyy-MM-dd");
+  error: string= '';
+  tr_type: any;
 
 
   constructor(private datePipe: DatePipe,private session:LoginService,private apicall:ApiCallService,private router:Router,private fb: FormBuilder,private route: ActivatedRoute) { 
@@ -818,6 +824,8 @@ editscheduledplan(trainingId:any)
     //alert(this.fetchScheduledDtls[0].COMPANY);
 
     //alert(JSON.stringify(res))
+    this.tr_type= this.fetchScheduledDtls[0].TRAINING_TYPEID;    
+    this.selectprovider(this.tr_type)
 
     this.companycode= this.fetchScheduledDtls[0].COMPANY;
     this.scheDuration = this.fetchScheduledDtls[0].CONFIRMED_QUARTER;
@@ -967,9 +975,6 @@ fetchskilledemployees()
   // const duration = durationval.value;
 
   const duration = this.scheDuration;
-
- // alert(duration)
-
   const actual_train_dt=  (<HTMLInputElement>document.getElementById("actual_train_dt")).value;
   const assess = (document.querySelector('input[name="assess"]:checked') as HTMLInputElement)?.value;
   const cert = (document.querySelector('input[name="cert"]:checked') as HTMLInputElement)?.value;
@@ -977,44 +982,46 @@ fetchskilledemployees()
   const checkbox = (<HTMLInputElement>document.getElementById("formCheck11"))
   const markasvalue = checkbox.checked ? checkbox.value : "0";
 
-  const updatedata = {
-    trainingid: trainingId,
-    location: location,
-    provider: provider,
-    training_type: providerty,
-    duration: duration,
-    actual_train_dt: actual_train_dt,
-    assess: assess,
-    cert: cert,
-    effective: effective,
-    mark_val: markasvalue,
-    updatedby:this.empcode,
-    };
-
-
-   // alert(JSON.stringify(updatedata))
-
-    this.apicall.Update_ScheduledTraining(updatedata).subscribe(res =>{
-      //this.listrainingplan=res;
+  if(actual_train_dt){
+     if(!duration){
+        this.error = 'Please, Select the duration'
+     }
+     else{
+        this.error = '';
+     }
+  }
  
-     
+  if(this.error == ''){
+    const updatedata = {
+      trainingid: trainingId,
+      location: location,
+      provider: provider,
+      training_type: providerty,
+      duration: duration,
+      actual_train_dt: actual_train_dt,
+      assess: assess,
+      cert: cert,
+      effective: effective,
+      mark_val: markasvalue,
+      updatedby:this.empcode,
+      };
+    // alert(JSON.stringify(updatedata))
 
-      if(res.Errorid==1){
-        (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
-        this.showModals = 1;
-        this.successs = "Updated Successfully";
-        this.Listtrainingplans();
-  
-      }
-      else{
-        (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
-        this.showModals = 2;
-        this.faileds = "Failed";
-        this.Listtrainingplans();  
-      }
-    
+      this.apicall.Update_ScheduledTraining(updatedata).subscribe(res =>{
+        if(res.Errorid==1){
+          (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
+          this.showModals = 1;
+          this.successs = "Updated Successfully";
+          this.Listscheduledtrainingplans();
+        }
+        else{
+          (<HTMLInputElement>document.getElementById("openModalButtonForalertsuccess")).click();
+          this.showModals = 2;
+          this.faileds = "Failed";
+          this.Listscheduledtrainingplans();  
+        }
       })
-
+  }
 
  }
 
@@ -1216,6 +1223,31 @@ display_total() {
   (<HTMLInputElement>document.getElementById("totalcost")).value = total.toString();
 }
 
+Changenocost()
+{
+  this.trainingfee = 0;
+  this.accomodation = 0;
+  this.transport = 0;
+  this.allowance = 0;
+  this.totalcost = 0;
 
+  const checkbox = (<HTMLInputElement>document.getElementById("formCheck11"))
+  if(checkbox.checked == true)
+  {
+    this.disablefields = 1;
+  }else{
+    this.disablefields = 0;
+  }
+}
+
+Changeduration()
+{
+  if(this.scheDuration == '' || this.scheDuration == '00:00')
+  {
+    this.error = 'Please, Select the duration'
+  }else{
+    this.error = '';
+  }
+}
 
 }

@@ -100,7 +100,7 @@
                                                                         <div class="col-sm-2">
                                                                             <select class="form-select font-type fs-12 textbox-15 h-30" name="trainingstatus" id="trainingstatus" (change)="Listtrainingplansfilter()">
                                                                                 <option value ="-1">Select Status</option>
-                                                                                <option  *ngFor="let trainingsts of liststatus" value="{{trainingsts.KEY_ID}}" [hidden]="trainingsts.KEY_ID==0 || trainingsts.KEY_ID==9 || trainingsts.KEY_ID==5 || trainingsts.KEY_ID==6">
+                                                                                <option  *ngFor="let trainingsts of liststatus" value="{{trainingsts.KEY_ID}}" [hidden]="trainingsts.KEY_ID==3 || trainingsts.KEY_ID==9 || trainingsts.KEY_ID==5 || trainingsts.KEY_ID==6 || trainingsts.KEY_ID==8">
                                                                                     {{trainingsts.DATA_VALUE}}
                                                                                 </option>
                                                                               </select>  
@@ -343,6 +343,7 @@
                                                                         <th>Provider Type</th>
                                                                         <th>Provider Name</th>
                                                                         <th>Confirmed<br>Schedule</th>
+                                                                        <th>Duration</th>
                                                                         <th>Actual<br>Training<br>Date</th>
                                                                         <th>Remarks</th>
                                                                         <th>Status</th>
@@ -370,6 +371,7 @@
                                                                                     </ng-container> 
                                                                                 </td>
                                                                                 <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.CONFIRMED_QUARTER}}</td>
+                                                                                <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.DURATION}}</td>
                                                                                 <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.SCHEDULED_DATE | date: 'dd-MM-yyyy' }}</td>
                                                                                 <td [attr.rowspan]="schePlans.Employees.length">{{schePlans.REMARKS}}</td>
                                                                                 <td class="status" [attr.rowspan]="schePlans.Employees.length"><span [ngStyle]="getStatusStyles(schePlans.PLAN_STATUS)" class="badge text-white width-budge fs-11 fw-medium">{{schePlans.PLAN_STATUS_VAL}}</span></td>
@@ -930,11 +932,24 @@
                 <div class="modal-body">
                     <div>
                         <div class="row mb-3">
+                            <!-- <div class="col-lg-4">
+                                <label for="leaveemails" class="form-label font-type fw-semibold">Total Cost</label>
+                            </div> -->
+                            <div class="col-lg-8"> 
+                                <div class="form-check form-check-info mb-3">
+                                    <input class="form-check-input" type="checkbox" id="formCheck11" value="1" (click)="Changenocost()">
+                                    <label class="form-check-label font-type fw-semibold" for="formCheck11" >
+                                        No Cost Applicable
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col-lg-4">
                                 <label for="leaveemails" class="form-label font-type fw-semibold">Training Fees</label>
                             </div>
                             <div class="col-lg-8"> 
-                                <input type="number" class="form-control font-type textbox-15"  id="trainingfee" name="trainingfee"  [(ngModel)]="trainingfee" (keyup)="display_total()">
+                                <input type="number" class="form-control font-type textbox-15"  id="trainingfee" name="trainingfee"  [(ngModel)]="trainingfee" (keyup)="display_total()"  [ngClass]="{ 'disabled-input': disablefields }">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -942,7 +957,7 @@
                                 <label for="leaveemails" class="form-label font-type fw-semibold">Accomodation Fees</label>
                             </div>
                             <div class="col-lg-8"> 
-                                <input type="number" class="form-control font-type textbox-15"  id="accomodation" name="accomodation" [(ngModel)]="accomodation" (keyup)="display_total()">
+                                <input type="number" class="form-control font-type textbox-15"  id="accomodation" name="accomodation" [(ngModel)]="accomodation" (keyup)="display_total()" [ngClass]="{ 'disabled-input': disablefields }">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -950,7 +965,7 @@
                                 <label for="leaveemails" class="form-label font-type fw-semibold">Transportation Fees</label>
                             </div>
                             <div class="col-lg-8"> 
-                                <input type="number" class="form-control font-type textbox-15"  id="transportation" name="transportation" [(ngModel)]="transport" (keyup)="display_total()">
+                                <input type="number" class="form-control font-type textbox-15"  id="transportation" name="transportation" [(ngModel)]="transport" (keyup)="display_total()" [ngClass]="{ 'disabled-input': disablefields }">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -958,7 +973,7 @@
                                 <label for="leaveemails" class="form-label font-type fw-semibold">Allowance</label>
                             </div>
                             <div class="col-lg-8"> 
-                                <input type="number" class="form-control font-type textbox-15"  id="allowance" name="allowance" [(ngModel)]="allowance" (keyup)="display_total()">
+                                <input type="number" class="form-control font-type textbox-15"  id="allowance" name="allowance" [(ngModel)]="allowance" (keyup)="display_total()" [ngClass]="{ 'disabled-input': disablefields }">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -967,19 +982,6 @@
                             </div>
                             <div class="col-lg-8"> 
                                 <input type="number" class="form-control font-type textbox-15 bg-light"  id="totalcost" name="totalcost" [(ngModel)]="totalcost" readonly>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <!-- <div class="col-lg-4">
-                                <label for="leaveemails" class="form-label font-type fw-semibold">Total Cost</label>
-                            </div> -->
-                            <div class="col-lg-8"> 
-                                <div class="form-check form-check-info mb-3">
-                                    <input class="form-check-input" type="checkbox" id="formCheck11" value="1" >
-                                    <label class="form-check-label font-type fw-semibold" for="formCheck11" >
-                                        No Cost Applicable
-                                    </label>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -1131,9 +1133,10 @@
                                                         <label for="leaveemails" class="form-label font-type fw-semibold">Duration</label>
                                                     </div>
                                                     <div class="col-lg-10"> 
-                                                        <ngx-timepicker-field  #timePicker [format]="24"   class="editedIntime" id="duration" name="duration" [(ngModel)]="scheDuration" ></ngx-timepicker-field>
+                                                        <ngx-timepicker-field  #timePicker [format]="24"   class="editedIntime" id="duration" name="duration" [(ngModel)]="scheDuration" (ngModelChange)="Changeduration()"></ngx-timepicker-field>
                                                         <!-- <ngx-timepicker-field  #timePicker [format]="24"    id="duration" name="duration" [formControl]="durationval" [(ngModel)]="scheDuration" ></ngx-timepicker-field> -->
                                                         <!-- <input type="text" class="form-control font-type textbox-15" placeholder="Enter Duration" id="duration" name="duration" value="{{fetcdtls.CONFIRMED_QUARTER}}" > -->
+                                                        <div *ngIf="error" class="text-danger">{{error}}</div>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -1141,7 +1144,7 @@
                                                         <label for="contactNumber" class="form-label fw-semibold font-type">Actual Training Date</label>
                                                     </div>
                                                     <div class="col-lg-8">
-                                                        <input type="date" class="form-control font-type fs-12 textbox-15 h-30" id="actual_train_dt" name="actual_train_dt" value="{{fetcdtls.SCHEDULED_DATE| date: 'yyyy-MM-dd' }}"> 
+                                                        <input type="date" class="form-control font-type fs-12 textbox-15 h-30" id="actual_train_dt" name="actual_train_dt" value="{{fetcdtls.SCHEDULED_DATE| date: 'yyyy-MM-dd' }}" min="{{mindate}}"> 
                                                     </div>
                                                 </div>
                                             
@@ -1201,7 +1204,7 @@
                                             <div class="col-lg-6 pt-2 mb-2" style="float: inline-end;">
                                                 <div class="hstack gap-2 justify-content-end">
                                                 <button type="button" class="btn btn-orange btn-label right ms-auto nexttab nexttab font-type "  (click)="UpdateScheduledData()" ><i class="ri-check-double-line label-icon align-middle fs-16 ms-2"></i>Update</button>
-                                                <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type "><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Cancel</button>
+                                                <button type="button" class="btn btn-blue btn-label right  nexttab  nexttab font-type" data-bs-dismiss="modal" aria-label="Close"><i class="ri-close-circle-line label-icon align-middle fs-16 ms-2"></i>Close</button>
                                                 </div>
                                             </div>
                                         </div><!--end row-->   

@@ -3,3 +3,9 @@
     color: #999; 
     pointer-events: none; 
   }
+  .disabled-input {
+    background-color: #e9ecef; /* Light gray background to indicate it's disabled */
+    cursor: not-allowed; /* Change cursor to indicate it's unclickable */
+    opacity: 0.6; /* Reduce opacity to indicate it's disabled */
+    pointer-events: none;
+  }

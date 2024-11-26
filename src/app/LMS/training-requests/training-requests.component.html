@@ -423,11 +423,15 @@
                                                 <div class="row topbar-up mb-2">
                                                             <div class="col-lg-3 pt-2">
                                                                 <h6 class="fs-12 font-type fw-semibold"><span>Training Name</span></h6>
-                                                                    <select class="form-select font-type fs-12 textbox-15" formControlName="trainingname">
-                                                                        <option value="">Select</option>
-                                                                        <option *ngFor="let training of listtraining" value="{{training.VALUE_FIELD}}">{{training.DISPLAY_FIELD}}</option>
-                                                                    </select> 
-                                                                    <div *ngIf="requestForm.get('trainingname')!.hasError('required') && requestForm.get('trainingname')!.touched" class="text-danger">Please select the training</div>   
+                                                                <input  class="form-control fs-12" list="regno-options" formControlName="trainingname">
+                                                                <datalist id="regno-options">
+                                                                <option *ngFor="let training of listtraining" [value]="training.DISPLAY_FIELD" [attr.data-value]="training.VALUE_FIELD"></option>
+                                                                </datalist>
+                                                                <!-- <select class="form-select font-type fs-12 textbox-15" formControlName="trainingname">
+                                                                    <option value="">Select</option>
+                                                                    <option *ngFor="let training of listtraining" value="{{training.VALUE_FIELD}}">{{training.DISPLAY_FIELD}}</option>
+                                                                </select>  -->
+                                                                <div *ngIf="requestForm.get('trainingname')!.hasError('required') && requestForm.get('trainingname')!.touched" class="text-danger">Please select the training</div>   
                                                             </div>
                                                             <div class="col-lg-3 pt-2">
                                                                 <h6 class="fs-12 font-type fw-semibold"><span>Convenient Schedule</span></h6>

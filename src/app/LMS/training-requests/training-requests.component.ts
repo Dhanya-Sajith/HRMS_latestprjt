@@ -249,10 +249,21 @@ export class TrainingRequestsComponent implements OnInit {
     AddRequests()
     {
       if (this.requestForm.valid) {
-        const trainingname= this.requestForm.get('trainingname');
+        
+        let trainingname= this.requestForm.get('trainingname');
         const schedule= this.requestForm.get('schedule'); 
         const provider= this.requestForm.get('provider'); 
         const area= this.requestForm.get('area');
+
+        const selectedTraining = this.listtraining.find((training: { DISPLAY_FIELD: any; }) => training.DISPLAY_FIELD == trainingname?.value);
+
+        if (selectedTraining) {
+          trainingname= selectedTraining.VALUE_FIELD;
+        }else{
+          trainingname= trainingname?.value;
+        }
+
+        alert(trainingname)
        
           const data = {
             empcode : this.empcode,
@@ -672,6 +683,16 @@ Object.values(policy).some((value: any) =>
 );
 const end = this.currentPagePersonal * this.itemsPerPage;
 return Math.min(end, filteredData.length);
+}
+
+onTrainingInput(event: any) {
+  const selectedOption = event.target.value;
+
+  const selectedTraining = this.listtraining.find((training: { DISPLAY_FIELD: any; }) => training.DISPLAY_FIELD === selectedOption);
+
+  if (selectedTraining) {
+    this.requestForm.controls['trainingname'].setValue(selectedTraining.VALUE_FIELD);
+  }
 }
   
 

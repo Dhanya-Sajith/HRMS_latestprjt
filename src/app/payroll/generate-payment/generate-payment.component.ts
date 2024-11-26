@@ -131,8 +131,8 @@ export class GeneratePaymentComponent implements OnInit {
           this.showModal = 2;
           this.failed = "Failed";
         }
-      })
       this.FetchPayment_Reports_Summary();
+    })
   }
 
   Get_WPS_File(data:any)
