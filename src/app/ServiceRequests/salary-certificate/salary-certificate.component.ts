@@ -88,23 +88,23 @@ export class SalaryCertificateComponent implements OnInit {
       const allowanceDetails = item.AllowanceDetails.map(data => [
           {}, // First empty cell
           { text: data.ALLOWANCE, style: 'boldText' }, // Allowance description
-          { text: `: ${data.AMOUNT} /per month`, style: 'boldText' }, // Allowance amount
-          {} // Last empty cell
+          { text: `:`, style: 'boldText' },
+          { text: ` ${data.AMOUNT} /per month`, style: 'boldText', alignment: 'right'  }, // Allowance amount
       ]);
   
       return {
           table: {
-              widths: ['*', 'auto', '*', '*'], // Define column widths
+              widths: ['auto', 'auto', 'auto', 'auto'], // Define column widths
               body: [
                   [{}, { text: 'Currency: AED', style: 'boldText', colSpan: 2 }, {}, {}], // Currency row
                   [{ text: '', colSpan: 4, margin: [0, 5] }] ,
                   ...allowanceDetails, // Allowance details
                   [{ text: '', colSpan: 4, margin: [0, 5] }] ,
-                  [{}, { text: 'Total', style: 'boldText' }, { text: `: ${item.GROSS_SALARY} /per month`, style: 'boldText' }, {}] // Total row
+                  [{}, { text: 'Total', style: 'boldText' }, { text: `:`, style: 'boldText'}, { text: ` ${item.GROSS_SALARY} /per month`, style: 'boldText', alignment: 'right' }] // Total row
               ]
           },
           layout: 'noBorders',
-          margin: [0, 0, 0, 0] // Margin around the table
+          margin: [40, 0, 40, 0] // Margin around the table
       };
   });
 

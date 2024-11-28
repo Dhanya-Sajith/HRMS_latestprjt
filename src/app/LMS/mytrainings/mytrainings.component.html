@@ -108,7 +108,7 @@
                                                     <td>{{data.SCHEDULED_DATE | date:"dd-MM-yyyy"}}</td>
                                                     <td class="status"><span class="badge bg-success text-white width-budge fs-11 font-type">{{data.PLAN_STATUS_VAL}}</span></td>
                                                     <td>
-                                                        <ul class="list-inline hstack gap-2 mb-0">
+                                                        <ul class="list-inline hstack gap-2 mb-0"  *ngIf="data.EFFECTIVE_STATUS == 1">
                                                             <!-- <li class="list-inline-item expandChildTable" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Download Certificate">
                                                                 <a href="#"  class="d-inline-block">
                                                                     <button type="button" class="btn btn-primary btn-sm"> <i class="ri-download-2-line fs-14"></i></button>
@@ -142,6 +142,9 @@
                                                         <ul class="mb-0 ms-1 pl-10" *ngFor="let log of data.Employees;">
                                                             <li style="white-space: pre-wrap;">{{log.EMP_NAME}}</li>
                                                         </ul>  
+                                                        <ul class="mb-0 ms-1 pl-10" *ngIf="data.EFFECTIVE_STATUS == 0">
+                                                            <li style="white-space: pre-wrap;"><b>Attendance not marked</b></li>
+                                                        </ul> 
                                                     </td>  
                                                 </tr>
                                             </tbody>

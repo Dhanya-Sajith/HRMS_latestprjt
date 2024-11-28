@@ -275,7 +275,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1">
                                                         <div class="text-muted">
-                                                            <h5 class="card-title mb-2 me-2 fw-semibold font-type pa-15">Your Leaves</h5>
+                                                            <h5 class="card-title mb-2 me-2 fw-semibold font-type pa-15 mb-4">Your Leaves</h5>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -285,7 +285,7 @@
                                                         <div class="mb-0 pb-0">
                                                             <circle-progress
                                                             [percent]="compoff_value"
-                                                            [radius]="35"
+                                                            [radius]="45"
                                                             [outerStrokeColor]= "compoffcolor"
                                                             [outerStrokeGradientStopColor]= "compoffcolor1"
                                                             [title]="compoff_part"
@@ -293,7 +293,7 @@
                                                             [animation]="true"
                                                             [animationDuration]="300"
                                                             ></circle-progress>
-                                                            <h5 class="mb-2 fs-12 font-type">Comp off</h5>
+                                                            <h5 class="mb-2 fs-12 font-type pa-15 mb-4">Comp off</h5>
                                                         </div>
                                                       </a>
                                                     </div>
@@ -302,7 +302,7 @@
                                                         <div class="mb-0 pb-0">
                                                             <circle-progress
                                                             [percent]="annual_value"
-                                                            [radius]="35"
+                                                            [radius]="45"
                                                             [outerStrokeColor]= "annualcolor"
                                                             [outerStrokeGradientStopColor]= "annualcolor1"
                                                             [title]="annual_part"
@@ -310,7 +310,7 @@
                                                             [animation]="true"
                                                             [animationDuration]="300"
                                                             ></circle-progress>  
-                                                            <h5 class="mb-2 fs-12 font-type">Annual</h5>
+                                                            <h5 class="mb-2 fs-12 font-type pa-15 mb-4">Annual</h5>
                                                         </div>
                                                         </a>
                                                     </div>
@@ -319,7 +319,7 @@
                                                         <div class="mb-0 pb-0">
                                                             <circle-progress
                                                             [percent]="medical_value"
-                                                            [radius]="35"
+                                                            [radius]="45"
                                                             [outerStrokeColor]= "medicalcolor"
                                                             [outerStrokeGradientStopColor]= "medicalcolor1"
                                                             [title]="medical_part"
@@ -327,7 +327,7 @@
                                                             [animation]="true"
                                                             [animationDuration]="300"
                                                             ></circle-progress>  
-                                                            <h5 class="mb-2 fs-12 font-type">Medical</h5>
+                                                            <h5 class="mb-2 fs-12 font-type pa-15 mb-4">Medical</h5>
                                                         </div>
                                                         </a>
                                                     </div>
@@ -339,7 +339,7 @@
                                                          <div class="mb-0 pb-0">
                                                              <circle-progress
                                                              [percent]="annual_value"
-                                                             [radius]="35"
+                                                             [radius]="45"
                                                              [outerStrokeColor]= "annualcolor"
                                                              [outerStrokeGradientStopColor]= "annualcolor1"
                                                              [title]="annual_part"
@@ -347,7 +347,7 @@
                                                              [animation]="true"
                                                              [animationDuration]="300"
                                                              ></circle-progress>  
-                                                             <h5 class="mb-2 fs-12 font-type">Annual</h5>
+                                                             <h5 class="mb-2 fs-12 font-type pa-15 mb-4">Annual</h5>
                                                          </div>
                                                          </a>
                                                      </div>
@@ -356,7 +356,7 @@
                                                          <div class="mb-0 pb-0">
                                                              <circle-progress
                                                              [percent]="medical_value"
-                                                             [radius]="35"
+                                                             [radius]="45"
                                                              [outerStrokeColor]= "medicalcolor"
                                                              [outerStrokeGradientStopColor]= "medicalcolor1"
                                                              [title]="medical_part"
@@ -364,7 +364,7 @@
                                                              [animation]="true"
                                                              [animationDuration]="300"
                                                              ></circle-progress>  
-                                                             <h5 class="mb-2 fs-12 font-type">Medical</h5>
+                                                             <h5 class="mb-2 fs-12 font-type pa-15 mb-4">Medical</h5>
                                                          </div>
                                                          </a>
                                                      </div>
@@ -376,26 +376,37 @@
                             </div>
                               <!-- End Your Leaves -->
 
-                            <!-- Your Training -->
+                              <!-- Your Training -->
                        
-                            <div class="col-md-6" [ngClass]="{'disabled': isDisabled}">
+                              <div class="col-md-6">
                                 <div class="card card-animate r-10 shadow-lg">
-                                    <div class="card-body pa-0">
+                                    <div class="card-body pa-0 pb-0">
                                         <h4 class="card-title mb-2 font-type fw-semibold">Training Hours</h4>
-                                        <div class="text-center margin-up-15">
+                                        <div class="text-center margin-up-15 mb-0">
                                             <div>
-                                               <div class="apex-charts" id="radial-chart" style="min-height: 66px;"><div id="apexchartszis7lnkb" class="apexcharts-canvas apexchartszis7lnkb apexcharts-theme-light font-type" style="width: 190px; height: 66px;"><svg id="SvgjsSvg1133" width="190" height="66" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG1135" class="apexcharts-inner apexcharts-graphical" transform="translate(20, -10)"><defs id="SvgjsDefs1134"><clipPath id="gridRectMaskzis7lnkb"><rect id="SvgjsRect1137" width="156" height="162" x="-3" y="-1" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath><clipPath id="gridRectMarkerMaskzis7lnkb"><rect id="SvgjsRect1138" width="154" height="164" x="-2" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath></defs><g id="SvgjsG1139" class="apexcharts-radialbar"><g id="SvgjsG1140"><g id="SvgjsG1141" class="apexcharts-tracks"><g id="SvgjsG1142" class="apexcharts-radialbar-track apexcharts-track" rel="1"><path id="apexcharts-radialbarTrack-0" d="M 21.280487804878042 75 A 53.71951219512196 53.71951219512196 0 0 1 128.71951219512195 75" fill="none" fill-opacity="1" stroke="rgba(231,231,231,0.85)" stroke-opacity="1" stroke-linecap="butt" stroke-width="9.345121951219513" stroke-dasharray="0" class="apexcharts-radialbar-area" data:pathOrig="M 21.280487804878042 75 A 53.71951219512196 53.71951219512196 0 0 1 128.71951219512195 75"></path></g></g><g id="SvgjsG1144"><g id="SvgjsG1148" class="apexcharts-series apexcharts-radial-series" seriesName="Storage" rel="1" data:realIndex="0"><path id="SvgjsPath1149" d="M 21.280487804878042 75 A 53.71951219512196 53.71951219512196 0 0 1 114.28796409307861 38.36338077956944" fill="none" fill-opacity="0.85" stroke="#3399cc" stroke-opacity="1" stroke-linecap="butt" stroke-width="9.634146341463415" stroke-dasharray="3" class="apexcharts-radialbar-area apexcharts-radialbar-slice-0" data:angle="137" data:value="76" index="0" j="0" data:pathOrig="M 21.280487804878042 75 A 53.71951219512196 53.71951219512196 0 0 1 114.28796409307861 38.36338077956944"></path></g><circle id="SvgjsCircle1145" r="44.0469512195122" cx="75" cy="75" class="apexcharts-radialbar-hollow" fill="transparent"></circle><g id="SvgjsG1146" class="apexcharts-datalabels-group" transform="translate(0, 0) scale(1)" style="opacity: 1;"><text id="SvgjsText1147" font-family=" hkgrotesk,sans-serif;" x="75" y="73" text-anchor="middle" dominant-baseline="auto" font-size="16px" font-weight="400" stroke="#3399cc" class="apexcharts-text apexcharts-datalabel-value" style="font-family:hkgrotesk,sans-serif;">32 Hrs</text></g></g></g></g><line id="SvgjsLine1150" x1="0" y1="0" x2="150" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1151" x1="0" y1="0" x2="150" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line></g><g id="SvgjsG1136" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend"></div></div></div>
+
+                                                <ngx-gauge 
+                                                [value]="value"
+                                                [max]="100"
+                                                [type]="'semi'"
+                                                [foregroundColor]="'#00c6ff'"
+                                                [backgroundColor]="'#f0f0f0'"
+                                                [thick]="20"
+                                                [size]="170">
+                                               </ngx-gauge>
+
                                             </div>
                                         </div>
-                                        <div class="row mt-1 text-center pa-0">                    
+                                        <div class="row text-center pa-0 margin-up-15">                    
                                             <div class="col-lg-6 ">                        
-                                                <h6 class="font-type ma-5"><span class="badge fs-12 bg-light-orange text-orange"><span class="font-type fs-14 fw-semibold text-orange">40</span> hrs</span></h6>                        
+                                                <h6 class="font-type"><span class="badge fs-12 bg-light-orange text-orange"><span class="font-type fs-14 fw-semibold text-orange">{{TRAINING_ASSIGNED}}</span> hrs</span></h6>                        
                                                 <p class="font-type fs-12 margin-up-5">Target</p>                    
                                             </div>                    
                                             <div class="col-lg-6">                        
-                                                <h6 class="font-type ma-5"><span class="badge bg-info-subtle text-blue fs-12"><span class="font-type fs-14 fw-semibold text-blue" >8</span> hrs</span></h6>                                             
+                                                <h6 class="font-type"><span class="badge bg-info-subtle text-blue fs-12"><span class="font-type fs-14 fw-semibold text-blue" >{{TRAINING_PENDING}}</span> hrs</span></h6>                                             
                                                 <p class="font-type fs-12 margin-up-5">Pending</p>                        
-                                            </div> </div>
+                                            </div> 
+                                        </div>
                                         </div>
                                 </div>
                             </div>

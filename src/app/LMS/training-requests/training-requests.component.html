@@ -587,10 +587,14 @@
                                         </div>
                                         <div class="col-lg-3 pt-2">
                                             <h6 class="fs-12 font-type fw-semibold"><span>Training Name</span></h6>
-                                            <select class="form-select font-type fs-12 textbox-15" formControlName="htrainingname">
+                                            <!-- <select class="form-select font-type fs-12 textbox-15" formControlName="htrainingname">
                                                 <option value="">Select</option>
                                                 <option *ngFor="let training of listtraining" value="{{training.VALUE_FIELD}}">{{training.DISPLAY_FIELD}}</option>
-                                            </select> 
+                                            </select>  -->
+                                            <input  class="form-control fs-12" list="regno-options" formControlName="htrainingname">
+                                            <datalist id="regno-options">
+                                            <option *ngFor="let training of listtraining" [value]="training.DISPLAY_FIELD" [attr.data-value]="training.VALUE_FIELD"></option>
+                                            </datalist>
                                             <div *ngIf="HODrequestForm.get('htrainingname')!.hasError('required') && HODrequestForm.get('htrainingname')!.touched" class="text-danger">Please select the training</div>   
                                         </div>
                                         <div class="col-lg-6 pt-2">

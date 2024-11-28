@@ -249,7 +249,7 @@ export class TrainingRequestsComponent implements OnInit {
     AddRequests()
     {
       if (this.requestForm.valid) {
-        
+        let trainingid
         let trainingname= this.requestForm.get('trainingname');
         const schedule= this.requestForm.get('schedule'); 
         const provider= this.requestForm.get('provider'); 
@@ -258,24 +258,25 @@ export class TrainingRequestsComponent implements OnInit {
         const selectedTraining = this.listtraining.find((training: { DISPLAY_FIELD: any; }) => training.DISPLAY_FIELD == trainingname?.value);
 
         if (selectedTraining) {
-          trainingname= selectedTraining.VALUE_FIELD;
+          trainingid= selectedTraining.VALUE_FIELD;
+          trainingname = null;
         }else{
+          trainingid = -1
           trainingname= trainingname?.value;
         }
-
-        alert(trainingname)
        
           const data = {
             empcode : this.empcode,
             area_id : area?.value,
-            training_subject : trainingname?.value,
+            training_subject : trainingid,
             proposed_quarter : schedule?.value,
             training_type : provider?.value,
             updated_by : this.empcode,
             eflag : 1,
-            remarks : ""
+            remarks : "",
+            new_training_name : trainingname
             };
-          // alert(JSON.stringify(data))
+          //  alert(JSON.stringify(data))
           this.apicall.SaveTrainingRequest(data).subscribe(res =>{
             
             if(res.Errorid == 1)
@@ -316,7 +317,8 @@ export class TrainingRequestsComponent implements OnInit {
     HODRequests()
     {
       if (this.HODrequestForm.valid) {
-        const trainingname= this.HODrequestForm.get('htrainingname');
+        let trainingid
+        let trainingname= this.HODrequestForm.get('htrainingname');
         const schedule= this.HODrequestForm.get('hschedule'); 
         const provider= this.HODrequestForm.get('hprovider'); 
         const area= this.HODrequestForm.get('harea');
@@ -325,18 +327,27 @@ export class TrainingRequestsComponent implements OnInit {
         const empname = emplist.map((item: {
           EMP_CODE: any; id: any; 
           }) => item.EMP_CODE).join(',');
+          const selectedTraining = this.listtraining.find((training: { DISPLAY_FIELD: any; }) => training.DISPLAY_FIELD == trainingname?.value);
+          if (selectedTraining) {
+            trainingid= selectedTraining.VALUE_FIELD;
+            trainingname = null;
+          }else{
+            trainingid = -1
+            trainingname= trainingname?.value;
+          }
 
           const data = {
             empcode : empname,
             area_id : area?.value,
-            training_subject : trainingname?.value,
+            training_subject : trainingid,
             proposed_quarter : schedule?.value,
             training_type : provider?.value,
             updated_by : this.empcode,
             eflag : 0,
-            remarks :  remarks?.value
+            remarks :  remarks?.value,
+            new_training_name : trainingname
             };
-          // alert(JSON.stringify(data))
+          //  alert(JSON.stringify(data))
           this.apicall.SaveTrainingRequest(data).subscribe(res =>{
             
             if(res.Errorid == 1)

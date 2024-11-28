@@ -264,10 +264,14 @@
                                     </div>
                                     <div class="col-lg-3 pt-2" [class.has-error]="requestForm.get('training_subject')?.invalid && requestForm.get('training_subject')?.touched">
                                         <h6 class="fs-12 font-type fw-semibold"><span>Training Name</span></h6>
-                                        <select class="form-select font-type fs-12 textbox-15" formControlName="training_subject">
+                                        <!-- <select class="form-select font-type fs-12 textbox-15" formControlName="training_subject">
                                             <option value="">Select</option>
                                             <option *ngFor="let combo of trainingname" [value]="combo.VALUE_FIELD">{{ combo.DISPLAY_FIELD }}</option>
-                                        </select>
+                                        </select> -->
+                                        <input  class="form-control fs-12" list="regno-options" formControlName="training_subject">
+                                        <datalist id="regno-options">
+                                        <option *ngFor="let training of trainingname" [value]="training.DISPLAY_FIELD" [attr.data-value]="training.VALUE_FIELD"></option>
+                                        </datalist>
                                         <div *ngIf="requestForm.get('training_subject')?.invalid && requestForm.get('training_subject')?.touched" class="text-danger">
                                             Please select a training name.
                                         </div>

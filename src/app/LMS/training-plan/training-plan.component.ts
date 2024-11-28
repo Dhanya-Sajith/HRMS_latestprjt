@@ -360,7 +360,8 @@ listProvidername()
     HODRequests()
     {
       if (this.HODrequestForm.valid) {
-        const trainingname= this.HODrequestForm.get('htrainingname');
+        let trainingid
+        let trainingname= this.HODrequestForm.get('htrainingname');
         const schedule= this.HODrequestForm.get('hschedule'); 
         const provider= this.HODrequestForm.get('hprovider'); 
         const area= this.HODrequestForm.get('harea');
@@ -369,16 +370,25 @@ listProvidername()
         const empname = emplist.map((item: {
           EMP_CODE: any; id: any; 
           }) => item.EMP_CODE).join(',');
+          const selectedTraining = this.listtraining.find((training: { DISPLAY_FIELD: any; }) => training.DISPLAY_FIELD == trainingname?.value);
+          if (selectedTraining) {
+            trainingid= selectedTraining.VALUE_FIELD;
+            trainingname = null;
+          }else{
+            trainingid = -1
+            trainingname= trainingname?.value;
+          }
 
           const data = {
             empcode : empname,
             area_id : area?.value,
-            training_subject : trainingname?.value,
+            training_subject : trainingid,
             proposed_quarter : schedule?.value,
             training_type : provider?.value,
             updated_by : this.empcode,
             eflag : 2,
-            remarks :  remarks?.value
+            remarks :  remarks?.value,
+            new_training_name : trainingname
             };
 
           console.log(JSON.stringify(data))

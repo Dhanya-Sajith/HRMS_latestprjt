@@ -43,6 +43,8 @@ export class MytrainingsComponent implements OnInit {
   failed:any="";  
   selecttrid: any;
   VIDEO_WATCHED_TIME: any;
+  todaydate:any = new Date();
+  mindate = this.datePipe.transform(this.todaydate,"yyyy-MM-dd");
 
   constructor(private apicall:ApiCallService,private datePipe:DatePipe,private session:LoginService,private fb: FormBuilder,private router: Router,private sanitizer: DomSanitizer) { }
 

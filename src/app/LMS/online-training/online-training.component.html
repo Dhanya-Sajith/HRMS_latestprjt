@@ -257,11 +257,15 @@
                                         </div>
                                         <div class="col-lg-10">
                                             <div class="div-space">
-                                                <select class="form-select h-30 fs-12 font-type textbox-15" id="trainingname" name="trainingname" #trainingname formControlName="trainingname" (change)="newfield(trainingname.value,areanm.value);">
+                                                <!-- <select class="form-select h-30 fs-12 font-type textbox-15" id="trainingname" name="trainingname" #trainingname formControlName="trainingname" (change)="newfield(trainingname.value,areanm.value);">
                                                     <option value="">Select</option>
                                                     <option *ngFor="let training of listtraining" value="{{training.VALUE_FIELD}}">{{training.DISPLAY_FIELD}}</option>
                                                     <option value="-1" style="background-color: red;" >Add New Training</option>
-                                                </select>
+                                                </select> -->
+                                                <input  class="form-control fs-12" list="regno-options" formControlName="trainingname" #trainingname (change)="newfield(trainingname.value,areanm.value);">
+                                                <datalist id="regno-options">
+                                                <option *ngFor="let training of listtraining" [value]="training.DISPLAY_FIELD" [attr.data-value]="training.VALUE_FIELD"></option>
+                                                </datalist>
                                                 <div *ngIf="OnlinAddForm.get('trainingname')!.hasError('required') && OnlinAddForm.get('trainingname')!.touched" class="text-danger">Please select the training name</div>
                                                 <!-- <input type="text" name="trainingname" id="trainingname" class="form-control text-space font-type" placeholder="Type / Select Training Name" onfocus="this.select()" onchange=""> -->
                                                 <!-- <input name="trainingValue" id="trainingValue" type="hidden"> -->
@@ -270,7 +274,7 @@
                                         
                                         
                                     </div>
-                                    <div class="row mb-3" *ngIf="this.fieldflag==1">
+                                    <!-- <div class="row mb-3" *ngIf="this.fieldflag==1">
                                         <div class="col-lg-2">
                                             <h6 class="fs-12 font-type fw-semibold"><span></span></h6>
                                         </div>
@@ -280,7 +284,7 @@
                                         <div class="col-lg-2">
                                             <a (click)="addnrewtraining(newtraining.value)" ><i class="ri-add-circle-line fs-24 text-success" title="Add New Training Subject"></i></a>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="row mb-3" *ngIf="viewsts==1">
                                         <div class="col-lg-2">
                                             <h6 class="fs-12 font-type fw-semibold"><span>Old Link / Old Video</span></h6>
@@ -334,7 +338,7 @@
                                             <h6 class="fs-12 font-type fw-semibold"><span>Target Date</span></h6>
                                         </div>
                                         <div class="col-lg-10">
-                                            <input type="date" class="form-control font-type fs-11 mb-0 textbox-15" id="targetdate" name="targetdate" formControlName="targetdate">  
+                                            <input type="date" class="form-control font-type fs-11 mb-0 textbox-15" id="targetdate" name="targetdate" formControlName="targetdate" [min]="mindate">  
                                             <div *ngIf="OnlinAddForm.get('targetdate')!.hasError('required') && OnlinAddForm.get('targetdate')!.touched" class="text-danger">Please enter target date</div>  
                                         </div>
                                     </div>

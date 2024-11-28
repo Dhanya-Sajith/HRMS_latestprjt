@@ -2,7 +2,7 @@ import { Component, OnInit  } from '@angular/core';
 import { ApiCallService } from 'src/app/api-call.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/login.service';
-import { JsonPipe, formatDate } from '@angular/common';
+import { DatePipe, JsonPipe, formatDate } from '@angular/common';
 import { FormControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
@@ -42,8 +42,10 @@ export class OnlineTrainingComponent implements OnInit {
   oldvideo_path=new FormControl();
   olddoc_path=new FormControl();
   durationval= new FormControl();
+  todaydate:any = new Date();
+  mindate = this.datePipe.transform(this.todaydate,"yyyy-MM-dd");
 
-  constructor(private session:LoginService,private apicall:ApiCallService,private route:Router,private fb: FormBuilder) {
+  constructor(private session:LoginService,private apicall:ApiCallService,private route:Router,private fb: FormBuilder,private datePipe:DatePipe) {
 
     this.dropdownSettings = {
       idField: 'EMP_CODE',
@@ -107,8 +109,9 @@ export class OnlineTrainingComponent implements OnInit {
     Onlinetrsubmit()
     {
       if (this.OnlinAddForm.valid) {
+        let trainingid
         const areanm= this.OnlinAddForm.get('areanm');
-        const trainingname= this.OnlinAddForm.get('trainingname'); 
+        let trainingname= this.OnlinAddForm.get('trainingname'); 
         const targetdate= this.OnlinAddForm.get('targetdate'); 
         const video_path= this.OnlinAddForm.get('video_path');
         const doc_path= this.OnlinAddForm.get('doc_path');
@@ -118,6 +121,15 @@ export class OnlineTrainingComponent implements OnInit {
         const empname = emplist.map((item: {
           EMP_CODE: any; id: any; 
           }) => item.EMP_CODE).join(',');
+
+          const selectedTraining = this.listtraining.find((training: { DISPLAY_FIELD: any; }) => training.DISPLAY_FIELD == trainingname?.value);
+          if (selectedTraining) {
+            trainingid= selectedTraining.VALUE_FIELD;
+            trainingname = null;
+          }else{
+            trainingid = -1
+            trainingname= trainingname?.value;
+          }
 
           if(video_path?.value !== "" && doc_path?.value !== "") 
             {
@@ -131,19 +143,19 @@ export class OnlineTrainingComponent implements OnInit {
           const data = {
             employees : empname,
             area : areanm?.value,
-            train_subject : trainingname?.value,
+            train_subject : trainingid,
             target_date : targetdate?.value,
             remarks :  remarks?.value,
             duration :  duration?.value,
             video_path : video_path?.value,
             updatedby : this.empcode,
-            doc_path : doc_path?.value
+            doc_path : doc_path?.value,
+            training_name:trainingname
             };
 
         //  alert(JSON.stringify(data))
 
           this.apicall.SaveOnlineTrainingRequest(data).subscribe(res =>{
-          //  alert(res.Errorid);
             if(res.Errorid!=0){
 
               this.uploadBasic(res.Errorid);
@@ -380,44 +392,35 @@ return Math.min(end, filteredData.length);
 
 newfield(trainingnm:any,area:any)
 {
-
-  // alert(trainingnm);
-  // alert(area);
- //alert(typval);
- if(trainingnm=='-1')
- {
-      this.fieldflag=1;
- }
- else
- {
-      this.fieldflag=0;
- }
-
-
-
- this.apicall.fetchexistingtrdetails(area,trainingnm).subscribe((res) => {
- // this.FetchTrainingSubjects();
- this.existingtddocs=res;
- //alert(JSON.stringify(res))
-
- if(this.existingtddocs!="")
+ let trainingname
+ const selectedTraining = this.listtraining.find((training: { DISPLAY_FIELD: any; }) => training.DISPLAY_FIELD == trainingnm);
+ if (selectedTraining) {
+    trainingname= selectedTraining.VALUE_FIELD;
+  }else{
+    trainingname = -1
+  }
+  if(trainingname == -1)
   {
-    this.viewsts=1;
-    this.oldvideo_path.setValue(this.existingtddocs[0].KEY_ID);
-    this.olddoc_path.setValue(this.existingtddocs[0].DATA_VALUE);
-
+        this.fieldflag=1;
   }
   else
   {
-    this.viewsts=0;
+        this.fieldflag=0;
   }
 
-
-
-})
-
-
- 
+ this.apicall.fetchexistingtrdetails(area,trainingname).subscribe((res) => {
+  this.existingtddocs=res;
+  if(this.existingtddocs!="")
+    {
+      this.viewsts=1;
+      this.oldvideo_path.setValue(this.existingtddocs[0].KEY_ID);
+      this.olddoc_path.setValue(this.existingtddocs[0].DATA_VALUE);
+    }
+    else
+    {
+      this.viewsts=0;
+    }
+  })
 }
 
 

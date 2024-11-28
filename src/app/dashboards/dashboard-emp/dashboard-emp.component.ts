@@ -59,6 +59,11 @@ export class DashboardEmpComponent implements OnInit {
   ANNIVERSARY: any;
   BIRTHDAY: any;
   hostname:any=this.apicall.dotnetapi;
+  TRAINING_ASSIGNED: any;
+  TRAINING_COMPLETED: any;
+  TRAINING_PENDING: any;
+  value: number = 0;
+  
   
   constructor(private apicall:ApiCallService,private session:LoginService,private route:Router, private datePipe: DatePipe,private router: Router) {}
 
@@ -92,6 +97,11 @@ export class DashboardEmpComponent implements OnInit {
       this.MISSED_PUNCHES = this.data.MISSED_PUNCHES;
       this.ANNIVERSARY = this.data.ANNIVERSARY;
       this.BIRTHDAY = this.data.BIRTHDAY;
+
+      this.TRAINING_ASSIGNED = this.data.TRAINING_ASSIGNED;
+      this.TRAINING_COMPLETED = this.data.TRAINING_COMPLETED;
+      this.TRAINING_PENDING = this.data.TRAINING_PENDING;
+      this.value = this.TRAINING_COMPLETED/ this.TRAINING_ASSIGNED * 100
 
       const cup = this.data.COMP_OFFTOOK;
       const cdown = this.data.COMP_OFFTOT;

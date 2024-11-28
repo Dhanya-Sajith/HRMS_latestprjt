@@ -156,15 +156,41 @@ export class VPApprovalTrainingsComponent implements OnInit {
   //Team add new request  
   submitForm() {
     if (this.requestForm.valid) {
+      let trainingid
+      let trainingname= this.requestForm.get('training_subject');
+      const schedule= this.requestForm.get('proposed_quarter'); 
+      const provider= this.requestForm.get('training_type'); 
+      const area= this.requestForm.get('area_id');
+      const remarks= this.requestForm.get('remarks');
       const empCodes = this.requestForm.value.empcode.map((emp: { EMP_CODE: any; }) => emp.EMP_CODE);
       const empCodeString = empCodes.join(','); 
-     
+      const selectedTraining = this.trainingname.find((training: { DISPLAY_FIELD: any; }) => training.DISPLAY_FIELD == trainingname?.value);
+      if (selectedTraining) {
+        trainingid= selectedTraining.VALUE_FIELD;
+        trainingname = null;
+      }else{
+        trainingid = -1
+        trainingname= trainingname?.value;
+      }
+
+      // const data = {
+      //     ...this.requestForm.value,
+      //     updated_by: this.empcode,
+      //     eflag: 3,
+      //     empcode: empCodeString // Update the empcode property with the comma-separated string
+      // };
+      
       const data = {
-          ...this.requestForm.value,
-          updated_by: this.empcode,
-          eflag: 3,
-          empcode: empCodeString // Update the empcode property with the comma-separated string
-      };
+        empcode : empCodeString,
+        area_id : area?.value,
+        training_subject : trainingid,
+        proposed_quarter : schedule?.value,
+        training_type : provider?.value,
+        updated_by : this.empcode,
+        eflag : 3,
+        remarks :  remarks?.value,
+        new_training_name : trainingname
+        };
   
      console.log(JSON.stringify(data))
      this.apicall.SaveTrainingRequest(data).subscribe((res)=>{
