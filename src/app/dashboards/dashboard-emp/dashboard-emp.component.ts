@@ -98,10 +98,10 @@ export class DashboardEmpComponent implements OnInit {
       this.ANNIVERSARY = this.data.ANNIVERSARY;
       this.BIRTHDAY = this.data.BIRTHDAY;
 
-      this.TRAINING_ASSIGNED = this.data.TRAINING_ASSIGNED;
-      this.TRAINING_COMPLETED = this.data.TRAINING_COMPLETED;
-      this.TRAINING_PENDING = this.data.TRAINING_PENDING;
-      this.value = this.TRAINING_COMPLETED/ this.TRAINING_ASSIGNED * 100
+      // this.TRAINING_ASSIGNED = this.data.TRAINING_ASSIGNED;
+      // this.TRAINING_COMPLETED = this.data.TRAINING_COMPLETED;
+      // this.TRAINING_PENDING = this.data.TRAINING_PENDING;
+      // this.value = this.TRAINING_COMPLETED/ this.TRAINING_ASSIGNED * 100
 
       const cup = this.data.COMP_OFFTOOK;
       const cdown = this.data.COMP_OFFTOT;

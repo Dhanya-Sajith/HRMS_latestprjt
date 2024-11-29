@@ -222,7 +222,6 @@ markFormGroupTouched(formGroup: FormGroup) {
 Edit(Employeeleave:any)
 {
   this.company_code= (<HTMLInputElement>document.getElementById("employeeCmpny")).value;
-  alert(this.company_code)
   this.emp_code = Employeeleave.KEY_ID;
   if(this.company_code != 'MH'){
     Employeeleave.isEditing= true;
